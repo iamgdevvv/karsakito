@@ -5,7 +5,7 @@
 		"wrangler.json": "jsonc"
 	},
 	"[typescript]": {
-		"editor.defaultFormatter": "oxc.oxc-vscode",
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
 		"editor.formatOnSave": true,
 		"editor.codeActionsOnSave": {
 			"source.fixAll": "explicit",
@@ -13,7 +13,7 @@
 		}
 	},
 	"[typescriptreact]": {
-		"editor.defaultFormatter": "oxc.oxc-vscode",
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
 		"editor.formatOnSave": true,
 		"editor.codeActionsOnSave": {
 			"source.fixAll": "explicit",
@@ -21,7 +21,7 @@
 		}
 	},
 	"[javascript]": {
-		"editor.defaultFormatter": "oxc.oxc-vscode",
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
 		"editor.formatOnSave": true,
 		"editor.codeActionsOnSave": {
 			"source.fixAll": "explicit",

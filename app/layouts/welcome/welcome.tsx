@@ -1,3 +1,4 @@
+import { Image } from '@mantine/core';
 import logoDark from './logo-dark.svg';
 import logoLight from './logo-light.svg';
 
@@ -7,12 +8,12 @@ export function Welcome({ message }: { message: string }) {
 			<div className="flex-1 flex flex-col items-center gap-16 min-h-0">
 				<header className="flex flex-col items-center gap-9">
 					<div className="w-[500px] max-w-[100vw] p-4">
-						<img
+						<Image
 							src={logoLight}
 							alt="React Router"
 							className="block w-full dark:hidden"
 						/>
-						<img
+						<Image
 							src={logoDark}
 							alt="React Router"
 							className="hidden w-full dark:block"

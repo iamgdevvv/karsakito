@@ -1,0 +1,47 @@
+{
+	"version": 1,
+	"skills": {
+		"mantine-combobox": {
+			"source": "mantinedev/skills",
+			"sourceType": "github",
+			"skillPath": "skills/mantine-combobox/SKILL.md",
+			"computedHash": "fb3002c7bb704a111b1f4c596573aa9905e1b8dd728ad15dbba8cdf7a53ed98a"
+		},
+		"mantine-custom-components": {
+			"source": "mantinedev/skills",
+			"sourceType": "github",
+			"skillPath": "skills/mantine-custom-components/SKILL.md",
+			"computedHash": "16f771d471da17b76a803ace40211177283ad3adcf319e8e3b4bd1a1ddeb74c1"
+		},
+		"mantine-form": {
+			"source": "mantinedev/skills",
+			"sourceType": "github",
+			"skillPath": "skills/mantine-form/SKILL.md",
+			"computedHash": "1bf98bd02676810bf420019b501ffaaba61774869b2b758dd5518620311ef518"
+		},
+		"react-router": {
+			"source": "remix-run/react-router",
+			"sourceType": "github",
+			"skillPath": ".agents/skills/react-router/SKILL.md",
+			"computedHash": "ff4d9bc724f0e56a51c453eef5b93caef1c16d3623ac49345d74fc1a5efbc05a"
+		},
+		"vercel-react-best-practices": {
+			"source": "vercel-labs/agent-skills",
+			"sourceType": "github",
+			"skillPath": "skills/react-best-practices/SKILL.md",
+			"computedHash": "ca7b0c0c6e5f2750043f7f0cd72d16ac4e2abc48f9b5500d047a4b77a2506212"
+		},
+		"web-design-guidelines": {
+			"source": "vercel-labs/agent-skills",
+			"sourceType": "github",
+			"skillPath": "skills/web-design-guidelines/SKILL.md",
+			"computedHash": "f3bc47f890f42a44db1007ab390709ec368e4b8c089baee6b0007182236ac474"
+		},
+		"writing-guidelines": {
+			"source": "vercel-labs/agent-skills",
+			"sourceType": "github",
+			"skillPath": "skills/writing-guidelines/SKILL.md",
+			"computedHash": "25aa3a33a97bddbcb1847ce4a6169106ec25e5b19b15b99c66e75ab383866ef2"
+		}
+	}
+}

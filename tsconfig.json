@@ -3,9 +3,18 @@
 	"references": [{ "path": "./tsconfig.node.json" }, { "path": "./tsconfig.cloudflare.json" }],
 	"compilerOptions": {
 		"checkJs": true,
+		"esModuleInterop": true,
 		"verbatimModuleSyntax": true,
+		"isolatedModules": true,
+		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"strict": true,
-		"noEmit": true
+		"noEmit": true,
+		"noImplicitAny": true,
+		"baseUrl": ".",
+		"ignoreDeprecations": "6.0",
+		"paths": {
+			"$/*": ["./app/*"]
+		}
 	}
 }

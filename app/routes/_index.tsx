@@ -1,7 +1,7 @@
 import { env } from 'cloudflare:workers';
 
-import { Welcome } from '../welcome/welcome';
-import type { Route } from './+types/home';
+import { Welcome } from '$/layouts/welcome/welcome';
+import type { Route } from './+types/_index';
 
 export function meta(_: Route.MetaArgs) {
 	return [

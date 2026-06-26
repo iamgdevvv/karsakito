@@ -1,3 +1,5 @@
+import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core';
+import { NavigationProgress } from '@mantine/nprogress';
 import {
 	isRouteErrorResponse,
 	Links,
@@ -5,10 +7,15 @@ import {
 	Outlet,
 	Scripts,
 	ScrollRestoration,
+	useNavigation,
 } from 'react-router';
 
+import '@mantine/nprogress/styles.css';
+
 import type { Route } from './+types/root';
-import './app.css';
+
+import './styles/app.css';
+import './styles/mantine.css';
 
 export const links: Route.LinksFunction = () => [
 	{ rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -24,16 +31,23 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+	const navigation = useNavigation();
+	const isNavigating = Boolean(navigation.location);
+
 	return (
-		<html lang="en">
+		<html lang="id" {...mantineHtmlProps}>
 			<head>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<ColorSchemeScript />
 				<Meta />
 				<Links />
 			</head>
 			<body>
-				{children}
+				<MantineProvider>
+					{children}
+					{isNavigating ? <NavigationProgress /> : null}
+				</MantineProvider>
 				<ScrollRestoration />
 				<Scripts />
 			</body>
@@ -73,3 +87,15 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 		</main>
 	);
 }
+
+const loggingMiddleware: Route.MiddlewareFunction = async ({ request }, next) => {
+	const start = performance.now();
+	const response = await next();
+	const duration = performance.now() - start;
+	console.info(
+		`${new Date().toISOString()} ${request.method} ${request.url} Response ${response.status} (${duration}ms)`,
+	);
+	return response;
+};
+
+export const middleware: Route.MiddlewareFunction[] = [loggingMiddleware];
