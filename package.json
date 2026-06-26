@@ -1,32 +1,38 @@
 {
-  "name": "karyakito-frontend",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "react-router build",
-    "dev": "react-router dev",
-    "typecheck": "wrangler types && react-router typegen && tsc -b",
-    "deploy": "npm run build && wrangler deploy",
-    "preview": "npm run build && vite preview",
-    "cf-typegen": "wrangler types",
-    "postinstall": "wrangler types"
-  },
-  "dependencies": {
-    "isbot": "^5.1.36",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7",
-    "react-router": "8.0.0"
-  },
-  "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.42.3",
-    "@react-router/dev": "8.0.0",
-    "@tailwindcss/vite": "^4.2.2",
-    "@types/node": "^22.20.0",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "tailwindcss": "^4.2.2",
-    "typescript": "^5.9.3",
-    "vite": "^8.0.3",
-    "wrangler": "^4.105.0"
-  }
+	"name": "karyakito-frontend",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"typecheck": "wrangler types && react-router typegen && tsc -b",
+		"format": "oxfmt",
+		"format:check": "oxfmt --check",
+		"lint": "oxlint -c ./.oxlintrc.json --tsconfig ./tsconfig.json --ignore-path ./.eslintignore app",
+		"lint:fix": "oxlint -c ./.oxlintrc.json --tsconfig ./tsconfig.json --ignore-path ./.eslintignore --fix app",
+		"build": "npm run typecheck && npm run lint && npm run format && react-router build",
+		"dev": "react-router dev",
+		"deploy": "npm run build && wrangler deploy",
+		"preview": "npm run build && vite preview",
+		"cf-typegen": "wrangler types",
+		"postinstall": "wrangler types"
+	},
+	"dependencies": {
+		"isbot": "^5.1.44",
+		"react": "^19.2.7",
+		"react-dom": "^19.2.7",
+		"react-router": "8.0.1"
+	},
+	"devDependencies": {
+		"@cloudflare/vite-plugin": "^1.42.3",
+		"@react-router/dev": "8.0.1",
+		"@tailwindcss/vite": "^4.3.1",
+		"@types/node": "^26.0.1",
+		"@types/react": "^19.2.17",
+		"@types/react-dom": "^19.2.3",
+		"oxfmt": "^0.56.0",
+		"oxlint": "^1.71.0",
+		"tailwindcss": "^4.3.1",
+		"typescript": "^6.0.3",
+		"vite": "^8.1.0",
+		"wrangler": "^4.105.0"
+	}
 }

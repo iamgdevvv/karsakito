@@ -1,0 +1,15 @@
+{
+	"$schema": "./node_modules/oxfmt/configuration_schema.json",
+	"useTabs": true,
+	"tabWidth": 4,
+	"singleQuote": true,
+	"printWidth": 100,
+	"ignorePatterns": [
+		".agents/**",
+		"dist/**",
+		"logs/**",
+		"node_modules/**",
+		".tmp/**",
+		"src/generated/**"
+	]
+}
