@@ -1,5 +1,6 @@
 import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core';
-import { NavigationProgress } from '@mantine/nprogress';
+import { NavigationProgress, nprogress } from '@mantine/nprogress';
+import { useEffect } from 'react';
 import {
 	isRouteErrorResponse,
 	Links,
@@ -9,11 +10,14 @@ import {
 	ScrollRestoration,
 	useNavigation,
 } from 'react-router';
-
-import '@mantine/nprogress/styles.css';
+import theme from '~app-modules/theme';
 
 import type { Route } from './+types/root';
 
+import '@mantine/carousel/styles.css';
+import '@mantine/notifications/styles.css';
+import '@mantine/nprogress/styles.css';
+import '@mantine/tiptap/styles.css';
 import './styles/app.css';
 import './styles/mantine.css';
 
@@ -26,7 +30,12 @@ export const links: Route.LinksFunction = () => [
 	},
 	{
 		rel: 'stylesheet',
-		href: 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap',
+		href: 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&display=swap',
+	},
+	{
+		rel: 'icon',
+		type: 'image/svg+xml',
+		href: '/favicon.svg',
 	},
 ];
 
@@ -34,19 +43,33 @@ export function Layout({ children }: { children: React.ReactNode }) {
 	const navigation = useNavigation();
 	const isNavigating = Boolean(navigation.location);
 
+	useEffect(() => {
+		if (isNavigating) {
+			nprogress.start();
+		} else {
+			nprogress.complete();
+		}
+	}, [isNavigating]);
+
 	return (
-		<html lang="id" {...mantineHtmlProps}>
+		<html
+			lang="id"
+			{...mantineHtmlProps}
+		>
 			<head>
 				<meta charSet="utf-8" />
-				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<meta
+					name="viewport"
+					content="width=device-width, initial-scale=1"
+				/>
 				<ColorSchemeScript />
 				<Meta />
 				<Links />
 			</head>
 			<body>
-				<MantineProvider>
+				<MantineProvider theme={theme}>
+					<NavigationProgress />
 					{children}
-					{isNavigating ? <NavigationProgress /> : null}
 				</MantineProvider>
 				<ScrollRestoration />
 				<Scripts />
@@ -76,11 +99,11 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 	}
 
 	return (
-		<main className="pt-16 p-4 container mx-auto">
+		<main className="container mx-auto p-4 pt-16">
 			<h1>{message}</h1>
 			<p>{details}</p>
 			{stack && (
-				<pre className="w-full p-4 overflow-x-auto">
+				<pre className="w-full overflow-x-auto p-4">
 					<code>{stack}</code>
 				</pre>
 			)}

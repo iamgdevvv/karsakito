@@ -4,7 +4,7 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "karyakito-frontend",
+	"name": "karsakito",
 	"compatibility_date": "2026-06-26",
 	"main": "./workers/app.ts",
 	"vars": {
@@ -12,9 +12,29 @@
 	},
 	"observability": {
 		"enabled": true,
+		"logs": {
+			"enabled": true,
+			"invocation_logs": true,
+		},
+		"traces": {
+			"enabled": true,
+		},
 	},
 	"upload_source_maps": true,
 	"compatibility_flags": ["nodejs_compat"],
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "karsakito-db",
+			"database_id": "799bd19e-8df1-4f42-a21f-cba80e8e35b0",
+		},
+	],
+	"kv_namespaces": [
+		{
+			"binding": "SESSION",
+			"id": "fabde525ccf345c48e3262007ba152d3",
+		},
+	],
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement

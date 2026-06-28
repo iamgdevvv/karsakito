@@ -6,7 +6,8 @@
 		"app/**/.server/**/*",
 		"app/**/.client/**/*",
 		"workers/**/*",
-		"worker-configuration.d.ts"
+		"worker-configuration.d.ts",
+		"generated/**/*"
 	],
 	"compilerOptions": {
 		"composite": true,
@@ -19,8 +20,11 @@
 		"jsx": "react-jsx",
 		"rootDirs": [".", "./.react-router/types"],
 		"paths": {
-			"$/*": ["./app/*"],
-			"~/*": ["./app/*"]
+			"~workers/*": ["./workers/*"],
+			"~generated/*": ["./generated/*"],
+			"~app-modules/*": ["./app/modules/*"],
+			"~app-server/*": ["./app/.server/*"],
+			"~app-ui/*": ["./app/ui/*"]
 		},
 		"esModuleInterop": true,
 		"resolveJsonModule": true

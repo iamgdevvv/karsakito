@@ -8,6 +8,10 @@ export default defineConfig({
 			viteEnvironment: { name: 'ssr' },
 		}),
 		reactRouter(),
+		// mantineTheme({
+		// 	input: "./app/modules/theme.ts",
+		// 	output: './app/styles/mantine.css',
+		// }),
 	],
 	resolve: {
 		tsconfigPaths: true,

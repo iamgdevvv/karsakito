@@ -10,11 +10,6 @@
 		"skipLibCheck": true,
 		"strict": true,
 		"noEmit": true,
-		"noImplicitAny": true,
-		"baseUrl": ".",
-		"ignoreDeprecations": "6.0",
-		"paths": {
-			"$/*": ["./app/*"]
-		}
+		"noImplicitAny": true
 	}
 }

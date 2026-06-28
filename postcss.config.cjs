@@ -10,6 +10,9 @@ module.exports = {
 				'mantine-breakpoint-xl': '1600px',
 			},
 		},
+		// 'tailwind-preset-mantine/postcss': {
+		// 	input: './app/modules/theme.ts',
+		// },
 		'@tailwindcss/postcss': {},
 		autoprefixer: {},
 	},

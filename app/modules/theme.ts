@@ -1,5 +1,15 @@
+'use client';
+
 import { Carousel } from '@mantine/carousel';
-import { Button, Container, createTheme } from '@mantine/core';
+import {
+	Button,
+	Container,
+	createTheme,
+	Input,
+	PasswordInput,
+	Textarea,
+	TextInput,
+} from '@mantine/core';
 
 const theme = createTheme({
 	breakpoints: {
@@ -45,27 +55,27 @@ const theme = createTheme({
 	primaryColor: 'primary',
 	colors: {
 		primary: [
-			'#e5f3ff',
-			'#cde2ff',
-			'#9ac2ff',
-			'#64a0ff',
-			'#3884fe',
-			'#1d72fe',
-			'#0063ff',
-			'#0058e4',
-			'#004ecd',
-			'#0043b5',
+			'#edfdfb',
+			'#dcf8f6',
+			'#b3f2ec',
+			'#89ebe3',
+			'#6ae6db',
+			'#58e2d6',
+			'#4de1d4',
+			'#3fc8bb',
+			'#31b2a6',
+			'#0f766e',
 		],
 	},
 	radius: {
 		xs: '2px',
 		sm: '4px',
 		md: '8px',
-		lg: '16px',
-		xl: '24px',
-		'2xl': '32px',
-		'3xl': '56px',
-		'4xl': '64px',
+		lg: '12px',
+		xl: '16px',
+		'2xl': '20px',
+		'3xl': '28px',
+		'4xl': '36px',
 		full: '99999px',
 	},
 	components: {
@@ -75,10 +85,47 @@ const theme = createTheme({
 				size: 'lg',
 			},
 		}),
+		TextInput: TextInput.extend({
+			defaultProps: {
+				size: 'md',
+				labelProps: {
+					fz: 'sm',
+					fw: 400,
+				},
+			},
+		}),
+		PasswordInput: PasswordInput.extend({
+			defaultProps: {
+				size: 'md',
+				labelProps: {
+					fz: 'sm',
+					fw: 400,
+				},
+			},
+		}),
+		Input: Input.extend({
+			defaultProps: {
+				size: 'md',
+			},
+		}),
+		Textarea: Textarea.extend({
+			defaultProps: {
+				size: 'md',
+				labelProps: {
+					fz: 'sm',
+					fw: 400,
+				},
+			},
+		}),
 		Button: Button.extend({
 			defaultProps: {
+				size: 'lg',
+				fz: 'md',
 				fw: 500,
 				radius: 'lg',
+				loaderProps: {
+					size: 'sm',
+				},
 			},
 		}),
 		Carousel: Carousel.extend({

@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "generatorVersion": "unknown",
+  "generatedAt": "2026-06-28T06:36:18.455Z",
+  "outputPath": "E:\\WORKSPACE\\WEBAPP\\karyakito-frontend\\generated\\prisma-zod",
+  "files": [
+    "schemas\\enums\\TransactionIsolationLevel.schema.ts",
+    "schemas\\enums\\UserScalarFieldEnum.schema.ts",
+    "schemas\\enums\\AuthScalarFieldEnum.schema.ts",
+    "schemas\\enums\\SortOrder.schema.ts",
+    "schemas\\enums\\UserRole.schema.ts"
+  ],
+  "directories": [
+    "schemas\\enums"
+  ],
+  "singleFileMode": false
+}

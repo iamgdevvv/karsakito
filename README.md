@@ -70,6 +70,30 @@ You can then promote a version to production after verification or roll it out p
 npx wrangler versions deploy
 ```
 
+## Database
+
+```sh
+npm run db:generate
+npm run db:migrate:create -- nama_migrasi
+```
+
+### Initial Migration
+
+```sh
+npx prisma migrate diff --from-empty --to-schema-datamodel ./prisma/schema.prisma --script > migrations/0001_nama_migrasi.sql
+```
+
+### Subsequent Migration
+
+```sh
+npx prisma migrate diff --from-url file:./.wrangler/state/v3/d1/miniflare-D1DatabaseObject/XXXXXXXX.sqlite --to-schema-datamodel ./prisma/schema.prisma --script > migrations/0002_nama_migrasi_selanjutnya.sql
+```
+
+```sh
+npm run db:migrate:local
+npm run db:migrate:remote
+```
+
 ## Styling
 
 This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
