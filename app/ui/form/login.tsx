@@ -17,12 +17,12 @@ import { useMemo, useState } from 'react';
 import { FaGoogle } from 'react-icons/fa';
 import { useFetcher } from 'react-router';
 import { PayloadLoginSchema, type PayloadLogin } from '~app-modules/schema/auth';
-import type { ActionFormLogin } from '~app-server/auth';
+import type { ActionLogin } from '~app-server/auth';
 import { Image } from '~app-ui/components/image';
 import { ButtonLink, Link } from '~app-ui/components/link';
 
 export default function FormLogin(props: BoxProps) {
-	const fetcher = useFetcher<ActionFormLogin>();
+	const fetcher = useFetcher<ActionLogin>();
 	const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
 	const isLoading = useMemo(() => {
@@ -56,13 +56,16 @@ export default function FormLogin(props: BoxProps) {
 			bdrs="2xl"
 			bd="1px solid gray.4"
 			{...props}
+			data-slot="FormLogin"
 		>
 			<Center>
-				<Image
-					src="/logo.svg"
-					w={80}
-					h="auto"
-				/>
+				<Link to="/">
+					<Image
+						src="/logo.svg"
+						w={80}
+						h="auto"
+					/>
+				</Link>
 			</Center>
 			<Stack
 				gap="xs"

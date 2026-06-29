@@ -14,11 +14,16 @@ export default function Footer(props: BoxProps) {
 			}}
 			{...props}
 			component="footer"
-			data-slot="footer"
+			data-slot="Footer"
 		>
 			<Container>
 				<Group justify="center">
-					<Text span>© {new Date().getFullYear()} Team Kito. All rights reserved.</Text>
+					<Text
+						span
+						size="sm"
+					>
+						© {new Date().getFullYear()} Team Kito. All rights reserved.
+					</Text>
 					<Text
 						span
 						display="inline-block"

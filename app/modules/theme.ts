@@ -126,6 +126,9 @@ const theme = createTheme({
 				loaderProps: {
 					size: 'sm',
 				},
+				classNames: {
+					label: 'leading-tight',
+				},
 			},
 		}),
 		Carousel: Carousel.extend({

@@ -1,19 +1,19 @@
 import { Center, Container } from '@mantine/core';
-import { metaDashboard } from '~app-modules/meta';
-import { actionFormRegister } from '~app-server/auth';
+import { metaAppsRoute } from '~app-modules/meta';
+import { actionRegister } from '~app-server/auth';
 import FormRegister from '~app-ui/form/register';
 
-import type { Route } from './+types/_auth.login';
+import type { Route } from './+types/_auth.register';
 
 export async function action({ request, context }: Route.ActionArgs) {
-	return await actionFormRegister({
-		formData: await request.formData(),
+	return await actionRegister({
+		request,
 		context,
 	});
 }
 
 export function meta(_: Route.MetaArgs) {
-	return metaDashboard({
+	return metaAppsRoute({
 		title: 'Sign up',
 	});
 }

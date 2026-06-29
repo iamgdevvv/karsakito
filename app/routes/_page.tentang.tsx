@@ -1,8 +1,8 @@
 import { Title } from '@mantine/core';
-import { metaPublic } from '~app-modules/meta';
+import { metaPublicRoute } from '~app-modules/meta';
 import { cloudflareContext } from '~workers/app';
 
-import type { Route } from './+types/_page.tentang-kami';
+import type { Route } from './+types/_page.tentang';
 
 export function loader({ context }: Route.LoaderArgs) {
 	return {
@@ -11,7 +11,7 @@ export function loader({ context }: Route.LoaderArgs) {
 }
 
 export function meta({ loaderData }: Route.MetaArgs) {
-	return metaPublic({
+	return metaPublicRoute({
 		title: 'Tentang KarsaKito',
 		noIndex: loaderData.noIndex,
 	});

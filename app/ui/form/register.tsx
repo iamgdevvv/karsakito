@@ -17,13 +17,13 @@ import { useMemo, useState } from 'react';
 import { FaGoogle } from 'react-icons/fa';
 import { useFetcher, useNavigate } from 'react-router';
 import { PayloadRegisterSchema, type PayloadRegister } from '~app-modules/schema/auth';
-import type { ActionFormRegister } from '~app-server/auth';
+import type { ActionRegister } from '~app-server/auth';
 import { Image } from '~app-ui/components/image';
 import { ButtonLink, Link } from '~app-ui/components/link';
 
 export default function FormRegister(props: BoxProps) {
 	const navigate = useNavigate();
-	const fetcher = useFetcher<ActionFormRegister>();
+	const fetcher = useFetcher<ActionRegister>();
 	const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
 	const isLoading = useMemo(() => {
@@ -65,13 +65,16 @@ export default function FormRegister(props: BoxProps) {
 			bdrs="2xl"
 			bd="1px solid gray.4"
 			{...props}
+			data-slot="FormRegister"
 		>
 			<Center>
-				<Image
-					src="/logo.svg"
-					w={80}
-					h="auto"
-				/>
+				<Link to="/">
+					<Image
+						src="/logo.svg"
+						w={80}
+						h="auto"
+					/>
+				</Link>
 			</Center>
 			<Stack
 				gap="xs"

@@ -32,29 +32,48 @@ const authMiddlewareSession = async ({
         role?: UserRole[],
     }
     request: Request
-}) => {
+}): Promise<{
+    user: User
+} | {
+    error: true
+    cause: 'user_not_found' | 'user_not_active' | 'user_not_authorized' | 'user_not_authorized_role'
+}> => {
     const authUser = await authGetSession(request);
     const user = authUser.get('user')
 
     if (!user) {
-        return false
+        return {
+            error: true,
+            cause: 'user_not_found'
+        }
     }
 
     if (!user.isActive) {
-        return false
+        return {
+            error: true,
+            cause: 'user_not_active'
+        }
     }
 
     if (guard) {
         if (guard.userId && guard.userId !== user.id) {
-            return false
+            return {
+                error: true,
+                cause: 'user_not_authorized'
+            }
         }
 
         if (guard.role && !guard.role.includes(user.role)) {
-            return false
+            return {
+                error: true,
+                cause: 'user_not_authorized_role'
+            }
         }
     }
 
-    return user;
+    return {
+        user
+    };
 };
 
 

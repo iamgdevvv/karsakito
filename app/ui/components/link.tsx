@@ -1,38 +1,23 @@
-import { Box, type BoxProps, Button, type ButtonProps } from '@mantine/core';
-import type { ComponentProps } from 'react';
-import { Link as LinkX, NavLink as NavLinkX } from 'react-router';
+import { Box, Button, type BoxProps, type ButtonProps } from '@mantine/core';
+import { Link as LinkX, type LinkProps } from 'react-router';
 
-export type LinkProps = ComponentProps<typeof LinkX> & BoxProps;
-
-export type NavLinkProps = ComponentProps<typeof NavLinkX> & BoxProps;
-
-export type ButtonLinkProps = ComponentProps<typeof LinkX> & ButtonProps;
-
-export function Link({ viewTransition, ...props }: LinkProps) {
+export function Link({ viewTransition, ...props }: BoxProps & LinkProps) {
 	return (
 		<Box
 			{...props}
+			data-slot="Link"
 			component={LinkX}
 			viewTransition={viewTransition ?? true}
 		/>
 	);
 }
 
-export function NavLink({ viewTransition, ...props }: NavLinkProps) {
-	return (
-		<Box
-			{...props}
-			component={NavLinkX}
-			viewTransition={viewTransition ?? true}
-		/>
-	);
-}
-
-export function ButtonLink(props: ButtonLinkProps) {
+export function ButtonLink(props: ButtonProps & LinkProps) {
 	return (
 		<Button
 			component={LinkX}
 			{...props}
+			data-slot="ButtonLink"
 		/>
 	);
 }

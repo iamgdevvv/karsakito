@@ -1,14 +1,15 @@
 import { redirect } from 'react-router';
-import { authGetSession } from '~app-server/session';
+import { authMiddlewareSession } from '~app-server/session';
 
 import type { Route } from './+types/_auth';
 
 const authMiddleware: Route.MiddlewareFunction = async ({ request }) => {
-	const authSession = await authGetSession(request);
-	const user = authSession.get('user');
+	const authSession = await authMiddlewareSession({
+		request,
+	});
 
-	if (user) {
-		if (user.role === 'ADMIN') {
+	if ('user' in authSession) {
+		if (authSession.user.role === 'ADMIN') {
 			throw redirect('/admin');
 		}
 

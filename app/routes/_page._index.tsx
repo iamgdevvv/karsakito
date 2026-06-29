@@ -1,6 +1,6 @@
 import { Text, Title } from '@mantine/core';
 import { LuArrowRight } from 'react-icons/lu';
-import { metaPublic } from '~app-modules/meta';
+import { metaPublicRoute } from '~app-modules/meta';
 import Banner from '~app-ui/layouts/banner';
 import { cloudflareContext } from '~workers/app';
 
@@ -13,7 +13,7 @@ export function loader({ context }: Route.LoaderArgs) {
 }
 
 export function meta({ loaderData }: Route.MetaArgs) {
-	return metaPublic({
+	return metaPublicRoute({
 		title: 'KarsaKito',
 		description:
 			'Platform AI untuk Mengakselerasi Pemanfaatan Bahasa dan Warisan Budaya Daerah',
@@ -28,14 +28,14 @@ export default function HomeRoute(_: Route.ComponentProps) {
 				background="/images/karsakito-beranda-banner.jpg"
 				ctas={[
 					{
-						label: 'Coba KarsaKito Gratis',
-						to: '#features',
-						rightSection: <LuArrowRight size={20} />,
+						label: 'Pelajari Selengkapnya',
+						to: '/tentang',
+						variant: 'light',
 					},
 					{
-						label: 'Pelajari Selengkapnya',
-						to: '/tentang-kami',
-						variant: 'light',
+						label: 'Lihat Layanan',
+						to: '/layanan',
+						rightSection: <LuArrowRight size={20} />,
 					},
 				]}
 			>

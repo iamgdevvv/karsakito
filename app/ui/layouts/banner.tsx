@@ -8,7 +8,8 @@ import {
 	type StackProps,
 } from '@mantine/core';
 import type { ReactNode } from 'react';
-import { ButtonLink, type LinkProps } from '~app-ui/components/link';
+import type { LinkProps } from 'react-router';
+import { ButtonLink } from '~app-ui/components/link';
 
 type Props = {
 	children: ReactNode;
@@ -31,7 +32,7 @@ export default function Banner({ background, ctas, children, ...props }: Props) 
 			}}
 			c="white"
 			role="banner"
-			data-slot="banner"
+			data-slot="Banner"
 			className="bg-cover bg-fixed bg-center bg-no-repeat"
 			style={{
 				backgroundImage: `url(${background})`,

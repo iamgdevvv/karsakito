@@ -38,7 +38,7 @@ html[lang][lang]:root {
 	--mantine-color-primary-light-hover: var(--mantine-color-primary-light);
 	--mantine-color-primary-light-color: var(--mantine-color-primary-filled);
 	--mantine-color-primary-outline: var(--mantine-color-primary-filled);
-
+	--mantine-color-anchor: var(--mantine-color-primary-filled);
 	--mantine-primary-color-filled: var(--mantine-color-primary-filled);
 	--mantine-primary-color-filled-hover: var(--mantine-color-primary-filled-hover);
 	--mantine-primary-color-light: var(--mantine-color-primary-light);

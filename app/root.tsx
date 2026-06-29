@@ -1,4 +1,15 @@
-import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core';
+import {
+	Box,
+	Button,
+	ColorSchemeScript,
+	Container,
+	Group,
+	mantineHtmlProps,
+	MantineProvider,
+	Stack,
+	Text,
+	Title,
+} from '@mantine/core';
 import { NavigationProgress, nprogress } from '@mantine/nprogress';
 import { useEffect } from 'react';
 import {
@@ -12,12 +23,17 @@ import {
 } from 'react-router';
 import theme from '~app-modules/theme';
 
-import type { Route } from './+types/root';
-
 import '@mantine/carousel/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/nprogress/styles.css';
+import '@mantine/spotlight/styles.css';
 import '@mantine/tiptap/styles.css';
+
+import { ButtonLink } from '~app-ui/components/link';
+import Footer from '~app-ui/layouts/footer';
+
+import type { Route } from './+types/root';
+
 import './styles/app.css';
 import './styles/mantine.css';
 
@@ -83,31 +99,81 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-	let message = 'Oops!';
-	let details = 'An unexpected error occurred.';
-	let stack: string | undefined;
+	// let message = 'Oops!';
+	// let details = 'An unexpected error occurred.';
+	// let stack: string | undefined;
+	let statusCode: number = 404;
 
 	if (isRouteErrorResponse(error)) {
-		message = error.status === 404 ? '404' : 'Error';
-		details =
-			error.status === 404
-				? 'The requested page could not be found.'
-				: error.statusText || details;
+		statusCode = error.status;
+		// message = error.status === 404 ? '404' : 'Error';
+		// details =
+		// 	error.status === 404
+		// 		? 'The requested page could not be found.'
+		// 		: error.statusText || details;
 	} else if (import.meta.env.DEV && error && error instanceof Error) {
-		details = error.message;
-		stack = error.stack;
+		// details = error.message;
+		// stack = error.stack;
 	}
 
 	return (
-		<main className="container mx-auto p-4 pt-16">
-			<h1>{message}</h1>
-			<p>{details}</p>
-			{stack && (
-				<pre className="w-full overflow-x-auto p-4">
-					<code>{stack}</code>
-				</pre>
-			)}
-		</main>
+		<div className="site">
+			<Box
+				component="main"
+				bg="primary.1"
+				py="xl"
+				className="site-main"
+			>
+				<Container size="xs">
+					<Stack
+						gap="xs"
+						align="center"
+						justify="center"
+						ta="center"
+						mih="60vh"
+					>
+						<Title
+							fz={{
+								lg: 40,
+							}}
+						>
+							{statusCode === 404
+								? 'Halaman Tidak Ditemukan'
+								: 'Something went wrong'}
+						</Title>
+						<Text>
+							{statusCode === 404
+								? 'Ups! Halaman yang Anda tuju tidak tersedia. Periksa kembali alamat URL atau kembali ke halaman sebelumnya untuk melanjutkan penjelajahan.'
+								: 'Terjadi kesalahan saat memproses permintaan Anda. Silakan coba beberapa saat lagi. Jika masalah masih berlanjut, hubungi tim dukungan untuk mendapatkan bantuan.'}
+						</Text>
+						<Group
+							justify="center"
+							gap="xs"
+						>
+							{statusCode === 404 ? (
+								<ButtonLink to="/">Halaman Utama</ButtonLink>
+							) : (
+								<>
+									<ButtonLink
+										to="/"
+										variant="light"
+									>
+										Halaman Utama
+									</ButtonLink>
+									<Button
+										component="a"
+										href="/hubungi-kami"
+									>
+										Laporkan Kesalahan
+									</Button>
+								</>
+							)}
+						</Group>
+					</Stack>
+				</Container>
+			</Box>
+			<Footer />
+		</div>
 	);
 }
 

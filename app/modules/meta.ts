@@ -1,6 +1,6 @@
 import type { MetaDescriptor } from 'react-router';
 
-export function metaPublic(
+export function metaPublicRoute(
 	{
 		title,
 		description,
@@ -35,7 +35,7 @@ export function metaPublic(
 	];
 }
 
-export function metaDashboard(
+export function metaAppsRoute(
 	{
 		title,
 		description,
@@ -47,7 +47,7 @@ export function metaDashboard(
 ): MetaDescriptor[] {
 	const meta: MetaDescriptor[] = [
 		{
-			title: `${title} | KarsaKito`,
+			title: `${title} | Apps KarsaKito`,
 		},
 	];
 
@@ -68,7 +68,40 @@ export function metaDashboard(
 	];
 }
 
-export function metaAdmin(
+export function metaDashboardRoute(
+	{
+		title,
+		description,
+	}: {
+		title: string;
+		description?: string;
+	},
+	extra?: MetaDescriptor[],
+): MetaDescriptor[] {
+	const meta: MetaDescriptor[] = [
+		{
+			title: `${title} | Dashboard KarsaKito`,
+		},
+	];
+
+	if (description) {
+		meta.push({
+			name: 'description',
+			content: description,
+		});
+	}
+
+	return [
+		...(extra || []),
+		...meta,
+		{
+			name: 'robots',
+			content: 'noindex, nofollow',
+		},
+	];
+}
+
+export function metaAdminRoute(
 	{
 		title,
 		description,

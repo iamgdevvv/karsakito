@@ -7,9 +7,6 @@
 	"name": "karsakito",
 	"compatibility_date": "2026-06-26",
 	"main": "./workers/app.ts",
-	"vars": {
-		"VALUE_FROM_CLOUDFLARE": "Hello from Cloudflare",
-	},
 	"observability": {
 		"enabled": true,
 		"logs": {
@@ -27,12 +24,14 @@
 			"binding": "DB",
 			"database_name": "karsakito-db",
 			"database_id": "799bd19e-8df1-4f42-a21f-cba80e8e35b0",
+			"remote": true,
 		},
 	],
 	"kv_namespaces": [
 		{
 			"binding": "SESSION",
 			"id": "fabde525ccf345c48e3262007ba152d3",
+			"remote": true,
 		},
 	],
 	/**
