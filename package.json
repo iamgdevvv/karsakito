@@ -17,8 +17,7 @@
 		"dev": "react-router dev",
 		"deploy": "npm run build && wrangler deploy",
 		"preview": "vite preview",
-		"cf-typegen": "wrangler types",
-		"postinstall": "wrangler types"
+		"cf-typegen": "wrangler types"
 	},
 	"dependencies": {
 		"@mantine/carousel": "^9.4.1",
