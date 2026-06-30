@@ -19,6 +19,15 @@
 	},
 	"upload_source_maps": true,
 	"compatibility_flags": ["nodejs_compat"],
+	"workers_dev": true,
+	"preview_urls": true,
+	"routes": [
+		{
+			"pattern": "karsakito.web.id",
+			"zone_name": "karsakito.web.id",
+			"custom_domain": true,
+		},
+	],
 	"d1_databases": [
 		{
 			"binding": "DB",

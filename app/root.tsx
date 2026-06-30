@@ -10,8 +10,9 @@ import {
 	Text,
 	Title,
 } from '@mantine/core';
+import { notifications, Notifications } from '@mantine/notifications';
 import { NavigationProgress, nprogress } from '@mantine/nprogress';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import {
 	isRouteErrorResponse,
 	Links,
@@ -57,9 +58,12 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
 	const navigation = useNavigation();
-	const isNavigating = Boolean(navigation.location);
+	const isNavigating = useMemo(() => Boolean(navigation.location), [navigation.location]);
 
 	useEffect(() => {
+		notifications.clean();
+		notifications.cleanQueue();
+
 		if (isNavigating) {
 			nprogress.start();
 		} else {
@@ -85,6 +89,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 			<body>
 				<MantineProvider theme={theme}>
 					<NavigationProgress />
+					<Notifications position="bottom-center" />
 					{children}
 				</MantineProvider>
 				<ScrollRestoration />

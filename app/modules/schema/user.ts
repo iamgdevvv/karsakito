@@ -35,16 +35,11 @@ export const PayloadUpdateProfileSchema = UserSchema.pick({
 	email: true,
 }).partial();
 
-export const PayloadUpdateProfilePasswordSchema = z
-	.object({
-		curentPassword: z.string().nonempty(),
-		password: z.string().nonempty(),
-		confirmPassword: z.string().nonempty(),
-	})
-	.refine((data) => data.password === data.confirmPassword, {
-		message: 'Passwords do not match',
-		path: ['confirmPassword'],
-	});
+export const PayloadUpdateProfilePasswordSchema = z.object({
+	curentPassword: z.string().nonempty(),
+	password: z.string().nonempty(),
+	confirmPassword: z.string().nonempty(),
+});
 
 export type PayloadCreateUser = z.infer<typeof PayloadCreateUserSchema>;
 export type PayloadUpdateUser = z.infer<typeof PayloadUpdateUserSchema>;

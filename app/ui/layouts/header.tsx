@@ -18,11 +18,11 @@ import { useHotkeys } from '@mantine/hooks';
 import { Spotlight, spotlight } from '@mantine/spotlight';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { LuLogOut } from 'react-icons/lu';
-import { NavLink, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { adminSpotlight, dashboardSpotlight } from '~app-modules/spotlight';
 import { cn } from '~app-modules/utils';
 import { Image } from '~app-ui/components/image';
-import { ButtonLink, Link } from '~app-ui/components/link';
+import { ButtonLink, Link, NavLink } from '~app-ui/components/link';
 import type { User } from '~generated/prisma/client';
 
 export function Header({
@@ -38,7 +38,10 @@ export function Header({
 			top={0}
 			w="100%"
 			bg="white"
-			py="lg"
+			py={{
+				base: 'xs',
+				md: 'sm',
+			}}
 			{...props}
 			component="header"
 			data-slot="Header"
@@ -197,7 +200,10 @@ export function HeaderApps({
 			top={0}
 			w="100%"
 			bg="white"
-			py="lg"
+			py={{
+				base: 'xs',
+				md: 'sm',
+			}}
 			{...props}
 			component="header"
 			data-slot="HeaderApps"
@@ -310,7 +316,10 @@ export function HeaderDashboard({
 			top={0}
 			w="100%"
 			bg="white"
-			py="lg"
+			py={{
+				base: 'xs',
+				md: 'sm',
+			}}
 			{...props}
 			component="header"
 			data-slot="HeaderDashboard"
@@ -439,7 +448,10 @@ export function HeaderAdmin({
 			top={0}
 			w="100%"
 			bg="white"
-			py="lg"
+			py={{
+				base: 'xs',
+				md: 'sm',
+			}}
 			{...props}
 			component="header"
 			data-slot="HeaderAdmin"

@@ -12,8 +12,8 @@ import {
 	type BoxProps,
 } from '@mantine/core';
 import { schemaResolver, useForm } from '@mantine/form';
-import { useShallowEffect } from '@mantine/hooks';
-import { useMemo, useState } from 'react';
+import { notifications } from '@mantine/notifications';
+import { useEffect, useMemo, useState } from 'react';
 import { FaGoogle } from 'react-icons/fa';
 import { useFetcher, useNavigate } from 'react-router';
 import { PayloadRegisterSchema, type PayloadRegister } from '~app-modules/schema/auth';
@@ -24,7 +24,7 @@ import { ButtonLink, Link } from '~app-ui/components/link';
 export default function FormRegister(props: BoxProps) {
 	const navigate = useNavigate();
 	const fetcher = useFetcher<ActionRegister>();
-	const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 	const isLoading = useMemo(() => {
 		return fetcher.state !== 'idle';
@@ -35,25 +35,33 @@ export default function FormRegister(props: BoxProps) {
 		validate: schemaResolver(PayloadRegisterSchema, { sync: true }),
 		onSubmitPreventDefault: 'validation-failed',
 		onValuesChange: () => {
-			setErrorMessage(undefined);
+			if (errorMessage) {
+				fetcher.reset();
+				setErrorMessage(null);
+			}
 		},
 	});
 
-	useShallowEffect(() => {
+	useEffect(() => {
+		notifications.clean();
+
 		if (!isLoading) {
 			if (fetcher.data?.error) {
 				form.reset();
 
 				setErrorMessage(fetcher.data.error);
-			}
+			} else if (fetcher.data?.data) {
+				notifications.show({
+					title: 'Success',
+					message: 'You have successfully registered.',
+				});
 
-			if (fetcher.data?.data) {
 				navigate('/login', {
 					replace: true,
 				});
 			}
 		}
-	}, [fetcher, isLoading]);
+	}, [fetcher.data, isLoading]);
 
 	return (
 		<Box

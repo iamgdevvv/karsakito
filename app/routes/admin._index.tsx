@@ -1,10 +1,13 @@
-import { Outlet, redirect } from 'react-router';
+import { Title } from '@mantine/core';
+import { redirect } from 'react-router';
+import { metaPublicRoute } from '~app-modules/meta';
 import { authUserCtx } from '~app-server/context';
 import { authMiddlewareSession } from '~app-server/session';
 import Footer from '~app-ui/layouts/footer';
 import { HeaderAdmin } from '~app-ui/layouts/header';
+import { AdminPanel } from '~app-ui/layouts/panel';
 
-import type { Route } from './+types/_admin';
+import type { Route } from './+types/admin._index';
 
 const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) => {
 	const authSession = await authMiddlewareSession({
@@ -35,13 +38,20 @@ export async function loader({ context }: Route.LoaderArgs) {
 	};
 }
 
+export function meta(_: Route.MetaArgs) {
+	return metaPublicRoute({
+		title: 'Admin KarsaKito',
+		noIndex: true,
+	});
+}
+
 export default function Admin({ loaderData }: Route.ComponentProps) {
 	return (
 		<div className="site">
 			<HeaderAdmin authUser={loaderData.user} />
-			<main className="site-main">
-				<Outlet />
-			</main>
+			<AdminPanel className="site-main">
+				<Title>Admin Panel</Title>
+			</AdminPanel>
 			<Footer />
 		</div>
 	);

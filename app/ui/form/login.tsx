@@ -12,8 +12,7 @@ import {
 	type BoxProps,
 } from '@mantine/core';
 import { schemaResolver, useForm } from '@mantine/form';
-import { useShallowEffect } from '@mantine/hooks';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FaGoogle } from 'react-icons/fa';
 import { useFetcher } from 'react-router';
 import { PayloadLoginSchema, type PayloadLogin } from '~app-modules/schema/auth';
@@ -23,7 +22,7 @@ import { ButtonLink, Link } from '~app-ui/components/link';
 
 export default function FormLogin(props: BoxProps) {
 	const fetcher = useFetcher<ActionLogin>();
-	const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 	const isLoading = useMemo(() => {
 		return fetcher.state !== 'idle';
@@ -34,17 +33,20 @@ export default function FormLogin(props: BoxProps) {
 		validate: schemaResolver(PayloadLoginSchema, { sync: true }),
 		onSubmitPreventDefault: 'validation-failed',
 		onValuesChange: () => {
-			setErrorMessage(undefined);
+			if (errorMessage) {
+				fetcher.reset();
+				setErrorMessage(null);
+			}
 		},
 	});
 
-	useShallowEffect(() => {
-		if (fetcher.data && 'error' in fetcher.data && !isLoading) {
+	useEffect(() => {
+		if (!isLoading && fetcher.data && 'error' in fetcher.data) {
 			form.reset();
 
 			setErrorMessage(fetcher.data.error);
 		}
-	}, [fetcher, isLoading]);
+	}, [fetcher.data, isLoading]);
 
 	return (
 		<Box

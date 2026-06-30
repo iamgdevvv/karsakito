@@ -7,6 +7,7 @@ import {
 	createTheme,
 	Input,
 	PasswordInput,
+	Select,
 	Textarea,
 	TextInput,
 } from '@mantine/core';
@@ -114,6 +115,18 @@ const theme = createTheme({
 				labelProps: {
 					fz: 'sm',
 					fw: 400,
+				},
+			},
+		}),
+		Select: Select.extend({
+			defaultProps: {
+				size: 'md',
+				labelProps: {
+					fz: 'sm',
+					fw: 400,
+				},
+				comboboxProps: {
+					size: 'sm',
 				},
 			},
 		}),

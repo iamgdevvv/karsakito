@@ -1,10 +1,12 @@
-import { Outlet, redirect } from 'react-router';
+import { Title } from '@mantine/core';
+import { redirect } from 'react-router';
+import { metaPublicRoute } from '~app-modules/meta';
 import { authUserCtx } from '~app-server/context';
 import { authMiddlewareSession } from '~app-server/session';
 import Footer from '~app-ui/layouts/footer';
 import { HeaderApps } from '~app-ui/layouts/header';
 
-import type { Route } from './+types/_apps';
+import type { Route } from './+types/apps._index';
 
 const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) => {
 	const authSession = await authMiddlewareSession({
@@ -28,12 +30,19 @@ export async function loader({ context }: Route.LoaderArgs) {
 	};
 }
 
-export default function Apps({ loaderData }: Route.ComponentProps) {
+export function meta(_: Route.MetaArgs) {
+	return metaPublicRoute({
+		title: 'Apps KarsaKito',
+		noIndex: true,
+	});
+}
+
+export default function AppsRoute({ loaderData }: Route.ComponentProps) {
 	return (
 		<div className="site">
 			<HeaderApps authUser={loaderData.user} />
 			<main className="site-main">
-				<Outlet />
+				<Title>Overview Apps</Title>
 			</main>
 			<Footer />
 		</div>

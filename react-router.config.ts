@@ -5,7 +5,4 @@ export default {
 	future: {
 		unstable_optimizeDeps: true,
 	},
-	async prerender() {
-		return ['/'];
-	},
 } satisfies Config;

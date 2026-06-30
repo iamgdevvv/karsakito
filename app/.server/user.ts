@@ -1,7 +1,7 @@
-import { type RouterContextProvider } from "react-router";
+import { redirect, type RouterContextProvider } from "react-router";
 import { PayloadCreateUserSchema, PayloadDeleteUserSchema, PayloadUpdateProfilePasswordSchema, PayloadUpdateProfileSchema, PayloadUpdateUserPasswordSchema, PayloadUpdateUserSchema } from "~app-modules/schema/user";
 import { prismaClient } from "~app-server/context";
-import { authMiddlewareSession } from "~app-server/session";
+import { authGetSession, authLoginSession, authMiddlewareSession } from "~app-server/session";
 import { hashCreds, messageActionError, valueOrSkip, verifyCreds } from "~app-server/utils";
 
 export const actionCreateUser = async ({
@@ -229,14 +229,18 @@ export const actionUpdateProfile = async ({
 				name: valueOrSkip(body.name),
 				email: valueOrSkip(body.email),
 			},
-			select: {
-				id: true
-			}
 		})
 
-		return {
-			data: resultUser
-		}
+		const authNewSession = await authGetSession(request);
+
+		authNewSession.set('user', resultUser);
+
+		return redirect('/dashboard/profile', {
+			headers: {
+				'Set-Cookie': await authLoginSession(authNewSession),
+			},
+		});
+
 	} catch (error) {
 		return {
 			error: messageActionError(error)
@@ -244,7 +248,7 @@ export const actionUpdateProfile = async ({
 	}
 };
 
-export const actionUserProfilePassword = async ({
+export const actionChangePassword = async ({
 	request,
 	context
 }: {
@@ -327,4 +331,4 @@ export type ActionUpdateUser = Awaited<ReturnType<typeof actionUpdateUser>>;
 export type ActionUpdateUserPassword = Awaited<ReturnType<typeof actionUpdateUserPassword>>;
 export type ActionDeleteUser = Awaited<ReturnType<typeof actionDeleteUser>>;
 export type ActionUpdateProfile = Awaited<ReturnType<typeof actionUpdateProfile>>;
-export type ActionUserProfilePassword = Awaited<ReturnType<typeof actionUserProfilePassword>>;
+export type ActionChangePassword = Awaited<ReturnType<typeof actionChangePassword>>;
