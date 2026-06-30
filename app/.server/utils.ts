@@ -22,10 +22,18 @@ export const valueNullOrSkip = <T>(value?: T | null | undefined): T | null | typ
 	return value ?? Prisma.skip;
 };
 
+export const valueBooleanOrFalse = (value?: boolean | null | undefined): boolean => {
+	return value ?? false;
+}
+
 export const messageActionError = (error: unknown) => {
 	if (error instanceof Prisma.PrismaClientKnownRequestError) {
 		if (error.code === 'P2002') {
-			return 'Email already in use'
+			return 'Record already exists'
+		}
+
+		if (error.code === 'P2025') {
+			return 'Record not found'
 		}
 	}
 

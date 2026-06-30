@@ -1,15 +1,15 @@
 import * as z from 'zod';
-import { UserSchema } from '~generated/prisma-zod/schemas/models';
+import { UserSchemaPlain } from '~app-modules/schema/user';
 
 export const PayloadLoginSchema = z.object({
-	email: UserSchema.shape.email,
+	email: UserSchemaPlain.shape.email,
 	password: z.string().nonempty(),
 	_redirect: z.string().optional(),
 });
 
 export const PayloadRegisterSchema = z.object({
-	name: UserSchema.shape.name,
-	email: UserSchema.shape.email,
+	name: UserSchemaPlain.shape.name,
+	email: UserSchemaPlain.shape.email,
 	password: z.string().nonempty(),
 });
 

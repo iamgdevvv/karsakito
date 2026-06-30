@@ -130,6 +130,7 @@ export function Header({
 										variant="outline"
 										to="/apps"
 										size="sm"
+										fz="sm"
 										radius="full"
 										h="auto"
 										py="xs"
@@ -140,6 +141,7 @@ export function Header({
 										to="/dashboard"
 										variant="light"
 										size="sm"
+										fz="sm"
 										radius="full"
 										h="auto"
 										pl={8}
@@ -161,6 +163,7 @@ export function Header({
 										variant="outline"
 										to="/register"
 										size="sm"
+										fz="sm"
 										radius="full"
 										h="auto"
 										py="xs"
@@ -168,9 +171,10 @@ export function Header({
 										Daftar
 									</ButtonLink>
 									<ButtonLink
-										to="/login"
+										to="/apps"
 										variant="light"
 										size="sm"
+										fz="sm"
 										radius="full"
 										h="auto"
 										py="xs"
@@ -232,12 +236,12 @@ export function HeaderApps({
 					<Menu
 						position="bottom-end"
 						width={200}
-						withinPortal={false}
 					>
 						<MenuTarget>
 							<Button
 								variant="light"
 								size="sm"
+								fz="sm"
 								radius="full"
 								h="auto"
 								pl={8}
@@ -367,12 +371,12 @@ export function HeaderDashboard({
 						<Menu
 							position="bottom-end"
 							width={200}
-							withinPortal={false}
 						>
 							<MenuTarget>
 								<Button
 									variant="light"
 									size="sm"
+									fz="sm"
 									radius="full"
 									h="auto"
 									pl={8}
@@ -499,12 +503,12 @@ export function HeaderAdmin({
 						<Menu
 							position="bottom-end"
 							width={200}
-							withinPortal={false}
 						>
 							<MenuTarget>
 								<Button
 									variant="light"
 									size="sm"
+									fz="sm"
 									radius="full"
 									h="auto"
 									pl={8}

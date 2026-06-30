@@ -1,8 +1,10 @@
-import { Title } from '@mantine/core';
+import { SimpleGrid, Text, ThemeIcon } from '@mantine/core';
+import { FaUsersCog } from 'react-icons/fa';
 import { redirect } from 'react-router';
 import { metaPublicRoute } from '~app-modules/meta';
 import { authUserCtx } from '~app-server/context';
 import { authMiddlewareSession } from '~app-server/session';
+import { Link } from '~app-ui/components/link';
 import Footer from '~app-ui/layouts/footer';
 import { HeaderAdmin } from '~app-ui/layouts/header';
 import { AdminPanel } from '~app-ui/layouts/panel';
@@ -19,7 +21,7 @@ const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) =>
 
 	if ('error' in authSession) {
 		if (authSession.cause === 'user_not_authorized_role') {
-			throw redirect('/apps');
+			throw redirect('/');
 		}
 
 		throw redirect('/login?redirect=/admin');
@@ -45,12 +47,61 @@ export function meta(_: Route.MetaArgs) {
 	});
 }
 
-export default function Admin({ loaderData }: Route.ComponentProps) {
+export default function AdminRoute({ loaderData }: Route.ComponentProps) {
 	return (
 		<div className="site">
 			<HeaderAdmin authUser={loaderData.user} />
 			<AdminPanel className="site-main">
-				<Title>Admin Panel</Title>
+				<SimpleGrid
+					cols={{
+						base: 2,
+						md: 3,
+					}}
+				>
+					<Link
+						to="/dashboard/usage"
+						pos="relative"
+						bd="1px solid gray.2"
+						bdrs="lg"
+						bg="primary.0"
+						mih={120}
+						px={{
+							base: 'sm',
+							sm: 'md',
+							lg: 'lg',
+						}}
+						py={{
+							base: 'sm',
+							md: 'md',
+						}}
+						className="group"
+					>
+						<Text
+							pos="relative"
+							span
+							fw={500}
+							fz={{
+								base: 'sm',
+								md: 'md',
+							}}
+							className="z-2"
+						>
+							Manage Users
+						</Text>
+						<ThemeIcon
+							variant="transparent"
+							pos="absolute"
+							bottom={0}
+							right={16}
+							p={0}
+							radius={0}
+							size="auto"
+							className="z-1 translate-2 opacity-40 transition group-hover:translate-0 group-hover:opacity-100"
+						>
+							<FaUsersCog size={100} />
+						</ThemeIcon>
+					</Link>
+				</SimpleGrid>
 			</AdminPanel>
 			<Footer />
 		</div>

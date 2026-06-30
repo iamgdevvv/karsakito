@@ -9,6 +9,18 @@ export default async function handleRequest(
 	responseHeaders: Headers,
 	routerContext: EntryContext,
 ) {
+	const url = new URL(request.url);
+
+	if (url.pathname.length > 1 && url.pathname.endsWith('/')) {
+		url.pathname = url.pathname.slice(0, -1);
+
+		return Response.redirect(url.toString(), 301);
+	}
+
+	if (url.toString().includes('/.well-known/appspecific/com.chrome.devtools.json')) {
+		return new Response(null, { status: 204 });
+	}
+
 	let shellRendered = false;
 	const userAgent = request.headers.get('user-agent');
 

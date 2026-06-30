@@ -45,7 +45,7 @@ export function meta(_: Route.MetaArgs) {
 	});
 }
 
-export default function UsageDashboardRoute({ loaderData }: Route.ComponentProps) {
+export default function ProfileDashboardRoute({ loaderData }: Route.ComponentProps) {
 	return (
 		<div className="site">
 			<HeaderDashboard authUser={loaderData.user} />

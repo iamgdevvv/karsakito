@@ -1,7 +1,24 @@
 import * as z from 'zod';
+import { UserScalarFieldEnumSchema } from '~generated/prisma-zod/schemas/enums/UserScalarFieldEnum.schema';
 import { UserSchema } from '~generated/prisma-zod/schemas/models';
 
-export const PayloadCreateUserSchema = UserSchema.pick({
+export const UserSchemaPlain = UserSchema.omit({
+	isActive: true,
+}).extend({
+	isActive: z.stringbool().nullish(),
+});
+
+export const PayloadQueryUsersSchema = UserSchemaPlain.partial().extend({
+	nextCursor: UserSchemaPlain.shape.id.optional(),
+	previousCursor: UserSchemaPlain.shape.id.optional(),
+	total: z.number().optional(),
+	search: z.string().optional(),
+	asc: z.union([UserScalarFieldEnumSchema, UserScalarFieldEnumSchema.array()]).optional(),
+	desc: z.union([UserScalarFieldEnumSchema, UserScalarFieldEnumSchema.array()]).optional(),
+	select: z.union([UserScalarFieldEnumSchema, UserScalarFieldEnumSchema.array()]).optional(),
+});
+
+export const PayloadCreateUserSchema = UserSchemaPlain.pick({
 	name: true,
 	email: true,
 	role: true,
@@ -10,7 +27,7 @@ export const PayloadCreateUserSchema = UserSchema.pick({
 	password: z.string().nonempty(),
 });
 
-export const PayloadUpdateUserSchema = UserSchema.pick({
+export const PayloadUpdateUserSchema = UserSchemaPlain.pick({
 	name: true,
 	email: true,
 	role: true,
@@ -18,19 +35,19 @@ export const PayloadUpdateUserSchema = UserSchema.pick({
 })
 	.partial()
 	.extend({
-		userId: UserSchema.shape.id,
+		userId: UserSchemaPlain.shape.id,
 	});
 
 export const PayloadUpdateUserPasswordSchema = z.object({
-	userId: UserSchema.shape.id,
+	userId: UserSchemaPlain.shape.id,
 	password: z.string().nonempty(),
 });
 
 export const PayloadDeleteUserSchema = z.object({
-	userId: UserSchema.shape.id,
+	userId: UserSchemaPlain.shape.id,
 });
 
-export const PayloadUpdateProfileSchema = UserSchema.pick({
+export const PayloadUpdateProfileSchema = UserSchemaPlain.pick({
 	name: true,
 	email: true,
 }).partial();
@@ -41,6 +58,7 @@ export const PayloadUpdateProfilePasswordSchema = z.object({
 	confirmPassword: z.string().nonempty(),
 });
 
+export type PayloadQueryUsers = z.infer<typeof PayloadQueryUsersSchema>;
 export type PayloadCreateUser = z.infer<typeof PayloadCreateUserSchema>;
 export type PayloadUpdateUser = z.infer<typeof PayloadUpdateUserSchema>;
 export type PayloadUpdateUserPassword = z.infer<typeof PayloadUpdateUserPasswordSchema>;

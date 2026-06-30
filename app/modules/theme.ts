@@ -2,11 +2,15 @@
 
 import { Carousel } from '@mantine/carousel';
 import {
+	Alert,
 	Button,
 	Container,
 	createTheme,
 	Input,
+	Menu,
+	MultiSelect,
 	PasswordInput,
+	Popover,
 	Select,
 	Textarea,
 	TextInput,
@@ -127,6 +131,22 @@ const theme = createTheme({
 				},
 				comboboxProps: {
 					size: 'sm',
+					withinPortal: false,
+					keepMounted: true,
+				},
+			},
+		}),
+		MultiSelect: MultiSelect.extend({
+			defaultProps: {
+				size: 'md',
+				labelProps: {
+					fz: 'sm',
+					fw: 400,
+				},
+				comboboxProps: {
+					size: 'sm',
+					withinPortal: false,
+					keepMounted: true,
 				},
 			},
 		}),
@@ -141,6 +161,24 @@ const theme = createTheme({
 				},
 				classNames: {
 					label: 'leading-tight',
+				},
+			},
+		}),
+		Popover: Popover.extend({
+			defaultProps: {
+				withinPortal: false,
+			},
+		}),
+		Menu: Menu.extend({
+			defaultProps: {
+				withinPortal: false,
+			},
+		}),
+		Alert: Alert.extend({
+			defaultProps: {
+				p: 'sm',
+				classNames: {
+					body: 'gap-0',
 				},
 			},
 		}),

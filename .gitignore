@@ -14,4 +14,5 @@
 
 !.dev.vars.example
 !.env.example
+package-lock.json
 generated/prisma-zod/.prisma-zod-generator-manifest.json

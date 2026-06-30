@@ -80,7 +80,7 @@ npm run db:migrate:create -- nama_migrasi
 ### Initial Migration
 
 ```sh
-npx prisma migrate diff --from-empty --to-schema-datamodel ./prisma/schema.prisma --script > migrations/0001_nama_migrasi.sql
+npx prisma migrate diff --from-empty --to-schema ./prisma/schema.prisma --script > migrations/0001_nama_migrasi.sql
 ```
 
 ### Subsequent Migration

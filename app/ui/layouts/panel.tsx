@@ -183,7 +183,7 @@ function Panel({
 								<Select
 									hiddenFrom="md"
 									label="Navigation"
-									value={pathname}
+									defaultValue={pathname}
 									loading={isNavigating}
 									radius="xl"
 									labelProps={{
@@ -248,7 +248,7 @@ export function DashboardPanel({
 						value: '/dashboard/usage',
 					},
 					{
-						label: 'Top Up Token',
+						label: 'Topup Token',
 						value: '/dashboard/topup',
 					},
 				],

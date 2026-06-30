@@ -1,8 +1,10 @@
 import { redirect, type RouterContextProvider } from "react-router";
-import { PayloadCreateUserSchema, PayloadDeleteUserSchema, PayloadUpdateProfilePasswordSchema, PayloadUpdateProfileSchema, PayloadUpdateUserPasswordSchema, PayloadUpdateUserSchema } from "~app-modules/schema/user";
+import { PayloadCreateUserSchema, PayloadDeleteUserSchema, PayloadQueryUsersSchema, PayloadUpdateProfilePasswordSchema, PayloadUpdateProfileSchema, PayloadUpdateUserPasswordSchema, PayloadUpdateUserSchema, type PayloadQueryUsers } from "~app-modules/schema/user";
+import { dayjs, qsParse } from "~app-modules/utils";
 import { prismaClient } from "~app-server/context";
 import { authGetSession, authLoginSession, authMiddlewareSession } from "~app-server/session";
-import { hashCreds, messageActionError, valueOrSkip, verifyCreds } from "~app-server/utils";
+import { hashCreds, messageActionError, valueBooleanOrFalse, valueOrSkip, verifyCreds } from "~app-server/utils";
+import { Prisma, type User } from "~generated/prisma/client";
 
 export const actionCreateUser = async ({
 	request,
@@ -21,7 +23,7 @@ export const actionCreateUser = async ({
 
 		if ('error' in authSession) {
 			return {
-				error: 'Unauthorized'
+				error: 'Forbidden'
 			}
 		}
 
@@ -35,14 +37,12 @@ export const actionCreateUser = async ({
 		const resultUser = await prismaClient(context).user.create({
 			data: {
 				...payload,
+				isActive: valueBooleanOrFalse(body.isActive),
 				auth: {
 					create: {
 						hash
 					}
 				}
-			},
-			select: {
-				id: true
 			}
 		})
 
@@ -73,7 +73,7 @@ export const actionUpdateUser = async ({
 
 		if ('error' in authSession) {
 			return {
-				error: 'Unauthorized'
+				error: 'Forbidden'
 			}
 		}
 
@@ -88,7 +88,7 @@ export const actionUpdateUser = async ({
 				name: valueOrSkip(body.name),
 				email: valueOrSkip(body.email),
 				role: valueOrSkip(body.role),
-				isActive: valueOrSkip(body.isActive),
+				isActive: valueBooleanOrFalse(body.isActive),
 			},
 			select: {
 				id: true
@@ -99,6 +99,7 @@ export const actionUpdateUser = async ({
 			data: resultUser
 		}
 	} catch (error) {
+
 		return {
 			error: messageActionError(error)
 		}
@@ -122,7 +123,7 @@ export const actionUpdateUserPassword = async ({
 
 		if ('error' in authSession) {
 			return {
-				error: 'Unauthorized'
+				error: 'Forbidden'
 			}
 		}
 
@@ -172,7 +173,7 @@ export const actionDeleteUser = async ({
 
 		if ('error' in authSession) {
 			return {
-				error: 'Unauthorized'
+				error: 'Forbidden'
 			}
 		}
 
@@ -212,7 +213,7 @@ export const actionUpdateProfile = async ({
 
 		if ('error' in authSession) {
 			return {
-				error: 'Unauthorized'
+				error: 'Forbidden'
 			}
 		}
 
@@ -262,7 +263,7 @@ export const actionChangePassword = async ({
 
 		if ('error' in authSession) {
 			return {
-				error: 'Unauthorized'
+				error: 'Forbidden'
 			}
 		}
 
@@ -279,7 +280,7 @@ export const actionChangePassword = async ({
 			}
 		}
 
-		const authRecord = await prismaClient(context).auth.findUnique({
+		const authRecord = await prismaClient(context).auth.findUniqueOrThrow({
 			where: {
 				userId
 			},
@@ -287,12 +288,6 @@ export const actionChangePassword = async ({
 				hash: true
 			}
 		})
-
-		if (!authRecord) {
-			return {
-				error: 'User oauth without password'
-			}
-		}
 
 		const credValid = await verifyCreds(curentPassword, authRecord.hash);
 
@@ -318,6 +313,206 @@ export const actionChangePassword = async ({
 
 		return {
 			data: resultAuth
+		}
+	} catch (error) {
+		return {
+			error: messageActionError(error)
+		}
+	}
+};
+
+export const actionGetUsers = async <T = User>({
+	request,
+	context
+}: {
+	request: Request
+	context: Readonly<RouterContextProvider>
+}): Promise<{
+	data: T[];
+	params: PayloadQueryUsers | null;
+	nextCursor: User['id'] | null;
+	previousCursor: User['id'] | null;
+}> => {
+	try {
+		const authSession = await authMiddlewareSession({
+			guard: {
+				role: ['ADMIN'],
+			},
+			request,
+		});
+
+		if ('error' in authSession) {
+			return {
+				data: [],
+				params: null,
+				nextCursor: null,
+				previousCursor: null,
+			}
+		}
+
+		const searchPayload = qsParse(new URL(request.url).search);
+
+		const queryParams = PayloadQueryUsersSchema.parse(searchPayload);
+
+		const { nextCursor, previousCursor, total, search, asc, desc, select, ...params } = queryParams
+
+		const argsOrderBy: Prisma.UserOrderByWithRelationInput[] = [];
+		const argsSelect: Prisma.UserSelect = {};
+		const whereSearch: Prisma.UserWhereInput['OR'] = []
+
+		if (typeof desc === 'string') {
+			argsOrderBy.push({
+				[desc]: 'desc',
+			});
+		} else if (desc?.length) {
+			desc.forEach((field) => {
+				argsOrderBy.push({
+					[field]: 'desc',
+				});
+			});
+		}
+
+		if (typeof asc === 'string') {
+			argsOrderBy.push({
+				[asc]: 'asc',
+			});
+		} else if (asc?.length) {
+			asc.forEach((field) => {
+				argsOrderBy.push({
+					[field]: 'asc',
+				});
+			});
+		}
+
+		if (typeof select === 'string') {
+			argsSelect[select] = true;
+		} else if (select) {
+			select.forEach((field) => {
+				argsSelect[field] = true;
+			});
+		}
+
+		if (search) {
+			const searchFields = ['name', 'email'] satisfies Prisma.UserScalarFieldEnum[];
+
+			whereSearch.push(...searchFields.map((field) => ({
+				[field]: {
+					contains: search,
+				}
+			})));
+		}
+
+		const pageSize = Number(total || 10);
+		const takeAmount = pageSize + 1;
+		let cursorId = nextCursor;
+		let isBackward = false;
+
+		if (previousCursor) {
+			isBackward = true;
+			cursorId = previousCursor;
+		}
+
+		const args = {
+			take: isBackward ? -takeAmount : takeAmount,
+			skip: cursorId ? 1 : Prisma.skip,
+			cursor: cursorId ? { id: cursorId } : Prisma.skip,
+			orderBy: argsOrderBy.length ? argsOrderBy : Prisma.skip,
+			...(Object.keys(argsSelect).length ? { select: { ...argsSelect, id: true } } : {}),
+			where: {
+				OR: whereSearch.length ? whereSearch : Prisma.skip,
+				id: valueOrSkip(params.id),
+				name: valueOrSkip(params.name),
+				email: valueOrSkip(params.email),
+				role: valueOrSkip(params.role),
+				isActive: valueOrSkip(params.isActive),
+				createdAt: params.createdAt
+					? {
+						lte: dayjs(params.createdAt).endOf('day').toDate(),
+						gte: dayjs(params.createdAt).startOf('day').toDate(),
+					}
+					: Prisma.skip,
+				updatedAt: params.updatedAt
+					? {
+						lte: dayjs(params.updatedAt).endOf('day').toDate(),
+						gte: dayjs(params.updatedAt).startOf('day').toDate(),
+					}
+					: Prisma.skip,
+			}
+		} as const satisfies Prisma.UserFindManyArgs
+
+		const rawResultUsers = await prismaClient(context).user.findMany(args)
+
+		let hasExtraRecord = rawResultUsers.length > pageSize;
+		let resultUsers = [...rawResultUsers];
+
+		let finalNextCursor: User['id'] | null = null;
+		let finalPrevCursor: User['id'] | null = null;
+
+		if (isBackward) {
+			if (hasExtraRecord) {
+				resultUsers.shift();
+				finalPrevCursor = resultUsers[0]?.id || null;
+			}
+
+			if (resultUsers.length > 0) {
+				finalNextCursor = resultUsers[resultUsers.length - 1].id;
+			}
+		} else {
+			if (hasExtraRecord) {
+				resultUsers.pop();
+				finalNextCursor = resultUsers[resultUsers.length - 1]?.id || null;
+			}
+
+			if (cursorId && resultUsers.length > 0) {
+				finalPrevCursor = resultUsers[0].id;
+			}
+		}
+
+		return {
+			data: resultUsers as T[],
+			params: queryParams,
+			nextCursor: finalNextCursor,
+			previousCursor: finalPrevCursor
+		}
+	} catch {
+		return {
+			data: [],
+			params: null,
+			nextCursor: null,
+			previousCursor: null,
+		}
+	}
+};
+
+export const actionGetUser = async ({
+	userId,
+	request,
+	context
+}: {
+	userId: User['id']
+	request: Request
+	context: Readonly<RouterContextProvider>
+}) => {
+	try {
+		const authSession = await authMiddlewareSession({
+			guard: {
+				role: ['ADMIN'],
+			},
+			request,
+		});
+
+		if ('error' in authSession) {
+			return {
+				error: 'Forbidden'
+			}
+		}
+
+		return {
+			data: await prismaClient(context).user.findUniqueOrThrow({
+				where: {
+					id: userId
+				}
+			})
 		}
 	} catch (error) {
 		return {

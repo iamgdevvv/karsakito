@@ -17,7 +17,7 @@ export const actionLogin = async ({
 
 		const { password, _redirect, ...payload } = body;
 
-		const recordUser = await prismaClient(context).user.findUnique({
+		const recordUser = await prismaClient(context).user.findUniqueOrThrow({
 			where: {
 				email: payload.email
 			},
@@ -29,12 +29,6 @@ export const actionLogin = async ({
 				}
 			}
 		});
-
-		if (!recordUser) {
-			return {
-				error: 'User not found'
-			}
-		}
 
 		const { auth, ...user } = recordUser
 
