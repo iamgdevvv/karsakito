@@ -8,7 +8,7 @@
 		"db:migrate:local": "wrangler d1 migrations apply DB --local",
 		"db:migrate:remote": "wrangler d1 migrations apply DB --remote",
 		"mantine:generate": "npx tailwind-preset-mantine ./app/modules/theme.ts -o ./app/styles/mantine.css",
-		"typecheck": "wrangler types && react-router typegen && tsc -b",
+		"typecheck": "react-router typegen && tsc -b",
 		"format": "oxfmt",
 		"format:check": "oxfmt --check",
 		"lint": "oxlint -c ./.oxlintrc.json --tsconfig ./tsconfig.json --ignore-path ./.eslintignore app",
