@@ -117,6 +117,7 @@ export default function FormLogin(props: BoxProps) {
 					<Button
 						type="submit"
 						fullWidth
+						fz="md"
 						loading={isLoading}
 						mt="md"
 					>

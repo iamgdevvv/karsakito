@@ -8,7 +8,7 @@ export default function Footer(props: BoxProps) {
 			w="100%"
 			bg="black"
 			c="white"
-			py="lg"
+			py="xl"
 			{...props}
 			component="footer"
 			data-slot="Footer"

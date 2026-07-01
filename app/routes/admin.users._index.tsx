@@ -50,7 +50,9 @@ const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) =>
 			throw redirect('/');
 		}
 
-		throw redirect('/login?redirect=/admin/users');
+		const sourceUrl = new URL(request.url);
+
+		throw redirect(`/login?redirect=${sourceUrl.pathname}${sourceUrl.search}`);
 	}
 
 	context.set(authUserCtx, authSession.user);

@@ -14,7 +14,9 @@ const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) =>
 	});
 
 	if ('error' in authSession) {
-		throw redirect('/login?redirect=/apps');
+		const sourceUrl = new URL(request.url);
+
+		throw redirect(`/login?redirect=${sourceUrl.pathname}${sourceUrl.search}`);
 	}
 
 	context.set(authUserCtx, authSession.user);

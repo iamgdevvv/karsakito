@@ -11,7 +11,7 @@ import { AdminPanel } from '~app-ui/layouts/panel';
 
 import type { Route } from './+types/admin.users.$id._index';
 
-const authMiddleware: Route.MiddlewareFunction = async ({ request, context, params }) => {
+const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) => {
 	const authSession = await authMiddlewareSession({
 		guard: {
 			role: ['ADMIN'],
@@ -24,7 +24,9 @@ const authMiddleware: Route.MiddlewareFunction = async ({ request, context, para
 			throw redirect('/');
 		}
 
-		throw redirect(`/login?redirect=/admin/users/${params.id}/change-password`);
+		const sourceUrl = new URL(request.url);
+
+		throw redirect(`/login?redirect=${sourceUrl.pathname}${sourceUrl.search}`);
 	}
 
 	context.set(authUserCtx, authSession.user);

@@ -1,4 +1,5 @@
 import {
+	ActionIcon,
 	Avatar,
 	Button,
 	Container,
@@ -12,6 +13,7 @@ import {
 	MenuTarget,
 	Stack,
 	Text,
+	type ButtonProps,
 	type StackProps,
 } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
@@ -24,6 +26,158 @@ import { cn } from '~app-modules/utils';
 import { Image } from '~app-ui/components/image';
 import { ButtonLink, Link, NavLink } from '~app-ui/components/link';
 import type { User } from '~generated/prisma/client';
+
+function MenuActionUser({
+	data,
+	...props
+}: ButtonProps & {
+	data: User;
+}) {
+	return (
+		<Menu
+			position="bottom-end"
+			width={200}
+		>
+			<MenuTarget>
+				<Button
+					variant="light"
+					size="sm"
+					fz="sm"
+					radius="full"
+					h="auto"
+					pl={{
+						base: 2,
+						lg: 8,
+					}}
+					pr={{
+						base: 'sm',
+						lg: 'md',
+					}}
+					py={{
+						base: 2,
+						lg: 8,
+					}}
+					leftSection={
+						<Avatar
+							size="sm"
+							name={data.name}
+							mr={-6}
+						/>
+					}
+					{...props}
+				>
+					{data.name.split(' ')[0]}
+				</Button>
+			</MenuTarget>
+			<MenuDropdown>
+				<MenuItem
+					component={Link}
+					to="/dashboard"
+				>
+					Dashboard
+				</MenuItem>
+				<MenuItem
+					component={Link}
+					to="/dashboard/profile"
+				>
+					Profile
+				</MenuItem>
+				<MenuItem
+					component={Link}
+					to="/dashboard/change-password"
+				>
+					Change Password
+				</MenuItem>
+				<MenuDivider />
+				<MenuItem
+					color="red"
+					component={Link}
+					to="/logout"
+					replace
+					leftSection={<LuLogOut size={14} />}
+				>
+					Logout
+				</MenuItem>
+			</MenuDropdown>
+		</Menu>
+	);
+}
+
+function MenuActionUserAdmin({
+	data,
+	...props
+}: ButtonProps & {
+	data: User;
+}) {
+	return (
+		<Menu
+			position="bottom-end"
+			width={200}
+		>
+			<MenuTarget>
+				<Button
+					variant="light"
+					size="sm"
+					fz="sm"
+					radius="full"
+					h="auto"
+					pl={{
+						base: 2,
+						lg: 8,
+					}}
+					pr={{
+						base: 'sm',
+						lg: 'md',
+					}}
+					py={{
+						base: 2,
+						lg: 8,
+					}}
+					leftSection={
+						<Avatar
+							size="sm"
+							name={data.name}
+							mr={-6}
+						/>
+					}
+					{...props}
+				>
+					{data.name.split(' ')[0]}
+				</Button>
+			</MenuTarget>
+			<MenuDropdown>
+				<MenuItem
+					component={Link}
+					to="/dashboard"
+				>
+					Dashboard
+				</MenuItem>
+				<MenuItem
+					component={Link}
+					to="/dashboard/profile"
+				>
+					Profile
+				</MenuItem>
+				<MenuItem
+					component={Link}
+					to="/dashboard/change-password"
+				>
+					Change Password
+				</MenuItem>
+				<MenuDivider />
+				<MenuItem
+					color="red"
+					component={Link}
+					to="/logout"
+					replace
+					leftSection={<LuLogOut size={14} />}
+				>
+					Logout
+				</MenuItem>
+			</MenuDropdown>
+		</Menu>
+	);
+}
 
 export function Header({
 	authUser,
@@ -68,60 +222,65 @@ export function Header({
 
 					{/* Navigation */}
 					<Group gap="xl">
-						<NavLink
-							to="/tentang"
-							className={({ isActive, isPending, isTransitioning }) =>
-								cn('hover:underline', {
-									'text-primary font-semibold': isActive,
-									'text-primary font-semibold animate-pulse':
-										isPending || isTransitioning,
-								})
-							}
-						>
-							Tentang
-						</NavLink>
-						<NavLink
-							to="/layanan"
-							className={({ isActive, isPending, isTransitioning }) =>
-								cn('hover:underline', {
-									'text-primary font-semibold': isActive,
-									'text-primary font-semibold animate-pulse':
-										isPending || isTransitioning,
-								})
-							}
-						>
-							Layanan
-						</NavLink>
-						<NavLink
-							to="/biaya-langganan"
-							className={({ isActive, isPending, isTransitioning }) =>
-								cn('hover:underline', {
-									'text-primary font-semibold': isActive,
-									'text-primary font-semibold animate-pulse':
-										isPending || isTransitioning,
-								})
-							}
-						>
-							Info Harga
-						</NavLink>
 						<Group
-							gap={4}
-							align="flex-start"
+							gap="lg"
+							visibleFrom="lg"
 						>
-							<Text
-								span
-								className="text-dark-100"
+							<NavLink
+								to="/tentang"
+								className={({ isActive, isPending, isTransitioning }) =>
+									cn('hover:underline', {
+										'text-primary font-semibold': isActive,
+										'text-primary font-semibold animate-pulse':
+											isPending || isTransitioning,
+									})
+								}
 							>
-								Kontribusi
-							</Text>
-							<Text
-								span
-								fz={10}
-								fw={700}
-								c="primary"
+								Tentang
+							</NavLink>
+							<NavLink
+								to="/layanan"
+								className={({ isActive, isPending, isTransitioning }) =>
+									cn('hover:underline', {
+										'text-primary font-semibold': isActive,
+										'text-primary font-semibold animate-pulse':
+											isPending || isTransitioning,
+									})
+								}
 							>
-								(Segera)
-							</Text>
+								Layanan
+							</NavLink>
+							<NavLink
+								to="/biaya-langganan"
+								className={({ isActive, isPending, isTransitioning }) =>
+									cn('hover:underline', {
+										'text-primary font-semibold': isActive,
+										'text-primary font-semibold animate-pulse':
+											isPending || isTransitioning,
+									})
+								}
+							>
+								Info Harga
+							</NavLink>
+							<Group
+								gap={4}
+								align="flex-start"
+							>
+								<Text
+									span
+									className="text-dark-100"
+								>
+									Kontribusi
+								</Text>
+								<Text
+									span
+									fz={10}
+									fw={700}
+									c="primary"
+								>
+									(Segera)
+								</Text>
+							</Group>
 						</Group>
 						<Group gap="xs">
 							{authUser ? (
@@ -133,29 +292,18 @@ export function Header({
 										fz="sm"
 										radius="full"
 										h="auto"
-										py="xs"
+										px={{
+											base: 'sm',
+											lg: 'md',
+										}}
+										py={{
+											base: 6,
+											lg: 'xs',
+										}}
 									>
 										Apps
 									</ButtonLink>
-									<ButtonLink
-										to="/dashboard"
-										variant="light"
-										size="sm"
-										fz="sm"
-										radius="full"
-										h="auto"
-										pl={8}
-										pr={16}
-										py={8}
-										leftSection={
-											<Avatar
-												size="sm"
-												name={authUser.name}
-											/>
-										}
-									>
-										Dashboard
-									</ButtonLink>
+									<MenuActionUser data={authUser} />
 								</>
 							) : (
 								<>
@@ -166,7 +314,14 @@ export function Header({
 										fz="sm"
 										radius="full"
 										h="auto"
-										py="xs"
+										px={{
+											base: 'sm',
+											lg: 'md',
+										}}
+										py={{
+											base: 6,
+											lg: 'xs',
+										}}
 									>
 										Daftar
 									</ButtonLink>
@@ -177,7 +332,14 @@ export function Header({
 										fz="sm"
 										radius="full"
 										h="auto"
-										py="xs"
+										px={{
+											base: 'sm',
+											lg: 'md',
+										}}
+										py={{
+											base: 6,
+											lg: 'xs',
+										}}
 									>
 										Mulai Sekarang
 									</ButtonLink>
@@ -233,61 +395,7 @@ export function HeaderApps({
 					</Link>
 
 					{/* Navigation */}
-					<Menu
-						position="bottom-end"
-						width={200}
-					>
-						<MenuTarget>
-							<Button
-								variant="light"
-								size="sm"
-								fz="sm"
-								radius="full"
-								h="auto"
-								pl={8}
-								pr={16}
-								py={8}
-								leftSection={
-									<Avatar
-										size="sm"
-										name={authUser.name}
-									/>
-								}
-							>
-								{authUser.name.split(' ')[0]}
-							</Button>
-						</MenuTarget>
-						<MenuDropdown>
-							<MenuItem
-								component={Link}
-								to="/dashboard"
-							>
-								Dashboard
-							</MenuItem>
-							<MenuItem
-								component={Link}
-								to="/dashboard/profile"
-							>
-								Profile
-							</MenuItem>
-							<MenuItem
-								component={Link}
-								to="/dashboard/change-password"
-							>
-								Change Password
-							</MenuItem>
-							<MenuDivider />
-							<MenuItem
-								color="red"
-								component={Link}
-								to="/logout"
-								replace
-								leftSection={<LuLogOut size={14} />}
-							>
-								Logout
-							</MenuItem>
-						</MenuDropdown>
-					</Menu>
+					<MenuActionUser data={authUser} />
 				</Flex>
 			</Container>
 		</Stack>
@@ -303,16 +411,6 @@ export function HeaderDashboard({
 }) {
 	const navigate = useNavigate();
 	useHotkeys([['mod + K', () => spotlight.open()]]);
-
-	if (authUser.role === 'ADMIN') {
-		return (
-			<HeaderAdmin
-				authUser={authUser}
-				className={className}
-				{...props}
-			/>
-		);
-	}
 
 	return (
 		<Stack
@@ -347,76 +445,40 @@ export function HeaderDashboard({
 							objectPosition="left"
 						/>
 					</Link>
-
 					{/* Navigation */}
-					<Group>
+					<Group gap="xs">
 						<Button
+							visibleFrom="lg"
 							onClick={spotlight.open}
 							variant="outline"
 							color="dark"
 							size="sm"
 							fz="sm"
 							radius="full"
-							w={280}
+							w={{
+								lg: 280,
+							}}
 							h="auto"
-							py={12}
+							px="md"
+							py={9}
 							leftSection={<HiOutlineSearch size={18} />}
 							rightSection={<Kbd>⌘+K</Kbd>}
 							classNames={{
-								label: 'mr-auto',
+								label: 'mr-auto leading-tight',
 							}}
 						>
 							Search Actions
 						</Button>
-						<Menu
-							position="bottom-end"
-							width={200}
+						<ActionIcon
+							hiddenFrom="lg"
+							onClick={spotlight.open}
+							variant="outline"
+							color="dark"
+							radius="full"
 						>
-							<MenuTarget>
-								<Button
-									variant="light"
-									size="sm"
-									fz="sm"
-									radius="full"
-									h="auto"
-									pl={8}
-									pr={16}
-									py={8}
-									leftSection={
-										<Avatar
-											size="sm"
-											name={authUser.name}
-										/>
-									}
-								>
-									{authUser.name.split(' ')[0]}
-								</Button>
-							</MenuTarget>
-							<MenuDropdown>
-								<MenuItem
-									component={Link}
-									to="/dashboard/profile"
-								>
-									Profile
-								</MenuItem>
-								<MenuItem
-									component={Link}
-									to="/dashboard/change-password"
-								>
-									Change Password
-								</MenuItem>
-								<MenuDivider />
-								<MenuItem
-									color="red"
-									component={Link}
-									to="/logout"
-									replace
-									leftSection={<LuLogOut size={14} />}
-								>
-									Logout
-								</MenuItem>
-							</MenuDropdown>
-						</Menu>
+							<HiOutlineSearch size={16} />
+						</ActionIcon>
+						<MenuActionUser data={authUser} />
 					</Group>
 				</Flex>
 			</Container>
@@ -483,84 +545,37 @@ export function HeaderAdmin({
 					{/* Navigation */}
 					<Group gap="xs">
 						<Button
+							visibleFrom="lg"
 							onClick={spotlight.open}
 							variant="outline"
 							color="dark"
 							size="sm"
 							fz="sm"
 							radius="full"
-							w={280}
+							w={{
+								lg: 280,
+							}}
 							h="auto"
-							py={12}
+							px="md"
+							py={9}
 							leftSection={<HiOutlineSearch size={18} />}
 							rightSection={<Kbd>⌘+K</Kbd>}
 							classNames={{
-								label: 'mr-auto',
+								label: 'mr-auto leading-tight',
 							}}
 						>
 							Search Actions
 						</Button>
-						<Menu
-							position="bottom-end"
-							width={200}
+						<ActionIcon
+							hiddenFrom="lg"
+							onClick={spotlight.open}
+							variant="outline"
+							color="dark"
+							radius="full"
 						>
-							<MenuTarget>
-								<Button
-									variant="light"
-									size="sm"
-									fz="sm"
-									radius="full"
-									h="auto"
-									pl={8}
-									pr={16}
-									py={8}
-									leftSection={
-										<Avatar
-											size="sm"
-											name={authUser.name}
-										/>
-									}
-								>
-									{authUser.name.split(' ')[0]}
-								</Button>
-							</MenuTarget>
-							<MenuDropdown>
-								<MenuItem
-									component={Link}
-									to="/admin"
-								>
-									Admin Panel
-								</MenuItem>
-								<MenuItem
-									component={Link}
-									to="/admin/users"
-								>
-									Manage Users
-								</MenuItem>
-								<MenuItem
-									component={Link}
-									to="/dashboard/profile"
-								>
-									Profile
-								</MenuItem>
-								<MenuItem
-									component={Link}
-									to="/dashboard/change-password"
-								>
-									Change Password
-								</MenuItem>
-								<MenuDivider />
-								<MenuItem
-									color="red"
-									component={Link}
-									to="/logout"
-									replace
-									leftSection={<LuLogOut size={14} />}
-								>
-									Logout
-								</MenuItem>
-							</MenuDropdown>
-						</Menu>
+							<HiOutlineSearch size={16} />
+						</ActionIcon>
+						<MenuActionUserAdmin data={authUser} />
 					</Group>
 				</Flex>
 			</Container>
