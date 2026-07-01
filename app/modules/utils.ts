@@ -16,6 +16,10 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
 
+export const valueBooleanOrFalse = (value?: boolean | null | undefined): boolean => {
+	return value ?? false;
+};
+
 export function dayjs(date?: dayjsX.ConfigType, timezone?: number) {
 	return dayjsX(date)
 		.startOf('day')

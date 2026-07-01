@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useFetcher } from 'react-router';
 import { PayloadUpdateProfileSchema, type PayloadUpdateProfile } from '~app-modules/schema/user';
 import type { ActionUpdateProfile } from '~app-server/user';
-import type { User } from '~generated/prisma/client';
+import type { User } from '~generated/prisma/browser';
 
 export default function FormProfile({
 	data,

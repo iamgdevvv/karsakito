@@ -22,6 +22,7 @@ import { FaSort } from 'react-icons/fa';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { LuTrash } from 'react-icons/lu';
 import { redirect, useNavigation, useSearchParams } from 'react-router';
+import { optionsUserRole } from '~app-modules/enum-options';
 import { metaAdminRoute } from '~app-modules/meta';
 import type { PayloadQueryUsers } from '~app-modules/schema/user';
 import { toSearchParams } from '~app-modules/utils';
@@ -32,8 +33,7 @@ import { ButtonLink, Link } from '~app-ui/components/link';
 import Footer from '~app-ui/layouts/footer';
 import { HeaderAdmin } from '~app-ui/layouts/header';
 import { AdminPanel } from '~app-ui/layouts/panel';
-import { UserRole } from '~generated/prisma/enums';
-import { UserScalarFieldEnum } from '~generated/prisma/internal/prismaNamespace';
+import type { UserScalarFieldEnum } from '~generated/prisma/internal/prismaNamespace';
 
 import type { Route } from './+types/admin.users._index';
 
@@ -170,7 +170,7 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 									name="role"
 									size="xs"
 									defaultValue={loaderData.users.params?.role}
-									data={Object.values(UserRole)}
+									data={optionsUserRole}
 								/>
 								<Popover
 									width={160}
@@ -199,7 +199,14 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 														? [loaderData.users.params.asc]
 														: loaderData.users.params?.asc
 												}
-												data={Object.values(UserScalarFieldEnum)}
+												data={
+													[
+														'email',
+														'name',
+														'createdAt',
+														'updatedAt',
+													] satisfies UserScalarFieldEnum[]
+												}
 												label="Sort ASC"
 												labelProps={{
 													fz: 10,
@@ -214,7 +221,14 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 														? [loaderData.users.params.desc]
 														: loaderData.users.params?.desc
 												}
-												data={Object.values(UserScalarFieldEnum)}
+												data={
+													[
+														'email',
+														'name',
+														'createdAt',
+														'updatedAt',
+													] satisfies UserScalarFieldEnum[]
+												}
 												label="Sort DESC"
 												labelProps={{
 													fz: 10,

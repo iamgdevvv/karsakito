@@ -14,10 +14,10 @@ import { schemaResolver, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { useEffect, useMemo, useState } from 'react';
 import { useFetcher } from 'react-router';
+import { optionsUserRole } from '~app-modules/enum-options';
 import { PayloadUpdateUserSchema, type PayloadUpdateUser } from '~app-modules/schema/user';
 import type { ActionUpdateUser } from '~app-server/user';
-import type { User } from '~generated/prisma/client';
-import { UserRole } from '~generated/prisma/enums';
+import { type User } from '~generated/prisma/browser';
 
 export default function FormUpdateUser({
 	data,
@@ -114,7 +114,7 @@ export default function FormUpdateUser({
 						name="role"
 						key={form.key('role')}
 						readOnly={isLoading}
-						data={Object.values(UserRole)}
+						data={optionsUserRole}
 						{...form.getInputProps('role')}
 					/>
 					<Checkbox

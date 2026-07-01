@@ -14,9 +14,9 @@ import { schemaResolver, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { useEffect, useMemo, useState } from 'react';
 import { useFetcher, useNavigate } from 'react-router';
+import { optionsUserRole } from '~app-modules/enum-options';
 import { PayloadCreateUserSchema, type PayloadCreateUser } from '~app-modules/schema/user';
 import type { ActionCreateUser } from '~app-server/user';
-import { UserRole } from '~generated/prisma/enums';
 
 export default function FormCreateUser(props: BoxProps) {
 	const navigate = useNavigate();
@@ -94,7 +94,7 @@ export default function FormCreateUser(props: BoxProps) {
 						name="role"
 						key={form.key('role')}
 						readOnly={isLoading}
-						data={Object.values(UserRole)}
+						data={optionsUserRole}
 						{...form.getInputProps('role')}
 					/>
 					<Checkbox
