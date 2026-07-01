@@ -65,3 +65,11 @@ export function toSearchParams<T extends Record<string, unknown>>(
 			}),
 	);
 }
+
+export function queryParamsToString(payload: URLSearchParams) {
+	if (payload.size === 0) {
+		return '';
+	}
+
+	return `?${payload.toString()}`;
+}

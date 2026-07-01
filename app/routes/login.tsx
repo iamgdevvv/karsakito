@@ -42,7 +42,10 @@ export default function LoginRoute(_: Route.ComponentProps) {
 			mih="100vh"
 			bg="primary.1"
 		>
-			<Container size="xs">
+			<Container
+				size="xs"
+				className="not-lg:self-start not-lg:pt-6"
+			>
 				<FormLogin />
 			</Container>
 		</Center>

@@ -24,9 +24,7 @@ const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) =>
 			throw redirect('/');
 		}
 
-		const sourceUrl = new URL(request.url);
-
-		throw redirect(`/login?redirect=${sourceUrl.pathname}${sourceUrl.search}`);
+		throw redirect('/login?redirect=/admin');
 	}
 
 	context.set(authUserCtx, authSession.user);
@@ -61,7 +59,7 @@ export default function AdminRoute({ loaderData }: Route.ComponentProps) {
 					}}
 				>
 					<Link
-						to="/dashboard/usage"
+						to="/admin/users"
 						pos="relative"
 						bd="1px solid gray.2"
 						bdrs="lg"

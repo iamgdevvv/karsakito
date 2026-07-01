@@ -14,13 +14,15 @@ import {
 import { schemaResolver, useForm } from '@mantine/form';
 import { useEffect, useMemo, useState } from 'react';
 import { FaGoogle } from 'react-icons/fa';
-import { useFetcher } from 'react-router';
+import { useFetcher, useSearchParams } from 'react-router';
 import { PayloadLoginSchema, type PayloadLogin } from '~app-modules/schema/auth';
+import { queryParamsToString } from '~app-modules/utils';
 import type { ActionLogin } from '~app-server/auth';
 import { Image } from '~app-ui/components/image';
-import { ButtonLink, Link } from '~app-ui/components/link';
+import { Link } from '~app-ui/components/link';
 
 export default function FormLogin(props: BoxProps) {
+	const [searchParams] = useSearchParams();
 	const fetcher = useFetcher<ActionLogin>();
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -64,7 +66,10 @@ export default function FormLogin(props: BoxProps) {
 				<Link to="/">
 					<Image
 						src="/logo.svg"
-						w={80}
+						w={{
+							base: 56,
+							lg: 64,
+						}}
 						h="auto"
 					/>
 				</Link>
@@ -136,11 +141,10 @@ export default function FormLogin(props: BoxProps) {
 				}
 				my="lg"
 			/>
-			<ButtonLink
+			<Button
 				variant="outline"
-				to="/login/google"
 				fullWidth
-				disabled={isLoading}
+				disabled
 				leftSection={
 					<FaGoogle
 						size={20}
@@ -148,8 +152,8 @@ export default function FormLogin(props: BoxProps) {
 					/>
 				}
 			>
-				Continue with Google
-			</ButtonLink>
+				Continue with Google (Soon)
+			</Button>
 			<Text
 				span
 				display="inline-block"
@@ -159,7 +163,7 @@ export default function FormLogin(props: BoxProps) {
 			>
 				Don't have an account?{' '}
 				<Link
-					to="/register"
+					to={`/register${queryParamsToString(searchParams)}`}
 					c="primary"
 					td="underline"
 				>

@@ -48,6 +48,33 @@ function Panel({
 		[mainNavs, secondaryNavs],
 	);
 
+	const selectedSidebarPanel = useMemo(() => {
+		const navigations: {
+			label: string;
+			value: string;
+		}[] = [];
+
+		if (mainNavs) {
+			navigations.push(...mainNavs.items);
+		}
+
+		if (secondaryNavs) {
+			navigations.push(...secondaryNavs.items);
+		}
+
+		const matchNavs = navigations.filter(
+			(item) => pathname === item.value || pathname.startsWith(`${item.value}/`),
+		);
+
+		if (matchNavs.length) {
+			matchNavs.sort((a, b) => b.value.length - a.value.length);
+
+			return matchNavs[0];
+		}
+
+		return undefined;
+	}, [sidebarPanel]);
+
 	return (
 		<Flex
 			bg="primary.1"
@@ -100,7 +127,10 @@ function Panel({
 																'text-sm rounded-sm py-2 px-3 hover:text-primary',
 																{
 																	'text-primary bg-primary-50 font-semibold':
-																		isActive,
+																		isActive ||
+																		(selectedSidebarPanel &&
+																			selectedSidebarPanel.value ===
+																				nav.value),
 																	'text-primary bg-primary-50 animate-pulse':
 																		isPending ||
 																		isTransitioning,
@@ -147,7 +177,10 @@ function Panel({
 																	'text-sm rounded-sm py-2 px-3 hover:text-primary',
 																	{
 																		'text-primary bg-primary-50 font-semibold':
-																			isActive,
+																			isActive ||
+																			(selectedSidebarPanel &&
+																				selectedSidebarPanel.value ===
+																					nav.value),
 																		'text-primary bg-primary-50 animate-pulse':
 																			isPending ||
 																			isTransitioning,
@@ -183,7 +216,9 @@ function Panel({
 								<Select
 									hiddenFrom="md"
 									label="Navigation"
-									defaultValue={pathname}
+									defaultValue={
+										selectedSidebarPanel ? selectedSidebarPanel.value : pathname
+									}
 									loading={isNavigating}
 									radius="xl"
 									labelProps={{

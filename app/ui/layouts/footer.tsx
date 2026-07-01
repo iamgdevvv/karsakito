@@ -8,25 +8,37 @@ export default function Footer(props: BoxProps) {
 			w="100%"
 			bg="black"
 			c="white"
-			py="xl"
+			py={{
+				base: 'lg',
+				lg: 'xl',
+			}}
 			{...props}
 			component="footer"
 			data-slot="Footer"
 		>
 			<Container>
-				<Group justify="center">
+				<Group
+					gap="xs"
+					justify="center"
+				>
 					<Text
 						span
-						size="sm"
+						fz={{
+							base: 'xs',
+							lg: 'sm',
+						}}
 					>
 						© {new Date().getFullYear()} Team Kito. All rights reserved.
 					</Text>
 					<Text
 						span
 						display="inline-block"
-						size="sm"
 						ml={{
 							lg: 'auto',
+						}}
+						fz={{
+							base: 'xs',
+							lg: 'sm',
 						}}
 					>
 						Hackathon X DIGDAYA 2026 - Bank Indonesia

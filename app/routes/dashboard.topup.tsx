@@ -14,9 +14,7 @@ const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) =>
 	const user = authSession.get('user');
 
 	if (!user) {
-		const sourceUrl = new URL(request.url);
-
-		throw redirect(`/login?redirect=${sourceUrl.pathname}${sourceUrl.search}`);
+		throw redirect('/login?redirect=/dashboard/topup');
 	}
 
 	context.set(authUserCtx, user);

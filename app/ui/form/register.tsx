@@ -15,13 +15,15 @@ import { schemaResolver, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { useEffect, useMemo, useState } from 'react';
 import { FaGoogle } from 'react-icons/fa';
-import { useFetcher, useNavigate } from 'react-router';
+import { useFetcher, useNavigate, useSearchParams } from 'react-router';
 import { PayloadRegisterSchema, type PayloadRegister } from '~app-modules/schema/auth';
+import { queryParamsToString } from '~app-modules/utils';
 import type { ActionRegister } from '~app-server/auth';
 import { Image } from '~app-ui/components/image';
-import { ButtonLink, Link } from '~app-ui/components/link';
+import { Link } from '~app-ui/components/link';
 
 export default function FormRegister(props: BoxProps) {
+	const [searchParams] = useSearchParams();
 	const navigate = useNavigate();
 	const fetcher = useFetcher<ActionRegister>();
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -79,7 +81,10 @@ export default function FormRegister(props: BoxProps) {
 				<Link to="/">
 					<Image
 						src="/logo.svg"
-						w={80}
+						w={{
+							base: 56,
+							lg: 64,
+						}}
 						h="auto"
 					/>
 				</Link>
@@ -158,11 +163,10 @@ export default function FormRegister(props: BoxProps) {
 				}
 				my="lg"
 			/>
-			<ButtonLink
+			<Button
 				variant="outline"
-				to="/login/google"
 				fullWidth
-				disabled={isLoading}
+				disabled
 				leftSection={
 					<FaGoogle
 						size={20}
@@ -170,8 +174,8 @@ export default function FormRegister(props: BoxProps) {
 					/>
 				}
 			>
-				Continue with Google
-			</ButtonLink>
+				Continue with Google (Soon)
+			</Button>
 			<Text
 				span
 				display="inline-block"
@@ -181,7 +185,7 @@ export default function FormRegister(props: BoxProps) {
 			>
 				Already have an account?{' '}
 				<Link
-					to="/login"
+					to={`/login${queryParamsToString(searchParams)}`}
 					c="primary"
 					td="underline"
 				>

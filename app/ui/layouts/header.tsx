@@ -13,13 +13,14 @@ import {
 	MenuTarget,
 	Stack,
 	Text,
+	ThemeIcon,
 	type ButtonProps,
 	type StackProps,
 } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
 import { Spotlight, spotlight } from '@mantine/spotlight';
 import { HiOutlineSearch } from 'react-icons/hi';
-import { LuLogOut } from 'react-icons/lu';
+import { LuArrowUpRight, LuLogOut } from 'react-icons/lu';
 import { useNavigate } from 'react-router';
 import { adminSpotlight, dashboardSpotlight } from '~app-modules/spotlight';
 import { cn } from '~app-modules/utils';
@@ -213,8 +214,11 @@ export function Header({
 					>
 						<Image
 							src="/logo.svg"
-							w={64}
-							h={26}
+							w={{
+								base: 56,
+								lg: 64,
+							}}
+							h="auto"
 							objectFit="contain"
 							objectPosition="left"
 						/>
@@ -278,7 +282,7 @@ export function Header({
 									fw={700}
 									c="primary"
 								>
-									(Segera)
+									(Soon)
 								</Text>
 							</Group>
 						</Group>
@@ -300,6 +304,17 @@ export function Header({
 											base: 6,
 											lg: 'xs',
 										}}
+										rightSection={
+											<ThemeIcon
+												p={0}
+												size={20}
+												radius={0}
+												ml={-6}
+												variant="transparent"
+											>
+												<LuArrowUpRight size={18} />
+											</ThemeIcon>
+										}
 									>
 										Apps
 									</ButtonLink>
@@ -341,7 +356,27 @@ export function Header({
 											lg: 'xs',
 										}}
 									>
-										Mulai Sekarang
+										<Text
+											visibleFrom="lg"
+											span
+											fz="inherit"
+										>
+											Mulai Sekarang
+										</Text>
+										<Group
+											hiddenFrom="lg"
+											component="span"
+											gap={4}
+											fz="inherit"
+										>
+											<Text
+												span
+												fz="inherit"
+											>
+												Mulai
+											</Text>
+											<LuArrowUpRight size={18} />
+										</Group>
 									</ButtonLink>
 								</>
 							)}
@@ -387,8 +422,11 @@ export function HeaderApps({
 					>
 						<Image
 							src="/logo.svg"
-							w={64}
-							h={26}
+							w={{
+								base: 56,
+								lg: 64,
+							}}
+							h="auto"
 							objectFit="contain"
 							objectPosition="left"
 						/>
@@ -439,8 +477,11 @@ export function HeaderDashboard({
 					>
 						<Image
 							src="/logo.svg"
-							w={64}
-							h={26}
+							w={{
+								base: 56,
+								lg: 64,
+							}}
+							h="auto"
 							objectFit="contain"
 							objectPosition="left"
 						/>
@@ -535,8 +576,11 @@ export function HeaderAdmin({
 					>
 						<Image
 							src="/logo.svg"
-							w={64}
-							h={26}
+							w={{
+								base: 56,
+								lg: 64,
+							}}
+							h="auto"
 							objectFit="contain"
 							objectPosition="left"
 						/>
