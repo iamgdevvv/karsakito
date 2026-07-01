@@ -17,6 +17,7 @@ import { useFetcher } from 'react-router';
 import { optionsUserRole } from '~app-modules/enum-options';
 import { PayloadUpdateUserSchema, type PayloadUpdateUser } from '~app-modules/schema/user';
 import type { ActionUpdateUser } from '~app-server/user';
+import { ButtonLink } from '~app-ui/components/link';
 import { type User } from '~generated/prisma/browser';
 
 export default function FormUpdateUser({
@@ -86,7 +87,14 @@ export default function FormUpdateUser({
 					{errorMessage}
 				</Alert>
 			) : null}
-			<fetcher.Form method="post">
+			<fetcher.Form
+				method="post"
+				onSubmit={form.onSubmit((values) => {
+					fetcher.submit(values, {
+						method: 'post',
+					});
+				})}
+			>
 				<Stack gap="xs">
 					<Input
 						type="hidden"
@@ -126,11 +134,21 @@ export default function FormUpdateUser({
 							type: 'checkbox',
 						})}
 					/>
-					<Group justify="flex-end">
+					<Group
+						gap="xs"
+						justify="flex-end"
+						mt="md"
+					>
+						<ButtonLink
+							variant="light"
+							to={`/admin/users/${data.id}/change-password`}
+							loading={isLoading}
+						>
+							Change Password
+						</ButtonLink>
 						<Button
 							type="submit"
 							loading={isLoading}
-							mt="md"
 						>
 							Update User
 						</Button>

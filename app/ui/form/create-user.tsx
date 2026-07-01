@@ -52,7 +52,7 @@ export default function FormCreateUser(props: BoxProps) {
 				});
 
 				navigate(
-					`/admin/users?role${fetcher.data.data.role}&isActive=${fetcher.data.data.isActive}&desc=createdAt`,
+					`/admin/users?role=${fetcher.data.data.role}&isActive=${fetcher.data.data.isActive}&desc=createdAt`,
 				);
 			}
 		}
@@ -72,7 +72,14 @@ export default function FormCreateUser(props: BoxProps) {
 					{errorMessage}
 				</Alert>
 			) : null}
-			<fetcher.Form method="post">
+			<fetcher.Form
+				method="post"
+				onSubmit={form.onSubmit((values) => {
+					fetcher.submit(values, {
+						method: 'post',
+					});
+				})}
+			>
 				<Stack gap="xs">
 					<TextInput
 						label="Name"

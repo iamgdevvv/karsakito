@@ -5,7 +5,7 @@ import { UserSchema } from '~generated/prisma-zod/schemas/models';
 export const UserSchemaPlain = UserSchema.omit({
 	isActive: true,
 }).extend({
-	isActive: z.stringbool().nullish(),
+	isActive: z.union([z.boolean(), z.stringbool()]).nullish(),
 });
 
 export const PayloadQueryUsersSchema = UserSchemaPlain.partial().extend({
@@ -52,11 +52,16 @@ export const PayloadUpdateProfileSchema = UserSchemaPlain.pick({
 	email: true,
 }).partial();
 
-export const PayloadUpdateProfilePasswordSchema = z.object({
-	curentPassword: z.string().nonempty(),
-	password: z.string().nonempty(),
-	confirmPassword: z.string().nonempty(),
-});
+export const PayloadUpdateProfilePasswordSchema = z
+	.object({
+		curentPassword: z.string().nonempty(),
+		password: z.string().nonempty(),
+		confirmPassword: z.string().nonempty(),
+	})
+	.refine(({ password, confirmPassword }) => password === confirmPassword, {
+		message: 'Passwords do not match',
+		path: ['confirmPassword'],
+	});
 
 export type PayloadQueryUsers = z.infer<typeof PayloadQueryUsersSchema>;
 export type PayloadCreateUser = z.infer<typeof PayloadCreateUserSchema>;

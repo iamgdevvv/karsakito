@@ -90,7 +90,14 @@ export default function FormLogin(props: BoxProps) {
 					</Alert>
 				) : null}
 			</Stack>
-			<fetcher.Form method="post">
+			<fetcher.Form
+				method="post"
+				onSubmit={form.onSubmit((values) => {
+					fetcher.submit(values, {
+						method: 'post',
+					});
+				})}
+			>
 				<Stack gap="xs">
 					<TextInput
 						type="email"

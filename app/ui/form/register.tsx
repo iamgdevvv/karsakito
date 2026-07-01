@@ -105,7 +105,14 @@ export default function FormRegister(props: BoxProps) {
 					</Alert>
 				) : null}
 			</Stack>
-			<fetcher.Form method="post">
+			<fetcher.Form
+				method="post"
+				onSubmit={form.onSubmit((values) => {
+					fetcher.submit(values, {
+						method: 'post',
+					});
+				})}
+			>
 				<Stack gap="xs">
 					<TextInput
 						label="Name"
@@ -132,6 +139,7 @@ export default function FormRegister(props: BoxProps) {
 					<Button
 						type="submit"
 						fullWidth
+						fz="md"
 						loading={isLoading}
 						mt="md"
 					>

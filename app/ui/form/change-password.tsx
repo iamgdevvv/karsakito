@@ -60,7 +60,14 @@ export default function FormChangePassword(props: BoxProps) {
 					{errorMessage}
 				</Alert>
 			) : null}
-			<fetcher.Form method="post">
+			<fetcher.Form
+				method="post"
+				onSubmit={form.onSubmit((values) => {
+					fetcher.submit(values, {
+						method: 'post',
+					});
+				})}
+			>
 				<Stack gap="xs">
 					<PasswordInput
 						label="Current Password"

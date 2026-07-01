@@ -1,37 +1,33 @@
-import { Alert, Box, Button, Stack, TextInput, type BoxProps } from '@mantine/core';
+import { Alert, Box, Button, Input, PasswordInput, Stack, type BoxProps } from '@mantine/core';
 import { schemaResolver, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { useEffect, useMemo, useState } from 'react';
-import { useFetcher } from 'react-router';
-import { PayloadUpdateProfileSchema, type PayloadUpdateProfile } from '~app-modules/schema/user';
-import type { ActionUpdateProfile } from '~app-server/user';
-import type { User } from '~generated/prisma/browser';
+import { useFetcher, useNavigate } from 'react-router';
+import {
+	PayloadUpdateUserPasswordSchema,
+	type PayloadUpdateUserPassword,
+} from '~app-modules/schema/user';
+import type { ActionUpdateUserPassword } from '~app-server/user';
+import { type User } from '~generated/prisma/browser';
 
-export default function FormProfile({
+export default function FormChangePasswordUser({
 	data,
 	...props
 }: BoxProps & {
 	data: User;
 }) {
-	const fetcher = useFetcher<ActionUpdateProfile>();
+	const navigate = useNavigate();
+	const fetcher = useFetcher<ActionUpdateUserPassword>();
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 	const isLoading = useMemo(() => {
 		return fetcher.state !== 'idle';
 	}, [fetcher.state]);
 
-	const initialValues = useMemo((): PayloadUpdateProfile => {
-		return {
-			name: data.name,
-			email: data.email,
-		};
-	}, [data]);
-
-	const form = useForm<PayloadUpdateProfile>({
+	const form = useForm<PayloadUpdateUserPassword>({
 		mode: 'uncontrolled',
-		validate: schemaResolver(PayloadUpdateProfileSchema, { sync: true }),
+		validate: schemaResolver(PayloadUpdateUserPasswordSchema, { sync: true }),
 		onSubmitPreventDefault: 'validation-failed',
-		initialValues,
 		onValuesChange: () => {
 			if (errorMessage) {
 				fetcher.reset();
@@ -41,17 +37,20 @@ export default function FormProfile({
 	});
 
 	useEffect(() => {
+		form.setFieldValue('userId', data.id);
+	}, [data.id]);
+
+	useEffect(() => {
 		notifications.clean();
 
 		if (!isLoading && fetcher.data) {
-			if ('error' in fetcher.data) {
-				form.setValues(initialValues);
-
+			if ('error' in fetcher.data && fetcher.data.error) {
 				setErrorMessage(fetcher.data.error);
 			} else {
+				navigate('/admin/users/' + data.id);
 				notifications.show({
 					title: 'Success',
-					message: 'Profile updated successfully',
+					message: 'Change password user successfully',
 				});
 			}
 		}
@@ -60,7 +59,7 @@ export default function FormProfile({
 	return (
 		<Box
 			{...props}
-			data-slot="FormProfile"
+			data-slot="FormChangePasswordUser"
 		>
 			{errorMessage ? (
 				<Alert
@@ -80,20 +79,19 @@ export default function FormProfile({
 				})}
 			>
 				<Stack gap="xs">
-					<TextInput
-						label="Nama"
-						name="name"
-						key={form.key('name')}
-						readOnly={isLoading}
-						{...form.getInputProps('name')}
+					<Input
+						type="hidden"
+						name="userId"
+						key={form.key('userId')}
+						{...form.getInputProps('userId')}
 					/>
-					<TextInput
-						type="email"
-						label="Email"
-						name="email"
-						key={form.key('email')}
+
+					<PasswordInput
+						label="New Password"
+						name="password"
+						key={form.key('password')}
 						readOnly={isLoading}
-						{...form.getInputProps('email')}
+						{...form.getInputProps('password')}
 					/>
 					<Button
 						type="submit"
@@ -101,7 +99,7 @@ export default function FormProfile({
 						loading={isLoading}
 						mt="md"
 					>
-						Update Profile
+						Save Password
 					</Button>
 				</Stack>
 			</fetcher.Form>

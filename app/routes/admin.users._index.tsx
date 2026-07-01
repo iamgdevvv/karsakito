@@ -330,6 +330,12 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 															</Menu.Item>
 															<Menu.Item
 																component={Link}
+																to={`/admin/users/${user.id}/change-password`}
+															>
+																Change Password
+															</Menu.Item>
+															<Menu.Item
+																component={Link}
 																to={`/admin/users/${user.id}/delete`}
 																color="red"
 																leftSection={<LuTrash size={14} />}

@@ -90,6 +90,16 @@ const theme = createTheme({
 				size: 'lg',
 			},
 		}),
+		InputWrapper: Input.Wrapper.extend({
+			defaultProps: {
+				inputWrapperOrder: ['label', 'input', 'description'],
+			},
+		}),
+		Input: Input.extend({
+			defaultProps: {
+				size: 'md',
+			},
+		}),
 		TextInput: TextInput.extend({
 			defaultProps: {
 				size: 'md',
@@ -106,11 +116,6 @@ const theme = createTheme({
 					fz: 'sm',
 					fw: 400,
 				},
-			},
-		}),
-		Input: Input.extend({
-			defaultProps: {
-				size: 'md',
 			},
 		}),
 		Textarea: Textarea.extend({
@@ -153,7 +158,7 @@ const theme = createTheme({
 		Button: Button.extend({
 			defaultProps: {
 				size: 'lg',
-				fz: 'md',
+				fz: 'sm',
 				fw: 500,
 				radius: 'lg',
 				loaderProps: {

@@ -9,9 +9,9 @@ import Footer from '~app-ui/layouts/footer';
 import { HeaderAdmin } from '~app-ui/layouts/header';
 import { AdminPanel } from '~app-ui/layouts/panel';
 
-import type { Route } from './+types/admin.users.$id';
+import type { Route } from './+types/admin.users.$id._index';
 
-const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) => {
+const authMiddleware: Route.MiddlewareFunction = async ({ request, context, params }) => {
 	const authSession = await authMiddlewareSession({
 		guard: {
 			role: ['ADMIN'],
@@ -24,7 +24,7 @@ const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) =>
 			throw redirect('/');
 		}
 
-		throw redirect('/login?redirect=/admin/users/create');
+		throw redirect(`/login?redirect=/admin/users/${params.id}`);
 	}
 
 	context.set(authUserCtx, authSession.user);
