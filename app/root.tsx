@@ -12,7 +12,7 @@ import {
 } from '@mantine/core';
 import { notifications, Notifications } from '@mantine/notifications';
 import { NavigationProgress, nprogress } from '@mantine/nprogress';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import {
 	isRouteErrorResponse,
 	Links,
@@ -24,11 +24,14 @@ import {
 } from 'react-router';
 import theme from '~app-modules/theme';
 
+import '@gfazioli/mantine-scene/styles.css';
 import '@mantine/carousel/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/nprogress/styles.css';
 import '@mantine/spotlight/styles.css';
 import '@mantine/tiptap/styles.css';
+import '@vidstack/react/player/styles/default/layouts/video.css';
+import '@vidstack/react/player/styles/default/theme.css';
 
 import { ButtonLink } from '~app-ui/components/link';
 import Footer from '~app-ui/layouts/footer';
@@ -58,18 +61,18 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
 	const navigation = useNavigation();
-	const isNavigating = useMemo(() => Boolean(navigation.location), [navigation.location]);
+	// const isNavigating = useMemo(() => Boolean(navigation.location), [navigation.location]);
 
 	useEffect(() => {
 		notifications.clean();
 		notifications.cleanQueue();
 
-		if (isNavigating) {
+		if (navigation.state === 'loading' || navigation.state === 'submitting') {
 			nprogress.start();
 		} else {
 			nprogress.complete();
 		}
-	}, [isNavigating]);
+	}, [navigation.state]);
 
 	return (
 		<html

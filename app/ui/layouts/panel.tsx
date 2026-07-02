@@ -12,7 +12,7 @@ import {
 import { useMemo, useState, type ReactNode } from 'react';
 import { TbLayoutSidebarLeftCollapseFilled, TbLayoutSidebarLeftExpandFilled } from 'react-icons/tb';
 import { useLocation, useNavigate, useNavigation } from 'react-router';
-import { cn } from '~app-modules/utils';
+import { cn, findActiveNavigation } from '~app-modules/utils';
 import { Link, NavLink } from '~app-ui/components/link';
 
 function Panel({
@@ -40,7 +40,7 @@ function Panel({
 	const { pathname } = useLocation();
 	const navigation = useNavigation();
 	const navigate = useNavigate();
-	const isNavigating = useMemo(() => Boolean(navigation.location), [navigation.location]);
+	// const isNavigating = useMemo(() => Boolean(navigation.location), [navigation.location]);
 	const [expandedPanel, setExpandedPanel] = useState(true);
 
 	const sidebarPanel = useMemo(
@@ -62,17 +62,7 @@ function Panel({
 			navigations.push(...secondaryNavs.items);
 		}
 
-		const matchNavs = navigations.filter(
-			(item) => pathname === item.value || pathname.startsWith(`${item.value}/`),
-		);
-
-		if (matchNavs.length) {
-			matchNavs.sort((a, b) => b.value.length - a.value.length);
-
-			return matchNavs[0];
-		}
-
-		return undefined;
+		return findActiveNavigation(navigations, pathname);
 	}, [sidebarPanel]);
 
 	return (
@@ -219,7 +209,7 @@ function Panel({
 									defaultValue={
 										selectedSidebarPanel ? selectedSidebarPanel.value : pathname
 									}
-									loading={isNavigating}
+									loading={navigation.state === 'loading'}
 									radius="xl"
 									labelProps={{
 										fz: 10,

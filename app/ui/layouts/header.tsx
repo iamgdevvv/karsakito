@@ -21,7 +21,7 @@ import { useHotkeys } from '@mantine/hooks';
 import { Spotlight, spotlight } from '@mantine/spotlight';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { LuArrowUpRight, LuLogOut } from 'react-icons/lu';
-import { useNavigate } from 'react-router';
+import { useNavigate, useNavigation } from 'react-router';
 import { adminSpotlight, dashboardSpotlight } from '~app-modules/spotlight';
 import { cn } from '~app-modules/utils';
 import { Image } from '~app-ui/components/image';
@@ -32,8 +32,44 @@ function MenuActionUser({
 	data,
 	...props
 }: ButtonProps & {
-	data: User;
+	data?: User | null;
 }) {
+	const navigation = useNavigation();
+
+	if (!data) {
+		return (
+			<ButtonLink
+				variant="light"
+				to={navigation.location?.pathname || '/apps'}
+				size="sm"
+				fz="sm"
+				radius="full"
+				h="auto"
+				pl={{
+					base: 2,
+					lg: 8,
+				}}
+				pr={{
+					base: 'sm',
+					lg: 'md',
+				}}
+				py={{
+					base: 2,
+					lg: 8,
+				}}
+				leftSection={
+					<Avatar
+						size="sm"
+						mr={-6}
+					/>
+				}
+				{...props}
+			>
+				Tamu
+			</ButtonLink>
+		);
+	}
+
 	return (
 		<Menu
 			position="bottom-end"
@@ -393,7 +429,7 @@ export function HeaderApps({
 	className,
 	...props
 }: StackProps & {
-	authUser: User;
+	authUser?: User | null;
 }) {
 	return (
 		<Stack

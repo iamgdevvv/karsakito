@@ -73,3 +73,44 @@ export function queryParamsToString(payload: URLSearchParams) {
 
 	return `?${payload.toString()}`;
 }
+
+export function findActiveNavigation(
+	navs: {
+		value: string;
+	}[],
+	currentPath: string,
+) {
+	const matchNavs = navs.filter(
+		(item) => currentPath === item.value || currentPath.startsWith(`${item.value}/`),
+	);
+
+	if (matchNavs.length) {
+		matchNavs.sort((a, b) => b.value.length - a.value.length);
+
+		return matchNavs[0];
+	}
+
+	return undefined;
+}
+
+export function getYoutubeId(url: string) {
+	try {
+		const parsed = new URL(url, 'https://www.youtube.com');
+
+		if (parsed.hostname.includes('youtu.be')) {
+			return parsed.pathname.slice(1);
+		}
+
+		if (parsed.searchParams.has('v')) {
+			return parsed.searchParams.get('v');
+		}
+
+		const match = parsed.pathname.match(/\/(?:embed|shorts|live)\/([^/?]+)/);
+
+		if (match && match[1]) {
+			return match[1];
+		}
+	} catch {
+		return undefined;
+	}
+}

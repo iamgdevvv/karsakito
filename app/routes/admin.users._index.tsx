@@ -76,7 +76,7 @@ export function meta(_: Route.MetaArgs) {
 
 export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 	const navigation = useNavigation();
-	const isNavigating = useMemo(() => Boolean(navigation.location), [navigation.location]);
+	// const isNavigating = useMemo(() => Boolean(navigation.location), [navigation.location]);
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	const handlerSearchParams = useCallback(
@@ -118,7 +118,7 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 			<HeaderAdmin authUser={loaderData.user} />
 			<AdminPanel className="site-main">
 				<Title mb="lg">Manage Users</Title>
-				{isNavigating ? (
+				{navigation.state === 'loading' ? (
 					<Center>
 						<Loader />
 					</Center>

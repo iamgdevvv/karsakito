@@ -1,5 +1,3 @@
-'use client';
-
 import { Carousel } from '@mantine/carousel';
 import {
 	Alert,

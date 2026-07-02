@@ -27,7 +27,7 @@ export function NavLink(props: NavLinkProps) {
 	);
 }
 
-export function ButtonLink(props: ButtonProps & LinkProps) {
+export function ButtonLink(props: ButtonProps & Omit<LinkProps, 'style' | 'fill'>) {
 	return (
 		<Button
 			component={BaseLink}
