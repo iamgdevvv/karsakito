@@ -1,8 +1,8 @@
 import { Scene } from '@gfazioli/mantine-scene';
 import { Container, Flex, Group, Text, ThemeIcon, type FlexProps } from '@mantine/core';
 import { useMemo } from 'react';
-import { HiBookmark } from 'react-icons/hi';
 import { HiUser } from 'react-icons/hi2';
+import { MdSave } from 'react-icons/md';
 import { RiPencilAiFill } from 'react-icons/ri';
 import { TbAppsFilled } from 'react-icons/tb';
 import { useLocation, useNavigation } from 'react-router';
@@ -23,7 +23,7 @@ const navigations = [
 	{
 		label: 'Saved',
 		value: '/apps/workspace/saved',
-		icon: <HiBookmark />,
+		icon: <MdSave />,
 	},
 	{
 		label: 'Profile',
@@ -49,6 +49,7 @@ export default function AppPanel({
 			p={{
 				sm: 'xl',
 			}}
+			bg="white"
 			{...props}
 		>
 			<Scene
@@ -85,8 +86,9 @@ export default function AppPanel({
 					bottom={16}
 					w="100%"
 					mt="auto"
-					pt="xl"
+					pt="md"
 					justify="center"
+					className="z-2"
 				>
 					<Group
 						w="100%"

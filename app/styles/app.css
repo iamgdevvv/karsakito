@@ -230,3 +230,7 @@ img {
 		@apply text-black opacity-100;
 	}
 }
+
+.mantine-Window-header .mantine-ActionIcon-root {
+	@apply size-4;
+}

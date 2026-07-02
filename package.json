@@ -21,6 +21,7 @@
 	},
 	"dependencies": {
 		"@gfazioli/mantine-scene": "^2.2.6",
+		"@gfazioli/mantine-window": "^3.1.8",
 		"@mantine/carousel": "^9.4.1",
 		"@mantine/code-highlight": "^9.4.1",
 		"@mantine/core": "^9.4.1",

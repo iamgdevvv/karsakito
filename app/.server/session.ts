@@ -21,7 +21,7 @@ const {
     }),
 });
 
-const authGetSession = async (request: Request) => await getSession(request.headers.get('Cookie'))
+const authGetSession = (request: Request) => getSession(request.headers.get('Cookie'))
 
 const authMiddlewareSession = async ({
     guard,

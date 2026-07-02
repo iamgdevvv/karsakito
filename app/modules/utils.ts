@@ -16,6 +16,17 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
 
+export function slugify(str: string) {
+	return str
+		.normalize('NFD')
+		.replace(/[\u0300-\u036f]/g, '')
+		.replace(/^\s+|\s+$/g, '')
+		.toLowerCase()
+		.replace(/[^a-z0-9 -]/g, '')
+		.replace(/\s+/g, '-')
+		.replace(/-+/g, '-');
+}
+
 export const valueBooleanOrFalse = (value?: boolean | null | undefined): boolean => {
 	return value ?? false;
 };
@@ -42,7 +53,7 @@ export function qsParse(payload: string) {
 	});
 }
 
-export function toSearchParams<T extends Record<string, unknown>>(
+export function toPayloadSearchParams<T extends Record<string, unknown>>(
 	value: T,
 ): Record<string, string | string[]> {
 	return Object.fromEntries(

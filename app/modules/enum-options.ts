@@ -1,53 +1,51 @@
 import type { UserRole } from '~generated/prisma/enums';
 
 export enum Apps {
-	karsawriter = 'KarsaWriter',
-	karsalator = 'KarsaLator',
-	karsalisa = 'KarsaLisa',
-	karsafrase = 'KarsaFrase',
-	karsapedia = 'KarsaPedia',
-	karsalingo = 'KarsaLingo',
-}
-
-export enum AppsSoon {
-	karsapedia = 'KarsaPedia',
-	karsalingo = 'KarsaLingo',
+	karsawriter = 'karsawriter',
+	karsalator = 'karsalator',
+	karsalisa = 'karsalisa',
+	karsafrase = 'karsafrase',
+	karsapedia = 'karsapedia',
+	karsalingo = 'karsalingo',
 }
 
 export const optionsApps: {
-	label: Apps;
+	label: string;
 	value: keyof typeof Apps;
+	disabled?: boolean;
 	description: string;
 }[] = [
 	{
-		label: Apps.karsawriter,
+		label: 'KarsaWriter',
 		value: 'karsawriter',
 		description: 'Tulis konten dengan bantuan AI.',
 	},
 	{
-		label: Apps.karsalator,
+		label: 'KarsaLator',
 		value: 'karsalator',
 		description: 'Terjemahkan bahasa asing atau bahasa Indonesia dan bahasa daerah',
 	},
 	{
-		label: Apps.karsalisa,
+		label: 'KarsaLisa',
 		value: 'karsalisa',
 		description: 'Analisis dokumen dan data dengan AI.',
 	},
 	{
-		label: Apps.karsafrase,
+		label: 'KarsaFrase',
 		value: 'karsafrase',
 		description: 'Parafrase dan perbaiki kalimat.',
 	},
 	{
-		label: Apps.karsapedia,
+		label: 'KarsaPedia',
 		value: 'karsapedia',
 		description: 'Dapatkan informasi seputar budaya dan bahasa daerah.',
+		disabled: true,
 	},
 	{
-		label: Apps.karsalingo,
+		label: 'KarsaLingo',
 		value: 'karsalingo',
 		description: 'Belajar bahasa daerah dengan AI.',
+		disabled: true,
 	},
 ];
 

@@ -25,13 +25,12 @@ import {
 import theme from '~app-modules/theme';
 
 import '@gfazioli/mantine-scene/styles.css';
+import '@gfazioli/mantine-window/styles.css';
 import '@mantine/carousel/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/nprogress/styles.css';
 import '@mantine/spotlight/styles.css';
 import '@mantine/tiptap/styles.css';
-import '@vidstack/react/player/styles/default/layouts/video.css';
-import '@vidstack/react/player/styles/default/theme.css';
 
 import { ButtonLink } from '~app-ui/components/link';
 import Footer from '~app-ui/layouts/footer';

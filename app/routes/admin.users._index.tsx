@@ -25,7 +25,7 @@ import { redirect, useNavigation, useSearchParams } from 'react-router';
 import { optionsUserRole } from '~app-modules/enum-options';
 import { metaAdminRoute } from '~app-modules/meta';
 import type { PayloadQueryUsers } from '~app-modules/schema/user';
-import { toSearchParams } from '~app-modules/utils';
+import { toPayloadSearchParams } from '~app-modules/utils';
 import { authUserCtx } from '~app-server/context';
 import { authMiddlewareSession } from '~app-server/session';
 import { actionGetUsers } from '~app-server/user';
@@ -82,7 +82,7 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 	const handlerSearchParams = useCallback(
 		(payload: PayloadQueryUsers) => {
 			setSearchParams(
-				toSearchParams({
+				toPayloadSearchParams({
 					...loaderData.users.params,
 					...payload,
 				}),

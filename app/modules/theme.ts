@@ -12,6 +12,7 @@ import {
 	Select,
 	Textarea,
 	TextInput,
+	Tooltip,
 } from '@mantine/core';
 
 const theme = createTheme({
@@ -165,6 +166,11 @@ const theme = createTheme({
 				classNames: {
 					label: 'leading-tight',
 				},
+			},
+		}),
+		Tooltip: Tooltip.extend({
+			defaultProps: {
+				withinPortal: false,
 			},
 		}),
 		Popover: Popover.extend({
