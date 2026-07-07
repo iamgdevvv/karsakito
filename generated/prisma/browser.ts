@@ -27,3 +27,28 @@ export type User = Prisma.UserModel
  * 
  */
 export type Auth = Prisma.AuthModel
+/**
+ * Model Karsa
+ * 
+ */
+export type Karsa = Prisma.KarsaModel
+/**
+ * Model KarsaApps
+ * 
+ */
+export type KarsaApps = Prisma.KarsaAppsModel
+/**
+ * Model KarsaAppsCategory
+ * 
+ */
+export type KarsaAppsCategory = Prisma.KarsaAppsCategoryModel
+/**
+ * Model Balance
+ * 
+ */
+export type Balance = Prisma.BalanceModel
+/**
+ * Model BalanceActivity
+ * 
+ */
+export type BalanceActivity = Prisma.BalanceActivityModel

@@ -74,7 +74,7 @@ npx wrangler versions deploy
 
 ```sh
 npm run db:generate
-npm run db:migrate:create -- nama_migrasi
+npm run db:migrate:create nama_migrasi
 ```
 
 ### Initial Migration
@@ -86,7 +86,7 @@ npx prisma migrate diff --from-empty --to-schema ./prisma/schema.prisma --script
 ### Subsequent Migration
 
 ```sh
-npx prisma migrate diff --from-url file:./.wrangler/state/v3/d1/miniflare-D1DatabaseObject/XXXXXXXX.sqlite --to-schema-datamodel ./prisma/schema.prisma --script > migrations/0002_nama_migrasi_selanjutnya.sql
+npx prisma migrate diff --from-config-datasource file:./.wrangler/state/v3/d1/miniflare-D1DatabaseObject/XXXXXXXX.sqlite --to-schema ./prisma/schema.prisma --script > migrations/0002_nama_migrasi_selanjutnya.sql
 ```
 
 ```sh

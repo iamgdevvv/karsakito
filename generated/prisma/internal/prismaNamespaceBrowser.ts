@@ -52,7 +52,12 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Auth: 'Auth'
+  Auth: 'Auth',
+  Karsa: 'Karsa',
+  KarsaApps: 'KarsaApps',
+  KarsaAppsCategory: 'KarsaAppsCategory',
+  Balance: 'Balance',
+  BalanceActivity: 'BalanceActivity'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -83,10 +88,70 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 
 export const AuthScalarFieldEnum = {
   hash: 'hash',
+  updatedAt: 'updatedAt',
   userId: 'userId'
 } as const
 
 export type AuthScalarFieldEnum = (typeof AuthScalarFieldEnum)[keyof typeof AuthScalarFieldEnum]
+
+
+export const KarsaScalarFieldEnum = {
+  id: 'id',
+  app: 'app',
+  promptJson: 'promptJson',
+  result: 'result',
+  reaction: 'reaction',
+  feedback: 'feedback',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId',
+  balanceActivityId: 'balanceActivityId'
+} as const
+
+export type KarsaScalarFieldEnum = (typeof KarsaScalarFieldEnum)[keyof typeof KarsaScalarFieldEnum]
+
+
+export const KarsaAppsScalarFieldEnum = {
+  name: 'name',
+  token: 'token',
+  tokenPromo: 'tokenPromo',
+  visible: 'visible',
+  categoryId: 'categoryId'
+} as const
+
+export type KarsaAppsScalarFieldEnum = (typeof KarsaAppsScalarFieldEnum)[keyof typeof KarsaAppsScalarFieldEnum]
+
+
+export const KarsaAppsCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+} as const
+
+export type KarsaAppsCategoryScalarFieldEnum = (typeof KarsaAppsCategoryScalarFieldEnum)[keyof typeof KarsaAppsCategoryScalarFieldEnum]
+
+
+export const BalanceScalarFieldEnum = {
+  userId: 'userId',
+  token: 'token',
+  tokenDaily: 'tokenDaily'
+} as const
+
+export type BalanceScalarFieldEnum = (typeof BalanceScalarFieldEnum)[keyof typeof BalanceScalarFieldEnum]
+
+
+export const BalanceActivityScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  token: 'token',
+  tokenBefore: 'tokenBefore',
+  tokenAfter: 'tokenAfter',
+  description: 'description',
+  createdAt: 'createdAt',
+  balanceId: 'balanceId',
+  senderId: 'senderId'
+} as const
+
+export type BalanceActivityScalarFieldEnum = (typeof BalanceActivityScalarFieldEnum)[keyof typeof BalanceActivityScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -95,4 +160,37 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

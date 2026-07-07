@@ -199,6 +199,9 @@ export type UserWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string | runtime.Types.Skip
   auth?: Prisma.XOR<Prisma.AuthNullableScalarRelationFilter, Prisma.AuthWhereInput> | null | runtime.Types.Skip
+  balances?: Prisma.XOR<Prisma.BalanceNullableScalarRelationFilter, Prisma.BalanceWhereInput> | null | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityListRelationFilter | runtime.Types.Skip
+  karsas?: Prisma.KarsaListRelationFilter | runtime.Types.Skip
 }
 
 export type UserOrderByWithRelationInput = {
@@ -210,6 +213,9 @@ export type UserOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder | runtime.Types.Skip
   updatedAt?: Prisma.SortOrder | runtime.Types.Skip
   auth?: Prisma.AuthOrderByWithRelationInput | runtime.Types.Skip
+  balances?: Prisma.BalanceOrderByWithRelationInput | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityOrderByRelationAggregateInput | runtime.Types.Skip
+  karsas?: Prisma.KarsaOrderByRelationAggregateInput | runtime.Types.Skip
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -224,6 +230,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string | runtime.Types.Skip
   auth?: Prisma.XOR<Prisma.AuthNullableScalarRelationFilter, Prisma.AuthWhereInput> | null | runtime.Types.Skip
+  balances?: Prisma.XOR<Prisma.BalanceNullableScalarRelationFilter, Prisma.BalanceWhereInput> | null | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityListRelationFilter | runtime.Types.Skip
+  karsas?: Prisma.KarsaListRelationFilter | runtime.Types.Skip
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -261,6 +270,9 @@ export type UserCreateInput = {
   createdAt?: Date | string | runtime.Types.Skip
   updatedAt?: Date | string | runtime.Types.Skip
   auth?: Prisma.AuthCreateNestedOneWithoutUserInput | runtime.Types.Skip
+  balances?: Prisma.BalanceCreateNestedOneWithoutUserInput | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityCreateNestedManyWithoutSenderInput | runtime.Types.Skip
+  karsas?: Prisma.KarsaCreateNestedManyWithoutUserInput | runtime.Types.Skip
 }
 
 export type UserUncheckedCreateInput = {
@@ -272,6 +284,9 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string | runtime.Types.Skip
   updatedAt?: Date | string | runtime.Types.Skip
   auth?: Prisma.AuthUncheckedCreateNestedOneWithoutUserInput | runtime.Types.Skip
+  balances?: Prisma.BalanceUncheckedCreateNestedOneWithoutUserInput | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityUncheckedCreateNestedManyWithoutSenderInput | runtime.Types.Skip
+  karsas?: Prisma.KarsaUncheckedCreateNestedManyWithoutUserInput | runtime.Types.Skip
 }
 
 export type UserUpdateInput = {
@@ -283,6 +298,9 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   auth?: Prisma.AuthUpdateOneWithoutUserNestedInput | runtime.Types.Skip
+  balances?: Prisma.BalanceUpdateOneWithoutUserNestedInput | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityUpdateManyWithoutSenderNestedInput | runtime.Types.Skip
+  karsas?: Prisma.KarsaUpdateManyWithoutUserNestedInput | runtime.Types.Skip
 }
 
 export type UserUncheckedUpdateInput = {
@@ -294,6 +312,9 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   auth?: Prisma.AuthUncheckedUpdateOneWithoutUserNestedInput | runtime.Types.Skip
+  balances?: Prisma.BalanceUncheckedUpdateOneWithoutUserNestedInput | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityUncheckedUpdateManyWithoutSenderNestedInput | runtime.Types.Skip
+  karsas?: Prisma.KarsaUncheckedUpdateManyWithoutUserNestedInput | runtime.Types.Skip
 }
 
 export type UserCreateManyInput = {
@@ -361,6 +382,11 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput | runtime.Types.Skip
 }
 
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null | runtime.Types.Skip
+  isNot?: Prisma.UserWhereInput | null | runtime.Types.Skip
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string | runtime.Types.Skip
 }
@@ -391,6 +417,50 @@ export type UserUpdateOneRequiredWithoutAuthNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAuthInput, Prisma.UserUpdateWithoutAuthInput>, Prisma.UserUncheckedUpdateWithoutAuthInput> | runtime.Types.Skip
 }
 
+export type UserCreateNestedOneWithoutKarsasInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutKarsasInput, Prisma.UserUncheckedCreateWithoutKarsasInput> | runtime.Types.Skip
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutKarsasInput | runtime.Types.Skip
+  connect?: Prisma.UserWhereUniqueInput | runtime.Types.Skip
+}
+
+export type UserUpdateOneRequiredWithoutKarsasNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutKarsasInput, Prisma.UserUncheckedCreateWithoutKarsasInput> | runtime.Types.Skip
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutKarsasInput | runtime.Types.Skip
+  upsert?: Prisma.UserUpsertWithoutKarsasInput | runtime.Types.Skip
+  connect?: Prisma.UserWhereUniqueInput | runtime.Types.Skip
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutKarsasInput, Prisma.UserUpdateWithoutKarsasInput>, Prisma.UserUncheckedUpdateWithoutKarsasInput> | runtime.Types.Skip
+}
+
+export type UserCreateNestedOneWithoutBalancesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBalancesInput, Prisma.UserUncheckedCreateWithoutBalancesInput> | runtime.Types.Skip
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBalancesInput | runtime.Types.Skip
+  connect?: Prisma.UserWhereUniqueInput | runtime.Types.Skip
+}
+
+export type UserUpdateOneRequiredWithoutBalancesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBalancesInput, Prisma.UserUncheckedCreateWithoutBalancesInput> | runtime.Types.Skip
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBalancesInput | runtime.Types.Skip
+  upsert?: Prisma.UserUpsertWithoutBalancesInput | runtime.Types.Skip
+  connect?: Prisma.UserWhereUniqueInput | runtime.Types.Skip
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBalancesInput, Prisma.UserUpdateWithoutBalancesInput>, Prisma.UserUncheckedUpdateWithoutBalancesInput> | runtime.Types.Skip
+}
+
+export type UserCreateNestedOneWithoutBalanceActivitiesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBalanceActivitiesInput, Prisma.UserUncheckedCreateWithoutBalanceActivitiesInput> | runtime.Types.Skip
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBalanceActivitiesInput | runtime.Types.Skip
+  connect?: Prisma.UserWhereUniqueInput | runtime.Types.Skip
+}
+
+export type UserUpdateOneWithoutBalanceActivitiesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBalanceActivitiesInput, Prisma.UserUncheckedCreateWithoutBalanceActivitiesInput> | runtime.Types.Skip
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBalanceActivitiesInput | runtime.Types.Skip
+  upsert?: Prisma.UserUpsertWithoutBalanceActivitiesInput | runtime.Types.Skip
+  disconnect?: Prisma.UserWhereInput | boolean | runtime.Types.Skip
+  delete?: Prisma.UserWhereInput | boolean | runtime.Types.Skip
+  connect?: Prisma.UserWhereUniqueInput | runtime.Types.Skip
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBalanceActivitiesInput, Prisma.UserUpdateWithoutBalanceActivitiesInput>, Prisma.UserUncheckedUpdateWithoutBalanceActivitiesInput> | runtime.Types.Skip
+}
+
 export type UserCreateWithoutAuthInput = {
   id?: string | runtime.Types.Skip
   name: string
@@ -399,6 +469,9 @@ export type UserCreateWithoutAuthInput = {
   isActive?: boolean | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   updatedAt?: Date | string | runtime.Types.Skip
+  balances?: Prisma.BalanceCreateNestedOneWithoutUserInput | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityCreateNestedManyWithoutSenderInput | runtime.Types.Skip
+  karsas?: Prisma.KarsaCreateNestedManyWithoutUserInput | runtime.Types.Skip
 }
 
 export type UserUncheckedCreateWithoutAuthInput = {
@@ -409,6 +482,9 @@ export type UserUncheckedCreateWithoutAuthInput = {
   isActive?: boolean | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   updatedAt?: Date | string | runtime.Types.Skip
+  balances?: Prisma.BalanceUncheckedCreateNestedOneWithoutUserInput | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityUncheckedCreateNestedManyWithoutSenderInput | runtime.Types.Skip
+  karsas?: Prisma.KarsaUncheckedCreateNestedManyWithoutUserInput | runtime.Types.Skip
 }
 
 export type UserCreateOrConnectWithoutAuthInput = {
@@ -435,6 +511,9 @@ export type UserUpdateWithoutAuthInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  balances?: Prisma.BalanceUpdateOneWithoutUserNestedInput | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityUpdateManyWithoutSenderNestedInput | runtime.Types.Skip
+  karsas?: Prisma.KarsaUpdateManyWithoutUserNestedInput | runtime.Types.Skip
 }
 
 export type UserUncheckedUpdateWithoutAuthInput = {
@@ -445,8 +524,253 @@ export type UserUncheckedUpdateWithoutAuthInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  balances?: Prisma.BalanceUncheckedUpdateOneWithoutUserNestedInput | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityUncheckedUpdateManyWithoutSenderNestedInput | runtime.Types.Skip
+  karsas?: Prisma.KarsaUncheckedUpdateManyWithoutUserNestedInput | runtime.Types.Skip
 }
 
+export type UserCreateWithoutKarsasInput = {
+  id?: string | runtime.Types.Skip
+  name: string
+  email: string
+  role?: $Enums.UserRole | runtime.Types.Skip
+  isActive?: boolean | runtime.Types.Skip
+  createdAt?: Date | string | runtime.Types.Skip
+  updatedAt?: Date | string | runtime.Types.Skip
+  auth?: Prisma.AuthCreateNestedOneWithoutUserInput | runtime.Types.Skip
+  balances?: Prisma.BalanceCreateNestedOneWithoutUserInput | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityCreateNestedManyWithoutSenderInput | runtime.Types.Skip
+}
+
+export type UserUncheckedCreateWithoutKarsasInput = {
+  id?: string | runtime.Types.Skip
+  name: string
+  email: string
+  role?: $Enums.UserRole | runtime.Types.Skip
+  isActive?: boolean | runtime.Types.Skip
+  createdAt?: Date | string | runtime.Types.Skip
+  updatedAt?: Date | string | runtime.Types.Skip
+  auth?: Prisma.AuthUncheckedCreateNestedOneWithoutUserInput | runtime.Types.Skip
+  balances?: Prisma.BalanceUncheckedCreateNestedOneWithoutUserInput | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityUncheckedCreateNestedManyWithoutSenderInput | runtime.Types.Skip
+}
+
+export type UserCreateOrConnectWithoutKarsasInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutKarsasInput, Prisma.UserUncheckedCreateWithoutKarsasInput>
+}
+
+export type UserUpsertWithoutKarsasInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutKarsasInput, Prisma.UserUncheckedUpdateWithoutKarsasInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutKarsasInput, Prisma.UserUncheckedCreateWithoutKarsasInput>
+  where?: Prisma.UserWhereInput | runtime.Types.Skip
+}
+
+export type UserUpdateToOneWithWhereWithoutKarsasInput = {
+  where?: Prisma.UserWhereInput | runtime.Types.Skip
+  data: Prisma.XOR<Prisma.UserUpdateWithoutKarsasInput, Prisma.UserUncheckedUpdateWithoutKarsasInput>
+}
+
+export type UserUpdateWithoutKarsasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  name?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  email?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole | runtime.Types.Skip
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  auth?: Prisma.AuthUpdateOneWithoutUserNestedInput | runtime.Types.Skip
+  balances?: Prisma.BalanceUpdateOneWithoutUserNestedInput | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityUpdateManyWithoutSenderNestedInput | runtime.Types.Skip
+}
+
+export type UserUncheckedUpdateWithoutKarsasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  name?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  email?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole | runtime.Types.Skip
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  auth?: Prisma.AuthUncheckedUpdateOneWithoutUserNestedInput | runtime.Types.Skip
+  balances?: Prisma.BalanceUncheckedUpdateOneWithoutUserNestedInput | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityUncheckedUpdateManyWithoutSenderNestedInput | runtime.Types.Skip
+}
+
+export type UserCreateWithoutBalancesInput = {
+  id?: string | runtime.Types.Skip
+  name: string
+  email: string
+  role?: $Enums.UserRole | runtime.Types.Skip
+  isActive?: boolean | runtime.Types.Skip
+  createdAt?: Date | string | runtime.Types.Skip
+  updatedAt?: Date | string | runtime.Types.Skip
+  auth?: Prisma.AuthCreateNestedOneWithoutUserInput | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityCreateNestedManyWithoutSenderInput | runtime.Types.Skip
+  karsas?: Prisma.KarsaCreateNestedManyWithoutUserInput | runtime.Types.Skip
+}
+
+export type UserUncheckedCreateWithoutBalancesInput = {
+  id?: string | runtime.Types.Skip
+  name: string
+  email: string
+  role?: $Enums.UserRole | runtime.Types.Skip
+  isActive?: boolean | runtime.Types.Skip
+  createdAt?: Date | string | runtime.Types.Skip
+  updatedAt?: Date | string | runtime.Types.Skip
+  auth?: Prisma.AuthUncheckedCreateNestedOneWithoutUserInput | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityUncheckedCreateNestedManyWithoutSenderInput | runtime.Types.Skip
+  karsas?: Prisma.KarsaUncheckedCreateNestedManyWithoutUserInput | runtime.Types.Skip
+}
+
+export type UserCreateOrConnectWithoutBalancesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutBalancesInput, Prisma.UserUncheckedCreateWithoutBalancesInput>
+}
+
+export type UserUpsertWithoutBalancesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutBalancesInput, Prisma.UserUncheckedUpdateWithoutBalancesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutBalancesInput, Prisma.UserUncheckedCreateWithoutBalancesInput>
+  where?: Prisma.UserWhereInput | runtime.Types.Skip
+}
+
+export type UserUpdateToOneWithWhereWithoutBalancesInput = {
+  where?: Prisma.UserWhereInput | runtime.Types.Skip
+  data: Prisma.XOR<Prisma.UserUpdateWithoutBalancesInput, Prisma.UserUncheckedUpdateWithoutBalancesInput>
+}
+
+export type UserUpdateWithoutBalancesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  name?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  email?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole | runtime.Types.Skip
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  auth?: Prisma.AuthUpdateOneWithoutUserNestedInput | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityUpdateManyWithoutSenderNestedInput | runtime.Types.Skip
+  karsas?: Prisma.KarsaUpdateManyWithoutUserNestedInput | runtime.Types.Skip
+}
+
+export type UserUncheckedUpdateWithoutBalancesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  name?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  email?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole | runtime.Types.Skip
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  auth?: Prisma.AuthUncheckedUpdateOneWithoutUserNestedInput | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityUncheckedUpdateManyWithoutSenderNestedInput | runtime.Types.Skip
+  karsas?: Prisma.KarsaUncheckedUpdateManyWithoutUserNestedInput | runtime.Types.Skip
+}
+
+export type UserCreateWithoutBalanceActivitiesInput = {
+  id?: string | runtime.Types.Skip
+  name: string
+  email: string
+  role?: $Enums.UserRole | runtime.Types.Skip
+  isActive?: boolean | runtime.Types.Skip
+  createdAt?: Date | string | runtime.Types.Skip
+  updatedAt?: Date | string | runtime.Types.Skip
+  auth?: Prisma.AuthCreateNestedOneWithoutUserInput | runtime.Types.Skip
+  balances?: Prisma.BalanceCreateNestedOneWithoutUserInput | runtime.Types.Skip
+  karsas?: Prisma.KarsaCreateNestedManyWithoutUserInput | runtime.Types.Skip
+}
+
+export type UserUncheckedCreateWithoutBalanceActivitiesInput = {
+  id?: string | runtime.Types.Skip
+  name: string
+  email: string
+  role?: $Enums.UserRole | runtime.Types.Skip
+  isActive?: boolean | runtime.Types.Skip
+  createdAt?: Date | string | runtime.Types.Skip
+  updatedAt?: Date | string | runtime.Types.Skip
+  auth?: Prisma.AuthUncheckedCreateNestedOneWithoutUserInput | runtime.Types.Skip
+  balances?: Prisma.BalanceUncheckedCreateNestedOneWithoutUserInput | runtime.Types.Skip
+  karsas?: Prisma.KarsaUncheckedCreateNestedManyWithoutUserInput | runtime.Types.Skip
+}
+
+export type UserCreateOrConnectWithoutBalanceActivitiesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutBalanceActivitiesInput, Prisma.UserUncheckedCreateWithoutBalanceActivitiesInput>
+}
+
+export type UserUpsertWithoutBalanceActivitiesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutBalanceActivitiesInput, Prisma.UserUncheckedUpdateWithoutBalanceActivitiesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutBalanceActivitiesInput, Prisma.UserUncheckedCreateWithoutBalanceActivitiesInput>
+  where?: Prisma.UserWhereInput | runtime.Types.Skip
+}
+
+export type UserUpdateToOneWithWhereWithoutBalanceActivitiesInput = {
+  where?: Prisma.UserWhereInput | runtime.Types.Skip
+  data: Prisma.XOR<Prisma.UserUpdateWithoutBalanceActivitiesInput, Prisma.UserUncheckedUpdateWithoutBalanceActivitiesInput>
+}
+
+export type UserUpdateWithoutBalanceActivitiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  name?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  email?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole | runtime.Types.Skip
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  auth?: Prisma.AuthUpdateOneWithoutUserNestedInput | runtime.Types.Skip
+  balances?: Prisma.BalanceUpdateOneWithoutUserNestedInput | runtime.Types.Skip
+  karsas?: Prisma.KarsaUpdateManyWithoutUserNestedInput | runtime.Types.Skip
+}
+
+export type UserUncheckedUpdateWithoutBalanceActivitiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  name?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  email?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole | runtime.Types.Skip
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  auth?: Prisma.AuthUncheckedUpdateOneWithoutUserNestedInput | runtime.Types.Skip
+  balances?: Prisma.BalanceUncheckedUpdateOneWithoutUserNestedInput | runtime.Types.Skip
+  karsas?: Prisma.KarsaUncheckedUpdateManyWithoutUserNestedInput | runtime.Types.Skip
+}
+
+
+/**
+ * Count Type UserCountOutputType
+ */
+
+export type UserCountOutputType = {
+  balanceActivities: number
+  karsas: number
+}
+
+export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  balanceActivities?: boolean | UserCountOutputTypeCountBalanceActivitiesArgs
+  karsas?: boolean | UserCountOutputTypeCountKarsasArgs
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserCountOutputType
+   */
+  select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountBalanceActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BalanceActivityWhereInput | runtime.Types.Skip
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountKarsasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.KarsaWhereInput | runtime.Types.Skip
+}
 
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -458,6 +782,10 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean | runtime.Types.Skip
   updatedAt?: boolean | runtime.Types.Skip
   auth?: boolean | Prisma.User$authArgs<ExtArgs> | runtime.Types.Skip
+  balances?: boolean | Prisma.User$balancesArgs<ExtArgs> | runtime.Types.Skip
+  balanceActivities?: boolean | Prisma.User$balanceActivitiesArgs<ExtArgs> | runtime.Types.Skip
+  karsas?: boolean | Prisma.User$karsasArgs<ExtArgs> | runtime.Types.Skip
+  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs> | runtime.Types.Skip
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -493,6 +821,10 @@ export type UserSelectScalar = {
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "role" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["user"], runtime.Types.Skip>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   auth?: boolean | Prisma.User$authArgs<ExtArgs> | runtime.Types.Skip
+  balances?: boolean | Prisma.User$balancesArgs<ExtArgs> | runtime.Types.Skip
+  balanceActivities?: boolean | Prisma.User$balanceActivitiesArgs<ExtArgs> | runtime.Types.Skip
+  karsas?: boolean | Prisma.User$karsasArgs<ExtArgs> | runtime.Types.Skip
+  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs> | runtime.Types.Skip
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -501,6 +833,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     auth: Prisma.$AuthPayload<ExtArgs> | null
+    balances: Prisma.$BalancePayload<ExtArgs> | null
+    balanceActivities: Prisma.$BalanceActivityPayload<ExtArgs>[]
+    karsas: Prisma.$KarsaPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -908,6 +1243,9 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   auth<T extends Prisma.User$authArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$authArgs<ExtArgs>>): Prisma.Prisma__AuthClient<runtime.Types.Result.GetResult<Prisma.$AuthPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  balances<T extends Prisma.User$balancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$balancesArgs<ExtArgs>>): Prisma.Prisma__BalanceClient<runtime.Types.Result.GetResult<Prisma.$BalancePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  balanceActivities<T extends Prisma.User$balanceActivitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$balanceActivitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BalanceActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  karsas<T extends Prisma.User$karsasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$karsasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KarsaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1351,6 +1689,73 @@ export type User$authArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs 
    */
   include?: Prisma.AuthInclude<ExtArgs> | null
   where?: Prisma.AuthWhereInput | runtime.Types.Skip
+}
+
+/**
+ * User.balances
+ */
+export type User$balancesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Balance
+   */
+  select?: Prisma.BalanceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Balance
+   */
+  omit?: Prisma.BalanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BalanceInclude<ExtArgs> | null
+  where?: Prisma.BalanceWhereInput | runtime.Types.Skip
+}
+
+/**
+ * User.balanceActivities
+ */
+export type User$balanceActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BalanceActivity
+   */
+  select?: Prisma.BalanceActivitySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BalanceActivity
+   */
+  omit?: Prisma.BalanceActivityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BalanceActivityInclude<ExtArgs> | null
+  where?: Prisma.BalanceActivityWhereInput | runtime.Types.Skip
+  orderBy?: Prisma.BalanceActivityOrderByWithRelationInput | Prisma.BalanceActivityOrderByWithRelationInput[] | runtime.Types.Skip
+  cursor?: Prisma.BalanceActivityWhereUniqueInput | runtime.Types.Skip
+  take?: number | runtime.Types.Skip
+  skip?: number | runtime.Types.Skip
+  distinct?: Prisma.BalanceActivityScalarFieldEnum | Prisma.BalanceActivityScalarFieldEnum[] | runtime.Types.Skip
+}
+
+/**
+ * User.karsas
+ */
+export type User$karsasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Karsa
+   */
+  select?: Prisma.KarsaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Karsa
+   */
+  omit?: Prisma.KarsaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KarsaInclude<ExtArgs> | null
+  where?: Prisma.KarsaWhereInput | runtime.Types.Skip
+  orderBy?: Prisma.KarsaOrderByWithRelationInput | Prisma.KarsaOrderByWithRelationInput[] | runtime.Types.Skip
+  cursor?: Prisma.KarsaWhereUniqueInput | runtime.Types.Skip
+  take?: number | runtime.Types.Skip
+  skip?: number | runtime.Types.Skip
+  distinct?: Prisma.KarsaScalarFieldEnum | Prisma.KarsaScalarFieldEnum[] | runtime.Types.Skip
 }
 
 /**

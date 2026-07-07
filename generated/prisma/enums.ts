@@ -16,3 +16,43 @@ export const UserRole = {
 } as const
 
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+
+export const BalanceActivityType = {
+  KARSA: 'KARSA',
+  DAILY_BONUS: 'DAILY_BONUS',
+  PURCHASE: 'PURCHASE',
+  GIVEAWAY: 'GIVEAWAY'
+} as const
+
+export type BalanceActivityType = (typeof BalanceActivityType)[keyof typeof BalanceActivityType]
+
+
+export const KarsaAppsName = {
+  pidato: 'pidato',
+  pantun: 'pantun',
+  syair: 'syair',
+  puisi: 'puisi',
+  hymne: 'hymne',
+  ceritapendek: 'ceritapendek',
+  ceritapanjang: 'ceritapanjang',
+  doabersama: 'doabersama',
+  petuah: 'petuah',
+  tagline: 'tagline',
+  slogan: 'slogan',
+  motto: 'motto',
+  tekateki: 'tekateki',
+  parafrase: 'parafrase',
+  adaptasidialek: 'adaptasidialek',
+  rangkuman: 'rangkuman',
+  analisakalimat: 'analisakalimat',
+  analisadokumen: 'analisadokumen',
+  terjemahankalimat: 'terjemahankalimat',
+  terjemahandokumen: 'terjemahandokumen',
+  peribahasa: 'peribahasa',
+  adatistiadat: 'adatistiadat',
+  sejarah: 'sejarah',
+  artefak: 'artefak'
+} as const
+
+export type KarsaAppsName = (typeof KarsaAppsName)[keyof typeof KarsaAppsName]

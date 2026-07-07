@@ -390,7 +390,12 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
-  Auth: 'Auth'
+  Auth: 'Auth',
+  Karsa: 'Karsa',
+  KarsaApps: 'KarsaApps',
+  KarsaAppsCategory: 'KarsaAppsCategory',
+  Balance: 'Balance',
+  BalanceActivity: 'BalanceActivity'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -406,7 +411,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "auth"
+    modelProps: "user" | "auth" | "karsa" | "karsaApps" | "karsaAppsCategory" | "balance" | "balanceActivity"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -558,6 +563,376 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Karsa: {
+      payload: Prisma.$KarsaPayload<ExtArgs>
+      fields: Prisma.KarsaFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.KarsaFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.KarsaFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaPayload>
+        }
+        findFirst: {
+          args: Prisma.KarsaFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.KarsaFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaPayload>
+        }
+        findMany: {
+          args: Prisma.KarsaFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaPayload>[]
+        }
+        create: {
+          args: Prisma.KarsaCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaPayload>
+        }
+        createMany: {
+          args: Prisma.KarsaCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.KarsaCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaPayload>[]
+        }
+        delete: {
+          args: Prisma.KarsaDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaPayload>
+        }
+        update: {
+          args: Prisma.KarsaUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaPayload>
+        }
+        deleteMany: {
+          args: Prisma.KarsaDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.KarsaUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.KarsaUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaPayload>[]
+        }
+        upsert: {
+          args: Prisma.KarsaUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaPayload>
+        }
+        aggregate: {
+          args: Prisma.KarsaAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKarsa>
+        }
+        groupBy: {
+          args: Prisma.KarsaGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KarsaGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.KarsaCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KarsaCountAggregateOutputType> | number
+        }
+      }
+    }
+    KarsaApps: {
+      payload: Prisma.$KarsaAppsPayload<ExtArgs>
+      fields: Prisma.KarsaAppsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.KarsaAppsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.KarsaAppsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload>
+        }
+        findFirst: {
+          args: Prisma.KarsaAppsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.KarsaAppsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload>
+        }
+        findMany: {
+          args: Prisma.KarsaAppsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload>[]
+        }
+        create: {
+          args: Prisma.KarsaAppsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload>
+        }
+        createMany: {
+          args: Prisma.KarsaAppsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.KarsaAppsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload>[]
+        }
+        delete: {
+          args: Prisma.KarsaAppsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload>
+        }
+        update: {
+          args: Prisma.KarsaAppsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload>
+        }
+        deleteMany: {
+          args: Prisma.KarsaAppsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.KarsaAppsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.KarsaAppsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload>[]
+        }
+        upsert: {
+          args: Prisma.KarsaAppsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload>
+        }
+        aggregate: {
+          args: Prisma.KarsaAppsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKarsaApps>
+        }
+        groupBy: {
+          args: Prisma.KarsaAppsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KarsaAppsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.KarsaAppsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KarsaAppsCountAggregateOutputType> | number
+        }
+      }
+    }
+    KarsaAppsCategory: {
+      payload: Prisma.$KarsaAppsCategoryPayload<ExtArgs>
+      fields: Prisma.KarsaAppsCategoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.KarsaAppsCategoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.KarsaAppsCategoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload>
+        }
+        findFirst: {
+          args: Prisma.KarsaAppsCategoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.KarsaAppsCategoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload>
+        }
+        findMany: {
+          args: Prisma.KarsaAppsCategoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload>[]
+        }
+        create: {
+          args: Prisma.KarsaAppsCategoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload>
+        }
+        createMany: {
+          args: Prisma.KarsaAppsCategoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.KarsaAppsCategoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload>[]
+        }
+        delete: {
+          args: Prisma.KarsaAppsCategoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload>
+        }
+        update: {
+          args: Prisma.KarsaAppsCategoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.KarsaAppsCategoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.KarsaAppsCategoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.KarsaAppsCategoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.KarsaAppsCategoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload>
+        }
+        aggregate: {
+          args: Prisma.KarsaAppsCategoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKarsaAppsCategory>
+        }
+        groupBy: {
+          args: Prisma.KarsaAppsCategoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KarsaAppsCategoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.KarsaAppsCategoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KarsaAppsCategoryCountAggregateOutputType> | number
+        }
+      }
+    }
+    Balance: {
+      payload: Prisma.$BalancePayload<ExtArgs>
+      fields: Prisma.BalanceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BalanceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalancePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BalanceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalancePayload>
+        }
+        findFirst: {
+          args: Prisma.BalanceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalancePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BalanceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalancePayload>
+        }
+        findMany: {
+          args: Prisma.BalanceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalancePayload>[]
+        }
+        create: {
+          args: Prisma.BalanceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalancePayload>
+        }
+        createMany: {
+          args: Prisma.BalanceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BalanceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalancePayload>[]
+        }
+        delete: {
+          args: Prisma.BalanceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalancePayload>
+        }
+        update: {
+          args: Prisma.BalanceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalancePayload>
+        }
+        deleteMany: {
+          args: Prisma.BalanceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BalanceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BalanceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalancePayload>[]
+        }
+        upsert: {
+          args: Prisma.BalanceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalancePayload>
+        }
+        aggregate: {
+          args: Prisma.BalanceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBalance>
+        }
+        groupBy: {
+          args: Prisma.BalanceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BalanceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BalanceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BalanceCountAggregateOutputType> | number
+        }
+      }
+    }
+    BalanceActivity: {
+      payload: Prisma.$BalanceActivityPayload<ExtArgs>
+      fields: Prisma.BalanceActivityFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BalanceActivityFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceActivityPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BalanceActivityFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceActivityPayload>
+        }
+        findFirst: {
+          args: Prisma.BalanceActivityFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceActivityPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BalanceActivityFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceActivityPayload>
+        }
+        findMany: {
+          args: Prisma.BalanceActivityFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceActivityPayload>[]
+        }
+        create: {
+          args: Prisma.BalanceActivityCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceActivityPayload>
+        }
+        createMany: {
+          args: Prisma.BalanceActivityCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BalanceActivityCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceActivityPayload>[]
+        }
+        delete: {
+          args: Prisma.BalanceActivityDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceActivityPayload>
+        }
+        update: {
+          args: Prisma.BalanceActivityUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceActivityPayload>
+        }
+        deleteMany: {
+          args: Prisma.BalanceActivityDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BalanceActivityUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BalanceActivityUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceActivityPayload>[]
+        }
+        upsert: {
+          args: Prisma.BalanceActivityUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BalanceActivityPayload>
+        }
+        aggregate: {
+          args: Prisma.BalanceActivityAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBalanceActivity>
+        }
+        groupBy: {
+          args: Prisma.BalanceActivityGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BalanceActivityGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BalanceActivityCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BalanceActivityCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -609,10 +984,70 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 
 export const AuthScalarFieldEnum = {
   hash: 'hash',
+  updatedAt: 'updatedAt',
   userId: 'userId'
 } as const
 
 export type AuthScalarFieldEnum = (typeof AuthScalarFieldEnum)[keyof typeof AuthScalarFieldEnum]
+
+
+export const KarsaScalarFieldEnum = {
+  id: 'id',
+  app: 'app',
+  promptJson: 'promptJson',
+  result: 'result',
+  reaction: 'reaction',
+  feedback: 'feedback',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId',
+  balanceActivityId: 'balanceActivityId'
+} as const
+
+export type KarsaScalarFieldEnum = (typeof KarsaScalarFieldEnum)[keyof typeof KarsaScalarFieldEnum]
+
+
+export const KarsaAppsScalarFieldEnum = {
+  name: 'name',
+  token: 'token',
+  tokenPromo: 'tokenPromo',
+  visible: 'visible',
+  categoryId: 'categoryId'
+} as const
+
+export type KarsaAppsScalarFieldEnum = (typeof KarsaAppsScalarFieldEnum)[keyof typeof KarsaAppsScalarFieldEnum]
+
+
+export const KarsaAppsCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+} as const
+
+export type KarsaAppsCategoryScalarFieldEnum = (typeof KarsaAppsCategoryScalarFieldEnum)[keyof typeof KarsaAppsCategoryScalarFieldEnum]
+
+
+export const BalanceScalarFieldEnum = {
+  userId: 'userId',
+  token: 'token',
+  tokenDaily: 'tokenDaily'
+} as const
+
+export type BalanceScalarFieldEnum = (typeof BalanceScalarFieldEnum)[keyof typeof BalanceScalarFieldEnum]
+
+
+export const BalanceActivityScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  token: 'token',
+  tokenBefore: 'tokenBefore',
+  tokenAfter: 'tokenAfter',
+  description: 'description',
+  createdAt: 'createdAt',
+  balanceId: 'balanceId',
+  senderId: 'senderId'
+} as const
+
+export type BalanceActivityScalarFieldEnum = (typeof BalanceActivityScalarFieldEnum)[keyof typeof BalanceActivityScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -621,6 +1056,39 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
 
@@ -658,9 +1126,44 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
 
 
 /**
+ * Reference to a field of type 'KarsaAppsName'
+ */
+export type EnumKarsaAppsNameFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KarsaAppsName'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'BalanceActivityType'
+ */
+export type EnumBalanceActivityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BalanceActivityType'>
+    
+
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
     
 
 /**
@@ -775,6 +1278,11 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   auth?: Prisma.AuthOmit
+  karsa?: Prisma.KarsaOmit
+  karsaApps?: Prisma.KarsaAppsOmit
+  karsaAppsCategory?: Prisma.KarsaAppsCategoryOmit
+  balance?: Prisma.BalanceOmit
+  balanceActivity?: Prisma.BalanceActivityOmit
 }
 
 /* Types for Logging */

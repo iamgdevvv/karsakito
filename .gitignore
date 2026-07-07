@@ -11,6 +11,7 @@
 .mf
 .wrangler
 .dev.vars*
+/migrations/
 
 !.dev.vars.example
 !.env.example

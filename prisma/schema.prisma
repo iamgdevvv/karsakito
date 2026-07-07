@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
     provider        = "prisma-client"
     output          = "../generated/prisma"
@@ -26,6 +21,40 @@ enum UserRole {
     CUSTOMER
 }
 
+enum BalanceActivityType {
+    KARSA
+    DAILY_BONUS
+    PURCHASE
+    GIVEAWAY
+}
+
+enum KarsaAppsName {
+    pidato
+    pantun
+    syair
+    puisi
+    hymne
+    ceritapendek
+    ceritapanjang
+    doabersama
+    petuah
+    tagline
+    slogan
+    motto
+    tekateki
+    parafrase
+    adaptasidialek
+    rangkuman
+    analisakalimat
+    analisadokumen
+    terjemahankalimat
+    terjemahandokumen
+    peribahasa
+    adatistiadat
+    sejarah
+    artefak
+}
+
 model User {
     id        String   @id @default(uuid(7))
     name      String
@@ -34,18 +63,95 @@ model User {
     role      UserRole @default(CUSTOMER)
     isActive  Boolean  @default(true)
     createdAt DateTime @default(now())
-    updatedAt DateTime @default(now()) @updatedAt
+    updatedAt DateTime @updatedAt
 
-    auth Auth?
+    auth              Auth?
+    balances          Balance?
+    balanceActivities BalanceActivity[]
+    karsas            Karsa[]
 
     @@map("user")
 }
 
 model Auth {
-    hash String
+    hash      String
+    updatedAt DateTime @updatedAt
 
     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-    userId String @unique
+    userId String @id
 
     @@map("auth")
+}
+
+model Karsa {
+    id         String        @id @default(uuid(7))
+    app        KarsaAppsName
+    promptJson Json?
+    result     String
+    reaction   Boolean?
+    feedback   String?
+    createdAt  DateTime      @default(now())
+    updatedAt  DateTime      @updatedAt
+
+    user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId            String
+    balanceActivity   BalanceActivity @relation(fields: [balanceActivityId], references: [id], onDelete: Cascade)
+    balanceActivityId String          @unique
+
+    @@index([userId, createdAt])
+    @@map("karsa")
+}
+
+model KarsaApps {
+    name       KarsaAppsName @id
+    token      Int
+    tokenPromo Int?
+    visible    Boolean       @default(true)
+
+    category   KarsaAppsCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+    categoryId String
+
+    @@index([categoryId])
+    @@map("karsa_apps")
+}
+
+model KarsaAppsCategory {
+    id   String @id @default(uuid(7))
+    name String
+
+    apps KarsaApps[]
+
+    @@map("karsa_apps_category")
+}
+
+model Balance {
+    userId     String @id
+    token      Int    @default(0)
+    tokenDaily Int    @default(0)
+
+    user       User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+    activities BalanceActivity[]
+
+    @@map("balance")
+}
+
+model BalanceActivity {
+    id          String              @id @default(uuid(7))
+    type        BalanceActivityType
+    token       Int
+    tokenBefore Int
+    tokenAfter  Int
+    description String?
+    createdAt   DateTime            @default(now())
+
+    balance   Balance @relation(fields: [balanceId], references: [userId], onDelete: Cascade)
+    balanceId String
+    sender    User?   @relation(fields: [senderId], references: [id], onDelete: Cascade)
+    senderId  String?
+
+    karsa Karsa?
+
+    @@index([balanceId, createdAt])
+    @@index([senderId])
+    @@map("balance_activity")
 }
