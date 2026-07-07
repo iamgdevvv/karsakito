@@ -72,27 +72,60 @@ npx wrangler versions deploy
 
 ## Database
 
-```sh
+Project ini memakai Prisma untuk schema dan type generation, lalu Cloudflare D1 untuk database di runtime.
+
+Kalau kamu pakai PowerShell di Windows, pakai `cmd /c` supaya command `npm` dan `npx` tidak kena policy eksekusi.
+
+### 1. Generate Prisma client
+
+```bash
 npm run db:generate
-npm run db:migrate:create nama_migrasi
 ```
 
-### Initial Migration
+### 2. Buat migrasi baru
 
-```sh
-npx prisma migrate diff --from-empty --to-schema ./prisma/schema.prisma --script > migrations/0001_nama_migrasi.sql
+```bash
+npm run db:migrate:create -- nama_migrasi
 ```
 
-### Subsequent Migration
+Contoh:
 
-```sh
-npx prisma migrate diff --from-config-datasource file:./.wrangler/state/v3/d1/miniflare-D1DatabaseObject/XXXXXXXX.sqlite --to-schema ./prisma/schema.prisma --script > migrations/0002_nama_migrasi_selanjutnya.sql
+```bash
+npm run db:migrate:create -- add_balance_table
 ```
 
-```sh
+### 3. Jalankan migrasi ke database lokal
+
+```bash
+npm run db:migrate:local
+```
+
+### 4. Jalankan migrasi ke database Cloudflare
+
+```bash
+npm run db:migrate:remote
+```
+
+### 5. Cek isi tabel D1 lokal
+
+```bash
+.\node_modules\.bin\wrangler.cmd d1 execute DB --local --command "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;"
+```
+
+### Alur paling simpel
+
+```bash
+npm run db:generate
+npm run db:migrate:create -- nama_migrasi_baru
 npm run db:migrate:local
 npm run db:migrate:remote
 ```
+
+### Catatan penting
+
+- Folder migrasi D1 sekarang ada di `prisma/migrations`.
+- File `prisma/schema.prisma` tetap jadi sumber schema utama.
+- Runtime Worker mengambil database dari binding `env.DB` lewat adapter Prisma D1.
 
 ## Styling
 

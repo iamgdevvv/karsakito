@@ -33,6 +33,7 @@
 			"binding": "DB",
 			"database_name": "karsakito-db",
 			"database_id": "799bd19e-8df1-4f42-a21f-cba80e8e35b0",
+			"migrations_dir": "prisma/migrations",
 			"remote": true,
 		},
 	],
