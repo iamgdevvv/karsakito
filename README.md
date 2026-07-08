@@ -72,60 +72,57 @@ npx wrangler versions deploy
 
 ## Database
 
-Project ini memakai Prisma untuk schema dan type generation, lalu Cloudflare D1 untuk database di runtime.
+Project ini memakai Prisma sebagai sumber schema dan Cloudflare D1 sebagai database runtime. Tidak ada database SQLite lokal permanen; migrasi dibuat dari riwayat file `prisma/migrations` lalu diterapkan ke D1 remote dengan Wrangler.
 
-Kalau kamu pakai PowerShell di Windows, pakai `cmd /c` supaya command `npm` dan `npx` tidak kena policy eksekusi.
+Kalau kamu pakai PowerShell di Windows, pakai `cmd /c` jika command `npm` atau `npx` terkena policy eksekusi.
 
-### 1. Generate Prisma client
+### Konfigurasi
 
-```bash
-npm run db:generate
-```
+- Binding D1 ada di `wrangler.jsonc` dengan `binding: "DB"` dan `remote: true`.
+- Folder migrasi ada di `prisma/migrations`.
+- Layout migrasi memakai format Prisma nested: `0001_nama_migrasi/migration.sql`.
+- Wrangler membaca layout nested lewat `migrations_pattern`.
 
-### 2. Buat migrasi baru
+### Membuat migrasi berikutnya
+
+1. Edit model di `prisma/schema.prisma`.
+2. Buat file migrasi dari diff schema:
 
 ```bash
 npm run db:migrate:create -- nama_migrasi
 ```
 
-Contoh:
+3. Review file SQL yang dibuat di `prisma/migrations/<nomor>_nama_migrasi/migration.sql`.
+4. Cek migrasi yang pending di Cloudflare D1:
 
 ```bash
-npm run db:migrate:create -- add_balance_table
+npm run db:migrate:list
 ```
 
-### 3. Jalankan migrasi ke database lokal
-
-```bash
-npm run db:migrate:local
-```
-
-### 4. Jalankan migrasi ke database Cloudflare
+5. Terapkan migrasi ke D1 remote:
 
 ```bash
 npm run db:migrate:remote
 ```
 
-### 5. Cek isi tabel D1 lokal
+6. Verifikasi tabel remote:
 
 ```bash
-.\node_modules\.bin\wrangler.cmd d1 execute DB --local --command "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;"
+npm run db:tables
 ```
 
-### Alur paling simpel
+7. Generate ulang Prisma client kalau schema berubah:
 
 ```bash
 npm run db:generate
-npm run db:migrate:create -- nama_migrasi_baru
-npm run db:migrate:local
-npm run db:migrate:remote
 ```
 
-### Catatan penting
+### Catatan aman
 
-- Folder migrasi D1 sekarang ada di `prisma/migrations`.
-- File `prisma/schema.prisma` tetap jadi sumber schema utama.
-- Runtime Worker mengambil database dari binding `env.DB` lewat adapter Prisma D1.
+- Jangan pakai `wrangler d1 migrations apply --local` untuk project ini.
+- Jangan buat atau commit `prisma/db.sqlite`.
+- `remote: true` berarti query dari dev server dapat menyentuh resource Cloudflare asli. Hindari operasi tulis/hapus tanpa sadar.
+- Untuk perubahan destruktif, backup/export D1 remote dulu atau pastikan rollback plan jelas sebelum `npm run db:migrate:remote`.
 
 ## Styling
 

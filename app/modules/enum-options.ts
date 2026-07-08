@@ -1,5 +1,7 @@
 import type { UserRole } from '~generated/prisma/enums';
 
+export const amountTokenDaily = 10;
+
 export enum Apps {
 	karsawriter = 'karsawriter',
 	karsalator = 'karsalator',

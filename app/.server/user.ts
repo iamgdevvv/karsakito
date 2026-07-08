@@ -1,4 +1,5 @@
 import { redirect, type RouterContextProvider } from "react-router";
+import { amountTokenDaily } from "~app-modules/enum-options";
 import { PayloadCreateUserSchema, PayloadDeleteUserSchema, PayloadQueryUsersSchema, PayloadUpdateProfilePasswordSchema, PayloadUpdateProfileSchema, PayloadUpdateUserPasswordSchema, PayloadUpdateUserSchema, type PayloadQueryUsers } from "~app-modules/schema/user";
 import { dayjs, qsParse, valueBooleanOrFalse } from "~app-modules/utils";
 import { prismaClient } from "~app-server/context";
@@ -41,6 +42,19 @@ export const actionCreateUser = async ({
 				auth: {
 					create: {
 						hash
+					}
+				},
+				balances: {
+					create: {
+						token: amountTokenDaily,
+						activities: {
+							create: {
+								type: 'DAILY_BONUS',
+								token: amountTokenDaily,
+								tokenBefore: 0,
+								tokenAfter: amountTokenDaily
+							}
+						}
 					}
 				}
 			}

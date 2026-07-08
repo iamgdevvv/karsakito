@@ -5,7 +5,7 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "karsakito",
-	"compatibility_date": "2026-06-26",
+	"compatibility_date": "2026-07-07",
 	"main": "./workers/app.ts",
 	"observability": {
 		"enabled": true,
@@ -31,9 +31,10 @@
 	"d1_databases": [
 		{
 			"binding": "DB",
-			"database_name": "karsakito-db",
-			"database_id": "799bd19e-8df1-4f42-a21f-cba80e8e35b0",
+			"database_name": "karsakito-d1",
+			"database_id": "930bccde-801b-4655-9fb6-1e02bec879c3",
 			"migrations_dir": "prisma/migrations",
+			"migrations_pattern": "prisma/migrations/*/migration.sql",
 			"remote": true,
 		},
 	],

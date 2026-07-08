@@ -116,8 +116,9 @@ model KarsaApps {
 }
 
 model KarsaAppsCategory {
-    id   String @id @default(uuid(7))
-    name String
+    id          String  @id @default(uuid(7))
+    name        String
+    description String?
 
     apps KarsaApps[]
 
