@@ -51,7 +51,10 @@ export default function AdminRoute({ loaderData }: Route.ComponentProps) {
 	return (
 		<div className="site">
 			<HeaderAdmin authUser={loaderData.user} />
-			<AdminPanel className="site-main">
+			<AdminPanel
+				authUser={loaderData.user}
+				className="site-main"
+			>
 				<SimpleGrid
 					cols={{
 						base: 2,

@@ -1,10 +1,13 @@
 import * as z from 'zod';
+import { UserRoleSchema } from '~generated/prisma-zod/schemas/enums/UserRole.schema';
 import { UserScalarFieldEnumSchema } from '~generated/prisma-zod/schemas/enums/UserScalarFieldEnum.schema';
 import { UserSchema } from '~generated/prisma-zod/schemas/models';
 
 export const UserSchemaPlain = UserSchema.omit({
 	isActive: true,
+	role: true,
 }).extend({
+	role: UserRoleSchema,
 	isActive: z.union([z.boolean(), z.stringbool()]).nullish(),
 });
 
@@ -43,10 +46,6 @@ export const PayloadUpdateUserPasswordSchema = z.object({
 	password: z.string().nonempty(),
 });
 
-export const PayloadDeleteUserSchema = z.object({
-	userId: UserSchemaPlain.shape.id,
-});
-
 export const PayloadUpdateProfileSchema = UserSchemaPlain.pick({
 	name: true,
 	email: true,
@@ -67,6 +66,5 @@ export type PayloadQueryUsers = z.infer<typeof PayloadQueryUsersSchema>;
 export type PayloadCreateUser = z.infer<typeof PayloadCreateUserSchema>;
 export type PayloadUpdateUser = z.infer<typeof PayloadUpdateUserSchema>;
 export type PayloadUpdateUserPassword = z.infer<typeof PayloadUpdateUserPasswordSchema>;
-export type PayloadDeleteUser = z.infer<typeof PayloadDeleteUserSchema>;
 export type PayloadUpdateProfile = z.infer<typeof PayloadUpdateProfileSchema>;
 export type PayloadUpdateProfilePassword = z.infer<typeof PayloadUpdateProfilePasswordSchema>;

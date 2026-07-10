@@ -52,7 +52,7 @@ export default function FormCreateUser(props: BoxProps) {
 				});
 
 				navigate(
-					`/admin/users?role=${fetcher.data.data.role}&isActive=${fetcher.data.data.isActive}&desc=createdAt`,
+					`/admin/users?role=${fetcher.data.data.role}&isActive=${fetcher.data.data.isActive}&desc=createdAt&successMessage=User created successfully`,
 				);
 			}
 		}

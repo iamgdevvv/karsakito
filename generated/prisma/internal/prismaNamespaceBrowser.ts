@@ -54,8 +54,9 @@ export const ModelName = {
   User: 'User',
   Auth: 'Auth',
   Karsa: 'Karsa',
-  KarsaApps: 'KarsaApps',
-  KarsaAppsCategory: 'KarsaAppsCategory',
+  KarsaApp: 'KarsaApp',
+  Workspace: 'Workspace',
+  WorkspaceWindow: 'WorkspaceWindow',
   Balance: 'Balance',
   BalanceActivity: 'BalanceActivity'
 } as const
@@ -79,6 +80,7 @@ export const UserScalarFieldEnum = {
   email: 'email',
   role: 'role',
   isActive: 'isActive',
+  timezone: 'timezone',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -111,23 +113,42 @@ export const KarsaScalarFieldEnum = {
 export type KarsaScalarFieldEnum = (typeof KarsaScalarFieldEnum)[keyof typeof KarsaScalarFieldEnum]
 
 
-export const KarsaAppsScalarFieldEnum = {
+export const KarsaAppScalarFieldEnum = {
+  id: 'id',
   name: 'name',
+  label: 'label',
+  description: 'description',
   token: 'token',
   tokenPromo: 'tokenPromo',
   visible: 'visible',
-  categoryId: 'categoryId'
+  category: 'category',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type KarsaAppsScalarFieldEnum = (typeof KarsaAppsScalarFieldEnum)[keyof typeof KarsaAppsScalarFieldEnum]
+export type KarsaAppScalarFieldEnum = (typeof KarsaAppScalarFieldEnum)[keyof typeof KarsaAppScalarFieldEnum]
 
 
-export const KarsaAppsCategoryScalarFieldEnum = {
+export const WorkspaceScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  createdAt: 'createdAt',
+  userId: 'userId'
 } as const
 
-export type KarsaAppsCategoryScalarFieldEnum = (typeof KarsaAppsCategoryScalarFieldEnum)[keyof typeof KarsaAppsCategoryScalarFieldEnum]
+export type WorkspaceScalarFieldEnum = (typeof WorkspaceScalarFieldEnum)[keyof typeof WorkspaceScalarFieldEnum]
+
+
+export const WorkspaceWindowScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  props: 'props',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  workspaceId: 'workspaceId',
+  karsaId: 'karsaId'
+} as const
+
+export type WorkspaceWindowScalarFieldEnum = (typeof WorkspaceWindowScalarFieldEnum)[keyof typeof WorkspaceWindowScalarFieldEnum]
 
 
 export const BalanceScalarFieldEnum = {

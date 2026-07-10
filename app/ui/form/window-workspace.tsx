@@ -1,18 +1,29 @@
-import { Box, Button, Select, Stack, TextInput, type BoxProps } from '@mantine/core';
+import {
+	Box,
+	Button,
+	Select,
+	Stack,
+	TextInput,
+	type BoxProps,
+	type ComboboxItem,
+} from '@mantine/core';
 import { schemaResolver, useForm } from '@mantine/form';
 import { useEffect } from 'react';
-import { optionsApps } from '~app-modules/enum-options';
+import { labelAppCategory } from '~app-modules/enum-options';
 import {
 	PayloadWindowWorkspaceSchema,
 	type PayloadWindowWorkspace,
 } from '~app-modules/schema/workspace';
 import { slugify } from '~app-modules/utils';
+import type { KarsaApp } from '~generated/prisma/browser';
 
 export default function FormWindowWorkspace({
+	optionApps,
 	usedTitles,
 	onSubmit,
 	...props
 }: BoxProps & {
+	optionApps: Record<KarsaApp['category'], ComboboxItem[]>;
 	usedTitles: string[];
 	onSubmit: (values: PayloadWindowWorkspace) => void;
 }) {
@@ -53,7 +64,10 @@ export default function FormWindowWorkspace({
 					labelProps={{
 						fz: 'xs',
 					}}
-					data={optionsApps}
+					data={Object.entries(optionApps).map(([group, items]) => ({
+						group: labelAppCategory[group as KarsaApp['category']],
+						items,
+					}))}
 					key={form.key('app')}
 					{...form.getInputProps('app')}
 				/>

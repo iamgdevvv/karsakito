@@ -19,6 +19,8 @@ const requestHandler = createRequestHandler(
 
 export default {
 	async fetch(request, env, ctx) {
+		const url = new URL(request.url);
+
 		const adapter = new PrismaD1(env.DB);
 		const prisma = new PrismaClient({ adapter });
 
@@ -30,6 +32,51 @@ export default {
 			ctx,
 		});
 
+		if (
+			(url.pathname.includes('/__scheduled') ||
+				url.pathname.includes('/cdn-cgi/handler/scheduled')) &&
+			this.scheduled
+		) {
+			// Manually execute the scheduled function
+			await this.scheduled(
+				{
+					cron: 'local-test',
+					scheduledTime: Date.now(),
+					noRetry: function (): void {
+						throw new Error('Function not implemented.');
+					},
+				},
+				env,
+				ctx,
+			);
+			return new Response('Local cron executed manually');
+		}
+
 		return requestHandler(request, context);
+	},
+
+	async scheduled(controller, env, ctx) {
+		console.log(`Cron processed at ${new Date(controller.scheduledTime).toISOString()}`);
+		console.log(`Triggered by cron pattern: ${controller.cron}`);
+
+		const adapter = new PrismaD1(env.DB);
+		const prisma = new PrismaClient({ adapter });
+
+		const refillToken = async () => {
+			const users = await prisma.user.findMany({
+				where: {
+					balanceActivities: {
+						some: {
+							type: 'DAILY_BONUS',
+							// createdAt: dayjs().startOf('day').subtract(1, 'day').toDate(),
+						},
+					},
+				},
+			});
+
+			console.log({ users });
+		};
+
+		ctx.waitUntil(refillToken());
 	},
 } satisfies ExportedHandler<Env>;

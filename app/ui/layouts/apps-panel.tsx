@@ -38,7 +38,6 @@ export default function AppPanel({
 }: { children: React.ReactNode } & FlexProps) {
 	const { pathname } = useLocation();
 	const navigation = useNavigation();
-	// const isNavigating = useMemo(() => Boolean(navigation.location), [navigation.location]);
 
 	const selectedPanel = useMemo(() => {
 		return findActiveNavigation(navigations, pathname);

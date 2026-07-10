@@ -1,4 +1,5 @@
 import { redirect, type RouterContextProvider } from "react-router";
+import { amountTokenDaily } from "~app-modules/enum-options";
 import { PayloadLoginSchema, PayloadRegisterSchema } from "~app-modules/schema/auth";
 import { prismaClient } from "~app-server/context";
 import { authGetSession, authLoginSession } from "~app-server/session";
@@ -93,6 +94,19 @@ export const actionRegister = async ({
 				auth: {
 					create: {
 						hash
+					}
+				},
+				balances: {
+					create: {
+						tokenDaily: amountTokenDaily,
+						activities: {
+							create: {
+								type: 'DAILY_BONUS',
+								token: amountTokenDaily,
+								tokenBefore: 0,
+								tokenAfter: amountTokenDaily
+							}
+						}
 					}
 				}
 			},

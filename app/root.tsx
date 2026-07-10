@@ -21,6 +21,7 @@ import {
 	Scripts,
 	ScrollRestoration,
 	useNavigation,
+	useSearchParams,
 } from 'react-router';
 import theme from '~app-modules/theme';
 
@@ -59,8 +60,8 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+	const [searchParams, setSearchParams] = useSearchParams();
 	const navigation = useNavigation();
-	// const isNavigating = useMemo(() => Boolean(navigation.location), [navigation.location]);
 
 	useEffect(() => {
 		notifications.clean();
@@ -71,7 +72,38 @@ export function Layout({ children }: { children: React.ReactNode }) {
 		} else {
 			nprogress.complete();
 		}
-	}, [navigation.state]);
+
+		const successMessage = searchParams.get('successMessage');
+		const errorMessage = searchParams.get('errorMessage');
+
+		if (successMessage) {
+			notifications.show({
+				title: 'Success',
+				message: successMessage,
+				position: 'top-center',
+				onClose: () => {
+					searchParams.delete('successMessage');
+					setSearchParams(searchParams, {
+						defaultShouldRevalidate: false,
+					});
+				},
+			});
+		}
+
+		if (errorMessage) {
+			notifications.show({
+				title: 'Error',
+				message: errorMessage,
+				position: 'top-center',
+				onClose: () => {
+					searchParams.delete('errorMessage');
+					setSearchParams(searchParams, {
+						defaultShouldRevalidate: false,
+					});
+				},
+			});
+		}
+	}, [navigation]);
 
 	return (
 		<html

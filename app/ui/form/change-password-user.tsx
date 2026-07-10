@@ -47,11 +47,9 @@ export default function FormChangePasswordUser({
 			if ('error' in fetcher.data && fetcher.data.error) {
 				setErrorMessage(fetcher.data.error);
 			} else {
-				navigate('/admin/users/' + data.id);
-				notifications.show({
-					title: 'Success',
-					message: 'Change password user successfully',
-				});
+				navigate(
+					`/admin/users/${data.id}?successMessage=Change password user successfully`,
+				);
 			}
 		}
 	}, [fetcher.data, isLoading]);

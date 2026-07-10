@@ -229,6 +229,13 @@ export type IntNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedIntNullableFilter<$PrismaModel> | number | null | runtime.Types.Skip
 }
 
+export type EnumKarsaAppsCategoryFilter<$PrismaModel = never> = {
+  equals?: $Enums.KarsaAppsCategory | Prisma.EnumKarsaAppsCategoryFieldRefInput<$PrismaModel> | runtime.Types.Skip
+  in?: $Enums.KarsaAppsCategory[] | runtime.Types.Skip
+  notIn?: $Enums.KarsaAppsCategory[] | runtime.Types.Skip
+  not?: Prisma.NestedEnumKarsaAppsCategoryFilter<$PrismaModel> | $Enums.KarsaAppsCategory | runtime.Types.Skip
+}
+
 export type IntWithAggregatesFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel> | runtime.Types.Skip
   in?: number[] | runtime.Types.Skip
@@ -259,6 +266,16 @@ export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedIntNullableFilter<$PrismaModel> | runtime.Types.Skip
   _min?: Prisma.NestedIntNullableFilter<$PrismaModel> | runtime.Types.Skip
   _max?: Prisma.NestedIntNullableFilter<$PrismaModel> | runtime.Types.Skip
+}
+
+export type EnumKarsaAppsCategoryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.KarsaAppsCategory | Prisma.EnumKarsaAppsCategoryFieldRefInput<$PrismaModel> | runtime.Types.Skip
+  in?: $Enums.KarsaAppsCategory[] | runtime.Types.Skip
+  notIn?: $Enums.KarsaAppsCategory[] | runtime.Types.Skip
+  not?: Prisma.NestedEnumKarsaAppsCategoryWithAggregatesFilter<$PrismaModel> | $Enums.KarsaAppsCategory | runtime.Types.Skip
+  _count?: Prisma.NestedIntFilter<$PrismaModel> | runtime.Types.Skip
+  _min?: Prisma.NestedEnumKarsaAppsCategoryFilter<$PrismaModel> | runtime.Types.Skip
+  _max?: Prisma.NestedEnumKarsaAppsCategoryFilter<$PrismaModel> | runtime.Types.Skip
 }
 
 export type EnumBalanceActivityTypeFilter<$PrismaModel = never> = {
@@ -466,6 +483,13 @@ export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedStringNullableFilter<$PrismaModel> | runtime.Types.Skip
 }
 
+export type NestedEnumKarsaAppsCategoryFilter<$PrismaModel = never> = {
+  equals?: $Enums.KarsaAppsCategory | Prisma.EnumKarsaAppsCategoryFieldRefInput<$PrismaModel> | runtime.Types.Skip
+  in?: $Enums.KarsaAppsCategory[] | runtime.Types.Skip
+  notIn?: $Enums.KarsaAppsCategory[] | runtime.Types.Skip
+  not?: Prisma.NestedEnumKarsaAppsCategoryFilter<$PrismaModel> | $Enums.KarsaAppsCategory | runtime.Types.Skip
+}
+
 export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel> | runtime.Types.Skip
   in?: number[] | runtime.Types.Skip
@@ -518,6 +542,16 @@ export type NestedFloatNullableFilter<$PrismaModel = never> = {
   gt?: number | Prisma.FloatFieldRefInput<$PrismaModel> | runtime.Types.Skip
   gte?: number | Prisma.FloatFieldRefInput<$PrismaModel> | runtime.Types.Skip
   not?: Prisma.NestedFloatNullableFilter<$PrismaModel> | number | null | runtime.Types.Skip
+}
+
+export type NestedEnumKarsaAppsCategoryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.KarsaAppsCategory | Prisma.EnumKarsaAppsCategoryFieldRefInput<$PrismaModel> | runtime.Types.Skip
+  in?: $Enums.KarsaAppsCategory[] | runtime.Types.Skip
+  notIn?: $Enums.KarsaAppsCategory[] | runtime.Types.Skip
+  not?: Prisma.NestedEnumKarsaAppsCategoryWithAggregatesFilter<$PrismaModel> | $Enums.KarsaAppsCategory | runtime.Types.Skip
+  _count?: Prisma.NestedIntFilter<$PrismaModel> | runtime.Types.Skip
+  _min?: Prisma.NestedEnumKarsaAppsCategoryFilter<$PrismaModel> | runtime.Types.Skip
+  _max?: Prisma.NestedEnumKarsaAppsCategoryFilter<$PrismaModel> | runtime.Types.Skip
 }
 
 export type NestedEnumBalanceActivityTypeFilter<$PrismaModel = never> = {

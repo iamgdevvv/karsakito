@@ -57,7 +57,10 @@ export default function CreateUserAdminRoute({ loaderData }: Route.ComponentProp
 	return (
 		<div className="site">
 			<HeaderAdmin authUser={loaderData.user} />
-			<AdminPanel className="site-main">
+			<AdminPanel
+				authUser={loaderData.user}
+				className="site-main"
+			>
 				<Title mb="lg">Create User</Title>
 				<FormCreateUser maw={400} />
 			</AdminPanel>

@@ -1,6 +1,6 @@
 import { redirect, type RouterContextProvider } from "react-router";
 import { amountTokenDaily } from "~app-modules/enum-options";
-import { PayloadCreateUserSchema, PayloadDeleteUserSchema, PayloadQueryUsersSchema, PayloadUpdateProfilePasswordSchema, PayloadUpdateProfileSchema, PayloadUpdateUserPasswordSchema, PayloadUpdateUserSchema, type PayloadQueryUsers } from "~app-modules/schema/user";
+import { PayloadCreateUserSchema, PayloadQueryUsersSchema, PayloadUpdateProfilePasswordSchema, PayloadUpdateProfileSchema, PayloadUpdateUserPasswordSchema, PayloadUpdateUserSchema, type PayloadQueryUsers } from "~app-modules/schema/user";
 import { dayjs, qsParse, valueBooleanOrFalse } from "~app-modules/utils";
 import { prismaClient } from "~app-server/context";
 import { authGetSession, authLoginSession, authMiddlewareSession } from "~app-server/session";
@@ -46,7 +46,7 @@ export const actionCreateUser = async ({
 				},
 				balances: {
 					create: {
-						token: amountTokenDaily,
+						tokenDaily: amountTokenDaily,
 						activities: {
 							create: {
 								type: 'DAILY_BONUS',
@@ -57,6 +57,10 @@ export const actionCreateUser = async ({
 						}
 					}
 				}
+			},
+			select: {
+				role: true,
+				isActive: true
 			}
 		})
 
@@ -171,9 +175,11 @@ export const actionUpdateUserPassword = async ({
 };
 
 export const actionDeleteUser = async ({
+	userId,
 	request,
 	context
 }: {
+	userId: string
 	request: Request
 	context: Readonly<RouterContextProvider>
 }) => {
@@ -191,20 +197,19 @@ export const actionDeleteUser = async ({
 			}
 		}
 
-		const formData = await request.formData()
-		const body = PayloadDeleteUserSchema.parse(Object.fromEntries(formData))
-
 		const resultUser = await prismaClient(context).user.delete({
 			where: {
-				id: body.userId
+				id: userId
 			},
 			select: {
-				id: true
+				name: true
 			}
 		})
 
 		return {
-			data: resultUser
+			data: {
+				name: `Delete user ${resultUser.name} successfully`
+			}
 		}
 	} catch (error) {
 		return {

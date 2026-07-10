@@ -19,14 +19,15 @@ import {
 } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
 import { Spotlight, spotlight } from '@mantine/spotlight';
+import { useMemo } from 'react';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { LuArrowUpRight, LuLogOut } from 'react-icons/lu';
 import { useNavigate, useNavigation } from 'react-router';
-import { adminSpotlight, dashboardSpotlight } from '~app-modules/spotlight';
+import { adminSpotlight, dashboardSpotlight, staffSpotlight } from '~app-modules/spotlight';
 import { cn } from '~app-modules/utils';
 import { Image } from '~app-ui/components/image';
 import { ButtonLink, Link, NavLink } from '~app-ui/components/link';
-import type { User } from '~generated/prisma/client';
+import type { User } from '~generated/prisma/browser';
 
 function MenuActionUser({
 	data,
@@ -585,6 +586,14 @@ export function HeaderAdmin({
 	const navigate = useNavigate();
 	useHotkeys([['mod + K', () => spotlight.open()]]);
 
+	const navigationSpotlight = useMemo(() => {
+		if (authUser.role === 'ADMIN') {
+			return adminSpotlight;
+		}
+
+		return staffSpotlight;
+	}, [authUser.role]);
+
 	return (
 		<Stack
 			pos="sticky"
@@ -660,7 +669,7 @@ export function HeaderAdmin({
 				</Flex>
 			</Container>
 			<Spotlight
-				actions={adminSpotlight.map((action) => ({
+				actions={navigationSpotlight.map((action) => ({
 					...action,
 					onClick: () => navigate(action.id),
 				}))}

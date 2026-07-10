@@ -1,12 +1,22 @@
 import { Accordion, Box, DataList, Group, SimpleGrid, Stack, Text, Title } from '@mantine/core';
 import { LuArrowUpRight } from 'react-icons/lu';
-import { optionsApps } from '~app-modules/enum-options';
 import { metaPublicRoute } from '~app-modules/meta';
 import { dayjs } from '~app-modules/utils';
+import { actionGetKarsaAppsByCategory } from '~app-server/app';
 import { Image } from '~app-ui/components/image';
 import { ButtonLink, Link } from '~app-ui/components/link';
 import VideoIframe from '~app-ui/components/video';
 import AppPanel from '~app-ui/layouts/apps-panel';
+
+import type { Route } from './+types/apps._index';
+
+export async function loader({ context }: Route.LoaderArgs) {
+	const optionApps = await actionGetKarsaAppsByCategory({ context });
+
+	return {
+		optionApps,
+	};
+}
 
 export function meta() {
 	return metaPublicRoute({
@@ -15,34 +25,34 @@ export function meta() {
 	});
 }
 
-export default function AppsRoute() {
-	const faqItems = [
-		{
-			title: 'How does the AI generate content?',
-			content:
-				'The AI generates content using a combination of natural language processing and machine learning algorithms.',
-		},
-		{
-			title: 'Can i customize the AI-generated content?',
-			content:
-				'Yes, you can customize the AI-generated content to meet your specific needs untuk Mengakselerasi Pemanfaatan Bahasa dan Warisan Budaya Daerah',
-		},
-		{
-			title: 'What types of content can the AI generate?',
-			content:
-				'The AI can generate a wide range of content types, including text, images, videos, and more.',
-		},
-		{
-			title: 'Is the AI-generated content plagiarism-free?',
-			content:
-				'Yes, the AI-generated content is plagiarism-free and is not copied from other sources.',
-		},
-		{
-			title: 'Does the tool have any limitations?',
-			content: 'The tool has no limitations and can be used for any purpose.',
-		},
-	];
+const faqItems = [
+	{
+		title: 'How does the AI generate content?',
+		content:
+			'The AI generates content using a combination of natural language processing and machine learning algorithms.',
+	},
+	{
+		title: 'Can i customize the AI-generated content?',
+		content:
+			'Yes, you can customize the AI-generated content to meet your specific needs untuk Mengakselerasi Pemanfaatan Bahasa dan Warisan Budaya Daerah',
+	},
+	{
+		title: 'What types of content can the AI generate?',
+		content:
+			'The AI can generate a wide range of content types, including text, images, videos, and more.',
+	},
+	{
+		title: 'Is the AI-generated content plagiarism-free?',
+		content:
+			'Yes, the AI-generated content is plagiarism-free and is not copied from other sources.',
+	},
+	{
+		title: 'Does the tool have any limitations?',
+		content: 'The tool has no limitations and can be used for any purpose.',
+	},
+];
 
+export default function AppsRoute({ loaderData }: Route.ComponentProps) {
 	return (
 		<div className="site">
 			<AppPanel className="site-main">
@@ -131,51 +141,53 @@ export default function AppsRoute() {
 						}}
 						className="md:col-span-3"
 					>
-						{optionsApps.map((app, index) => (
-							<Link
-								key={`${app.value}-${index}`}
-								to={`/apps/workspace?app=${app.value}`}
-								className="group"
-							>
-								<Stack
-									gap="xs"
-									h="100%"
-									py="lg"
-									px={{
-										base: 'md',
-										sm: 'lg',
-									}}
-									bg="gray.1"
-									bdrs="lg"
-									bd="1px solid gray.3"
+						{Object.entries(loaderData.optionApps).map(([category, apps]) =>
+							apps.map((app, index) => (
+								<Link
+									key={`${app.value}-${index}`}
+									to={`/apps/workspace?app=${app.value}`}
+									className="group"
 								>
-									<Title
-										order={2}
-										fz="md"
+									<Stack
+										gap="xs"
+										h="100%"
+										py="lg"
+										px={{
+											base: 'md',
+											sm: 'lg',
+										}}
+										bg="gray.1"
+										bdrs="lg"
+										bd="1px solid gray.3"
 									>
-										{app.label}
-									</Title>
-									<Text fz="sm">{app.description}</Text>
-									<Group
-										gap={4}
-										c="primary"
-										mt="auto"
-									>
-										<Text
-											span
-											fz="sm"
-											td="underline"
+										<Title
+											order={2}
+											fz="md"
 										>
-											Mulai
-										</Text>
-										<LuArrowUpRight
-											size={16}
-											className="-translate-x-1 opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100"
-										/>
-									</Group>
-								</Stack>
-							</Link>
-						))}
+											{app.label}
+										</Title>
+										{/* <Text fz="sm">{app.description}</Text> */}
+										<Group
+											gap={4}
+											c="primary"
+											mt="auto"
+										>
+											<Text
+												span
+												fz="sm"
+												td="underline"
+											>
+												Mulai
+											</Text>
+											<LuArrowUpRight
+												size={16}
+												className="-translate-x-1 opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100"
+											/>
+										</Group>
+									</Stack>
+								</Link>
+							)),
+						)}
 					</SimpleGrid>
 					<Stack
 						gap="xs"

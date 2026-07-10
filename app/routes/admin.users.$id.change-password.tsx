@@ -67,7 +67,10 @@ export default function ChangePasswordUserAdminRoute({ loaderData }: Route.Compo
 	return (
 		<div className="site">
 			<HeaderAdmin authUser={loaderData.user} />
-			<AdminPanel className="site-main">
+			<AdminPanel
+				authUser={loaderData.user}
+				className="site-main"
+			>
 				<Title mb="lg">Change Password User</Title>
 				<FormChangePasswordUser
 					data={loaderData.recordUser}

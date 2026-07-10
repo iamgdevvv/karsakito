@@ -1,70 +1,27 @@
-import type { UserRole } from '~generated/prisma/enums';
+import type { KarsaAppsCategory, UserRole } from '~generated/prisma/enums';
 
 export const amountTokenDaily = 10;
 
-export enum Apps {
-	karsawriter = 'karsawriter',
-	karsalator = 'karsalator',
-	karsalisa = 'karsalisa',
-	karsafrase = 'karsafrase',
-	karsapedia = 'karsapedia',
-	karsalingo = 'karsalingo',
-}
+export const labelAppCategory = {
+	karsawriter: 'KarsaWriter',
+	karsalator: 'KarsaLator',
+	karsalisa: 'KarsaLisa',
+	karsafrase: 'KarsaFrase',
+	karsapedia: 'KarsaPedia',
+} as const satisfies Record<KarsaAppsCategory, string>;
 
-export const optionsApps: {
-	label: string;
-	value: keyof typeof Apps;
-	disabled?: boolean;
-	description: string;
-}[] = [
-	{
-		label: 'KarsaWriter',
-		value: 'karsawriter',
-		description: 'Tulis konten dengan bantuan AI.',
-	},
-	{
-		label: 'KarsaLator',
-		value: 'karsalator',
-		description: 'Terjemahkan bahasa asing atau bahasa Indonesia dan bahasa daerah',
-	},
-	{
-		label: 'KarsaLisa',
-		value: 'karsalisa',
-		description: 'Analisis dokumen dan data dengan AI.',
-	},
-	{
-		label: 'KarsaFrase',
-		value: 'karsafrase',
-		description: 'Parafrase dan perbaiki kalimat.',
-	},
-	{
-		label: 'KarsaPedia',
-		value: 'karsapedia',
-		description: 'Dapatkan informasi seputar budaya dan bahasa daerah.',
-		disabled: true,
-	},
-	{
-		label: 'KarsaLingo',
-		value: 'karsalingo',
-		description: 'Belajar bahasa daerah dengan AI.',
-		disabled: true,
-	},
-];
+export const optionsAppCategory = Object.entries(labelAppCategory).map(([value, label]) => ({
+	label,
+	value,
+}));
 
-export const optionsUserRole: {
-	label: string;
-	value: UserRole;
-}[] = [
-	{
-		label: 'Admin',
-		value: 'ADMIN',
-	},
-	{
-		label: 'Staff',
-		value: 'STAFF',
-	},
-	{
-		label: 'Customer',
-		value: 'CUSTOMER',
-	},
-];
+export const labelUserRole = {
+	ADMIN: 'Admin',
+	STAFF: 'Staff',
+	CUSTOMER: 'Customer',
+} as const satisfies Record<UserRole, string>;
+
+export const optionsUserRole = Object.entries(labelUserRole).map(([value, label]) => ({
+	label,
+	value,
+}));

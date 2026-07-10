@@ -7,6 +7,7 @@ export const UserSchema = z.object({
   email: z.email(),
   role: UserRoleSchema.default("CUSTOMER"),
   isActive: z.boolean().default(true),
+  timezone: z.string().default("Asia/Jakarta"),
   createdAt: z.date(),
   updatedAt: z.date(),
 });

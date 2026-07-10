@@ -55,6 +55,14 @@ enum KarsaAppsName {
     artefak
 }
 
+enum KarsaAppsCategory {
+    karsawriter
+    karsalator
+    karsalisa
+    karsafrase
+    karsapedia
+}
+
 model User {
     id        String   @id @default(uuid(7))
     name      String
@@ -62,6 +70,7 @@ model User {
     email     String   @unique
     role      UserRole @default(CUSTOMER)
     isActive  Boolean  @default(true)
+    timezone  String   @default("Asia/Jakarta")
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
@@ -69,6 +78,7 @@ model User {
     balances          Balance?
     balanceActivities BalanceActivity[]
     karsas            Karsa[]
+    workspaces        Workspace[]
 
     @@map("user")
 }
@@ -98,31 +108,54 @@ model Karsa {
     balanceActivity   BalanceActivity @relation(fields: [balanceActivityId], references: [id], onDelete: Cascade)
     balanceActivityId String          @unique
 
+    workspaceWindow WorkspaceWindow?
+
     @@index([userId, createdAt])
     @@map("karsa")
 }
 
-model KarsaApps {
-    name       KarsaAppsName @id
-    token      Int
-    tokenPromo Int?
-    visible    Boolean       @default(true)
+model KarsaApp {
+    id          String            @id @default(uuid(7))
+    name        KarsaAppsName     @unique
+    label       String
+    description String?
+    token       Int
+    tokenPromo  Int?
+    visible     Boolean           @default(true)
+    category    KarsaAppsCategory
+    createdAt   DateTime          @default(now())
+    updatedAt   DateTime          @updatedAt
 
-    category   KarsaAppsCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-    categoryId String
-
-    @@index([categoryId])
-    @@map("karsa_apps")
+    @@index([category])
+    @@map("karsa_app")
 }
 
-model KarsaAppsCategory {
-    id          String  @id @default(uuid(7))
-    name        String
-    description String?
+model Workspace {
+    id        String   @id @default(uuid(7))
+    createdAt DateTime @default(now())
 
-    apps KarsaApps[]
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId String
 
-    @@map("karsa_apps_category")
+    windows WorkspaceWindow[]
+
+    @@index([userId, createdAt])
+    @@map("workspace")
+}
+
+model WorkspaceWindow {
+    id        String   @id @default(uuid(7))
+    title     String
+    props     Json?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+    workspaceId String
+    karsa       Karsa     @relation(fields: [karsaId], references: [id], onDelete: Cascade)
+    karsaId     String    @unique
+
+    @@map("workspace_window")
 }
 
 model Balance {

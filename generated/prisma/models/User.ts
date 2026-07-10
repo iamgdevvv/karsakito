@@ -30,6 +30,7 @@ export type UserMinAggregateOutputType = {
   email: string | null
   role: $Enums.UserRole | null
   isActive: boolean | null
+  timezone: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -40,6 +41,7 @@ export type UserMaxAggregateOutputType = {
   email: string | null
   role: $Enums.UserRole | null
   isActive: boolean | null
+  timezone: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,6 +52,7 @@ export type UserCountAggregateOutputType = {
   email: number
   role: number
   isActive: number
+  timezone: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -62,6 +65,7 @@ export type UserMinAggregateInputType = {
   email?: true | runtime.Types.Skip
   role?: true | runtime.Types.Skip
   isActive?: true | runtime.Types.Skip
+  timezone?: true | runtime.Types.Skip
   createdAt?: true | runtime.Types.Skip
   updatedAt?: true | runtime.Types.Skip
 }
@@ -72,6 +76,7 @@ export type UserMaxAggregateInputType = {
   email?: true | runtime.Types.Skip
   role?: true | runtime.Types.Skip
   isActive?: true | runtime.Types.Skip
+  timezone?: true | runtime.Types.Skip
   createdAt?: true | runtime.Types.Skip
   updatedAt?: true | runtime.Types.Skip
 }
@@ -82,6 +87,7 @@ export type UserCountAggregateInputType = {
   email?: true | runtime.Types.Skip
   role?: true | runtime.Types.Skip
   isActive?: true | runtime.Types.Skip
+  timezone?: true | runtime.Types.Skip
   createdAt?: true | runtime.Types.Skip
   updatedAt?: true | runtime.Types.Skip
   _all?: true | runtime.Types.Skip
@@ -165,6 +171,7 @@ export type UserGroupByOutputType = {
   email: string
   role: $Enums.UserRole
   isActive: boolean
+  timezone: string
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -196,12 +203,14 @@ export type UserWhereInput = {
   email?: Prisma.StringFilter<"User"> | string | runtime.Types.Skip
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole | runtime.Types.Skip
   isActive?: Prisma.BoolFilter<"User"> | boolean | runtime.Types.Skip
+  timezone?: Prisma.StringFilter<"User"> | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string | runtime.Types.Skip
   auth?: Prisma.XOR<Prisma.AuthNullableScalarRelationFilter, Prisma.AuthWhereInput> | null | runtime.Types.Skip
   balances?: Prisma.XOR<Prisma.BalanceNullableScalarRelationFilter, Prisma.BalanceWhereInput> | null | runtime.Types.Skip
   balanceActivities?: Prisma.BalanceActivityListRelationFilter | runtime.Types.Skip
   karsas?: Prisma.KarsaListRelationFilter | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceListRelationFilter | runtime.Types.Skip
 }
 
 export type UserOrderByWithRelationInput = {
@@ -210,12 +219,14 @@ export type UserOrderByWithRelationInput = {
   email?: Prisma.SortOrder | runtime.Types.Skip
   role?: Prisma.SortOrder | runtime.Types.Skip
   isActive?: Prisma.SortOrder | runtime.Types.Skip
+  timezone?: Prisma.SortOrder | runtime.Types.Skip
   createdAt?: Prisma.SortOrder | runtime.Types.Skip
   updatedAt?: Prisma.SortOrder | runtime.Types.Skip
   auth?: Prisma.AuthOrderByWithRelationInput | runtime.Types.Skip
   balances?: Prisma.BalanceOrderByWithRelationInput | runtime.Types.Skip
   balanceActivities?: Prisma.BalanceActivityOrderByRelationAggregateInput | runtime.Types.Skip
   karsas?: Prisma.KarsaOrderByRelationAggregateInput | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceOrderByRelationAggregateInput | runtime.Types.Skip
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -227,12 +238,14 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"User"> | string | runtime.Types.Skip
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole | runtime.Types.Skip
   isActive?: Prisma.BoolFilter<"User"> | boolean | runtime.Types.Skip
+  timezone?: Prisma.StringFilter<"User"> | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string | runtime.Types.Skip
   auth?: Prisma.XOR<Prisma.AuthNullableScalarRelationFilter, Prisma.AuthWhereInput> | null | runtime.Types.Skip
   balances?: Prisma.XOR<Prisma.BalanceNullableScalarRelationFilter, Prisma.BalanceWhereInput> | null | runtime.Types.Skip
   balanceActivities?: Prisma.BalanceActivityListRelationFilter | runtime.Types.Skip
   karsas?: Prisma.KarsaListRelationFilter | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceListRelationFilter | runtime.Types.Skip
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -241,6 +254,7 @@ export type UserOrderByWithAggregationInput = {
   email?: Prisma.SortOrder | runtime.Types.Skip
   role?: Prisma.SortOrder | runtime.Types.Skip
   isActive?: Prisma.SortOrder | runtime.Types.Skip
+  timezone?: Prisma.SortOrder | runtime.Types.Skip
   createdAt?: Prisma.SortOrder | runtime.Types.Skip
   updatedAt?: Prisma.SortOrder | runtime.Types.Skip
   _count?: Prisma.UserCountOrderByAggregateInput | runtime.Types.Skip
@@ -257,6 +271,7 @@ export type UserScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"User"> | string | runtime.Types.Skip
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole | runtime.Types.Skip
   isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean | runtime.Types.Skip
+  timezone?: Prisma.StringWithAggregatesFilter<"User"> | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string | runtime.Types.Skip
 }
@@ -267,12 +282,14 @@ export type UserCreateInput = {
   email: string
   role?: $Enums.UserRole | runtime.Types.Skip
   isActive?: boolean | runtime.Types.Skip
+  timezone?: string | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   updatedAt?: Date | string | runtime.Types.Skip
   auth?: Prisma.AuthCreateNestedOneWithoutUserInput | runtime.Types.Skip
   balances?: Prisma.BalanceCreateNestedOneWithoutUserInput | runtime.Types.Skip
   balanceActivities?: Prisma.BalanceActivityCreateNestedManyWithoutSenderInput | runtime.Types.Skip
   karsas?: Prisma.KarsaCreateNestedManyWithoutUserInput | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceCreateNestedManyWithoutUserInput | runtime.Types.Skip
 }
 
 export type UserUncheckedCreateInput = {
@@ -281,12 +298,14 @@ export type UserUncheckedCreateInput = {
   email: string
   role?: $Enums.UserRole | runtime.Types.Skip
   isActive?: boolean | runtime.Types.Skip
+  timezone?: string | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   updatedAt?: Date | string | runtime.Types.Skip
   auth?: Prisma.AuthUncheckedCreateNestedOneWithoutUserInput | runtime.Types.Skip
   balances?: Prisma.BalanceUncheckedCreateNestedOneWithoutUserInput | runtime.Types.Skip
   balanceActivities?: Prisma.BalanceActivityUncheckedCreateNestedManyWithoutSenderInput | runtime.Types.Skip
   karsas?: Prisma.KarsaUncheckedCreateNestedManyWithoutUserInput | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutUserInput | runtime.Types.Skip
 }
 
 export type UserUpdateInput = {
@@ -295,12 +314,14 @@ export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole | runtime.Types.Skip
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   auth?: Prisma.AuthUpdateOneWithoutUserNestedInput | runtime.Types.Skip
   balances?: Prisma.BalanceUpdateOneWithoutUserNestedInput | runtime.Types.Skip
   balanceActivities?: Prisma.BalanceActivityUpdateManyWithoutSenderNestedInput | runtime.Types.Skip
   karsas?: Prisma.KarsaUpdateManyWithoutUserNestedInput | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceUpdateManyWithoutUserNestedInput | runtime.Types.Skip
 }
 
 export type UserUncheckedUpdateInput = {
@@ -309,12 +330,14 @@ export type UserUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole | runtime.Types.Skip
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   auth?: Prisma.AuthUncheckedUpdateOneWithoutUserNestedInput | runtime.Types.Skip
   balances?: Prisma.BalanceUncheckedUpdateOneWithoutUserNestedInput | runtime.Types.Skip
   balanceActivities?: Prisma.BalanceActivityUncheckedUpdateManyWithoutSenderNestedInput | runtime.Types.Skip
   karsas?: Prisma.KarsaUncheckedUpdateManyWithoutUserNestedInput | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceUncheckedUpdateManyWithoutUserNestedInput | runtime.Types.Skip
 }
 
 export type UserCreateManyInput = {
@@ -323,6 +346,7 @@ export type UserCreateManyInput = {
   email: string
   role?: $Enums.UserRole | runtime.Types.Skip
   isActive?: boolean | runtime.Types.Skip
+  timezone?: string | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   updatedAt?: Date | string | runtime.Types.Skip
 }
@@ -333,6 +357,7 @@ export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole | runtime.Types.Skip
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
 }
@@ -343,6 +368,7 @@ export type UserUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole | runtime.Types.Skip
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
 }
@@ -353,6 +379,7 @@ export type UserCountOrderByAggregateInput = {
   email?: Prisma.SortOrder | runtime.Types.Skip
   role?: Prisma.SortOrder | runtime.Types.Skip
   isActive?: Prisma.SortOrder | runtime.Types.Skip
+  timezone?: Prisma.SortOrder | runtime.Types.Skip
   createdAt?: Prisma.SortOrder | runtime.Types.Skip
   updatedAt?: Prisma.SortOrder | runtime.Types.Skip
 }
@@ -363,6 +390,7 @@ export type UserMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder | runtime.Types.Skip
   role?: Prisma.SortOrder | runtime.Types.Skip
   isActive?: Prisma.SortOrder | runtime.Types.Skip
+  timezone?: Prisma.SortOrder | runtime.Types.Skip
   createdAt?: Prisma.SortOrder | runtime.Types.Skip
   updatedAt?: Prisma.SortOrder | runtime.Types.Skip
 }
@@ -373,6 +401,7 @@ export type UserMinOrderByAggregateInput = {
   email?: Prisma.SortOrder | runtime.Types.Skip
   role?: Prisma.SortOrder | runtime.Types.Skip
   isActive?: Prisma.SortOrder | runtime.Types.Skip
+  timezone?: Prisma.SortOrder | runtime.Types.Skip
   createdAt?: Prisma.SortOrder | runtime.Types.Skip
   updatedAt?: Prisma.SortOrder | runtime.Types.Skip
 }
@@ -431,6 +460,20 @@ export type UserUpdateOneRequiredWithoutKarsasNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutKarsasInput, Prisma.UserUpdateWithoutKarsasInput>, Prisma.UserUncheckedUpdateWithoutKarsasInput> | runtime.Types.Skip
 }
 
+export type UserCreateNestedOneWithoutWorkspacesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWorkspacesInput, Prisma.UserUncheckedCreateWithoutWorkspacesInput> | runtime.Types.Skip
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWorkspacesInput | runtime.Types.Skip
+  connect?: Prisma.UserWhereUniqueInput | runtime.Types.Skip
+}
+
+export type UserUpdateOneRequiredWithoutWorkspacesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWorkspacesInput, Prisma.UserUncheckedCreateWithoutWorkspacesInput> | runtime.Types.Skip
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWorkspacesInput | runtime.Types.Skip
+  upsert?: Prisma.UserUpsertWithoutWorkspacesInput | runtime.Types.Skip
+  connect?: Prisma.UserWhereUniqueInput | runtime.Types.Skip
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWorkspacesInput, Prisma.UserUpdateWithoutWorkspacesInput>, Prisma.UserUncheckedUpdateWithoutWorkspacesInput> | runtime.Types.Skip
+}
+
 export type UserCreateNestedOneWithoutBalancesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutBalancesInput, Prisma.UserUncheckedCreateWithoutBalancesInput> | runtime.Types.Skip
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutBalancesInput | runtime.Types.Skip
@@ -467,11 +510,13 @@ export type UserCreateWithoutAuthInput = {
   email: string
   role?: $Enums.UserRole | runtime.Types.Skip
   isActive?: boolean | runtime.Types.Skip
+  timezone?: string | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   updatedAt?: Date | string | runtime.Types.Skip
   balances?: Prisma.BalanceCreateNestedOneWithoutUserInput | runtime.Types.Skip
   balanceActivities?: Prisma.BalanceActivityCreateNestedManyWithoutSenderInput | runtime.Types.Skip
   karsas?: Prisma.KarsaCreateNestedManyWithoutUserInput | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceCreateNestedManyWithoutUserInput | runtime.Types.Skip
 }
 
 export type UserUncheckedCreateWithoutAuthInput = {
@@ -480,11 +525,13 @@ export type UserUncheckedCreateWithoutAuthInput = {
   email: string
   role?: $Enums.UserRole | runtime.Types.Skip
   isActive?: boolean | runtime.Types.Skip
+  timezone?: string | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   updatedAt?: Date | string | runtime.Types.Skip
   balances?: Prisma.BalanceUncheckedCreateNestedOneWithoutUserInput | runtime.Types.Skip
   balanceActivities?: Prisma.BalanceActivityUncheckedCreateNestedManyWithoutSenderInput | runtime.Types.Skip
   karsas?: Prisma.KarsaUncheckedCreateNestedManyWithoutUserInput | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutUserInput | runtime.Types.Skip
 }
 
 export type UserCreateOrConnectWithoutAuthInput = {
@@ -509,11 +556,13 @@ export type UserUpdateWithoutAuthInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole | runtime.Types.Skip
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   balances?: Prisma.BalanceUpdateOneWithoutUserNestedInput | runtime.Types.Skip
   balanceActivities?: Prisma.BalanceActivityUpdateManyWithoutSenderNestedInput | runtime.Types.Skip
   karsas?: Prisma.KarsaUpdateManyWithoutUserNestedInput | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceUpdateManyWithoutUserNestedInput | runtime.Types.Skip
 }
 
 export type UserUncheckedUpdateWithoutAuthInput = {
@@ -522,11 +571,13 @@ export type UserUncheckedUpdateWithoutAuthInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole | runtime.Types.Skip
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   balances?: Prisma.BalanceUncheckedUpdateOneWithoutUserNestedInput | runtime.Types.Skip
   balanceActivities?: Prisma.BalanceActivityUncheckedUpdateManyWithoutSenderNestedInput | runtime.Types.Skip
   karsas?: Prisma.KarsaUncheckedUpdateManyWithoutUserNestedInput | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceUncheckedUpdateManyWithoutUserNestedInput | runtime.Types.Skip
 }
 
 export type UserCreateWithoutKarsasInput = {
@@ -535,11 +586,13 @@ export type UserCreateWithoutKarsasInput = {
   email: string
   role?: $Enums.UserRole | runtime.Types.Skip
   isActive?: boolean | runtime.Types.Skip
+  timezone?: string | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   updatedAt?: Date | string | runtime.Types.Skip
   auth?: Prisma.AuthCreateNestedOneWithoutUserInput | runtime.Types.Skip
   balances?: Prisma.BalanceCreateNestedOneWithoutUserInput | runtime.Types.Skip
   balanceActivities?: Prisma.BalanceActivityCreateNestedManyWithoutSenderInput | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceCreateNestedManyWithoutUserInput | runtime.Types.Skip
 }
 
 export type UserUncheckedCreateWithoutKarsasInput = {
@@ -548,11 +601,13 @@ export type UserUncheckedCreateWithoutKarsasInput = {
   email: string
   role?: $Enums.UserRole | runtime.Types.Skip
   isActive?: boolean | runtime.Types.Skip
+  timezone?: string | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   updatedAt?: Date | string | runtime.Types.Skip
   auth?: Prisma.AuthUncheckedCreateNestedOneWithoutUserInput | runtime.Types.Skip
   balances?: Prisma.BalanceUncheckedCreateNestedOneWithoutUserInput | runtime.Types.Skip
   balanceActivities?: Prisma.BalanceActivityUncheckedCreateNestedManyWithoutSenderInput | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutUserInput | runtime.Types.Skip
 }
 
 export type UserCreateOrConnectWithoutKarsasInput = {
@@ -577,11 +632,13 @@ export type UserUpdateWithoutKarsasInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole | runtime.Types.Skip
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   auth?: Prisma.AuthUpdateOneWithoutUserNestedInput | runtime.Types.Skip
   balances?: Prisma.BalanceUpdateOneWithoutUserNestedInput | runtime.Types.Skip
   balanceActivities?: Prisma.BalanceActivityUpdateManyWithoutSenderNestedInput | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceUpdateManyWithoutUserNestedInput | runtime.Types.Skip
 }
 
 export type UserUncheckedUpdateWithoutKarsasInput = {
@@ -590,11 +647,89 @@ export type UserUncheckedUpdateWithoutKarsasInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole | runtime.Types.Skip
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   auth?: Prisma.AuthUncheckedUpdateOneWithoutUserNestedInput | runtime.Types.Skip
   balances?: Prisma.BalanceUncheckedUpdateOneWithoutUserNestedInput | runtime.Types.Skip
   balanceActivities?: Prisma.BalanceActivityUncheckedUpdateManyWithoutSenderNestedInput | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceUncheckedUpdateManyWithoutUserNestedInput | runtime.Types.Skip
+}
+
+export type UserCreateWithoutWorkspacesInput = {
+  id?: string | runtime.Types.Skip
+  name: string
+  email: string
+  role?: $Enums.UserRole | runtime.Types.Skip
+  isActive?: boolean | runtime.Types.Skip
+  timezone?: string | runtime.Types.Skip
+  createdAt?: Date | string | runtime.Types.Skip
+  updatedAt?: Date | string | runtime.Types.Skip
+  auth?: Prisma.AuthCreateNestedOneWithoutUserInput | runtime.Types.Skip
+  balances?: Prisma.BalanceCreateNestedOneWithoutUserInput | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityCreateNestedManyWithoutSenderInput | runtime.Types.Skip
+  karsas?: Prisma.KarsaCreateNestedManyWithoutUserInput | runtime.Types.Skip
+}
+
+export type UserUncheckedCreateWithoutWorkspacesInput = {
+  id?: string | runtime.Types.Skip
+  name: string
+  email: string
+  role?: $Enums.UserRole | runtime.Types.Skip
+  isActive?: boolean | runtime.Types.Skip
+  timezone?: string | runtime.Types.Skip
+  createdAt?: Date | string | runtime.Types.Skip
+  updatedAt?: Date | string | runtime.Types.Skip
+  auth?: Prisma.AuthUncheckedCreateNestedOneWithoutUserInput | runtime.Types.Skip
+  balances?: Prisma.BalanceUncheckedCreateNestedOneWithoutUserInput | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityUncheckedCreateNestedManyWithoutSenderInput | runtime.Types.Skip
+  karsas?: Prisma.KarsaUncheckedCreateNestedManyWithoutUserInput | runtime.Types.Skip
+}
+
+export type UserCreateOrConnectWithoutWorkspacesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutWorkspacesInput, Prisma.UserUncheckedCreateWithoutWorkspacesInput>
+}
+
+export type UserUpsertWithoutWorkspacesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutWorkspacesInput, Prisma.UserUncheckedUpdateWithoutWorkspacesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutWorkspacesInput, Prisma.UserUncheckedCreateWithoutWorkspacesInput>
+  where?: Prisma.UserWhereInput | runtime.Types.Skip
+}
+
+export type UserUpdateToOneWithWhereWithoutWorkspacesInput = {
+  where?: Prisma.UserWhereInput | runtime.Types.Skip
+  data: Prisma.XOR<Prisma.UserUpdateWithoutWorkspacesInput, Prisma.UserUncheckedUpdateWithoutWorkspacesInput>
+}
+
+export type UserUpdateWithoutWorkspacesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  name?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  email?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole | runtime.Types.Skip
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  auth?: Prisma.AuthUpdateOneWithoutUserNestedInput | runtime.Types.Skip
+  balances?: Prisma.BalanceUpdateOneWithoutUserNestedInput | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityUpdateManyWithoutSenderNestedInput | runtime.Types.Skip
+  karsas?: Prisma.KarsaUpdateManyWithoutUserNestedInput | runtime.Types.Skip
+}
+
+export type UserUncheckedUpdateWithoutWorkspacesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  name?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  email?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole | runtime.Types.Skip
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  auth?: Prisma.AuthUncheckedUpdateOneWithoutUserNestedInput | runtime.Types.Skip
+  balances?: Prisma.BalanceUncheckedUpdateOneWithoutUserNestedInput | runtime.Types.Skip
+  balanceActivities?: Prisma.BalanceActivityUncheckedUpdateManyWithoutSenderNestedInput | runtime.Types.Skip
+  karsas?: Prisma.KarsaUncheckedUpdateManyWithoutUserNestedInput | runtime.Types.Skip
 }
 
 export type UserCreateWithoutBalancesInput = {
@@ -603,11 +738,13 @@ export type UserCreateWithoutBalancesInput = {
   email: string
   role?: $Enums.UserRole | runtime.Types.Skip
   isActive?: boolean | runtime.Types.Skip
+  timezone?: string | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   updatedAt?: Date | string | runtime.Types.Skip
   auth?: Prisma.AuthCreateNestedOneWithoutUserInput | runtime.Types.Skip
   balanceActivities?: Prisma.BalanceActivityCreateNestedManyWithoutSenderInput | runtime.Types.Skip
   karsas?: Prisma.KarsaCreateNestedManyWithoutUserInput | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceCreateNestedManyWithoutUserInput | runtime.Types.Skip
 }
 
 export type UserUncheckedCreateWithoutBalancesInput = {
@@ -616,11 +753,13 @@ export type UserUncheckedCreateWithoutBalancesInput = {
   email: string
   role?: $Enums.UserRole | runtime.Types.Skip
   isActive?: boolean | runtime.Types.Skip
+  timezone?: string | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   updatedAt?: Date | string | runtime.Types.Skip
   auth?: Prisma.AuthUncheckedCreateNestedOneWithoutUserInput | runtime.Types.Skip
   balanceActivities?: Prisma.BalanceActivityUncheckedCreateNestedManyWithoutSenderInput | runtime.Types.Skip
   karsas?: Prisma.KarsaUncheckedCreateNestedManyWithoutUserInput | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutUserInput | runtime.Types.Skip
 }
 
 export type UserCreateOrConnectWithoutBalancesInput = {
@@ -645,11 +784,13 @@ export type UserUpdateWithoutBalancesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole | runtime.Types.Skip
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   auth?: Prisma.AuthUpdateOneWithoutUserNestedInput | runtime.Types.Skip
   balanceActivities?: Prisma.BalanceActivityUpdateManyWithoutSenderNestedInput | runtime.Types.Skip
   karsas?: Prisma.KarsaUpdateManyWithoutUserNestedInput | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceUpdateManyWithoutUserNestedInput | runtime.Types.Skip
 }
 
 export type UserUncheckedUpdateWithoutBalancesInput = {
@@ -658,11 +799,13 @@ export type UserUncheckedUpdateWithoutBalancesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole | runtime.Types.Skip
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   auth?: Prisma.AuthUncheckedUpdateOneWithoutUserNestedInput | runtime.Types.Skip
   balanceActivities?: Prisma.BalanceActivityUncheckedUpdateManyWithoutSenderNestedInput | runtime.Types.Skip
   karsas?: Prisma.KarsaUncheckedUpdateManyWithoutUserNestedInput | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceUncheckedUpdateManyWithoutUserNestedInput | runtime.Types.Skip
 }
 
 export type UserCreateWithoutBalanceActivitiesInput = {
@@ -671,11 +814,13 @@ export type UserCreateWithoutBalanceActivitiesInput = {
   email: string
   role?: $Enums.UserRole | runtime.Types.Skip
   isActive?: boolean | runtime.Types.Skip
+  timezone?: string | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   updatedAt?: Date | string | runtime.Types.Skip
   auth?: Prisma.AuthCreateNestedOneWithoutUserInput | runtime.Types.Skip
   balances?: Prisma.BalanceCreateNestedOneWithoutUserInput | runtime.Types.Skip
   karsas?: Prisma.KarsaCreateNestedManyWithoutUserInput | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceCreateNestedManyWithoutUserInput | runtime.Types.Skip
 }
 
 export type UserUncheckedCreateWithoutBalanceActivitiesInput = {
@@ -684,11 +829,13 @@ export type UserUncheckedCreateWithoutBalanceActivitiesInput = {
   email: string
   role?: $Enums.UserRole | runtime.Types.Skip
   isActive?: boolean | runtime.Types.Skip
+  timezone?: string | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   updatedAt?: Date | string | runtime.Types.Skip
   auth?: Prisma.AuthUncheckedCreateNestedOneWithoutUserInput | runtime.Types.Skip
   balances?: Prisma.BalanceUncheckedCreateNestedOneWithoutUserInput | runtime.Types.Skip
   karsas?: Prisma.KarsaUncheckedCreateNestedManyWithoutUserInput | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutUserInput | runtime.Types.Skip
 }
 
 export type UserCreateOrConnectWithoutBalanceActivitiesInput = {
@@ -713,11 +860,13 @@ export type UserUpdateWithoutBalanceActivitiesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole | runtime.Types.Skip
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   auth?: Prisma.AuthUpdateOneWithoutUserNestedInput | runtime.Types.Skip
   balances?: Prisma.BalanceUpdateOneWithoutUserNestedInput | runtime.Types.Skip
   karsas?: Prisma.KarsaUpdateManyWithoutUserNestedInput | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceUpdateManyWithoutUserNestedInput | runtime.Types.Skip
 }
 
 export type UserUncheckedUpdateWithoutBalanceActivitiesInput = {
@@ -726,11 +875,13 @@ export type UserUncheckedUpdateWithoutBalanceActivitiesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole | runtime.Types.Skip
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean | runtime.Types.Skip
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   auth?: Prisma.AuthUncheckedUpdateOneWithoutUserNestedInput | runtime.Types.Skip
   balances?: Prisma.BalanceUncheckedUpdateOneWithoutUserNestedInput | runtime.Types.Skip
   karsas?: Prisma.KarsaUncheckedUpdateManyWithoutUserNestedInput | runtime.Types.Skip
+  workspaces?: Prisma.WorkspaceUncheckedUpdateManyWithoutUserNestedInput | runtime.Types.Skip
 }
 
 
@@ -741,11 +892,13 @@ export type UserUncheckedUpdateWithoutBalanceActivitiesInput = {
 export type UserCountOutputType = {
   balanceActivities: number
   karsas: number
+  workspaces: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   balanceActivities?: boolean | UserCountOutputTypeCountBalanceActivitiesArgs
   karsas?: boolean | UserCountOutputTypeCountKarsasArgs
+  workspaces?: boolean | UserCountOutputTypeCountWorkspacesArgs
 }
 
 /**
@@ -772,6 +925,13 @@ export type UserCountOutputTypeCountKarsasArgs<ExtArgs extends runtime.Types.Ext
   where?: Prisma.KarsaWhereInput | runtime.Types.Skip
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountWorkspacesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WorkspaceWhereInput | runtime.Types.Skip
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean | runtime.Types.Skip
@@ -779,12 +939,14 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   email?: boolean | runtime.Types.Skip
   role?: boolean | runtime.Types.Skip
   isActive?: boolean | runtime.Types.Skip
+  timezone?: boolean | runtime.Types.Skip
   createdAt?: boolean | runtime.Types.Skip
   updatedAt?: boolean | runtime.Types.Skip
   auth?: boolean | Prisma.User$authArgs<ExtArgs> | runtime.Types.Skip
   balances?: boolean | Prisma.User$balancesArgs<ExtArgs> | runtime.Types.Skip
   balanceActivities?: boolean | Prisma.User$balanceActivitiesArgs<ExtArgs> | runtime.Types.Skip
   karsas?: boolean | Prisma.User$karsasArgs<ExtArgs> | runtime.Types.Skip
+  workspaces?: boolean | Prisma.User$workspacesArgs<ExtArgs> | runtime.Types.Skip
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs> | runtime.Types.Skip
 }, ExtArgs["result"]["user"]>
 
@@ -794,6 +956,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean | runtime.Types.Skip
   role?: boolean | runtime.Types.Skip
   isActive?: boolean | runtime.Types.Skip
+  timezone?: boolean | runtime.Types.Skip
   createdAt?: boolean | runtime.Types.Skip
   updatedAt?: boolean | runtime.Types.Skip
 }, ExtArgs["result"]["user"]>
@@ -804,6 +967,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean | runtime.Types.Skip
   role?: boolean | runtime.Types.Skip
   isActive?: boolean | runtime.Types.Skip
+  timezone?: boolean | runtime.Types.Skip
   createdAt?: boolean | runtime.Types.Skip
   updatedAt?: boolean | runtime.Types.Skip
 }, ExtArgs["result"]["user"]>
@@ -814,16 +978,18 @@ export type UserSelectScalar = {
   email?: boolean | runtime.Types.Skip
   role?: boolean | runtime.Types.Skip
   isActive?: boolean | runtime.Types.Skip
+  timezone?: boolean | runtime.Types.Skip
   createdAt?: boolean | runtime.Types.Skip
   updatedAt?: boolean | runtime.Types.Skip
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "role" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["user"], runtime.Types.Skip>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "role" | "isActive" | "timezone" | "createdAt" | "updatedAt", ExtArgs["result"]["user"], runtime.Types.Skip>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   auth?: boolean | Prisma.User$authArgs<ExtArgs> | runtime.Types.Skip
   balances?: boolean | Prisma.User$balancesArgs<ExtArgs> | runtime.Types.Skip
   balanceActivities?: boolean | Prisma.User$balanceActivitiesArgs<ExtArgs> | runtime.Types.Skip
   karsas?: boolean | Prisma.User$karsasArgs<ExtArgs> | runtime.Types.Skip
+  workspaces?: boolean | Prisma.User$workspacesArgs<ExtArgs> | runtime.Types.Skip
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs> | runtime.Types.Skip
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -836,6 +1002,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     balances: Prisma.$BalancePayload<ExtArgs> | null
     balanceActivities: Prisma.$BalanceActivityPayload<ExtArgs>[]
     karsas: Prisma.$KarsaPayload<ExtArgs>[]
+    workspaces: Prisma.$WorkspacePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -846,6 +1013,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     email: string
     role: $Enums.UserRole
     isActive: boolean
+    timezone: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1246,6 +1414,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   balances<T extends Prisma.User$balancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$balancesArgs<ExtArgs>>): Prisma.Prisma__BalanceClient<runtime.Types.Result.GetResult<Prisma.$BalancePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   balanceActivities<T extends Prisma.User$balanceActivitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$balanceActivitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BalanceActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   karsas<T extends Prisma.User$karsasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$karsasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KarsaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  workspaces<T extends Prisma.User$workspacesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$workspacesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1280,6 +1449,7 @@ export interface UserFieldRefs {
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'UserRole'>
   readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
+  readonly timezone: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
@@ -1756,6 +1926,30 @@ export type User$karsasArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number | runtime.Types.Skip
   skip?: number | runtime.Types.Skip
   distinct?: Prisma.KarsaScalarFieldEnum | Prisma.KarsaScalarFieldEnum[] | runtime.Types.Skip
+}
+
+/**
+ * User.workspaces
+ */
+export type User$workspacesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Workspace
+   */
+  select?: Prisma.WorkspaceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Workspace
+   */
+  omit?: Prisma.WorkspaceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkspaceInclude<ExtArgs> | null
+  where?: Prisma.WorkspaceWhereInput | runtime.Types.Skip
+  orderBy?: Prisma.WorkspaceOrderByWithRelationInput | Prisma.WorkspaceOrderByWithRelationInput[] | runtime.Types.Skip
+  cursor?: Prisma.WorkspaceWhereUniqueInput | runtime.Types.Skip
+  take?: number | runtime.Types.Skip
+  skip?: number | runtime.Types.Skip
+  distinct?: Prisma.WorkspaceScalarFieldEnum | Prisma.WorkspaceScalarFieldEnum[] | runtime.Types.Skip
 }
 
 /**

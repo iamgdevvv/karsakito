@@ -67,7 +67,10 @@ export default function DetailUserAdminRoute({ loaderData }: Route.ComponentProp
 	return (
 		<div className="site">
 			<HeaderAdmin authUser={loaderData.user} />
-			<AdminPanel className="site-main">
+			<AdminPanel
+				authUser={loaderData.user}
+				className="site-main"
+			>
 				<Title mb="lg">Detail User</Title>
 				<FormUpdateUser
 					data={loaderData.recordUser}

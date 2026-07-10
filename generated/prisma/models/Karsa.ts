@@ -220,6 +220,7 @@ export type KarsaWhereInput = {
   balanceActivityId?: Prisma.StringFilter<"Karsa"> | string | runtime.Types.Skip
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput> | runtime.Types.Skip
   balanceActivity?: Prisma.XOR<Prisma.BalanceActivityScalarRelationFilter, Prisma.BalanceActivityWhereInput> | runtime.Types.Skip
+  workspaceWindow?: Prisma.XOR<Prisma.WorkspaceWindowNullableScalarRelationFilter, Prisma.WorkspaceWindowWhereInput> | null | runtime.Types.Skip
 }
 
 export type KarsaOrderByWithRelationInput = {
@@ -235,6 +236,7 @@ export type KarsaOrderByWithRelationInput = {
   balanceActivityId?: Prisma.SortOrder | runtime.Types.Skip
   user?: Prisma.UserOrderByWithRelationInput | runtime.Types.Skip
   balanceActivity?: Prisma.BalanceActivityOrderByWithRelationInput | runtime.Types.Skip
+  workspaceWindow?: Prisma.WorkspaceWindowOrderByWithRelationInput | runtime.Types.Skip
 }
 
 export type KarsaWhereUniqueInput = Prisma.AtLeast<{
@@ -253,6 +255,7 @@ export type KarsaWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.StringFilter<"Karsa"> | string | runtime.Types.Skip
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput> | runtime.Types.Skip
   balanceActivity?: Prisma.XOR<Prisma.BalanceActivityScalarRelationFilter, Prisma.BalanceActivityWhereInput> | runtime.Types.Skip
+  workspaceWindow?: Prisma.XOR<Prisma.WorkspaceWindowNullableScalarRelationFilter, Prisma.WorkspaceWindowWhereInput> | null | runtime.Types.Skip
 }, "id" | "balanceActivityId">
 
 export type KarsaOrderByWithAggregationInput = {
@@ -298,6 +301,7 @@ export type KarsaCreateInput = {
   updatedAt?: Date | string | runtime.Types.Skip
   user: Prisma.UserCreateNestedOneWithoutKarsasInput
   balanceActivity: Prisma.BalanceActivityCreateNestedOneWithoutKarsaInput
+  workspaceWindow?: Prisma.WorkspaceWindowCreateNestedOneWithoutKarsaInput | runtime.Types.Skip
 }
 
 export type KarsaUncheckedCreateInput = {
@@ -311,6 +315,7 @@ export type KarsaUncheckedCreateInput = {
   updatedAt?: Date | string | runtime.Types.Skip
   userId: string
   balanceActivityId: string
+  workspaceWindow?: Prisma.WorkspaceWindowUncheckedCreateNestedOneWithoutKarsaInput | runtime.Types.Skip
 }
 
 export type KarsaUpdateInput = {
@@ -324,6 +329,7 @@ export type KarsaUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   user?: Prisma.UserUpdateOneRequiredWithoutKarsasNestedInput | runtime.Types.Skip
   balanceActivity?: Prisma.BalanceActivityUpdateOneRequiredWithoutKarsaNestedInput | runtime.Types.Skip
+  workspaceWindow?: Prisma.WorkspaceWindowUpdateOneWithoutKarsaNestedInput | runtime.Types.Skip
 }
 
 export type KarsaUncheckedUpdateInput = {
@@ -337,6 +343,7 @@ export type KarsaUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   userId?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   balanceActivityId?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  workspaceWindow?: Prisma.WorkspaceWindowUncheckedUpdateOneWithoutKarsaNestedInput | runtime.Types.Skip
 }
 
 export type KarsaCreateManyInput = {
@@ -423,6 +430,11 @@ export type KarsaMinOrderByAggregateInput = {
   balanceActivityId?: Prisma.SortOrder | runtime.Types.Skip
 }
 
+export type KarsaScalarRelationFilter = {
+  is?: Prisma.KarsaWhereInput | runtime.Types.Skip
+  isNot?: Prisma.KarsaWhereInput | runtime.Types.Skip
+}
+
 export type KarsaNullableScalarRelationFilter = {
   is?: Prisma.KarsaWhereInput | null | runtime.Types.Skip
   isNot?: Prisma.KarsaWhereInput | null | runtime.Types.Skip
@@ -482,6 +494,20 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null | runtime.Types.Skip
 }
 
+export type KarsaCreateNestedOneWithoutWorkspaceWindowInput = {
+  create?: Prisma.XOR<Prisma.KarsaCreateWithoutWorkspaceWindowInput, Prisma.KarsaUncheckedCreateWithoutWorkspaceWindowInput> | runtime.Types.Skip
+  connectOrCreate?: Prisma.KarsaCreateOrConnectWithoutWorkspaceWindowInput | runtime.Types.Skip
+  connect?: Prisma.KarsaWhereUniqueInput | runtime.Types.Skip
+}
+
+export type KarsaUpdateOneRequiredWithoutWorkspaceWindowNestedInput = {
+  create?: Prisma.XOR<Prisma.KarsaCreateWithoutWorkspaceWindowInput, Prisma.KarsaUncheckedCreateWithoutWorkspaceWindowInput> | runtime.Types.Skip
+  connectOrCreate?: Prisma.KarsaCreateOrConnectWithoutWorkspaceWindowInput | runtime.Types.Skip
+  upsert?: Prisma.KarsaUpsertWithoutWorkspaceWindowInput | runtime.Types.Skip
+  connect?: Prisma.KarsaWhereUniqueInput | runtime.Types.Skip
+  update?: Prisma.XOR<Prisma.XOR<Prisma.KarsaUpdateToOneWithWhereWithoutWorkspaceWindowInput, Prisma.KarsaUpdateWithoutWorkspaceWindowInput>, Prisma.KarsaUncheckedUpdateWithoutWorkspaceWindowInput> | runtime.Types.Skip
+}
+
 export type KarsaCreateNestedOneWithoutBalanceActivityInput = {
   create?: Prisma.XOR<Prisma.KarsaCreateWithoutBalanceActivityInput, Prisma.KarsaUncheckedCreateWithoutBalanceActivityInput> | runtime.Types.Skip
   connectOrCreate?: Prisma.KarsaCreateOrConnectWithoutBalanceActivityInput | runtime.Types.Skip
@@ -524,6 +550,7 @@ export type KarsaCreateWithoutUserInput = {
   createdAt?: Date | string | runtime.Types.Skip
   updatedAt?: Date | string | runtime.Types.Skip
   balanceActivity: Prisma.BalanceActivityCreateNestedOneWithoutKarsaInput
+  workspaceWindow?: Prisma.WorkspaceWindowCreateNestedOneWithoutKarsaInput | runtime.Types.Skip
 }
 
 export type KarsaUncheckedCreateWithoutUserInput = {
@@ -536,6 +563,7 @@ export type KarsaUncheckedCreateWithoutUserInput = {
   createdAt?: Date | string | runtime.Types.Skip
   updatedAt?: Date | string | runtime.Types.Skip
   balanceActivityId: string
+  workspaceWindow?: Prisma.WorkspaceWindowUncheckedCreateNestedOneWithoutKarsaInput | runtime.Types.Skip
 }
 
 export type KarsaCreateOrConnectWithoutUserInput = {
@@ -579,6 +607,74 @@ export type KarsaScalarWhereInput = {
   balanceActivityId?: Prisma.StringFilter<"Karsa"> | string | runtime.Types.Skip
 }
 
+export type KarsaCreateWithoutWorkspaceWindowInput = {
+  id?: string | runtime.Types.Skip
+  app: $Enums.KarsaAppsName
+  promptJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue | runtime.Types.Skip
+  result: string
+  reaction?: boolean | null | runtime.Types.Skip
+  feedback?: string | null | runtime.Types.Skip
+  createdAt?: Date | string | runtime.Types.Skip
+  updatedAt?: Date | string | runtime.Types.Skip
+  user: Prisma.UserCreateNestedOneWithoutKarsasInput
+  balanceActivity: Prisma.BalanceActivityCreateNestedOneWithoutKarsaInput
+}
+
+export type KarsaUncheckedCreateWithoutWorkspaceWindowInput = {
+  id?: string | runtime.Types.Skip
+  app: $Enums.KarsaAppsName
+  promptJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue | runtime.Types.Skip
+  result: string
+  reaction?: boolean | null | runtime.Types.Skip
+  feedback?: string | null | runtime.Types.Skip
+  createdAt?: Date | string | runtime.Types.Skip
+  updatedAt?: Date | string | runtime.Types.Skip
+  userId: string
+  balanceActivityId: string
+}
+
+export type KarsaCreateOrConnectWithoutWorkspaceWindowInput = {
+  where: Prisma.KarsaWhereUniqueInput
+  create: Prisma.XOR<Prisma.KarsaCreateWithoutWorkspaceWindowInput, Prisma.KarsaUncheckedCreateWithoutWorkspaceWindowInput>
+}
+
+export type KarsaUpsertWithoutWorkspaceWindowInput = {
+  update: Prisma.XOR<Prisma.KarsaUpdateWithoutWorkspaceWindowInput, Prisma.KarsaUncheckedUpdateWithoutWorkspaceWindowInput>
+  create: Prisma.XOR<Prisma.KarsaCreateWithoutWorkspaceWindowInput, Prisma.KarsaUncheckedCreateWithoutWorkspaceWindowInput>
+  where?: Prisma.KarsaWhereInput | runtime.Types.Skip
+}
+
+export type KarsaUpdateToOneWithWhereWithoutWorkspaceWindowInput = {
+  where?: Prisma.KarsaWhereInput | runtime.Types.Skip
+  data: Prisma.XOR<Prisma.KarsaUpdateWithoutWorkspaceWindowInput, Prisma.KarsaUncheckedUpdateWithoutWorkspaceWindowInput>
+}
+
+export type KarsaUpdateWithoutWorkspaceWindowInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  app?: Prisma.EnumKarsaAppsNameFieldUpdateOperationsInput | $Enums.KarsaAppsName | runtime.Types.Skip
+  promptJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue | runtime.Types.Skip
+  result?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  reaction?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null | runtime.Types.Skip
+  feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null | runtime.Types.Skip
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  user?: Prisma.UserUpdateOneRequiredWithoutKarsasNestedInput | runtime.Types.Skip
+  balanceActivity?: Prisma.BalanceActivityUpdateOneRequiredWithoutKarsaNestedInput | runtime.Types.Skip
+}
+
+export type KarsaUncheckedUpdateWithoutWorkspaceWindowInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  app?: Prisma.EnumKarsaAppsNameFieldUpdateOperationsInput | $Enums.KarsaAppsName | runtime.Types.Skip
+  promptJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue | runtime.Types.Skip
+  result?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  reaction?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null | runtime.Types.Skip
+  feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null | runtime.Types.Skip
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
+  userId?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  balanceActivityId?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+}
+
 export type KarsaCreateWithoutBalanceActivityInput = {
   id?: string | runtime.Types.Skip
   app: $Enums.KarsaAppsName
@@ -589,6 +685,7 @@ export type KarsaCreateWithoutBalanceActivityInput = {
   createdAt?: Date | string | runtime.Types.Skip
   updatedAt?: Date | string | runtime.Types.Skip
   user: Prisma.UserCreateNestedOneWithoutKarsasInput
+  workspaceWindow?: Prisma.WorkspaceWindowCreateNestedOneWithoutKarsaInput | runtime.Types.Skip
 }
 
 export type KarsaUncheckedCreateWithoutBalanceActivityInput = {
@@ -601,6 +698,7 @@ export type KarsaUncheckedCreateWithoutBalanceActivityInput = {
   createdAt?: Date | string | runtime.Types.Skip
   updatedAt?: Date | string | runtime.Types.Skip
   userId: string
+  workspaceWindow?: Prisma.WorkspaceWindowUncheckedCreateNestedOneWithoutKarsaInput | runtime.Types.Skip
 }
 
 export type KarsaCreateOrConnectWithoutBalanceActivityInput = {
@@ -629,6 +727,7 @@ export type KarsaUpdateWithoutBalanceActivityInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   user?: Prisma.UserUpdateOneRequiredWithoutKarsasNestedInput | runtime.Types.Skip
+  workspaceWindow?: Prisma.WorkspaceWindowUpdateOneWithoutKarsaNestedInput | runtime.Types.Skip
 }
 
 export type KarsaUncheckedUpdateWithoutBalanceActivityInput = {
@@ -641,6 +740,7 @@ export type KarsaUncheckedUpdateWithoutBalanceActivityInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   userId?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  workspaceWindow?: Prisma.WorkspaceWindowUncheckedUpdateOneWithoutKarsaNestedInput | runtime.Types.Skip
 }
 
 export type KarsaCreateManyUserInput = {
@@ -665,6 +765,7 @@ export type KarsaUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   balanceActivity?: Prisma.BalanceActivityUpdateOneRequiredWithoutKarsaNestedInput | runtime.Types.Skip
+  workspaceWindow?: Prisma.WorkspaceWindowUpdateOneWithoutKarsaNestedInput | runtime.Types.Skip
 }
 
 export type KarsaUncheckedUpdateWithoutUserInput = {
@@ -677,6 +778,7 @@ export type KarsaUncheckedUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   balanceActivityId?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  workspaceWindow?: Prisma.WorkspaceWindowUncheckedUpdateOneWithoutKarsaNestedInput | runtime.Types.Skip
 }
 
 export type KarsaUncheckedUpdateManyWithoutUserInput = {
@@ -706,6 +808,7 @@ export type KarsaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   balanceActivityId?: boolean | runtime.Types.Skip
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs> | runtime.Types.Skip
   balanceActivity?: boolean | Prisma.BalanceActivityDefaultArgs<ExtArgs> | runtime.Types.Skip
+  workspaceWindow?: boolean | Prisma.Karsa$workspaceWindowArgs<ExtArgs> | runtime.Types.Skip
 }, ExtArgs["result"]["karsa"]>
 
 export type KarsaSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -755,6 +858,7 @@ export type KarsaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
 export type KarsaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs> | runtime.Types.Skip
   balanceActivity?: boolean | Prisma.BalanceActivityDefaultArgs<ExtArgs> | runtime.Types.Skip
+  workspaceWindow?: boolean | Prisma.Karsa$workspaceWindowArgs<ExtArgs> | runtime.Types.Skip
 }
 export type KarsaIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs> | runtime.Types.Skip
@@ -770,6 +874,7 @@ export type $KarsaPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
     balanceActivity: Prisma.$BalanceActivityPayload<ExtArgs>
+    workspaceWindow: Prisma.$WorkspaceWindowPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1178,6 +1283,7 @@ export interface Prisma__KarsaClient<T, Null = never, ExtArgs extends runtime.Ty
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   balanceActivity<T extends Prisma.BalanceActivityDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BalanceActivityDefaultArgs<ExtArgs>>): Prisma.Prisma__BalanceActivityClient<runtime.Types.Result.GetResult<Prisma.$BalanceActivityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  workspaceWindow<T extends Prisma.Karsa$workspaceWindowArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Karsa$workspaceWindowArgs<ExtArgs>>): Prisma.Prisma__WorkspaceWindowClient<runtime.Types.Result.GetResult<Prisma.$WorkspaceWindowPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1613,6 +1719,25 @@ export type KarsaDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Limit how many Karsas to delete.
    */
   limit?: number | runtime.Types.Skip
+}
+
+/**
+ * Karsa.workspaceWindow
+ */
+export type Karsa$workspaceWindowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WorkspaceWindow
+   */
+  select?: Prisma.WorkspaceWindowSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WorkspaceWindow
+   */
+  omit?: Prisma.WorkspaceWindowOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkspaceWindowInclude<ExtArgs> | null
+  where?: Prisma.WorkspaceWindowWhereInput | runtime.Types.Skip
 }
 
 /**

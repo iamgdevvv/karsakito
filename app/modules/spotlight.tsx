@@ -4,6 +4,7 @@ import { FaUsersCog } from 'react-icons/fa';
 import { HiMiniHome, HiUser } from 'react-icons/hi2';
 import { MdSpaceDashboard } from 'react-icons/md';
 import { PiCoinsFill, PiHandCoinsFill } from 'react-icons/pi';
+import { TbApiApp } from 'react-icons/tb';
 
 export const dashboardSpotlight: SpotlightActionData[] = [
 	{
@@ -42,7 +43,7 @@ export const dashboardSpotlight: SpotlightActionData[] = [
 	},
 ];
 
-export const adminSpotlight: SpotlightActionData[] = [
+export const staffSpotlight: SpotlightActionData[] = [
 	{
 		id: '/admin',
 		label: 'Admin',
@@ -50,10 +51,20 @@ export const adminSpotlight: SpotlightActionData[] = [
 		leftSection: <HiMiniHome size={24} />,
 	},
 	{
+		id: '/admin/apps',
+		label: 'Manage Apps',
+		description: 'Manage karsakito apps',
+		leftSection: <TbApiApp size={24} />,
+	},
+	...dashboardSpotlight,
+];
+
+export const adminSpotlight: SpotlightActionData[] = [
+	{
 		id: '/admin/users',
 		label: 'Manage Users',
 		description: 'Manage users, roles, and permissions',
 		leftSection: <FaUsersCog size={24} />,
 	},
-	...dashboardSpotlight,
+	...staffSpotlight,
 ];

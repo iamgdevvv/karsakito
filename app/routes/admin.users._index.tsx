@@ -24,7 +24,7 @@ import { LuTrash } from 'react-icons/lu';
 import { redirect, useNavigation, useSearchParams } from 'react-router';
 import { optionsUserRole } from '~app-modules/enum-options';
 import { metaAdminRoute } from '~app-modules/meta';
-import type { PayloadQueryUsers } from '~app-modules/schema/user';
+import { PayloadQueryUsersSchema, type PayloadQueryUsers } from '~app-modules/schema/user';
 import { toPayloadSearchParams } from '~app-modules/utils';
 import { authUserCtx } from '~app-server/context';
 import { authMiddlewareSession } from '~app-server/session';
@@ -76,7 +76,6 @@ export function meta(_: Route.MetaArgs) {
 
 export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 	const navigation = useNavigation();
-	// const isNavigating = useMemo(() => Boolean(navigation.location), [navigation.location]);
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	const handlerSearchParams = useCallback(
@@ -95,28 +94,38 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 		setSearchParams({});
 	}, []);
 
-	const hasParams = useMemo(() => {
-		const queryParams = Object.fromEntries(searchParams);
+	const queryParams = useMemo(
+		() =>
+			PayloadQueryUsersSchema.safeParse({
+				...loaderData.users.params,
+				...Object.fromEntries(searchParams),
+			}).data || {},
+		[loaderData.users.params, searchParams],
+	);
 
+	const hasParams = useMemo(() => {
 		return Object.values(queryParams).some(Boolean);
-	}, [loaderData.users.params]);
+	}, [queryParams]);
 
 	const hasParamOrderBy = useMemo(() => {
-		if (typeof loaderData.users.params?.asc === 'string') {
-			return !!loaderData.users.params.asc;
+		if (typeof queryParams?.asc === 'string') {
+			return !!queryParams.asc;
 		}
 
-		if (typeof loaderData.users.params?.desc === 'string') {
-			return !!loaderData.users.params.desc;
+		if (typeof queryParams?.desc === 'string') {
+			return !!queryParams.desc;
 		}
 
-		return loaderData.users.params?.asc?.length || loaderData.users.params?.desc?.length;
-	}, [loaderData.users.params]);
+		return queryParams?.asc?.length || queryParams?.desc?.length;
+	}, [queryParams]);
 
 	return (
 		<div className="site">
 			<HeaderAdmin authUser={loaderData.user} />
-			<AdminPanel className="site-main">
+			<AdminPanel
+				authUser={loaderData.user}
+				className="site-main"
+			>
 				<Title mb="lg">Manage Users</Title>
 				{navigation.state === 'loading' ? (
 					<Center>

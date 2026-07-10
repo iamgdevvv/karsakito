@@ -54,15 +54,20 @@ export type Auth = Prisma.AuthModel
  */
 export type Karsa = Prisma.KarsaModel
 /**
- * Model KarsaApps
+ * Model KarsaApp
  * 
  */
-export type KarsaApps = Prisma.KarsaAppsModel
+export type KarsaApp = Prisma.KarsaAppModel
 /**
- * Model KarsaAppsCategory
+ * Model Workspace
  * 
  */
-export type KarsaAppsCategory = Prisma.KarsaAppsCategoryModel
+export type Workspace = Prisma.WorkspaceModel
+/**
+ * Model WorkspaceWindow
+ * 
+ */
+export type WorkspaceWindow = Prisma.WorkspaceWindowModel
 /**
  * Model Balance
  * 

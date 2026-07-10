@@ -392,8 +392,9 @@ export const ModelName = {
   User: 'User',
   Auth: 'Auth',
   Karsa: 'Karsa',
-  KarsaApps: 'KarsaApps',
-  KarsaAppsCategory: 'KarsaAppsCategory',
+  KarsaApp: 'KarsaApp',
+  Workspace: 'Workspace',
+  WorkspaceWindow: 'WorkspaceWindow',
   Balance: 'Balance',
   BalanceActivity: 'BalanceActivity'
 } as const
@@ -411,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "auth" | "karsa" | "karsaApps" | "karsaAppsCategory" | "balance" | "balanceActivity"
+    modelProps: "user" | "auth" | "karsa" | "karsaApp" | "workspace" | "workspaceWindow" | "balance" | "balanceActivity"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -637,151 +638,225 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    KarsaApps: {
-      payload: Prisma.$KarsaAppsPayload<ExtArgs>
-      fields: Prisma.KarsaAppsFieldRefs
+    KarsaApp: {
+      payload: Prisma.$KarsaAppPayload<ExtArgs>
+      fields: Prisma.KarsaAppFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.KarsaAppsFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload> | null
+          args: Prisma.KarsaAppFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.KarsaAppsFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload>
+          args: Prisma.KarsaAppFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppPayload>
         }
         findFirst: {
-          args: Prisma.KarsaAppsFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload> | null
+          args: Prisma.KarsaAppFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.KarsaAppsFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload>
+          args: Prisma.KarsaAppFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppPayload>
         }
         findMany: {
-          args: Prisma.KarsaAppsFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload>[]
+          args: Prisma.KarsaAppFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppPayload>[]
         }
         create: {
-          args: Prisma.KarsaAppsCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload>
+          args: Prisma.KarsaAppCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppPayload>
         }
         createMany: {
-          args: Prisma.KarsaAppsCreateManyArgs<ExtArgs>
+          args: Prisma.KarsaAppCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.KarsaAppsCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload>[]
+          args: Prisma.KarsaAppCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppPayload>[]
         }
         delete: {
-          args: Prisma.KarsaAppsDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload>
+          args: Prisma.KarsaAppDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppPayload>
         }
         update: {
-          args: Prisma.KarsaAppsUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload>
+          args: Prisma.KarsaAppUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppPayload>
         }
         deleteMany: {
-          args: Prisma.KarsaAppsDeleteManyArgs<ExtArgs>
+          args: Prisma.KarsaAppDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.KarsaAppsUpdateManyArgs<ExtArgs>
+          args: Prisma.KarsaAppUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.KarsaAppsUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload>[]
+          args: Prisma.KarsaAppUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppPayload>[]
         }
         upsert: {
-          args: Prisma.KarsaAppsUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsPayload>
+          args: Prisma.KarsaAppUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppPayload>
         }
         aggregate: {
-          args: Prisma.KarsaAppsAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateKarsaApps>
+          args: Prisma.KarsaAppAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKarsaApp>
         }
         groupBy: {
-          args: Prisma.KarsaAppsGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.KarsaAppsGroupByOutputType>[]
+          args: Prisma.KarsaAppGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KarsaAppGroupByOutputType>[]
         }
         count: {
-          args: Prisma.KarsaAppsCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.KarsaAppsCountAggregateOutputType> | number
+          args: Prisma.KarsaAppCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KarsaAppCountAggregateOutputType> | number
         }
       }
     }
-    KarsaAppsCategory: {
-      payload: Prisma.$KarsaAppsCategoryPayload<ExtArgs>
-      fields: Prisma.KarsaAppsCategoryFieldRefs
+    Workspace: {
+      payload: Prisma.$WorkspacePayload<ExtArgs>
+      fields: Prisma.WorkspaceFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.KarsaAppsCategoryFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload> | null
+          args: Prisma.WorkspaceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspacePayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.KarsaAppsCategoryFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload>
+          args: Prisma.WorkspaceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspacePayload>
         }
         findFirst: {
-          args: Prisma.KarsaAppsCategoryFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload> | null
+          args: Prisma.WorkspaceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspacePayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.KarsaAppsCategoryFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload>
+          args: Prisma.WorkspaceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspacePayload>
         }
         findMany: {
-          args: Prisma.KarsaAppsCategoryFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload>[]
+          args: Prisma.WorkspaceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspacePayload>[]
         }
         create: {
-          args: Prisma.KarsaAppsCategoryCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload>
+          args: Prisma.WorkspaceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspacePayload>
         }
         createMany: {
-          args: Prisma.KarsaAppsCategoryCreateManyArgs<ExtArgs>
+          args: Prisma.WorkspaceCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.KarsaAppsCategoryCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload>[]
+          args: Prisma.WorkspaceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspacePayload>[]
         }
         delete: {
-          args: Prisma.KarsaAppsCategoryDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload>
+          args: Prisma.WorkspaceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspacePayload>
         }
         update: {
-          args: Prisma.KarsaAppsCategoryUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload>
+          args: Prisma.WorkspaceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspacePayload>
         }
         deleteMany: {
-          args: Prisma.KarsaAppsCategoryDeleteManyArgs<ExtArgs>
+          args: Prisma.WorkspaceDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.KarsaAppsCategoryUpdateManyArgs<ExtArgs>
+          args: Prisma.WorkspaceUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.KarsaAppsCategoryUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload>[]
+          args: Prisma.WorkspaceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspacePayload>[]
         }
         upsert: {
-          args: Prisma.KarsaAppsCategoryUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$KarsaAppsCategoryPayload>
+          args: Prisma.WorkspaceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspacePayload>
         }
         aggregate: {
-          args: Prisma.KarsaAppsCategoryAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateKarsaAppsCategory>
+          args: Prisma.WorkspaceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWorkspace>
         }
         groupBy: {
-          args: Prisma.KarsaAppsCategoryGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.KarsaAppsCategoryGroupByOutputType>[]
+          args: Prisma.WorkspaceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WorkspaceGroupByOutputType>[]
         }
         count: {
-          args: Prisma.KarsaAppsCategoryCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.KarsaAppsCategoryCountAggregateOutputType> | number
+          args: Prisma.WorkspaceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WorkspaceCountAggregateOutputType> | number
+        }
+      }
+    }
+    WorkspaceWindow: {
+      payload: Prisma.$WorkspaceWindowPayload<ExtArgs>
+      fields: Prisma.WorkspaceWindowFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WorkspaceWindowFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspaceWindowPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WorkspaceWindowFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspaceWindowPayload>
+        }
+        findFirst: {
+          args: Prisma.WorkspaceWindowFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspaceWindowPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WorkspaceWindowFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspaceWindowPayload>
+        }
+        findMany: {
+          args: Prisma.WorkspaceWindowFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspaceWindowPayload>[]
+        }
+        create: {
+          args: Prisma.WorkspaceWindowCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspaceWindowPayload>
+        }
+        createMany: {
+          args: Prisma.WorkspaceWindowCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WorkspaceWindowCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspaceWindowPayload>[]
+        }
+        delete: {
+          args: Prisma.WorkspaceWindowDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspaceWindowPayload>
+        }
+        update: {
+          args: Prisma.WorkspaceWindowUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspaceWindowPayload>
+        }
+        deleteMany: {
+          args: Prisma.WorkspaceWindowDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WorkspaceWindowUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WorkspaceWindowUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspaceWindowPayload>[]
+        }
+        upsert: {
+          args: Prisma.WorkspaceWindowUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkspaceWindowPayload>
+        }
+        aggregate: {
+          args: Prisma.WorkspaceWindowAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWorkspaceWindow>
+        }
+        groupBy: {
+          args: Prisma.WorkspaceWindowGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WorkspaceWindowGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WorkspaceWindowCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WorkspaceWindowCountAggregateOutputType> | number
         }
       }
     }
@@ -975,6 +1050,7 @@ export const UserScalarFieldEnum = {
   email: 'email',
   role: 'role',
   isActive: 'isActive',
+  timezone: 'timezone',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1007,23 +1083,42 @@ export const KarsaScalarFieldEnum = {
 export type KarsaScalarFieldEnum = (typeof KarsaScalarFieldEnum)[keyof typeof KarsaScalarFieldEnum]
 
 
-export const KarsaAppsScalarFieldEnum = {
+export const KarsaAppScalarFieldEnum = {
+  id: 'id',
   name: 'name',
+  label: 'label',
+  description: 'description',
   token: 'token',
   tokenPromo: 'tokenPromo',
   visible: 'visible',
-  categoryId: 'categoryId'
+  category: 'category',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type KarsaAppsScalarFieldEnum = (typeof KarsaAppsScalarFieldEnum)[keyof typeof KarsaAppsScalarFieldEnum]
+export type KarsaAppScalarFieldEnum = (typeof KarsaAppScalarFieldEnum)[keyof typeof KarsaAppScalarFieldEnum]
 
 
-export const KarsaAppsCategoryScalarFieldEnum = {
+export const WorkspaceScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  createdAt: 'createdAt',
+  userId: 'userId'
 } as const
 
-export type KarsaAppsCategoryScalarFieldEnum = (typeof KarsaAppsCategoryScalarFieldEnum)[keyof typeof KarsaAppsCategoryScalarFieldEnum]
+export type WorkspaceScalarFieldEnum = (typeof WorkspaceScalarFieldEnum)[keyof typeof WorkspaceScalarFieldEnum]
+
+
+export const WorkspaceWindowScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  props: 'props',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  workspaceId: 'workspaceId',
+  karsaId: 'karsaId'
+} as const
+
+export type WorkspaceWindowScalarFieldEnum = (typeof WorkspaceWindowScalarFieldEnum)[keyof typeof WorkspaceWindowScalarFieldEnum]
 
 
 export const BalanceScalarFieldEnum = {
@@ -1154,6 +1249,13 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
 
 
 /**
+ * Reference to a field of type 'KarsaAppsCategory'
+ */
+export type EnumKarsaAppsCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KarsaAppsCategory'>
+    
+
+
+/**
  * Reference to a field of type 'BalanceActivityType'
  */
 export type EnumBalanceActivityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BalanceActivityType'>
@@ -1279,8 +1381,9 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   auth?: Prisma.AuthOmit
   karsa?: Prisma.KarsaOmit
-  karsaApps?: Prisma.KarsaAppsOmit
-  karsaAppsCategory?: Prisma.KarsaAppsCategoryOmit
+  karsaApp?: Prisma.KarsaAppOmit
+  workspace?: Prisma.WorkspaceOmit
+  workspaceWindow?: Prisma.WorkspaceWindowOmit
   balance?: Prisma.BalanceOmit
   balanceActivity?: Prisma.BalanceActivityOmit
 }

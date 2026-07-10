@@ -56,3 +56,14 @@ export const KarsaAppsName = {
 } as const
 
 export type KarsaAppsName = (typeof KarsaAppsName)[keyof typeof KarsaAppsName]
+
+
+export const KarsaAppsCategory = {
+  karsawriter: 'karsawriter',
+  karsalator: 'karsalator',
+  karsalisa: 'karsalisa',
+  karsafrase: 'karsafrase',
+  karsapedia: 'karsapedia'
+} as const
+
+export type KarsaAppsCategory = (typeof KarsaAppsCategory)[keyof typeof KarsaAppsCategory]

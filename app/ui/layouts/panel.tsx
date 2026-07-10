@@ -14,6 +14,7 @@ import { TbLayoutSidebarLeftCollapseFilled, TbLayoutSidebarLeftExpandFilled } fr
 import { useLocation, useNavigate, useNavigation } from 'react-router';
 import { cn, findActiveNavigation } from '~app-modules/utils';
 import { Link, NavLink } from '~app-ui/components/link';
+import type { User } from '~generated/prisma/browser';
 
 function Panel({
 	children,
@@ -40,7 +41,6 @@ function Panel({
 	const { pathname } = useLocation();
 	const navigation = useNavigation();
 	const navigate = useNavigate();
-	// const isNavigating = useMemo(() => Boolean(navigation.location), [navigation.location]);
 	const [expandedPanel, setExpandedPanel] = useState(true);
 
 	const sidebarPanel = useMemo(
@@ -302,26 +302,41 @@ export function DashboardPanel({
 }
 
 export function AdminPanel({
+	authUser,
 	children,
 	...props
 }: FlexProps & {
+	authUser: User;
 	children: ReactNode;
 }) {
+	const navigationMain = useMemo(() => {
+		const navs = [
+			{
+				label: 'Ringkasan',
+				value: '/admin',
+			},
+			{
+				label: 'Manage Apps',
+				value: '/admin/apps',
+			},
+		];
+
+		if (authUser.role === 'ADMIN') {
+			navs.push({
+				label: 'Manage Users',
+				value: '/admin/users',
+			});
+		}
+
+		return navs;
+	}, [authUser.role]);
+
 	return (
 		<Panel
 			{...props}
 			mainNavs={{
 				title: 'Admin',
-				items: [
-					{
-						label: 'Ringkasan',
-						value: '/admin',
-					},
-					{
-						label: 'Manage Users',
-						value: '/admin/users',
-					},
-				],
+				items: navigationMain,
 			}}
 			secondaryNavs={{
 				title: 'Account',

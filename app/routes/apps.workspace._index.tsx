@@ -1,19 +1,15 @@
-import {
-	Window,
-	type WindowBaseProps,
-	type WindowGroupContextValue,
-} from '@gfazioli/mantine-window';
+import { Window, type WindowGroupContextValue } from '@gfazioli/mantine-window';
 import { ActionIcon, Box, Divider, Group, LoadingOverlay, Popover, Tooltip } from '@mantine/core';
 import { useFullscreenDocument, useMap, useMediaQuery, useScrollIntoView } from '@mantine/hooks';
-import { useCallback, useEffect, useRef, useState, useTransition } from 'react';
+import { useCallback, useRef, useState, useTransition } from 'react';
 import { BsArrowsFullscreen } from 'react-icons/bs';
 import { MdOutlineFitScreen, MdSaveAs } from 'react-icons/md';
 import { VscEmptyWindow } from 'react-icons/vsc';
 import { redirect, useSearchParams } from 'react-router';
-import type { Apps } from '~app-modules/enum-options';
 import { metaPublicRoute } from '~app-modules/meta';
-import { AppSchema } from '~app-modules/schema/workspace';
+import { type PayloadWindowWorkspace, type WorkspaceWindow } from '~app-modules/schema/workspace';
 import { slugify } from '~app-modules/utils';
+import { actionGetKarsaAppsByCategory } from '~app-server/app';
 import { authUserCtx } from '~app-server/context';
 import { authMiddlewareSession } from '~app-server/session';
 import { WindowAppKarsaWriter } from '~app-ui/form/window-apps';
@@ -38,9 +34,11 @@ export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
 export async function loader({ context }: Route.LoaderArgs) {
 	const user = context.get(authUserCtx)!;
+	const optionApps = await actionGetKarsaAppsByCategory({ context });
 
 	return {
 		user,
+		optionApps,
 	};
 }
 
@@ -51,7 +49,7 @@ export function meta(_: Route.MetaArgs) {
 	});
 }
 
-export default function WorkspaceAppsRoute() {
+export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps) {
 	const [searchParams] = useSearchParams();
 	const { fullscreen, toggle: toggleFullscreen } = useFullscreenDocument();
 	const [isLoadingRenderWindow, startActionRenderWindow] = useTransition();
@@ -61,12 +59,7 @@ export default function WorkspaceAppsRoute() {
 	const { scrollIntoView: scrollToBottom, targetRef: targetRefBottom } =
 		useScrollIntoView<HTMLDivElement>();
 	const [canvasHeight, setCanvasHeight] = useState<number | undefined>(800);
-	const windowLists = useMap<
-		string,
-		WindowBaseProps & {
-			app: Apps;
-		}
-	>([]);
+	const windowLists = useMap<NonNullable<WorkspaceWindow['id']>, PayloadWindowWorkspace>([]);
 	const isMobile = useMediaQuery('(max-width: 1199px)', true, {
 		getInitialValueInEffect: true,
 	});
@@ -87,12 +80,7 @@ export default function WorkspaceAppsRoute() {
 	}, [groupRef.current, isMobile]);
 
 	const handleAddWindow = useCallback(
-		(
-			params: Omit<WindowBaseProps, 'id'> & {
-				id: string;
-				app: Apps;
-			},
-		) => {
+		(params: PayloadWindowWorkspace) => {
 			startActionRenderWindow(() => {
 				windowLists.set(params.id, params);
 
@@ -110,28 +98,28 @@ export default function WorkspaceAppsRoute() {
 		[isMobile, windowLists.size],
 	);
 
-	useEffect(() => {
-		if (refCanvas.current) {
-			const params = Object.fromEntries(searchParams);
+	// useEffect(() => {
+	// 	if (refCanvas.current) {
+	// 		const params = Object.fromEntries(searchParams);
 
-			Object.entries(params).forEach(([k, v]) => {
-				if (k === 'app') {
-					const value = AppSchema.safeParse(v);
+	// 		Object.entries(params).forEach(([k, v]) => {
+	// 			if (k === 'app') {
+	// 				const value = PayloadWindowWorkspaceSchema.safeParse(v);
 
-					if (value.data) {
-						startActionRenderWindow(() => {
-							windowLists.set(value.data, {
-								title: value.data,
-								app: value.data,
-							});
+	// 				if (value.data) {
+	// 					startActionRenderWindow(() => {
+	// 						windowLists.set(value.data.label, {
+	// 							title: value.data,
+	// 							app: value.data,
+	// 						});
 
-							handleFitWindow();
-						});
-					}
-				}
-			});
-		}
-	}, [searchParams, refCanvas.current]);
+	// 						handleFitWindow();
+	// 					});
+	// 				}
+	// 			}
+	// 		});
+	// 	}
+	// }, [searchParams, refCanvas.current]);
 
 	return (
 		<div className="site">
@@ -164,6 +152,7 @@ export default function WorkspaceAppsRoute() {
 						</Popover.Target>
 						<Popover.Dropdown>
 							<FormWindowWorkspace
+								optionApps={loaderData.optionApps}
 								usedTitles={Array.from(windowLists.keys())}
 								onSubmit={(value) => {
 									handleAddWindow({
@@ -249,9 +238,9 @@ export default function WorkspaceAppsRoute() {
 									withinPortal={false}
 									controlsPosition="right"
 									{...windowItem}
-									draggable={isMobile ? 'none' : windowItem.draggable || 'header'}
-									resizable={isMobile ? 'none' : windowItem.resizable}
-									withToolsButton={isMobile ? false : windowItem.withToolsButton}
+									draggable={isMobile ? 'none' : 'header'}
+									resizable={isMobile ? 'none' : undefined}
+									withToolsButton={!isMobile}
 									id={id}
 									onClose={() => {
 										startActionRenderWindow(() => {

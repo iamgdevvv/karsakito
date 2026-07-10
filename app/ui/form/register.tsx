@@ -53,12 +53,7 @@ export default function FormRegister(props: BoxProps) {
 
 				setErrorMessage(fetcher.data.error);
 			} else if (fetcher.data?.data) {
-				notifications.show({
-					title: 'Success',
-					message: 'You have successfully registered.',
-				});
-
-				navigate('/login', {
+				navigate('/login?successMessage=You have successfully registered.', {
 					replace: true,
 				});
 			}
