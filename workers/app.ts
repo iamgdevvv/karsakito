@@ -59,24 +59,24 @@ export default {
 		console.log(`Cron processed at ${new Date(controller.scheduledTime).toISOString()}`);
 		console.log(`Triggered by cron pattern: ${controller.cron}`);
 
-		const adapter = new PrismaD1(env.DB);
-		const prisma = new PrismaClient({ adapter });
+		// const adapter = new PrismaD1(env.DB);
+		// const prisma = new PrismaClient({ adapter });
 
-		const refillToken = async () => {
-			const users = await prisma.user.findMany({
-				where: {
-					balanceActivities: {
-						some: {
-							type: 'DAILY_BONUS',
-							// createdAt: dayjs().startOf('day').subtract(1, 'day').toDate(),
-						},
-					},
-				},
-			});
+		// const refillToken = async () => {
+		// 	const users = await prisma.user.findMany({
+		// 		where: {
+		// 			balanceActivities: {
+		// 				some: {
+		// 					type: 'DAILY_BONUS',
+		// 					// createdAt: dayjs().startOf('day').subtract(1, 'day').toDate(),
+		// 				},
+		// 			},
+		// 		},
+		// 	});
 
-			console.log({ users });
-		};
+		// 	console.log({ users });
+		// };
 
-		ctx.waitUntil(refillToken());
+		// ctx.waitUntil(refillToken());
 	},
 } satisfies ExportedHandler<Env>;
