@@ -38,42 +38,52 @@ const authMiddlewareSession = async ({
     error: true
     cause: 'user_not_found' | 'user_not_active' | 'user_not_authorized' | 'user_not_authorized_role'
 }> => {
-    const authUser = await authGetSession(request);
-    const user = authUser.get('user')
+    try {
+        const authUser = await authGetSession(request);
+        const user = authUser.get('user')
 
-    if (!user) {
-        return {
-            error: true,
-            cause: 'user_not_found'
-        }
-    }
-
-    if (!user.isActive) {
-        return {
-            error: true,
-            cause: 'user_not_active'
-        }
-    }
-
-    if (guard) {
-        if (guard.userId && guard.userId !== user.id) {
+        if (!user) {
             return {
                 error: true,
-                cause: 'user_not_authorized'
+                cause: 'user_not_found'
             }
         }
 
-        if (guard.role && !guard.role.includes(user.role)) {
+        if (!user.isActive) {
             return {
                 error: true,
-                cause: 'user_not_authorized_role'
+                cause: 'user_not_active'
             }
         }
-    }
 
-    return {
-        user
-    };
+        if (guard) {
+            if (guard.userId && guard.userId !== user.id) {
+                return {
+                    error: true,
+                    cause: 'user_not_authorized'
+                }
+            }
+
+            if (guard.role && !guard.role.includes(user.role)) {
+                return {
+                    error: true,
+                    cause: 'user_not_authorized_role'
+                }
+            }
+        }
+
+        return {
+            user
+        };
+    } catch (error) {
+        console.log('authMiddlewareSession', error)
+
+        return {
+            error: true,
+            cause: 'user_not_authorized'
+        }
+
+    }
 };
 
 

@@ -1,6 +1,39 @@
-import type { KarsaAppsCategory, UserRole } from '~generated/prisma/enums';
+import { TimezoneSchema } from '~app-modules/schema/enum';
+import type { KarsaAppsCategory, KarsaAppsName, UserRole } from '~generated/prisma/enums';
 
 export const amountTokenDaily = 10;
+
+export const labelAppName = {
+	pidato: 'Pidato',
+	pantun: 'Pantun',
+	syair: 'Syair',
+	puisi: 'Puisi',
+	hymne: 'Hymne',
+	ceritapendek: 'Cerita Pendek',
+	ceritapanjang: 'Cerita Panjang',
+	doabersama: 'Doa Bersama',
+	petuah: 'Petuah',
+	tagline: 'Tagline',
+	slogan: 'Sloga',
+	motto: 'Motto',
+	tekateki: 'Teka Teki',
+	parafrase: 'Parafrasa',
+	adaptasidialek: 'Adaptasi Dialek',
+	rangkuman: 'Rangkuman',
+	analisakalimat: 'Analisa Kalimat',
+	analisadokumen: 'Analisa Dokumen',
+	terjemahankalimat: 'Terjemahan Kalimat',
+	terjemahandokumen: 'Terjemahan Dokumen',
+	peribahasa: 'Peribahasa',
+	adatistiadat: 'Adat Istiadat',
+	sejarah: 'Sejarah',
+	artefak: 'Artefak',
+} as const satisfies Record<KarsaAppsName, string>;
+
+export const optionsAppName = Object.entries(labelAppName).map(([value, label]) => ({
+	label,
+	value,
+}));
 
 export const labelAppCategory = {
 	karsawriter: 'KarsaWriter',
@@ -25,3 +58,5 @@ export const optionsUserRole = Object.entries(labelUserRole).map(([value, label]
 	label,
 	value,
 }));
+
+export const optionsTimezone = Object.values(TimezoneSchema.enum);

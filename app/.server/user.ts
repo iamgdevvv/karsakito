@@ -59,7 +59,7 @@ export const actionCreateUser = async ({
 				}
 			},
 			select: {
-				role: true,
+				name: true,
 				isActive: true
 			}
 		})
@@ -68,6 +68,8 @@ export const actionCreateUser = async ({
 			data: resultUser
 		}
 	} catch (error) {
+		console.log('actionCreateUser', error)
+
 		return {
 			error: messageActionError(error)
 		}
@@ -109,7 +111,7 @@ export const actionUpdateUser = async ({
 				isActive: valueBooleanOrFalse(body.isActive),
 			},
 			select: {
-				id: true
+				name: true
 			}
 		})
 
@@ -117,6 +119,7 @@ export const actionUpdateUser = async ({
 			data: resultUser
 		}
 	} catch (error) {
+		console.log('actionUpdateUser', error)
 
 		return {
 			error: messageActionError(error)
@@ -168,6 +171,8 @@ export const actionUpdateUserPassword = async ({
 			data: resultAuth
 		}
 	} catch (error) {
+		console.log('actionUpdateUserPassword', error)
+
 		return {
 			error: messageActionError(error)
 		}
@@ -208,10 +213,12 @@ export const actionDeleteUser = async ({
 
 		return {
 			data: {
-				name: `Delete user ${resultUser.name} successfully`
+				name: resultUser.name
 			}
 		}
 	} catch (error) {
+		console.log('actionDeleteUser', error)
+
 		return {
 			error: messageActionError(error)
 		}
@@ -262,6 +269,8 @@ export const actionUpdateProfile = async ({
 		});
 
 	} catch (error) {
+		console.log('actionUpdateProfile', error)
+
 		return {
 			error: messageActionError(error)
 		}
@@ -334,6 +343,8 @@ export const actionChangePassword = async ({
 			data: resultAuth
 		}
 	} catch (error) {
+		console.log('actionChangePassword', error)
+
 		return {
 			error: messageActionError(error)
 		}
@@ -493,7 +504,9 @@ export const actionGetUsers = async <T = User>({
 			nextCursor: finalNextCursor,
 			previousCursor: finalPrevCursor
 		}
-	} catch {
+	} catch (error) {
+		console.log('actionGetUsers', error)
+
 		return {
 			data: [],
 			params: null,
@@ -534,6 +547,8 @@ export const actionGetUser = async ({
 			})
 		}
 	} catch (error) {
+		console.log('actionGetUser', error)
+
 		return {
 			error: messageActionError(error)
 		}

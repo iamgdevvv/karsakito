@@ -123,7 +123,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 			<body>
 				<MantineProvider theme={theme}>
 					<NavigationProgress />
-					<Notifications position="bottom-center" />
+					<Notifications position="top-center" />
 					{children}
 				</MantineProvider>
 				<ScrollRestoration />

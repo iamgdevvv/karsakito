@@ -65,6 +65,8 @@ export const actionLogin = async ({
 			},
 		});
 	} catch (error) {
+		console.log('actionLogin', error)
+
 		return {
 			error: messageActionError(error)
 		}
@@ -119,6 +121,8 @@ export const actionRegister = async ({
 			data: resultUser
 		}
 	} catch (error) {
+		console.log('actionRegister', error)
+
 		return {
 			error: messageActionError(error)
 		}

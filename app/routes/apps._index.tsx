@@ -1,6 +1,18 @@
-import { Accordion, Box, DataList, Group, SimpleGrid, Stack, Text, Title } from '@mantine/core';
+import {
+	Accordion,
+	Badge,
+	Box,
+	DataList,
+	Group,
+	SimpleGrid,
+	Stack,
+	Text,
+	Title,
+} from '@mantine/core';
 import { LuArrowUpRight } from 'react-icons/lu';
+import { labelAppCategory } from '~app-modules/enum-options';
 import { metaPublicRoute } from '~app-modules/meta';
+import type { KarsaAppPlain } from '~app-modules/schema/app';
 import { dayjs } from '~app-modules/utils';
 import { actionGetKarsaAppsByCategory } from '~app-server/app';
 import { Image } from '~app-ui/components/image';
@@ -160,13 +172,28 @@ export default function AppsRoute({ loaderData }: Route.ComponentProps) {
 										bdrs="lg"
 										bd="1px solid gray.3"
 									>
+										<Badge
+											variant="light"
+											fz={8}
+										>
+											{
+												labelAppCategory[
+													category as KarsaAppPlain['category']
+												]
+											}
+										</Badge>
 										<Title
 											order={2}
 											fz="md"
 										>
 											{app.label}
 										</Title>
-										{/* <Text fz="sm">{app.description}</Text> */}
+										<Text
+											fz="sm"
+											lineClamp={4}
+										>
+											{app.description}
+										</Text>
 										<Group
 											gap={4}
 											c="primary"

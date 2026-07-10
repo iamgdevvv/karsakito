@@ -131,6 +131,7 @@ export type KarsaAppScalarFieldEnum = (typeof KarsaAppScalarFieldEnum)[keyof typ
 
 export const WorkspaceScalarFieldEnum = {
   id: 'id',
+  title: 'title',
   createdAt: 'createdAt',
   userId: 'userId'
 } as const

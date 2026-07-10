@@ -23,7 +23,7 @@ import { FaSort } from 'react-icons/fa';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { LuTrash } from 'react-icons/lu';
 import { redirect, useNavigation, useSearchParams } from 'react-router';
-import { optionsAppCategory } from '~app-modules/enum-options';
+import { labelAppCategory, labelAppName, optionsAppCategory } from '~app-modules/enum-options';
 import { metaAdminRoute } from '~app-modules/meta';
 import { PayloadQueryKarsaAppsSchema, type PayloadQueryKarsaApps } from '~app-modules/schema/app';
 import { toPayloadSearchParams } from '~app-modules/utils';
@@ -51,7 +51,7 @@ const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) =>
 			throw redirect('/');
 		}
 
-		throw redirect('/login?redirect=/admin/karsaApps');
+		throw redirect('/login?redirect=/admin/apps');
 	}
 
 	context.set(authUserCtx, authSession.user);
@@ -79,33 +79,31 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 	const navigation = useNavigation();
 	const [searchParams, setSearchParams] = useSearchParams();
 
+	const queryParams = useMemo(() => {
+		return {
+			...PayloadQueryKarsaAppsSchema.safeParse(Object.fromEntries(searchParams)).data,
+			...loaderData.karsaApps.params,
+		};
+	}, [loaderData.karsaApps.params, searchParams]);
+
 	const handlerSearchParams = useCallback(
 		(payload: PayloadQueryKarsaApps) => {
 			setSearchParams(
 				toPayloadSearchParams({
-					...loaderData.karsaApps.params,
+					...queryParams,
 					...payload,
 				}),
 			);
 		},
-		[loaderData.karsaApps.params],
+		[queryParams],
 	);
 
 	const handlerResetParams = useCallback(() => {
 		setSearchParams({});
 	}, []);
 
-	const queryParams = useMemo(
-		() =>
-			PayloadQueryKarsaAppsSchema.safeParse({
-				...loaderData.karsaApps.params,
-				...Object.fromEntries(searchParams),
-			}).data || {},
-		[loaderData.karsaApps.params, searchParams],
-	);
-
 	const hasParams = useMemo(() => {
-		return Object.values(queryParams).some(Boolean);
+		return Object.values(queryParams || {}).some(Boolean);
 	}, [queryParams]);
 
 	const hasParamOrderBy = useMemo(() => {
@@ -157,7 +155,7 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 							</ButtonLink>
 							<TextInput
 								name="search"
-								defaultValue={loaderData.karsaApps.params?.search}
+								defaultValue={queryParams?.search}
 								placeholder="Search..."
 								size="xs"
 								rightSection={
@@ -179,7 +177,7 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 								<Select
 									name="category"
 									size="xs"
-									defaultValue={loaderData.karsaApps.params?.category}
+									defaultValue={queryParams?.category}
 									data={optionsAppCategory}
 								/>
 								<Popover
@@ -205,10 +203,9 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 											<MultiSelect
 												name="asc"
 												defaultValue={
-													typeof loaderData.karsaApps.params?.asc ===
-													'string'
-														? [loaderData.karsaApps.params.asc]
-														: loaderData.karsaApps.params?.asc
+													typeof queryParams?.asc === 'string'
+														? [queryParams.asc]
+														: queryParams?.asc
 												}
 												data={
 													[
@@ -230,10 +227,9 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 											<MultiSelect
 												name="desc"
 												defaultValue={
-													typeof loaderData.karsaApps.params?.desc ===
-													'string'
-														? [loaderData.karsaApps.params.desc]
-														: loaderData.karsaApps.params?.desc
+													typeof queryParams?.desc === 'string'
+														? [queryParams.desc]
+														: queryParams?.desc
 												}
 												data={
 													[
@@ -290,10 +286,15 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 							>
 								<Table.Thead>
 									<Table.Tr>
-										<Table.Td miw={160}>Nama</Table.Td>
-										<Table.Td miw={160}>Label</Table.Td>
-										<Table.Td miw={88}>Category</Table.Td>
-										<Table.Td miw={80}>Token</Table.Td>
+										<Table.Td miw={120}>Nama</Table.Td>
+										<Table.Td miw={120}>Label</Table.Td>
+										<Table.Td miw={120}>Category</Table.Td>
+										<Table.Td
+											miw={80}
+											ta="center"
+										>
+											Token
+										</Table.Td>
 										<Table.Td miw={80}>Visible</Table.Td>
 										<Table.Td ta="center">Action</Table.Td>
 									</Table.Tr>
@@ -302,21 +303,29 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 									<Table.Tbody>
 										{loaderData.karsaApps.data.map((app, index) => (
 											<Table.Tr key={`${app.id}-${index}`}>
-												<Table.Td>{app.name}</Table.Td>
+												<Table.Td>{labelAppName[app.name]}</Table.Td>
 												<Table.Td>{app.label}</Table.Td>
-												<Table.Td>{app.category}</Table.Td>
 												<Table.Td>
+													{labelAppCategory[app.category]}
+												</Table.Td>
+												<Table.Td
+													ta="center"
+													fw={600}
+												>
 													{app.tokenPromo ? (
 														<Text
 															span
 															fz="inherit"
+															fw="inherit"
 														>
 															{app.tokenPromo}
 															<Text
 																span
-																fz="0.6em"
+																display="inline-block"
+																fz="0.68em"
 																td="line-through"
 																c="gray.6"
+																ml={2}
 															>
 																{app.token}
 															</Text>
@@ -362,13 +371,13 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 														<Menu.Dropdown>
 															<Menu.Item
 																component={Link}
-																to={`/admin/karsaApps/${app.id}`}
+																to={`/admin/apps/${app.id}`}
 															>
 																Update
 															</Menu.Item>
 															<Menu.Item
 																component={Link}
-																to={`/admin/karsaApps/${app.id}/delete`}
+																to={`/admin/apps/${app.id}/delete`}
 																color="red"
 																leftSection={<LuTrash size={14} />}
 															>
@@ -381,7 +390,7 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 										))}
 									</Table.Tbody>
 								) : (
-									<Table.Caption>KarsaApps not found</Table.Caption>
+									<Table.Caption>Apps not found</Table.Caption>
 								)}
 							</Table>
 						</Box>

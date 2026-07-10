@@ -14,11 +14,15 @@ import { schemaResolver, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { useEffect, useMemo, useState } from 'react';
 import { useFetcher } from 'react-router';
-import { optionsUserRole } from '~app-modules/enum-options';
-import { PayloadUpdateUserSchema, type PayloadUpdateUser } from '~app-modules/schema/user';
+import { optionsTimezone, optionsUserRole } from '~app-modules/enum-options';
+import {
+	PayloadUpdateUserSchema,
+	UserSchemaPlain,
+	type PayloadUpdateUser,
+} from '~app-modules/schema/user';
 import type { ActionUpdateUser } from '~app-server/user';
 import { ButtonLink } from '~app-ui/components/link';
-import { type User } from '~generated/prisma/browser';
+import type { User } from '~generated/prisma/browser';
 
 export default function FormUpdateUser({
 	data,
@@ -34,12 +38,15 @@ export default function FormUpdateUser({
 	}, [fetcher.state]);
 
 	const initialValues = useMemo((): PayloadUpdateUser => {
+		const timezone = UserSchemaPlain.shape.timezone.safeParse(data.timezone);
+
 		return {
 			userId: data.id,
 			name: data.name,
 			email: data.email,
 			role: data.role,
 			isActive: data.isActive,
+			timezone: timezone.data,
 		};
 	}, [data]);
 
@@ -64,10 +71,10 @@ export default function FormUpdateUser({
 				form.setValues(initialValues);
 
 				setErrorMessage(fetcher.data.error);
-			} else {
+			} else if (fetcher.data.data) {
 				notifications.show({
 					title: 'Success',
-					message: 'User updated successfully',
+					message: `User ${fetcher.data.data.name} updated successfully`,
 				});
 			}
 		}
@@ -90,6 +97,7 @@ export default function FormUpdateUser({
 			<fetcher.Form
 				method="post"
 				onSubmit={form.onSubmit((values) => {
+					setErrorMessage(null);
 					fetcher.submit(values, {
 						method: 'post',
 					});
@@ -124,6 +132,16 @@ export default function FormUpdateUser({
 						readOnly={isLoading}
 						data={optionsUserRole}
 						{...form.getInputProps('role')}
+					/>
+					<Select
+						label="Timezone"
+						name="timezone"
+						searchable
+						limit={20}
+						key={form.key('timezone')}
+						readOnly={isLoading}
+						data={optionsTimezone}
+						{...form.getInputProps('timezone')}
 					/>
 					<Checkbox
 						label="Activate User"

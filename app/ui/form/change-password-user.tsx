@@ -47,9 +47,10 @@ export default function FormChangePasswordUser({
 			if ('error' in fetcher.data && fetcher.data.error) {
 				setErrorMessage(fetcher.data.error);
 			} else {
-				navigate(
-					`/admin/users/${data.id}?successMessage=Change password user successfully`,
-				);
+				const redirectParams = new URLSearchParams();
+				redirectParams.set('successMessage', 'Change password user successfully');
+
+				navigate(`/admin/users/${data.id}?${redirectParams.toString()}`);
 			}
 		}
 	}, [fetcher.data, isLoading]);
@@ -71,6 +72,7 @@ export default function FormChangePasswordUser({
 			<fetcher.Form
 				method="post"
 				onSubmit={form.onSubmit((values) => {
+					setErrorMessage(null);
 					fetcher.submit(values, {
 						method: 'post',
 					});

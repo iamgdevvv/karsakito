@@ -7,7 +7,10 @@ import { MdOutlineFitScreen, MdSaveAs } from 'react-icons/md';
 import { VscEmptyWindow } from 'react-icons/vsc';
 import { redirect, useSearchParams } from 'react-router';
 import { metaPublicRoute } from '~app-modules/meta';
-import { type PayloadWindowWorkspace, type WorkspaceWindow } from '~app-modules/schema/workspace';
+import {
+	type PayloadWindowWorkspace,
+	type WorkspaceWindowPlain,
+} from '~app-modules/schema/workspace';
 import { slugify } from '~app-modules/utils';
 import { actionGetKarsaAppsByCategory } from '~app-server/app';
 import { authUserCtx } from '~app-server/context';
@@ -59,7 +62,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 	const { scrollIntoView: scrollToBottom, targetRef: targetRefBottom } =
 		useScrollIntoView<HTMLDivElement>();
 	const [canvasHeight, setCanvasHeight] = useState<number | undefined>(800);
-	const windowLists = useMap<NonNullable<WorkspaceWindow['id']>, PayloadWindowWorkspace>([]);
+	const windowLists = useMap<NonNullable<WorkspaceWindowPlain['id']>, PayloadWindowWorkspace>([]);
 	const isMobile = useMediaQuery('(max-width: 1199px)', true, {
 		getInitialValueInEffect: true,
 	});

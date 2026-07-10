@@ -23,7 +23,10 @@ export default function FormWindowWorkspace({
 	onSubmit,
 	...props
 }: BoxProps & {
-	optionApps: Record<KarsaApp['category'], ComboboxItem[]>;
+	optionApps: Record<
+		KarsaApp['category'],
+		(ComboboxItem & { description: KarsaApp['description'] })[]
+	>;
 	usedTitles: string[];
 	onSubmit: (values: PayloadWindowWorkspace) => void;
 }) {

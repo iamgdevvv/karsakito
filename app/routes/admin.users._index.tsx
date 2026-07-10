@@ -22,7 +22,7 @@ import { FaSort } from 'react-icons/fa';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { LuTrash } from 'react-icons/lu';
 import { redirect, useNavigation, useSearchParams } from 'react-router';
-import { optionsUserRole } from '~app-modules/enum-options';
+import { labelUserRole, optionsUserRole } from '~app-modules/enum-options';
 import { metaAdminRoute } from '~app-modules/meta';
 import { PayloadQueryUsersSchema, type PayloadQueryUsers } from '~app-modules/schema/user';
 import { toPayloadSearchParams } from '~app-modules/utils';
@@ -78,33 +78,31 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 	const navigation = useNavigation();
 	const [searchParams, setSearchParams] = useSearchParams();
 
+	const queryParams = useMemo(() => {
+		return {
+			...PayloadQueryUsersSchema.safeParse(Object.fromEntries(searchParams)).data,
+			...loaderData.users.params,
+		};
+	}, [loaderData.users.params, searchParams]);
+
 	const handlerSearchParams = useCallback(
 		(payload: PayloadQueryUsers) => {
 			setSearchParams(
 				toPayloadSearchParams({
-					...loaderData.users.params,
+					...queryParams,
 					...payload,
 				}),
 			);
 		},
-		[loaderData.users.params],
+		[queryParams],
 	);
 
 	const handlerResetParams = useCallback(() => {
 		setSearchParams({});
 	}, []);
 
-	const queryParams = useMemo(
-		() =>
-			PayloadQueryUsersSchema.safeParse({
-				...loaderData.users.params,
-				...Object.fromEntries(searchParams),
-			}).data || {},
-		[loaderData.users.params, searchParams],
-	);
-
 	const hasParams = useMemo(() => {
-		return Object.values(queryParams).some(Boolean);
+		return Object.values(queryParams || {}).some(Boolean);
 	}, [queryParams]);
 
 	const hasParamOrderBy = useMemo(() => {
@@ -156,7 +154,7 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 							</ButtonLink>
 							<TextInput
 								name="search"
-								defaultValue={loaderData.users.params?.search}
+								defaultValue={queryParams?.search}
 								placeholder="Search..."
 								size="xs"
 								rightSection={
@@ -178,7 +176,7 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 								<Select
 									name="role"
 									size="xs"
-									defaultValue={loaderData.users.params?.role}
+									defaultValue={queryParams?.role}
 									data={optionsUserRole}
 								/>
 								<Popover
@@ -204,9 +202,9 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 											<MultiSelect
 												name="asc"
 												defaultValue={
-													typeof loaderData.users.params?.asc === 'string'
-														? [loaderData.users.params.asc]
-														: loaderData.users.params?.asc
+													typeof queryParams?.asc === 'string'
+														? [queryParams.asc]
+														: queryParams?.asc
 												}
 												data={
 													[
@@ -225,10 +223,9 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 											<MultiSelect
 												name="desc"
 												defaultValue={
-													typeof loaderData.users.params?.desc ===
-													'string'
-														? [loaderData.users.params.desc]
-														: loaderData.users.params?.desc
+													typeof queryParams?.desc === 'string'
+														? [queryParams.desc]
+														: queryParams?.desc
 												}
 												data={
 													[
@@ -295,7 +292,7 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 											<Table.Tr key={`${user.id}-${index}`}>
 												<Table.Td>{user.name}</Table.Td>
 												<Table.Td>{user.email}</Table.Td>
-												<Table.Td>{user.role}</Table.Td>
+												<Table.Td>{labelUserRole[user.role]}</Table.Td>
 												<Table.Td>
 													{user.isActive ? (
 														<Badge

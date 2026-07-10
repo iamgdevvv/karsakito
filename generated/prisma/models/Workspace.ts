@@ -26,18 +26,21 @@ export type AggregateWorkspace = {
 
 export type WorkspaceMinAggregateOutputType = {
   id: string | null
+  title: string | null
   createdAt: Date | null
   userId: string | null
 }
 
 export type WorkspaceMaxAggregateOutputType = {
   id: string | null
+  title: string | null
   createdAt: Date | null
   userId: string | null
 }
 
 export type WorkspaceCountAggregateOutputType = {
   id: number
+  title: number
   createdAt: number
   userId: number
   _all: number
@@ -46,18 +49,21 @@ export type WorkspaceCountAggregateOutputType = {
 
 export type WorkspaceMinAggregateInputType = {
   id?: true | runtime.Types.Skip
+  title?: true | runtime.Types.Skip
   createdAt?: true | runtime.Types.Skip
   userId?: true | runtime.Types.Skip
 }
 
 export type WorkspaceMaxAggregateInputType = {
   id?: true | runtime.Types.Skip
+  title?: true | runtime.Types.Skip
   createdAt?: true | runtime.Types.Skip
   userId?: true | runtime.Types.Skip
 }
 
 export type WorkspaceCountAggregateInputType = {
   id?: true | runtime.Types.Skip
+  title?: true | runtime.Types.Skip
   createdAt?: true | runtime.Types.Skip
   userId?: true | runtime.Types.Skip
   _all?: true | runtime.Types.Skip
@@ -137,6 +143,7 @@ export type WorkspaceGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type WorkspaceGroupByOutputType = {
   id: string
+  title: string
   createdAt: Date
   userId: string
   _count: WorkspaceCountAggregateOutputType | null
@@ -164,6 +171,7 @@ export type WorkspaceWhereInput = {
   OR?: Prisma.WorkspaceWhereInput[] | runtime.Types.Skip
   NOT?: Prisma.WorkspaceWhereInput | Prisma.WorkspaceWhereInput[] | runtime.Types.Skip
   id?: Prisma.StringFilter<"Workspace"> | string | runtime.Types.Skip
+  title?: Prisma.StringFilter<"Workspace"> | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFilter<"Workspace"> | Date | string | runtime.Types.Skip
   userId?: Prisma.StringFilter<"Workspace"> | string | runtime.Types.Skip
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput> | runtime.Types.Skip
@@ -172,6 +180,7 @@ export type WorkspaceWhereInput = {
 
 export type WorkspaceOrderByWithRelationInput = {
   id?: Prisma.SortOrder | runtime.Types.Skip
+  title?: Prisma.SortOrder | runtime.Types.Skip
   createdAt?: Prisma.SortOrder | runtime.Types.Skip
   userId?: Prisma.SortOrder | runtime.Types.Skip
   user?: Prisma.UserOrderByWithRelationInput | runtime.Types.Skip
@@ -183,6 +192,7 @@ export type WorkspaceWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.WorkspaceWhereInput | Prisma.WorkspaceWhereInput[] | runtime.Types.Skip
   OR?: Prisma.WorkspaceWhereInput[] | runtime.Types.Skip
   NOT?: Prisma.WorkspaceWhereInput | Prisma.WorkspaceWhereInput[] | runtime.Types.Skip
+  title?: Prisma.StringFilter<"Workspace"> | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFilter<"Workspace"> | Date | string | runtime.Types.Skip
   userId?: Prisma.StringFilter<"Workspace"> | string | runtime.Types.Skip
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput> | runtime.Types.Skip
@@ -191,6 +201,7 @@ export type WorkspaceWhereUniqueInput = Prisma.AtLeast<{
 
 export type WorkspaceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder | runtime.Types.Skip
+  title?: Prisma.SortOrder | runtime.Types.Skip
   createdAt?: Prisma.SortOrder | runtime.Types.Skip
   userId?: Prisma.SortOrder | runtime.Types.Skip
   _count?: Prisma.WorkspaceCountOrderByAggregateInput | runtime.Types.Skip
@@ -203,12 +214,14 @@ export type WorkspaceScalarWhereWithAggregatesInput = {
   OR?: Prisma.WorkspaceScalarWhereWithAggregatesInput[] | runtime.Types.Skip
   NOT?: Prisma.WorkspaceScalarWhereWithAggregatesInput | Prisma.WorkspaceScalarWhereWithAggregatesInput[] | runtime.Types.Skip
   id?: Prisma.StringWithAggregatesFilter<"Workspace"> | string | runtime.Types.Skip
+  title?: Prisma.StringWithAggregatesFilter<"Workspace"> | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Workspace"> | Date | string | runtime.Types.Skip
   userId?: Prisma.StringWithAggregatesFilter<"Workspace"> | string | runtime.Types.Skip
 }
 
 export type WorkspaceCreateInput = {
   id?: string | runtime.Types.Skip
+  title: string
   createdAt?: Date | string | runtime.Types.Skip
   user: Prisma.UserCreateNestedOneWithoutWorkspacesInput
   windows?: Prisma.WorkspaceWindowCreateNestedManyWithoutWorkspaceInput | runtime.Types.Skip
@@ -216,6 +229,7 @@ export type WorkspaceCreateInput = {
 
 export type WorkspaceUncheckedCreateInput = {
   id?: string | runtime.Types.Skip
+  title: string
   createdAt?: Date | string | runtime.Types.Skip
   userId: string
   windows?: Prisma.WorkspaceWindowUncheckedCreateNestedManyWithoutWorkspaceInput | runtime.Types.Skip
@@ -223,6 +237,7 @@ export type WorkspaceUncheckedCreateInput = {
 
 export type WorkspaceUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  title?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   user?: Prisma.UserUpdateOneRequiredWithoutWorkspacesNestedInput | runtime.Types.Skip
   windows?: Prisma.WorkspaceWindowUpdateManyWithoutWorkspaceNestedInput | runtime.Types.Skip
@@ -230,6 +245,7 @@ export type WorkspaceUpdateInput = {
 
 export type WorkspaceUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  title?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   userId?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   windows?: Prisma.WorkspaceWindowUncheckedUpdateManyWithoutWorkspaceNestedInput | runtime.Types.Skip
@@ -237,17 +253,20 @@ export type WorkspaceUncheckedUpdateInput = {
 
 export type WorkspaceCreateManyInput = {
   id?: string | runtime.Types.Skip
+  title: string
   createdAt?: Date | string | runtime.Types.Skip
   userId: string
 }
 
 export type WorkspaceUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  title?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
 }
 
 export type WorkspaceUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  title?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   userId?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
 }
@@ -264,18 +283,21 @@ export type WorkspaceOrderByRelationAggregateInput = {
 
 export type WorkspaceCountOrderByAggregateInput = {
   id?: Prisma.SortOrder | runtime.Types.Skip
+  title?: Prisma.SortOrder | runtime.Types.Skip
   createdAt?: Prisma.SortOrder | runtime.Types.Skip
   userId?: Prisma.SortOrder | runtime.Types.Skip
 }
 
 export type WorkspaceMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder | runtime.Types.Skip
+  title?: Prisma.SortOrder | runtime.Types.Skip
   createdAt?: Prisma.SortOrder | runtime.Types.Skip
   userId?: Prisma.SortOrder | runtime.Types.Skip
 }
 
 export type WorkspaceMinOrderByAggregateInput = {
   id?: Prisma.SortOrder | runtime.Types.Skip
+  title?: Prisma.SortOrder | runtime.Types.Skip
   createdAt?: Prisma.SortOrder | runtime.Types.Skip
   userId?: Prisma.SortOrder | runtime.Types.Skip
 }
@@ -343,12 +365,14 @@ export type WorkspaceUpdateOneRequiredWithoutWindowsNestedInput = {
 
 export type WorkspaceCreateWithoutUserInput = {
   id?: string | runtime.Types.Skip
+  title: string
   createdAt?: Date | string | runtime.Types.Skip
   windows?: Prisma.WorkspaceWindowCreateNestedManyWithoutWorkspaceInput | runtime.Types.Skip
 }
 
 export type WorkspaceUncheckedCreateWithoutUserInput = {
   id?: string | runtime.Types.Skip
+  title: string
   createdAt?: Date | string | runtime.Types.Skip
   windows?: Prisma.WorkspaceWindowUncheckedCreateNestedManyWithoutWorkspaceInput | runtime.Types.Skip
 }
@@ -383,18 +407,21 @@ export type WorkspaceScalarWhereInput = {
   OR?: Prisma.WorkspaceScalarWhereInput[] | runtime.Types.Skip
   NOT?: Prisma.WorkspaceScalarWhereInput | Prisma.WorkspaceScalarWhereInput[] | runtime.Types.Skip
   id?: Prisma.StringFilter<"Workspace"> | string | runtime.Types.Skip
+  title?: Prisma.StringFilter<"Workspace"> | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFilter<"Workspace"> | Date | string | runtime.Types.Skip
   userId?: Prisma.StringFilter<"Workspace"> | string | runtime.Types.Skip
 }
 
 export type WorkspaceCreateWithoutWindowsInput = {
   id?: string | runtime.Types.Skip
+  title: string
   createdAt?: Date | string | runtime.Types.Skip
   user: Prisma.UserCreateNestedOneWithoutWorkspacesInput
 }
 
 export type WorkspaceUncheckedCreateWithoutWindowsInput = {
   id?: string | runtime.Types.Skip
+  title: string
   createdAt?: Date | string | runtime.Types.Skip
   userId: string
 }
@@ -417,35 +444,41 @@ export type WorkspaceUpdateToOneWithWhereWithoutWindowsInput = {
 
 export type WorkspaceUpdateWithoutWindowsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  title?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   user?: Prisma.UserUpdateOneRequiredWithoutWorkspacesNestedInput | runtime.Types.Skip
 }
 
 export type WorkspaceUncheckedUpdateWithoutWindowsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  title?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   userId?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
 }
 
 export type WorkspaceCreateManyUserInput = {
   id?: string | runtime.Types.Skip
+  title: string
   createdAt?: Date | string | runtime.Types.Skip
 }
 
 export type WorkspaceUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  title?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   windows?: Prisma.WorkspaceWindowUpdateManyWithoutWorkspaceNestedInput | runtime.Types.Skip
 }
 
 export type WorkspaceUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  title?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   windows?: Prisma.WorkspaceWindowUncheckedUpdateManyWithoutWorkspaceNestedInput | runtime.Types.Skip
 }
 
 export type WorkspaceUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
+  title?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
 }
 
@@ -482,6 +515,7 @@ export type WorkspaceCountOutputTypeCountWindowsArgs<ExtArgs extends runtime.Typ
 
 export type WorkspaceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean | runtime.Types.Skip
+  title?: boolean | runtime.Types.Skip
   createdAt?: boolean | runtime.Types.Skip
   userId?: boolean | runtime.Types.Skip
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs> | runtime.Types.Skip
@@ -491,6 +525,7 @@ export type WorkspaceSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type WorkspaceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean | runtime.Types.Skip
+  title?: boolean | runtime.Types.Skip
   createdAt?: boolean | runtime.Types.Skip
   userId?: boolean | runtime.Types.Skip
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs> | runtime.Types.Skip
@@ -498,6 +533,7 @@ export type WorkspaceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
 
 export type WorkspaceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean | runtime.Types.Skip
+  title?: boolean | runtime.Types.Skip
   createdAt?: boolean | runtime.Types.Skip
   userId?: boolean | runtime.Types.Skip
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs> | runtime.Types.Skip
@@ -505,11 +541,12 @@ export type WorkspaceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 
 export type WorkspaceSelectScalar = {
   id?: boolean | runtime.Types.Skip
+  title?: boolean | runtime.Types.Skip
   createdAt?: boolean | runtime.Types.Skip
   userId?: boolean | runtime.Types.Skip
 }
 
-export type WorkspaceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "userId", ExtArgs["result"]["workspace"], runtime.Types.Skip>
+export type WorkspaceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "createdAt" | "userId", ExtArgs["result"]["workspace"], runtime.Types.Skip>
 export type WorkspaceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs> | runtime.Types.Skip
   windows?: boolean | Prisma.Workspace$windowsArgs<ExtArgs> | runtime.Types.Skip
@@ -530,6 +567,7 @@ export type $WorkspacePayload<ExtArgs extends runtime.Types.Extensions.InternalA
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    title: string
     createdAt: Date
     userId: string
   }, ExtArgs["result"]["workspace"]>
@@ -958,6 +996,7 @@ export interface Prisma__WorkspaceClient<T, Null = never, ExtArgs extends runtim
  */
 export interface WorkspaceFieldRefs {
   readonly id: Prisma.FieldRef<"Workspace", 'String'>
+  readonly title: Prisma.FieldRef<"Workspace", 'String'>
   readonly createdAt: Prisma.FieldRef<"Workspace", 'DateTime'>
   readonly userId: Prisma.FieldRef<"Workspace", 'String'>
 }

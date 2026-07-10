@@ -40,6 +40,8 @@ export const actionCreateKarsaApp = async ({
             })
         }
     } catch (error) {
+        console.log('actionCreateKarsaApp', error)
+
         return {
             error: messageActionError(error)
         }
@@ -83,7 +85,7 @@ export const actionUpdateKarsaApp = async ({
                 visible: valueBooleanOrFalse(body.visible),
             },
             select: {
-                id: true
+                name: true
             }
         })
 
@@ -91,13 +93,13 @@ export const actionUpdateKarsaApp = async ({
             data: resultKarsaApp
         }
     } catch (error) {
+        console.log('actionUpdateKarsaApp', error)
 
         return {
             error: messageActionError(error)
         }
     }
 };
-
 
 export const actionDeleteKarsaApp = async ({
     karsaAppId,
@@ -133,10 +135,12 @@ export const actionDeleteKarsaApp = async ({
 
         return {
             data: {
-                name: `Delete karsaApp ${resultKarsaApp.name} successfully`
+                name: resultKarsaApp.name
             }
         }
     } catch (error) {
+        console.log('actionDeleteKarsaApp', error)
+
         return {
             error: messageActionError(error)
         }
@@ -215,7 +219,7 @@ export const actionGetKarsaApps = async <T = KarsaApp>({
         }
 
         if (search) {
-            const searchFields = ['name', 'label', 'category'] satisfies Prisma.KarsaAppScalarFieldEnum[];
+            const searchFields = ['label', 'description'] satisfies Prisma.KarsaAppScalarFieldEnum[];
 
             whereSearch.push(...searchFields.map((field) => ({
                 [field]: {
@@ -298,7 +302,9 @@ export const actionGetKarsaApps = async <T = KarsaApp>({
             nextCursor: finalNextCursor,
             previousCursor: finalPrevCursor
         }
-    } catch {
+    } catch (error) {
+        console.log('actionGetKarsaApps', error)
+
         return {
             data: [],
             params: null,
@@ -320,7 +326,7 @@ export const actionGetKarsaApp = async ({
     try {
         const authSession = await authMiddlewareSession({
             guard: {
-                role: ['ADMIN'],
+                role: ['ADMIN', 'STAFF'],
             },
             request,
         });
@@ -339,6 +345,8 @@ export const actionGetKarsaApp = async ({
             })
         }
     } catch (error) {
+        console.log('actionGetKarsaApp', error)
+
         return {
             error: messageActionError(error)
         }
@@ -349,8 +357,8 @@ export const actionGetKarsaAppsByCategory = async ({
     context
 }: {
     context: Readonly<RouterContextProvider>
-}): Promise<Record<KarsaApp['category'], ComboboxItem[]>> => {
-    const karsaAppWithCategories: Record<KarsaApp['category'], ComboboxItem[]> = {
+}): Promise<Record<KarsaApp['category'], (ComboboxItem & { description: KarsaApp['description'] })[]>> => {
+    const karsaAppWithCategories: Record<KarsaApp['category'], (ComboboxItem & { description: KarsaApp['description'] })[]> = {
         karsawriter: [],
         karsalator: [],
         karsalisa: [],
@@ -368,17 +376,19 @@ export const actionGetKarsaAppsByCategory = async ({
                 },
             ],
             select: {
-                id: true,
+                name: true,
                 label: true,
                 visible: true,
                 category: true,
+                description: true
             },
         })
 
         karsaApps.forEach((app) => {
             karsaAppWithCategories[app.category].push({
-                value: app.id,
+                value: app.name,
                 label: app.label,
+                description: app.description,
                 disabled: !app.visible,
             })
         })

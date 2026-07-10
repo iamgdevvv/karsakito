@@ -1,8 +1,9 @@
-import { Alert, Box, Button, Stack, TextInput, type BoxProps } from '@mantine/core';
+import { Alert, Box, Button, Select, Stack, TextInput, type BoxProps } from '@mantine/core';
 import { schemaResolver, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { useEffect, useMemo, useState } from 'react';
 import { useFetcher } from 'react-router';
+import { optionsTimezone } from '~app-modules/enum-options';
 import { PayloadUpdateProfileSchema, type PayloadUpdateProfile } from '~app-modules/schema/user';
 import type { ActionUpdateProfile } from '~app-server/user';
 import type { User } from '~generated/prisma/browser';
@@ -74,6 +75,7 @@ export default function FormProfile({
 			<fetcher.Form
 				method="post"
 				onSubmit={form.onSubmit((values) => {
+					setErrorMessage(null);
 					fetcher.submit(values, {
 						method: 'post',
 					});
@@ -94,6 +96,16 @@ export default function FormProfile({
 						key={form.key('email')}
 						readOnly={isLoading}
 						{...form.getInputProps('email')}
+					/>
+					<Select
+						label="Timezone"
+						name="timezone"
+						searchable
+						limit={20}
+						key={form.key('timezone')}
+						readOnly={isLoading}
+						data={optionsTimezone}
+						{...form.getInputProps('timezone')}
 					/>
 					<Button
 						type="submit"

@@ -6,3 +6,5 @@ export const KarsaSchemaPlain = KarsaSchema.omit({
 }).extend({
 	promptJson: z.record(z.string(), z.unknown()).nullish(),
 });
+
+export type KarsaPlain = z.infer<typeof KarsaSchemaPlain>;

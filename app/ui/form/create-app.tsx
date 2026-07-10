@@ -4,32 +4,36 @@ import {
 	Button,
 	Checkbox,
 	Group,
-	PasswordInput,
+	NumberInput,
 	Select,
+	SimpleGrid,
 	Stack,
+	Textarea,
 	TextInput,
 	type BoxProps,
 } from '@mantine/core';
 import { schemaResolver, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { useEffect, useMemo, useState } from 'react';
+import { LuCoins } from 'react-icons/lu';
+import { PiCoinsFill } from 'react-icons/pi';
 import { useFetcher, useNavigate } from 'react-router';
-import { optionsTimezone, optionsUserRole } from '~app-modules/enum-options';
-import { PayloadCreateUserSchema, type PayloadCreateUser } from '~app-modules/schema/user';
-import type { ActionCreateUser } from '~app-server/user';
+import { labelAppName, optionsAppCategory, optionsAppName } from '~app-modules/enum-options';
+import { PayloadCreateKarsaAppSchema, type PayloadCreateKarsaApp } from '~app-modules/schema/app';
+import type { ActionCreateKarsaApp } from '~app-server/app';
 
-export default function FormCreateUser(props: BoxProps) {
+export default function FormCreateKarsaApp(props: BoxProps) {
 	const navigate = useNavigate();
-	const fetcher = useFetcher<ActionCreateUser>();
+	const fetcher = useFetcher<ActionCreateKarsaApp>();
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 	const isLoading = useMemo(() => {
 		return fetcher.state !== 'idle';
 	}, [fetcher.state]);
 
-	const form = useForm<PayloadCreateUser>({
+	const form = useForm<PayloadCreateKarsaApp>({
 		mode: 'uncontrolled',
-		validate: schemaResolver(PayloadCreateUserSchema, { sync: true }),
+		validate: schemaResolver(PayloadCreateKarsaAppSchema, { sync: true }),
 		onSubmitPreventDefault: 'validation-failed',
 		onValuesChange: () => {
 			if (errorMessage) {
@@ -47,14 +51,13 @@ export default function FormCreateUser(props: BoxProps) {
 				setErrorMessage(fetcher.data.error);
 			} else if (fetcher.data?.data) {
 				const redirectParams = new URLSearchParams();
-				redirectParams.set('isActive', fetcher.data.data.isActive.toString());
 				redirectParams.set('desc', 'createdAt');
 				redirectParams.set(
 					'successMessage',
-					`User ${fetcher.data.data.name} created successfully`,
+					`App ${labelAppName[fetcher.data.data.name]} created successfully`,
 				);
 
-				navigate(`/admin/users?${redirectParams.toString()}`);
+				navigate(`/admin/apps?${redirectParams.toString()}`);
 			}
 		}
 	}, [fetcher.data, isLoading]);
@@ -62,7 +65,7 @@ export default function FormCreateUser(props: BoxProps) {
 	return (
 		<Box
 			{...props}
-			data-slot="FormCreateUser"
+			data-slot="FormCreateKarsaApp"
 		>
 			{errorMessage ? (
 				<Alert
@@ -83,54 +86,67 @@ export default function FormCreateUser(props: BoxProps) {
 				})}
 			>
 				<Stack gap="xs">
-					<TextInput
+					<Select
 						label="Name"
 						name="name"
 						key={form.key('name')}
 						readOnly={isLoading}
+						data={optionsAppName}
 						{...form.getInputProps('name')}
 					/>
 					<TextInput
-						type="email"
-						label="Email"
-						name="email"
-						key={form.key('email')}
+						label="Label"
+						name="label"
+						key={form.key('label')}
 						readOnly={isLoading}
-						{...form.getInputProps('email')}
+						{...form.getInputProps('label')}
 					/>
+					<SimpleGrid
+						cols={{
+							base: 1,
+							sm: 2,
+						}}
+					>
+						<NumberInput
+							label="Token"
+							name="token"
+							key={form.key('token')}
+							readOnly={isLoading}
+							leftSection={<PiCoinsFill size={18} />}
+							{...form.getInputProps('token')}
+						/>
+						<NumberInput
+							label="Token Promo"
+							name="tokenPromo"
+							key={form.key('tokenPromo')}
+							readOnly={isLoading}
+							leftSection={<LuCoins size={18} />}
+							{...form.getInputProps('tokenPromo')}
+						/>
+					</SimpleGrid>
 					<Select
-						label="Role"
-						name="role"
-						key={form.key('role')}
+						label="Category"
+						name="category"
+						key={form.key('category')}
 						readOnly={isLoading}
-						data={optionsUserRole}
-						{...form.getInputProps('role')}
-					/>
-					<Select
-						label="Timezone"
-						name="timezone"
-						searchable
-						limit={20}
-						key={form.key('timezone')}
-						readOnly={isLoading}
-						data={optionsTimezone}
-						{...form.getInputProps('timezone')}
+						data={optionsAppCategory}
+						{...form.getInputProps('category')}
 					/>
 					<Checkbox
-						label="Activate User"
-						name="isActive"
-						key={form.key('isActive')}
+						label="Visible"
+						name="visible"
+						key={form.key('visible')}
 						readOnly={isLoading}
-						{...form.getInputProps('isActive', {
+						{...form.getInputProps('visible', {
 							type: 'checkbox',
 						})}
 					/>
-					<PasswordInput
-						label="Password"
-						name="password"
-						key={form.key('password')}
+					<Textarea
+						label="Description"
+						name="description"
+						key={form.key('description')}
 						readOnly={isLoading}
-						{...form.getInputProps('password')}
+						{...form.getInputProps('description')}
 					/>
 					<Group justify="flex-end">
 						<Button
@@ -138,7 +154,7 @@ export default function FormCreateUser(props: BoxProps) {
 							loading={isLoading}
 							mt="md"
 						>
-							Create User
+							Create App
 						</Button>
 					</Group>
 				</Stack>

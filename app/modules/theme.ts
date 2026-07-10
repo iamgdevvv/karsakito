@@ -7,6 +7,7 @@ import {
 	Input,
 	Menu,
 	MultiSelect,
+	NumberInput,
 	PasswordInput,
 	Popover,
 	Select,
@@ -102,6 +103,16 @@ const theme = createTheme({
 		TextInput: TextInput.extend({
 			defaultProps: {
 				size: 'md',
+				labelProps: {
+					fz: 'sm',
+					fw: 400,
+				},
+			},
+		}),
+		NumberInput: NumberInput.extend({
+			defaultProps: {
+				size: 'md',
+				allowNegative: false,
 				labelProps: {
 					fz: 'sm',
 					fw: 400,

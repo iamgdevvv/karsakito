@@ -1,7 +1,8 @@
 import type { WindowBaseProps } from '@gfazioli/mantine-window';
 import * as z from 'zod';
 import { KarsaSchemaPlain } from '~app-modules/schema/karsa';
-import { WorkspaceWindowSchema } from '~generated/prisma-zod/schemas/models';
+import { WorkspaceScalarFieldEnumSchema } from '~generated/prisma-zod/schemas/enums/WorkspaceScalarFieldEnum.schema';
+import { WorkspaceSchema, WorkspaceWindowSchema } from '~generated/prisma-zod/schemas/models';
 
 export const WorkspaceWindowSchemaPlain = WorkspaceWindowSchema.omit({
 	props: true,
@@ -60,6 +61,22 @@ export const WorkspaceWindowSchemaPlain = WorkspaceWindowSchema.omit({
 	>,
 });
 
+export const PayloadQueryWorkspacesSchema = WorkspaceSchema.partial().extend({
+	nextCursor: WorkspaceSchema.shape.id.optional(),
+	previousCursor: WorkspaceSchema.shape.id.optional(),
+	total: z.number().optional(),
+	search: z.string().optional(),
+	asc: z
+		.union([WorkspaceScalarFieldEnumSchema, WorkspaceScalarFieldEnumSchema.array()])
+		.optional(),
+	desc: z
+		.union([WorkspaceScalarFieldEnumSchema, WorkspaceScalarFieldEnumSchema.array()])
+		.optional(),
+	select: z
+		.union([WorkspaceScalarFieldEnumSchema, WorkspaceScalarFieldEnumSchema.array()])
+		.optional(),
+});
+
 export const PayloadWindowWorkspaceSchema = WorkspaceWindowSchemaPlain.pick({
 	id: true,
 	title: true,
@@ -75,5 +92,5 @@ export const PayloadWindowWorkspaceSchema = WorkspaceWindowSchemaPlain.pick({
 	}).nullish(),
 });
 
-export type WorkspaceWindow = z.infer<typeof WorkspaceWindowSchemaPlain>;
+export type WorkspaceWindowPlain = z.infer<typeof WorkspaceWindowSchemaPlain>;
 export type PayloadWindowWorkspace = z.infer<typeof PayloadWindowWorkspaceSchema>;

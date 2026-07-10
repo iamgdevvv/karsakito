@@ -1,4 +1,5 @@
 import * as z from 'zod';
+import { TimezoneSchema } from '~app-modules/schema/enum';
 import { UserRoleSchema } from '~generated/prisma-zod/schemas/enums/UserRole.schema';
 import { UserScalarFieldEnumSchema } from '~generated/prisma-zod/schemas/enums/UserScalarFieldEnum.schema';
 import { UserSchema } from '~generated/prisma-zod/schemas/models';
@@ -6,9 +7,11 @@ import { UserSchema } from '~generated/prisma-zod/schemas/models';
 export const UserSchemaPlain = UserSchema.omit({
 	isActive: true,
 	role: true,
+	timezone: true,
 }).extend({
 	role: UserRoleSchema,
 	isActive: z.union([z.boolean(), z.stringbool()]).nullish(),
+	timezone: TimezoneSchema,
 });
 
 export const PayloadQueryUsersSchema = UserSchemaPlain.partial().extend({
@@ -26,6 +29,7 @@ export const PayloadCreateUserSchema = UserSchemaPlain.pick({
 	email: true,
 	role: true,
 	isActive: true,
+	timezone: true,
 }).extend({
 	password: z.string().nonempty(),
 });
@@ -35,6 +39,7 @@ export const PayloadUpdateUserSchema = UserSchemaPlain.pick({
 	email: true,
 	role: true,
 	isActive: true,
+	timezone: true,
 })
 	.partial()
 	.extend({
@@ -49,6 +54,7 @@ export const PayloadUpdateUserPasswordSchema = z.object({
 export const PayloadUpdateProfileSchema = UserSchemaPlain.pick({
 	name: true,
 	email: true,
+	timezone: true,
 }).partial();
 
 export const PayloadUpdateProfilePasswordSchema = z
@@ -62,6 +68,7 @@ export const PayloadUpdateProfilePasswordSchema = z
 		path: ['confirmPassword'],
 	});
 
+export type UserPlain = z.infer<typeof UserSchemaPlain>;
 export type PayloadQueryUsers = z.infer<typeof PayloadQueryUsersSchema>;
 export type PayloadCreateUser = z.infer<typeof PayloadCreateUserSchema>;
 export type PayloadUpdateUser = z.infer<typeof PayloadUpdateUserSchema>;

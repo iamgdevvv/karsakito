@@ -15,7 +15,10 @@ export async function loader({ request, context, params }: Route.LoaderArgs) {
 		return redirect('/logout');
 	}
 
-	return redirect(`/admin/users?successMessage=${deleteUser.data.name}`);
+	const redirectParams = new URLSearchParams();
+	redirectParams.set('successMessage', `Delete user ${deleteUser.data.name} successfully`);
+
+	return redirect(`/admin/users?${redirectParams.toString()}`);
 }
 
 export function meta() {

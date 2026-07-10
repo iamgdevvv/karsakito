@@ -53,7 +53,10 @@ export default function FormRegister(props: BoxProps) {
 
 				setErrorMessage(fetcher.data.error);
 			} else if (fetcher.data?.data) {
-				navigate('/login?successMessage=You have successfully registered.', {
+				const redirectParams = new URLSearchParams();
+				redirectParams.set('successMessage', 'You have successfully registered');
+
+				navigate(`/login?${redirectParams.toString()}`, {
 					replace: true,
 				});
 			}
@@ -108,6 +111,7 @@ export default function FormRegister(props: BoxProps) {
 			<fetcher.Form
 				method="post"
 				onSubmit={form.onSubmit((values) => {
+					setErrorMessage(null);
 					fetcher.submit(values, {
 						method: 'post',
 					});

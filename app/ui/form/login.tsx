@@ -98,6 +98,7 @@ export default function FormLogin(props: BoxProps) {
 			<fetcher.Form
 				method="post"
 				onSubmit={form.onSubmit((values) => {
+					setErrorMessage(null);
 					fetcher.submit(values, {
 						method: 'post',
 					});
