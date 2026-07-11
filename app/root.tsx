@@ -81,6 +81,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				title: 'Success',
 				message: successMessage,
 				position: 'top-center',
+				autoClose: 1000,
 				onClose: () => {
 					searchParams.delete('successMessage');
 					setSearchParams(searchParams, {
@@ -93,8 +94,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 		if (errorMessage) {
 			notifications.show({
 				title: 'Error',
+				color: 'red',
 				message: errorMessage,
 				position: 'top-center',
+				autoClose: 1000,
 				onClose: () => {
 					searchParams.delete('errorMessage');
 					setSearchParams(searchParams, {

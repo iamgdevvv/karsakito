@@ -1,5 +1,5 @@
 import { Title } from '@mantine/core';
-import { redirect } from 'react-router';
+import { replace } from 'react-router';
 import { metaDashboardRoute } from '~app-modules/meta';
 import { authUserCtx } from '~app-server/context';
 import { authGetSession } from '~app-server/session';
@@ -16,7 +16,17 @@ const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) =>
 	const user = authSession.get('user');
 
 	if (!user) {
-		throw redirect('/login?redirect=/dashboard/change-password');
+		const redirectParams = new URLSearchParams();
+		const queryParams = request.url.split('?')[1];
+		let redirectLink = '/dashboard/change-password';
+
+		if (queryParams) {
+			redirectLink += `?${queryParams}`;
+		}
+
+		redirectParams.set('redirect', redirectLink);
+
+		throw replace(`/login?${redirectParams.toString()}`);
 	}
 
 	context.set(authUserCtx, user);

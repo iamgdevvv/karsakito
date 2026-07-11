@@ -1,4 +1,4 @@
-import { redirect } from 'react-router';
+import { replace } from 'react-router';
 import { metaAdminRoute } from '~app-modules/meta';
 import { actionDeleteUser } from '~app-server/user';
 
@@ -12,13 +12,13 @@ export async function loader({ request, context, params }: Route.LoaderArgs) {
 	});
 
 	if ('error' in deleteUser) {
-		return redirect('/logout');
+		return replace('/logout');
 	}
 
 	const redirectParams = new URLSearchParams();
 	redirectParams.set('successMessage', `Delete user ${deleteUser.data.name} successfully`);
 
-	return redirect(`/admin/users?${redirectParams.toString()}`);
+	return replace(`/admin/users?${redirectParams.toString()}`);
 }
 
 export function meta() {

@@ -21,7 +21,7 @@ import { BsThreeDots } from 'react-icons/bs';
 import { FaSort } from 'react-icons/fa';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { LuTrash } from 'react-icons/lu';
-import { redirect, useNavigation, useSearchParams } from 'react-router';
+import { replace, useNavigation, useSearchParams } from 'react-router';
 import { labelUserRole, optionsUserRole } from '~app-modules/enum-options';
 import { metaAdminRoute } from '~app-modules/meta';
 import { PayloadQueryUsersSchema, type PayloadQueryUsers } from '~app-modules/schema/user';
@@ -29,6 +29,7 @@ import { toPayloadSearchParams } from '~app-modules/utils';
 import { authUserCtx } from '~app-server/context';
 import { authMiddlewareSession } from '~app-server/session';
 import { actionGetUsers } from '~app-server/user';
+import { messageActionError } from '~app-server/utils';
 import { ButtonLink, Link } from '~app-ui/components/link';
 import Footer from '~app-ui/layouts/footer';
 import { HeaderAdmin } from '~app-ui/layouts/header';
@@ -46,11 +47,10 @@ const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) =>
 	});
 
 	if ('error' in authSession) {
-		if (authSession.cause === 'user_not_authorized_role') {
-			throw redirect('/');
-		}
+		const redirectParams = new URLSearchParams();
+		redirectParams.set('errorMessage', messageActionError(authSession));
 
-		throw redirect('/login?redirect=/admin/users');
+		throw replace(`/?${redirectParams.toString()}`);
 	}
 
 	context.set(authUserCtx, authSession.user);

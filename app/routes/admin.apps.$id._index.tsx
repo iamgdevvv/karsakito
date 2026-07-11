@@ -1,10 +1,11 @@
 import { Title } from '@mantine/core';
-import { redirect } from 'react-router';
+import { replace } from 'react-router';
 import { labelAppName } from '~app-modules/enum-options';
 import { metaAdminRoute } from '~app-modules/meta';
 import { actionGetKarsaApp, actionUpdateKarsaApp } from '~app-server/app';
 import { authUserCtx } from '~app-server/context';
 import { authMiddlewareSession } from '~app-server/session';
+import { messageActionError } from '~app-server/utils';
 import FormUpdateApp from '~app-ui/form/update-app';
 import Footer from '~app-ui/layouts/footer';
 import { HeaderAdmin } from '~app-ui/layouts/header';
@@ -21,11 +22,10 @@ const authMiddleware: Route.MiddlewareFunction = async ({ request, context, para
 	});
 
 	if ('error' in authSession) {
-		if (authSession.cause === 'user_not_authorized_role') {
-			throw redirect('/');
-		}
+		const redirectParams = new URLSearchParams();
+		redirectParams.set('errorMessage', messageActionError(authSession));
 
-		throw redirect(`/login?redirect=/admin/apps/${params.id}`);
+		throw replace(`/?${redirectParams.toString()}`);
 	}
 
 	context.set(authUserCtx, authSession.user);
@@ -42,7 +42,7 @@ export async function loader({ request, context, params }: Route.LoaderArgs) {
 	});
 
 	if (!recordUser.data) {
-		throw redirect('/admin/apps');
+		throw replace('/');
 	}
 
 	return {

@@ -1,22 +1,31 @@
 import { Title } from '@mantine/core';
-import { redirect } from 'react-router';
+import { replace } from 'react-router';
 import { metaPublicRoute } from '~app-modules/meta';
 import { authUserCtx } from '~app-server/context';
-import { authMiddlewareSession } from '~app-server/session';
+import { authGetSession } from '~app-server/session';
 import AppPanel from '~app-ui/layouts/apps-panel';
 
 import type { Route } from './+types/apps.workspace._index';
 
 const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) => {
-	const authSession = await authMiddlewareSession({
-		request,
-	});
+	const authSession = await authGetSession(request);
+	const user = authSession.get('user');
 
-	if ('error' in authSession) {
-		throw redirect('/login?redirect=/apps/workspace');
+	if (!user) {
+		const redirectParams = new URLSearchParams();
+		const queryParams = request.url.split('?')[1];
+		let redirectLink = '/apps/workspace/saved';
+
+		if (queryParams) {
+			redirectLink += `?${queryParams}`;
+		}
+
+		redirectParams.set('redirect', redirectLink);
+
+		throw replace(`/login?${redirectParams.toString()}`);
 	}
 
-	context.set(authUserCtx, authSession.user);
+	context.set(authUserCtx, user);
 };
 
 export const middleware: Route.MiddlewareFunction[] = [authMiddleware];

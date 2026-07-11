@@ -14,12 +14,10 @@ import {
 	PayloadWindowWorkspaceSchema,
 	type PayloadWindowWorkspace,
 } from '~app-modules/schema/workspace';
-import { slugify } from '~app-modules/utils';
 import type { KarsaApp } from '~generated/prisma/browser';
 
 export default function FormWindowWorkspace({
 	optionApps,
-	usedTitles,
 	onSubmit,
 	...props
 }: BoxProps & {
@@ -27,7 +25,6 @@ export default function FormWindowWorkspace({
 		KarsaApp['category'],
 		(ComboboxItem & { description: KarsaApp['description'] })[]
 	>;
-	usedTitles: string[];
 	onSubmit: (values: PayloadWindowWorkspace) => void;
 }) {
 	const form = useForm<PayloadWindowWorkspace>({
@@ -35,14 +32,10 @@ export default function FormWindowWorkspace({
 	});
 
 	useEffect(() => {
-		if (form.values.title) {
-			usedTitles.forEach((title) => {
-				if (title === form.values.title || slugify(title) === slugify(form.values.title)) {
-					form.setFieldError('title', 'Title already in use');
-				}
-			});
+		if (!form.values.id) {
+			form.setFieldValue('id', crypto.randomUUID());
 		}
-	}, [form.values.title]);
+	}, [form.values.id]);
 
 	return (
 		<Box
@@ -79,7 +72,7 @@ export default function FormWindowWorkspace({
 					size="md"
 					fz="sm"
 					mt={6}
-					disabled={!form.isValid() || Object.keys(form.errors).length > 0}
+					// disabled={!form.isValid() || Object.keys(form.errors).length > 0}
 				>
 					Create Window
 				</Button>

@@ -1,9 +1,10 @@
 import { Title } from '@mantine/core';
-import { redirect } from 'react-router';
+import { replace } from 'react-router';
 import { metaAdminRoute } from '~app-modules/meta';
 import { authUserCtx } from '~app-server/context';
 import { authMiddlewareSession } from '~app-server/session';
 import { actionGetUser, actionUpdateUserPassword } from '~app-server/user';
+import { messageActionError } from '~app-server/utils';
 import FormChangePasswordUser from '~app-ui/form/change-password-user';
 import Footer from '~app-ui/layouts/footer';
 import { HeaderAdmin } from '~app-ui/layouts/header';
@@ -20,11 +21,10 @@ const authMiddleware: Route.MiddlewareFunction = async ({ request, context, para
 	});
 
 	if ('error' in authSession) {
-		if (authSession.cause === 'user_not_authorized_role') {
-			throw redirect('/');
-		}
+		const redirectParams = new URLSearchParams();
+		redirectParams.set('errorMessage', messageActionError(authSession));
 
-		throw redirect(`/login?redirect=/admin/users/${params.id}/change-password`);
+		throw replace(`/?${redirectParams.toString()}`);
 	}
 
 	context.set(authUserCtx, authSession.user);
@@ -41,7 +41,7 @@ export async function loader({ request, context, params }: Route.LoaderArgs) {
 	});
 
 	if (!recordUser.data) {
-		throw redirect('/admin/users');
+		throw replace('/');
 	}
 
 	return {

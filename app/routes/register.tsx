@@ -1,5 +1,5 @@
 import { Center, Container } from '@mantine/core';
-import { redirect } from 'react-router';
+import { replace } from 'react-router';
 import { metaAppsRoute } from '~app-modules/meta';
 import { actionRegister } from '~app-server/auth';
 import { authMiddlewareSession } from '~app-server/session';
@@ -13,11 +13,11 @@ const authMiddleware: Route.MiddlewareFunction = async ({ request }) => {
 	});
 
 	if ('user' in authSession) {
-		if (authSession.user.role === 'ADMIN') {
-			throw redirect('/admin');
+		if (['ADMIN', 'STAFF'].includes(authSession.user.role)) {
+			throw replace('/admin');
 		}
 
-		throw redirect('/apps');
+		throw replace('/apps');
 	}
 };
 

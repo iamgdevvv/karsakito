@@ -1,4 +1,4 @@
-import { redirect, type RouterContextProvider } from "react-router";
+import { replace, type RouterContextProvider } from "react-router";
 import { amountTokenDaily } from "~app-modules/enum-options";
 import { PayloadLoginSchema, PayloadRegisterSchema } from "~app-modules/schema/auth";
 import { prismaClient } from "~app-server/context";
@@ -59,7 +59,7 @@ export const actionLogin = async ({
 
 		let redirectUrl = _redirect || new URL(request.url).searchParams.get('redirect');
 
-		return redirect(redirectUrl || '/apps', {
+		return replace(redirectUrl || '/apps', {
 			headers: {
 				'Set-Cookie': await authLoginSession(authSession),
 			},

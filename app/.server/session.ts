@@ -23,6 +23,11 @@ const {
 
 const authGetSession = (request: Request) => getSession(request.headers.get('Cookie'))
 
+export type AuthMiddlewareError = {
+    error: true
+    cause: 'user_not_found' | 'user_not_active' | 'user_not_authorized' | 'user_not_authorized_role'
+}
+
 const authMiddlewareSession = async ({
     guard,
     request,
@@ -34,10 +39,7 @@ const authMiddlewareSession = async ({
     request: Request
 }): Promise<{
     user: User
-} | {
-    error: true
-    cause: 'user_not_found' | 'user_not_active' | 'user_not_authorized' | 'user_not_authorized_role'
-}> => {
+} | AuthMiddlewareError> => {
     try {
         const authUser = await authGetSession(request);
         const user = authUser.get('user')

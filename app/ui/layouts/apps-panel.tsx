@@ -91,7 +91,7 @@ export default function AppPanel({
 				>
 					<Group
 						w="100%"
-						maw={480}
+						maw={400}
 						grow
 						bdrs="full"
 						bg="white"

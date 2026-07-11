@@ -1,20 +1,31 @@
 import { Window, type WindowGroupContextValue } from '@gfazioli/mantine-window';
-import { ActionIcon, Box, Divider, Group, LoadingOverlay, Popover, Tooltip } from '@mantine/core';
+import {
+	ActionIcon,
+	Box,
+	Button,
+	Divider,
+	Group,
+	LoadingOverlay,
+	Popover,
+	Tooltip,
+} from '@mantine/core';
 import { useFullscreenDocument, useMap, useMediaQuery, useScrollIntoView } from '@mantine/hooks';
-import { useCallback, useRef, useState, useTransition } from 'react';
+import { useCallback, useEffect, useRef, useState, useTransition } from 'react';
 import { BsArrowsFullscreen } from 'react-icons/bs';
 import { MdOutlineFitScreen, MdSaveAs } from 'react-icons/md';
 import { VscEmptyWindow } from 'react-icons/vsc';
-import { redirect, useSearchParams } from 'react-router';
+import { replace, useSearchParams } from 'react-router';
+import { labelAppName } from '~app-modules/enum-options';
 import { metaPublicRoute } from '~app-modules/meta';
 import {
+	PayloadWindowWorkspaceSchema,
 	type PayloadWindowWorkspace,
 	type WorkspaceWindowPlain,
 } from '~app-modules/schema/workspace';
 import { slugify } from '~app-modules/utils';
 import { actionGetKarsaAppsByCategory } from '~app-server/app';
 import { authUserCtx } from '~app-server/context';
-import { authMiddlewareSession } from '~app-server/session';
+import { authGetSession } from '~app-server/session';
 import { WindowAppKarsaWriter } from '~app-ui/form/window-apps';
 import FormWindowWorkspace from '~app-ui/form/window-workspace';
 import AppPanel from '~app-ui/layouts/apps-panel';
@@ -22,15 +33,24 @@ import AppPanel from '~app-ui/layouts/apps-panel';
 import type { Route } from './+types/apps.workspace._index';
 
 const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) => {
-	const authSession = await authMiddlewareSession({
-		request,
-	});
+	const authSession = await authGetSession(request);
+	const user = authSession.get('user');
 
-	if ('error' in authSession) {
-		throw redirect('/login?redirect=/apps/workspace');
+	if (!user) {
+		const redirectParams = new URLSearchParams();
+		const queryParams = request.url.split('?')[1];
+		let redirectLink = '/apps/workspace';
+
+		if (queryParams) {
+			redirectLink += `?${queryParams}`;
+		}
+
+		redirectParams.set('redirect', redirectLink);
+
+		throw replace(`/login?${redirectParams.toString()}`);
 	}
 
-	context.set(authUserCtx, authSession.user);
+	context.set(authUserCtx, user);
 };
 
 export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
@@ -54,6 +74,7 @@ export function meta(_: Route.MetaArgs) {
 
 export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps) {
 	const [searchParams] = useSearchParams();
+	const [isFirstRender, setIsFirstRender] = useState(false);
 	const { fullscreen, toggle: toggleFullscreen } = useFullscreenDocument();
 	const [isLoadingRenderWindow, startActionRenderWindow] = useTransition();
 	const [openFormNewWindow, setOpenFormNewWindow] = useState(false);
@@ -101,28 +122,31 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 		[isMobile, windowLists.size],
 	);
 
-	// useEffect(() => {
-	// 	if (refCanvas.current) {
-	// 		const params = Object.fromEntries(searchParams);
+	useEffect(() => {
+		if (refCanvas.current && !isFirstRender) {
+			const params = Object.fromEntries(searchParams);
 
-	// 		Object.entries(params).forEach(([k, v]) => {
-	// 			if (k === 'app') {
-	// 				const value = PayloadWindowWorkspaceSchema.safeParse(v);
+			Object.entries(params).forEach(([k, v]) => {
+				if (k === 'app') {
+					const app = v as PayloadWindowWorkspace['app'];
 
-	// 				if (value.data) {
-	// 					startActionRenderWindow(() => {
-	// 						windowLists.set(value.data.label, {
-	// 							title: value.data,
-	// 							app: value.data,
-	// 						});
+					const param = PayloadWindowWorkspaceSchema.safeParse({
+						id: crypto.randomUUID(),
+						title: `Karsa ${labelAppName[app]}`,
+						app,
+					} satisfies PayloadWindowWorkspace);
 
-	// 						handleFitWindow();
-	// 					});
-	// 				}
-	// 			}
-	// 		});
-	// 	}
-	// }, [searchParams, refCanvas.current]);
+					if (param.data) {
+						startActionRenderWindow(() => {
+							handleAddWindow(param.data);
+						});
+
+						setIsFirstRender(true);
+					}
+				}
+			});
+		}
+	}, [isFirstRender, refCanvas.current]);
 
 	return (
 		<div className="site">
@@ -135,28 +159,23 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 						opened={openFormNewWindow}
 						onChange={setOpenFormNewWindow}
 						width={200}
-						position="bottom"
-						withArrow
+						position="bottom-start"
 						shadow="md"
 					>
 						<Popover.Target>
-							<Tooltip
-								fz="xs"
-								label="Add Window"
+							<Button
+								size="sm"
+								variant="light"
+								mr="auto"
+								leftSection={<VscEmptyWindow size={18} />}
+								onClick={() => setOpenFormNewWindow(true)}
 							>
-								<ActionIcon
-									size="lg"
-									variant="light"
-									onClick={() => setOpenFormNewWindow(true)}
-								>
-									<VscEmptyWindow size={20} />
-								</ActionIcon>
-							</Tooltip>
+								Add Window
+							</Button>
 						</Popover.Target>
 						<Popover.Dropdown>
 							<FormWindowWorkspace
 								optionApps={loaderData.optionApps}
-								usedTitles={Array.from(windowLists.keys())}
 								onSubmit={(value) => {
 									handleAddWindow({
 										...value,
@@ -233,7 +252,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 							{Array.from(windowLists).map(([id, windowItem], index) => (
 								<Window
 									opened
-									key={id}
+									key={`${id}-${index}`}
 									defaultX={index * 10}
 									defaultY={index * 10}
 									maxWidth="100%"

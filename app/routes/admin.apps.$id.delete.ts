@@ -1,4 +1,4 @@
-import { redirect } from 'react-router';
+import { replace } from 'react-router';
 import { labelAppName } from '~app-modules/enum-options';
 import { metaAdminRoute } from '~app-modules/meta';
 import { actionDeleteKarsaApp } from '~app-server/app';
@@ -13,7 +13,7 @@ export async function loader({ request, context, params }: Route.LoaderArgs) {
 	});
 
 	if ('error' in deleteApp) {
-		return redirect('/logout');
+		return replace('/logout');
 	}
 
 	const redirectParams = new URLSearchParams();
@@ -22,7 +22,7 @@ export async function loader({ request, context, params }: Route.LoaderArgs) {
 		`Delete app ${labelAppName[deleteApp.data.name]} successfully`,
 	);
 
-	return redirect(`/admin/apps?${redirectParams.toString()}`);
+	return replace(`/admin/apps?${redirectParams.toString()}`);
 }
 
 export function meta() {

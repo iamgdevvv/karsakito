@@ -1,10 +1,11 @@
 import { SimpleGrid, Text, ThemeIcon } from '@mantine/core';
 import { FaUsersCog } from 'react-icons/fa';
 import { TbApiApp } from 'react-icons/tb';
-import { redirect } from 'react-router';
+import { replace } from 'react-router';
 import { metaPublicRoute } from '~app-modules/meta';
 import { authUserCtx } from '~app-server/context';
 import { authMiddlewareSession } from '~app-server/session';
+import { messageActionError } from '~app-server/utils';
 import { Link } from '~app-ui/components/link';
 import Footer from '~app-ui/layouts/footer';
 import { HeaderAdmin } from '~app-ui/layouts/header';
@@ -15,17 +16,16 @@ import type { Route } from './+types/admin._index';
 const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) => {
 	const authSession = await authMiddlewareSession({
 		guard: {
-			role: ['ADMIN'],
+			role: ['ADMIN', 'STAFF'],
 		},
 		request,
 	});
 
 	if ('error' in authSession) {
-		if (authSession.cause === 'user_not_authorized_role') {
-			throw redirect('/');
-		}
+		const redirectParams = new URLSearchParams();
+		redirectParams.set('errorMessage', messageActionError(authSession));
 
-		throw redirect('/login?redirect=/admin');
+		throw replace(`/?${redirectParams.toString()}`);
 	}
 
 	context.set(authUserCtx, authSession.user);

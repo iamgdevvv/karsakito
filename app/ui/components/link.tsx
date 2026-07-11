@@ -6,13 +6,14 @@ import {
 	type NavLinkProps,
 } from 'react-router';
 
-export function Link({ viewTransition, ...props }: BoxProps & LinkProps) {
+export function Link(props: BoxProps & LinkProps) {
 	return (
 		<Box
+			discover="none"
+			viewTransition={true}
 			{...props}
 			data-slot="Link"
 			component={BaseLink}
-			viewTransition={viewTransition ?? true}
 		/>
 	);
 }
@@ -21,6 +22,8 @@ export function NavLink(props: NavLinkProps) {
 	return (
 		<BaseNavLink
 			end
+			discover="none"
+			viewTransition={true}
 			{...props}
 			data-slot="NavLink"
 		/>
@@ -31,6 +34,8 @@ export function ButtonLink(props: ButtonProps & Omit<LinkProps, 'style' | 'fill'
 	return (
 		<Button
 			component={BaseLink}
+			discover="none"
+			viewTransition={true}
 			{...props}
 			data-slot="ButtonLink"
 		/>

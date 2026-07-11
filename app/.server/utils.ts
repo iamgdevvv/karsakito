@@ -37,5 +37,23 @@ export const messageActionError = (error: unknown) => {
 		return 'Payload invalid'
 	}
 
+	if (typeof error === 'object' && error && 'cause' in error && typeof error.cause === 'string') {
+		if (error.cause === 'user_not_found') {
+			return 'User not found'
+		}
+
+		if (error.cause === 'user_not_active') {
+			return 'User not active'
+		}
+
+		if (error.cause === 'user_not_authorized') {
+			return 'User not authorized'
+		}
+
+		if (error.cause === 'user_not_authorized_role') {
+			return 'User not authorized role'
+		}
+	}
+
 	return 'Something went wrong'
 };
