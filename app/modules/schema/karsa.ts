@@ -1,8 +1,10 @@
 import * as z from 'zod';
 import { LanguageAppSchema } from '~app-modules/schema/app';
-import { KarsaSchema, WorkspaceSchema } from '~generated/prisma-zod/schemas/models';
-
-import { PayloadWindowWorkspaceSchema } from './workspace';
+import {
+	KarsaSchema,
+	WorkspaceSchema,
+	WorkspaceWindowSchema,
+} from '~generated/prisma-zod/schemas/models';
 
 export const KarsaSchemaPlain = KarsaSchema.omit({
 	promptJson: true,
@@ -42,9 +44,10 @@ export const PayloadKarsaSchemaPlain = KarsaSchemaPlain.omit({
 export const PayloadSubmissionKarsaSchema = z
 	.object({
 		workspaceId: WorkspaceSchema.shape.id.nullish(),
-		windowWorkspace: PayloadWindowWorkspaceSchema.omit({
-			app: true,
-			karsa: true,
+		windowWorkspace: WorkspaceWindowSchema.pick({
+			id: true,
+			title: true,
+			props: true,
 		}),
 	})
 	.and(
