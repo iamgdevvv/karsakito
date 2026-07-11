@@ -2,8 +2,14 @@ import { Box, Skeleton, Tabs, Text, type TabsProps } from '@mantine/core';
 import { useState } from 'react';
 import { HiOutlineCommandLine } from 'react-icons/hi2';
 import { IoMdOptions } from 'react-icons/io';
+import type { PayloadWindowWorkspace } from '~app-modules/schema/workspace';
 
-export function WindowAppKarsaWriter({ ...props }: TabsProps) {
+export function WindowAppKarsaWriter({
+	data,
+	...props
+}: TabsProps & {
+	data: PayloadWindowWorkspace;
+}) {
 	const [activeTab, setActiveTab] = useState<string | null>(
 		'options' satisfies 'options' | 'result',
 	);
@@ -57,7 +63,7 @@ export function WindowAppKarsaWriter({ ...props }: TabsProps) {
 						backgroundSize: '16px 16px',
 					}}
 				>
-					<Text>Form Karsa Writer</Text>
+					<Text>{data.app}</Text>
 				</Box>
 			</Tabs.Panel>
 

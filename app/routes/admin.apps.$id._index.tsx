@@ -13,7 +13,7 @@ import { AdminPanel } from '~app-ui/layouts/panel';
 
 import type { Route } from './+types/admin.apps.$id._index';
 
-const authMiddleware: Route.MiddlewareFunction = async ({ request, context, params }) => {
+const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) => {
 	const authSession = await authMiddlewareSession({
 		guard: {
 			role: ['ADMIN', 'STAFF'],

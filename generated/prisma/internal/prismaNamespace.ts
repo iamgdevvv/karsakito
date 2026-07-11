@@ -1137,6 +1137,8 @@ export const BalanceActivityScalarFieldEnum = {
   token: 'token',
   tokenBefore: 'tokenBefore',
   tokenAfter: 'tokenAfter',
+  tokenDailyBefore: 'tokenDailyBefore',
+  tokenDailyAfter: 'tokenDailyAfter',
   description: 'description',
   createdAt: 'createdAt',
   balanceId: 'balanceId',

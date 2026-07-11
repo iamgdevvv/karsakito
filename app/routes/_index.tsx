@@ -1,11 +1,11 @@
 import { Text, Title } from '@mantine/core';
 import { LuArrowRight } from 'react-icons/lu';
 import { metaPublicRoute } from '~app-modules/meta';
+import { cfContext } from '~app-server/context';
 import { authGetSession } from '~app-server/session';
 import Banner from '~app-ui/layouts/banner';
 import Footer from '~app-ui/layouts/footer';
 import { Header } from '~app-ui/layouts/header';
-import { cloudflareContext } from '~workers/app';
 
 import type { Route } from './+types/_index';
 
@@ -15,7 +15,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 
 	return {
 		user,
-		noIndex: context.get(cloudflareContext).env.NODE_ENV !== 'production',
+		noIndex: cfContext(context).env.NODE_ENV !== 'production',
 	};
 }
 

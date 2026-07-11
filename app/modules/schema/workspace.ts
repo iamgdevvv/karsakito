@@ -83,7 +83,7 @@ export const PayloadWindowWorkspaceSchema = WorkspaceWindowSchemaPlain.pick({
 	props: true,
 }).extend({
 	app: KarsaSchemaPlain.shape.app,
-	data: KarsaSchemaPlain.omit({
+	karsa: KarsaSchemaPlain.omit({
 		app: true,
 		createdAt: true,
 		updatedAt: true,

@@ -30,12 +30,16 @@ export type BalanceActivityAvgAggregateOutputType = {
   token: number | null
   tokenBefore: number | null
   tokenAfter: number | null
+  tokenDailyBefore: number | null
+  tokenDailyAfter: number | null
 }
 
 export type BalanceActivitySumAggregateOutputType = {
   token: number | null
   tokenBefore: number | null
   tokenAfter: number | null
+  tokenDailyBefore: number | null
+  tokenDailyAfter: number | null
 }
 
 export type BalanceActivityMinAggregateOutputType = {
@@ -44,6 +48,8 @@ export type BalanceActivityMinAggregateOutputType = {
   token: number | null
   tokenBefore: number | null
   tokenAfter: number | null
+  tokenDailyBefore: number | null
+  tokenDailyAfter: number | null
   description: string | null
   createdAt: Date | null
   balanceId: string | null
@@ -56,6 +62,8 @@ export type BalanceActivityMaxAggregateOutputType = {
   token: number | null
   tokenBefore: number | null
   tokenAfter: number | null
+  tokenDailyBefore: number | null
+  tokenDailyAfter: number | null
   description: string | null
   createdAt: Date | null
   balanceId: string | null
@@ -68,6 +76,8 @@ export type BalanceActivityCountAggregateOutputType = {
   token: number
   tokenBefore: number
   tokenAfter: number
+  tokenDailyBefore: number
+  tokenDailyAfter: number
   description: number
   createdAt: number
   balanceId: number
@@ -80,12 +90,16 @@ export type BalanceActivityAvgAggregateInputType = {
   token?: true | runtime.Types.Skip
   tokenBefore?: true | runtime.Types.Skip
   tokenAfter?: true | runtime.Types.Skip
+  tokenDailyBefore?: true | runtime.Types.Skip
+  tokenDailyAfter?: true | runtime.Types.Skip
 }
 
 export type BalanceActivitySumAggregateInputType = {
   token?: true | runtime.Types.Skip
   tokenBefore?: true | runtime.Types.Skip
   tokenAfter?: true | runtime.Types.Skip
+  tokenDailyBefore?: true | runtime.Types.Skip
+  tokenDailyAfter?: true | runtime.Types.Skip
 }
 
 export type BalanceActivityMinAggregateInputType = {
@@ -94,6 +108,8 @@ export type BalanceActivityMinAggregateInputType = {
   token?: true | runtime.Types.Skip
   tokenBefore?: true | runtime.Types.Skip
   tokenAfter?: true | runtime.Types.Skip
+  tokenDailyBefore?: true | runtime.Types.Skip
+  tokenDailyAfter?: true | runtime.Types.Skip
   description?: true | runtime.Types.Skip
   createdAt?: true | runtime.Types.Skip
   balanceId?: true | runtime.Types.Skip
@@ -106,6 +122,8 @@ export type BalanceActivityMaxAggregateInputType = {
   token?: true | runtime.Types.Skip
   tokenBefore?: true | runtime.Types.Skip
   tokenAfter?: true | runtime.Types.Skip
+  tokenDailyBefore?: true | runtime.Types.Skip
+  tokenDailyAfter?: true | runtime.Types.Skip
   description?: true | runtime.Types.Skip
   createdAt?: true | runtime.Types.Skip
   balanceId?: true | runtime.Types.Skip
@@ -118,6 +136,8 @@ export type BalanceActivityCountAggregateInputType = {
   token?: true | runtime.Types.Skip
   tokenBefore?: true | runtime.Types.Skip
   tokenAfter?: true | runtime.Types.Skip
+  tokenDailyBefore?: true | runtime.Types.Skip
+  tokenDailyAfter?: true | runtime.Types.Skip
   description?: true | runtime.Types.Skip
   createdAt?: true | runtime.Types.Skip
   balanceId?: true | runtime.Types.Skip
@@ -217,6 +237,8 @@ export type BalanceActivityGroupByOutputType = {
   token: number
   tokenBefore: number
   tokenAfter: number
+  tokenDailyBefore: number
+  tokenDailyAfter: number
   description: string | null
   createdAt: Date
   balanceId: string
@@ -252,6 +274,8 @@ export type BalanceActivityWhereInput = {
   token?: Prisma.IntFilter<"BalanceActivity"> | number | runtime.Types.Skip
   tokenBefore?: Prisma.IntFilter<"BalanceActivity"> | number | runtime.Types.Skip
   tokenAfter?: Prisma.IntFilter<"BalanceActivity"> | number | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.IntFilter<"BalanceActivity"> | number | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.IntFilter<"BalanceActivity"> | number | runtime.Types.Skip
   description?: Prisma.StringNullableFilter<"BalanceActivity"> | string | null | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFilter<"BalanceActivity"> | Date | string | runtime.Types.Skip
   balanceId?: Prisma.StringFilter<"BalanceActivity"> | string | runtime.Types.Skip
@@ -267,6 +291,8 @@ export type BalanceActivityOrderByWithRelationInput = {
   token?: Prisma.SortOrder | runtime.Types.Skip
   tokenBefore?: Prisma.SortOrder | runtime.Types.Skip
   tokenAfter?: Prisma.SortOrder | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.SortOrder | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.SortOrder | runtime.Types.Skip
   description?: Prisma.SortOrderInput | Prisma.SortOrder | runtime.Types.Skip
   createdAt?: Prisma.SortOrder | runtime.Types.Skip
   balanceId?: Prisma.SortOrder | runtime.Types.Skip
@@ -285,6 +311,8 @@ export type BalanceActivityWhereUniqueInput = Prisma.AtLeast<{
   token?: Prisma.IntFilter<"BalanceActivity"> | number | runtime.Types.Skip
   tokenBefore?: Prisma.IntFilter<"BalanceActivity"> | number | runtime.Types.Skip
   tokenAfter?: Prisma.IntFilter<"BalanceActivity"> | number | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.IntFilter<"BalanceActivity"> | number | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.IntFilter<"BalanceActivity"> | number | runtime.Types.Skip
   description?: Prisma.StringNullableFilter<"BalanceActivity"> | string | null | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFilter<"BalanceActivity"> | Date | string | runtime.Types.Skip
   balanceId?: Prisma.StringFilter<"BalanceActivity"> | string | runtime.Types.Skip
@@ -300,6 +328,8 @@ export type BalanceActivityOrderByWithAggregationInput = {
   token?: Prisma.SortOrder | runtime.Types.Skip
   tokenBefore?: Prisma.SortOrder | runtime.Types.Skip
   tokenAfter?: Prisma.SortOrder | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.SortOrder | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.SortOrder | runtime.Types.Skip
   description?: Prisma.SortOrderInput | Prisma.SortOrder | runtime.Types.Skip
   createdAt?: Prisma.SortOrder | runtime.Types.Skip
   balanceId?: Prisma.SortOrder | runtime.Types.Skip
@@ -320,6 +350,8 @@ export type BalanceActivityScalarWhereWithAggregatesInput = {
   token?: Prisma.IntWithAggregatesFilter<"BalanceActivity"> | number | runtime.Types.Skip
   tokenBefore?: Prisma.IntWithAggregatesFilter<"BalanceActivity"> | number | runtime.Types.Skip
   tokenAfter?: Prisma.IntWithAggregatesFilter<"BalanceActivity"> | number | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.IntWithAggregatesFilter<"BalanceActivity"> | number | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.IntWithAggregatesFilter<"BalanceActivity"> | number | runtime.Types.Skip
   description?: Prisma.StringNullableWithAggregatesFilter<"BalanceActivity"> | string | null | runtime.Types.Skip
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"BalanceActivity"> | Date | string | runtime.Types.Skip
   balanceId?: Prisma.StringWithAggregatesFilter<"BalanceActivity"> | string | runtime.Types.Skip
@@ -330,8 +362,10 @@ export type BalanceActivityCreateInput = {
   id?: string | runtime.Types.Skip
   type: $Enums.BalanceActivityType
   token: number
-  tokenBefore: number
-  tokenAfter: number
+  tokenBefore?: number | runtime.Types.Skip
+  tokenAfter?: number | runtime.Types.Skip
+  tokenDailyBefore?: number | runtime.Types.Skip
+  tokenDailyAfter?: number | runtime.Types.Skip
   description?: string | null | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   balance: Prisma.BalanceCreateNestedOneWithoutActivitiesInput
@@ -343,8 +377,10 @@ export type BalanceActivityUncheckedCreateInput = {
   id?: string | runtime.Types.Skip
   type: $Enums.BalanceActivityType
   token: number
-  tokenBefore: number
-  tokenAfter: number
+  tokenBefore?: number | runtime.Types.Skip
+  tokenAfter?: number | runtime.Types.Skip
+  tokenDailyBefore?: number | runtime.Types.Skip
+  tokenDailyAfter?: number | runtime.Types.Skip
   description?: string | null | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   balanceId: string
@@ -358,6 +394,8 @@ export type BalanceActivityUpdateInput = {
   token?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   balance?: Prisma.BalanceUpdateOneRequiredWithoutActivitiesNestedInput | runtime.Types.Skip
@@ -371,6 +409,8 @@ export type BalanceActivityUncheckedUpdateInput = {
   token?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   balanceId?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
@@ -382,8 +422,10 @@ export type BalanceActivityCreateManyInput = {
   id?: string | runtime.Types.Skip
   type: $Enums.BalanceActivityType
   token: number
-  tokenBefore: number
-  tokenAfter: number
+  tokenBefore?: number | runtime.Types.Skip
+  tokenAfter?: number | runtime.Types.Skip
+  tokenDailyBefore?: number | runtime.Types.Skip
+  tokenDailyAfter?: number | runtime.Types.Skip
   description?: string | null | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   balanceId: string
@@ -396,6 +438,8 @@ export type BalanceActivityUpdateManyMutationInput = {
   token?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
 }
@@ -406,6 +450,8 @@ export type BalanceActivityUncheckedUpdateManyInput = {
   token?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   balanceId?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
@@ -433,6 +479,8 @@ export type BalanceActivityCountOrderByAggregateInput = {
   token?: Prisma.SortOrder | runtime.Types.Skip
   tokenBefore?: Prisma.SortOrder | runtime.Types.Skip
   tokenAfter?: Prisma.SortOrder | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.SortOrder | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.SortOrder | runtime.Types.Skip
   description?: Prisma.SortOrder | runtime.Types.Skip
   createdAt?: Prisma.SortOrder | runtime.Types.Skip
   balanceId?: Prisma.SortOrder | runtime.Types.Skip
@@ -443,6 +491,8 @@ export type BalanceActivityAvgOrderByAggregateInput = {
   token?: Prisma.SortOrder | runtime.Types.Skip
   tokenBefore?: Prisma.SortOrder | runtime.Types.Skip
   tokenAfter?: Prisma.SortOrder | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.SortOrder | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.SortOrder | runtime.Types.Skip
 }
 
 export type BalanceActivityMaxOrderByAggregateInput = {
@@ -451,6 +501,8 @@ export type BalanceActivityMaxOrderByAggregateInput = {
   token?: Prisma.SortOrder | runtime.Types.Skip
   tokenBefore?: Prisma.SortOrder | runtime.Types.Skip
   tokenAfter?: Prisma.SortOrder | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.SortOrder | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.SortOrder | runtime.Types.Skip
   description?: Prisma.SortOrder | runtime.Types.Skip
   createdAt?: Prisma.SortOrder | runtime.Types.Skip
   balanceId?: Prisma.SortOrder | runtime.Types.Skip
@@ -463,6 +515,8 @@ export type BalanceActivityMinOrderByAggregateInput = {
   token?: Prisma.SortOrder | runtime.Types.Skip
   tokenBefore?: Prisma.SortOrder | runtime.Types.Skip
   tokenAfter?: Prisma.SortOrder | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.SortOrder | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.SortOrder | runtime.Types.Skip
   description?: Prisma.SortOrder | runtime.Types.Skip
   createdAt?: Prisma.SortOrder | runtime.Types.Skip
   balanceId?: Prisma.SortOrder | runtime.Types.Skip
@@ -473,6 +527,8 @@ export type BalanceActivitySumOrderByAggregateInput = {
   token?: Prisma.SortOrder | runtime.Types.Skip
   tokenBefore?: Prisma.SortOrder | runtime.Types.Skip
   tokenAfter?: Prisma.SortOrder | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.SortOrder | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.SortOrder | runtime.Types.Skip
 }
 
 export type BalanceActivityCreateNestedManyWithoutSenderInput = {
@@ -581,8 +637,10 @@ export type BalanceActivityCreateWithoutSenderInput = {
   id?: string | runtime.Types.Skip
   type: $Enums.BalanceActivityType
   token: number
-  tokenBefore: number
-  tokenAfter: number
+  tokenBefore?: number | runtime.Types.Skip
+  tokenAfter?: number | runtime.Types.Skip
+  tokenDailyBefore?: number | runtime.Types.Skip
+  tokenDailyAfter?: number | runtime.Types.Skip
   description?: string | null | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   balance: Prisma.BalanceCreateNestedOneWithoutActivitiesInput
@@ -593,8 +651,10 @@ export type BalanceActivityUncheckedCreateWithoutSenderInput = {
   id?: string | runtime.Types.Skip
   type: $Enums.BalanceActivityType
   token: number
-  tokenBefore: number
-  tokenAfter: number
+  tokenBefore?: number | runtime.Types.Skip
+  tokenAfter?: number | runtime.Types.Skip
+  tokenDailyBefore?: number | runtime.Types.Skip
+  tokenDailyAfter?: number | runtime.Types.Skip
   description?: string | null | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   balanceId: string
@@ -635,6 +695,8 @@ export type BalanceActivityScalarWhereInput = {
   token?: Prisma.IntFilter<"BalanceActivity"> | number | runtime.Types.Skip
   tokenBefore?: Prisma.IntFilter<"BalanceActivity"> | number | runtime.Types.Skip
   tokenAfter?: Prisma.IntFilter<"BalanceActivity"> | number | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.IntFilter<"BalanceActivity"> | number | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.IntFilter<"BalanceActivity"> | number | runtime.Types.Skip
   description?: Prisma.StringNullableFilter<"BalanceActivity"> | string | null | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFilter<"BalanceActivity"> | Date | string | runtime.Types.Skip
   balanceId?: Prisma.StringFilter<"BalanceActivity"> | string | runtime.Types.Skip
@@ -645,8 +707,10 @@ export type BalanceActivityCreateWithoutKarsaInput = {
   id?: string | runtime.Types.Skip
   type: $Enums.BalanceActivityType
   token: number
-  tokenBefore: number
-  tokenAfter: number
+  tokenBefore?: number | runtime.Types.Skip
+  tokenAfter?: number | runtime.Types.Skip
+  tokenDailyBefore?: number | runtime.Types.Skip
+  tokenDailyAfter?: number | runtime.Types.Skip
   description?: string | null | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   balance: Prisma.BalanceCreateNestedOneWithoutActivitiesInput
@@ -657,8 +721,10 @@ export type BalanceActivityUncheckedCreateWithoutKarsaInput = {
   id?: string | runtime.Types.Skip
   type: $Enums.BalanceActivityType
   token: number
-  tokenBefore: number
-  tokenAfter: number
+  tokenBefore?: number | runtime.Types.Skip
+  tokenAfter?: number | runtime.Types.Skip
+  tokenDailyBefore?: number | runtime.Types.Skip
+  tokenDailyAfter?: number | runtime.Types.Skip
   description?: string | null | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   balanceId: string
@@ -687,6 +753,8 @@ export type BalanceActivityUpdateWithoutKarsaInput = {
   token?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   balance?: Prisma.BalanceUpdateOneRequiredWithoutActivitiesNestedInput | runtime.Types.Skip
@@ -699,6 +767,8 @@ export type BalanceActivityUncheckedUpdateWithoutKarsaInput = {
   token?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   balanceId?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
@@ -709,8 +779,10 @@ export type BalanceActivityCreateWithoutBalanceInput = {
   id?: string | runtime.Types.Skip
   type: $Enums.BalanceActivityType
   token: number
-  tokenBefore: number
-  tokenAfter: number
+  tokenBefore?: number | runtime.Types.Skip
+  tokenAfter?: number | runtime.Types.Skip
+  tokenDailyBefore?: number | runtime.Types.Skip
+  tokenDailyAfter?: number | runtime.Types.Skip
   description?: string | null | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   sender?: Prisma.UserCreateNestedOneWithoutBalanceActivitiesInput | runtime.Types.Skip
@@ -721,8 +793,10 @@ export type BalanceActivityUncheckedCreateWithoutBalanceInput = {
   id?: string | runtime.Types.Skip
   type: $Enums.BalanceActivityType
   token: number
-  tokenBefore: number
-  tokenAfter: number
+  tokenBefore?: number | runtime.Types.Skip
+  tokenAfter?: number | runtime.Types.Skip
+  tokenDailyBefore?: number | runtime.Types.Skip
+  tokenDailyAfter?: number | runtime.Types.Skip
   description?: string | null | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   senderId?: string | null | runtime.Types.Skip
@@ -758,8 +832,10 @@ export type BalanceActivityCreateManySenderInput = {
   id?: string | runtime.Types.Skip
   type: $Enums.BalanceActivityType
   token: number
-  tokenBefore: number
-  tokenAfter: number
+  tokenBefore?: number | runtime.Types.Skip
+  tokenAfter?: number | runtime.Types.Skip
+  tokenDailyBefore?: number | runtime.Types.Skip
+  tokenDailyAfter?: number | runtime.Types.Skip
   description?: string | null | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   balanceId: string
@@ -771,6 +847,8 @@ export type BalanceActivityUpdateWithoutSenderInput = {
   token?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   balance?: Prisma.BalanceUpdateOneRequiredWithoutActivitiesNestedInput | runtime.Types.Skip
@@ -783,6 +861,8 @@ export type BalanceActivityUncheckedUpdateWithoutSenderInput = {
   token?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   balanceId?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
@@ -795,6 +875,8 @@ export type BalanceActivityUncheckedUpdateManyWithoutSenderInput = {
   token?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   balanceId?: Prisma.StringFieldUpdateOperationsInput | string | runtime.Types.Skip
@@ -804,8 +886,10 @@ export type BalanceActivityCreateManyBalanceInput = {
   id?: string | runtime.Types.Skip
   type: $Enums.BalanceActivityType
   token: number
-  tokenBefore: number
-  tokenAfter: number
+  tokenBefore?: number | runtime.Types.Skip
+  tokenAfter?: number | runtime.Types.Skip
+  tokenDailyBefore?: number | runtime.Types.Skip
+  tokenDailyAfter?: number | runtime.Types.Skip
   description?: string | null | runtime.Types.Skip
   createdAt?: Date | string | runtime.Types.Skip
   senderId?: string | null | runtime.Types.Skip
@@ -817,6 +901,8 @@ export type BalanceActivityUpdateWithoutBalanceInput = {
   token?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   sender?: Prisma.UserUpdateOneWithoutBalanceActivitiesNestedInput | runtime.Types.Skip
@@ -829,6 +915,8 @@ export type BalanceActivityUncheckedUpdateWithoutBalanceInput = {
   token?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   senderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null | runtime.Types.Skip
@@ -841,6 +929,8 @@ export type BalanceActivityUncheckedUpdateManyWithoutBalanceInput = {
   token?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   tokenAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyBefore?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
+  tokenDailyAfter?: Prisma.IntFieldUpdateOperationsInput | number | runtime.Types.Skip
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null | runtime.Types.Skip
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string | runtime.Types.Skip
   senderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null | runtime.Types.Skip
@@ -854,6 +944,8 @@ export type BalanceActivitySelect<ExtArgs extends runtime.Types.Extensions.Inter
   token?: boolean | runtime.Types.Skip
   tokenBefore?: boolean | runtime.Types.Skip
   tokenAfter?: boolean | runtime.Types.Skip
+  tokenDailyBefore?: boolean | runtime.Types.Skip
+  tokenDailyAfter?: boolean | runtime.Types.Skip
   description?: boolean | runtime.Types.Skip
   createdAt?: boolean | runtime.Types.Skip
   balanceId?: boolean | runtime.Types.Skip
@@ -869,6 +961,8 @@ export type BalanceActivitySelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   token?: boolean | runtime.Types.Skip
   tokenBefore?: boolean | runtime.Types.Skip
   tokenAfter?: boolean | runtime.Types.Skip
+  tokenDailyBefore?: boolean | runtime.Types.Skip
+  tokenDailyAfter?: boolean | runtime.Types.Skip
   description?: boolean | runtime.Types.Skip
   createdAt?: boolean | runtime.Types.Skip
   balanceId?: boolean | runtime.Types.Skip
@@ -883,6 +977,8 @@ export type BalanceActivitySelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   token?: boolean | runtime.Types.Skip
   tokenBefore?: boolean | runtime.Types.Skip
   tokenAfter?: boolean | runtime.Types.Skip
+  tokenDailyBefore?: boolean | runtime.Types.Skip
+  tokenDailyAfter?: boolean | runtime.Types.Skip
   description?: boolean | runtime.Types.Skip
   createdAt?: boolean | runtime.Types.Skip
   balanceId?: boolean | runtime.Types.Skip
@@ -897,13 +993,15 @@ export type BalanceActivitySelectScalar = {
   token?: boolean | runtime.Types.Skip
   tokenBefore?: boolean | runtime.Types.Skip
   tokenAfter?: boolean | runtime.Types.Skip
+  tokenDailyBefore?: boolean | runtime.Types.Skip
+  tokenDailyAfter?: boolean | runtime.Types.Skip
   description?: boolean | runtime.Types.Skip
   createdAt?: boolean | runtime.Types.Skip
   balanceId?: boolean | runtime.Types.Skip
   senderId?: boolean | runtime.Types.Skip
 }
 
-export type BalanceActivityOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "type" | "token" | "tokenBefore" | "tokenAfter" | "description" | "createdAt" | "balanceId" | "senderId", ExtArgs["result"]["balanceActivity"], runtime.Types.Skip>
+export type BalanceActivityOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "type" | "token" | "tokenBefore" | "tokenAfter" | "tokenDailyBefore" | "tokenDailyAfter" | "description" | "createdAt" | "balanceId" | "senderId", ExtArgs["result"]["balanceActivity"], runtime.Types.Skip>
 export type BalanceActivityInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   balance?: boolean | Prisma.BalanceDefaultArgs<ExtArgs> | runtime.Types.Skip
   sender?: boolean | Prisma.BalanceActivity$senderArgs<ExtArgs> | runtime.Types.Skip
@@ -931,6 +1029,8 @@ export type $BalanceActivityPayload<ExtArgs extends runtime.Types.Extensions.Int
     token: number
     tokenBefore: number
     tokenAfter: number
+    tokenDailyBefore: number
+    tokenDailyAfter: number
     description: string | null
     createdAt: Date
     balanceId: string
@@ -1366,6 +1466,8 @@ export interface BalanceActivityFieldRefs {
   readonly token: Prisma.FieldRef<"BalanceActivity", 'Int'>
   readonly tokenBefore: Prisma.FieldRef<"BalanceActivity", 'Int'>
   readonly tokenAfter: Prisma.FieldRef<"BalanceActivity", 'Int'>
+  readonly tokenDailyBefore: Prisma.FieldRef<"BalanceActivity", 'Int'>
+  readonly tokenDailyAfter: Prisma.FieldRef<"BalanceActivity", 'Int'>
   readonly description: Prisma.FieldRef<"BalanceActivity", 'String'>
   readonly createdAt: Prisma.FieldRef<"BalanceActivity", 'DateTime'>
   readonly balanceId: Prisma.FieldRef<"BalanceActivity", 'String'>

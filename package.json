@@ -55,6 +55,7 @@
 		"react-router": "8.2.0",
 		"tailwind-merge": "^3.6.0",
 		"tailwind-preset-mantine": "^4.1.0",
+		"uuidv7": "^1.2.1",
 		"zod": "^4.4.3"
 	},
 	"devDependencies": {

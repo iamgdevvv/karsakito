@@ -7,6 +7,8 @@ export const BalanceActivitySchema = z.object({
   token: z.number().int(),
   tokenBefore: z.number().int(),
   tokenAfter: z.number().int(),
+  tokenDailyBefore: z.number().int(),
+  tokenDailyAfter: z.number().int(),
   description: z.string().nullish(),
   createdAt: z.date(),
   balanceId: z.string(),

@@ -171,13 +171,15 @@ model Balance {
 }
 
 model BalanceActivity {
-    id          String              @id @default(uuid(7))
-    type        BalanceActivityType
-    token       Int
-    tokenBefore Int
-    tokenAfter  Int
-    description String?
-    createdAt   DateTime            @default(now())
+    id               String              @id @default(uuid(7))
+    type             BalanceActivityType
+    token            Int
+    tokenBefore      Int                 @default(0)
+    tokenAfter       Int                 @default(0)
+    tokenDailyBefore Int                 @default(0)
+    tokenDailyAfter  Int                 @default(0)
+    description      String?
+    createdAt        DateTime            @default(now())
 
     balance   Balance @relation(fields: [balanceId], references: [userId], onDelete: Cascade)
     balanceId String

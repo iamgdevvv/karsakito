@@ -9,7 +9,7 @@ import {
 	Popover,
 	Tooltip,
 } from '@mantine/core';
-import { useFullscreenDocument, useMap, useMediaQuery, useScrollIntoView } from '@mantine/hooks';
+import { useFullscreenDocument, useMap, useMediaQuery } from '@mantine/hooks';
 import { useCallback, useEffect, useRef, useState, useTransition } from 'react';
 import { BsArrowsFullscreen } from 'react-icons/bs';
 import { MdOutlineFitScreen, MdSaveAs } from 'react-icons/md';
@@ -26,6 +26,7 @@ import { slugify } from '~app-modules/utils';
 import { actionGetKarsaAppsByCategory } from '~app-server/app';
 import { authUserCtx } from '~app-server/context';
 import { authGetSession } from '~app-server/session';
+import { actionSubmissionKarsaAI } from '~app-server/workspace';
 import { WindowAppKarsaWriter } from '~app-ui/form/window-apps';
 import FormWindowWorkspace from '~app-ui/form/window-workspace';
 import AppPanel from '~app-ui/layouts/apps-panel';
@@ -65,6 +66,13 @@ export async function loader({ context }: Route.LoaderArgs) {
 	};
 }
 
+export async function action({ request, context }: Route.ActionArgs) {
+	return await actionSubmissionKarsaAI({
+		request,
+		context,
+	});
+}
+
 export function meta(_: Route.MetaArgs) {
 	return metaPublicRoute({
 		title: 'Apps KarsaKito',
@@ -80,8 +88,6 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 	const [openFormNewWindow, setOpenFormNewWindow] = useState(false);
 	const refCanvas = useRef<HTMLDivElement>(null);
 	const groupRef = useRef<WindowGroupContextValue>(null);
-	const { scrollIntoView: scrollToBottom, targetRef: targetRefBottom } =
-		useScrollIntoView<HTMLDivElement>();
 	const [canvasHeight, setCanvasHeight] = useState<number | undefined>(800);
 	const windowLists = useMap<NonNullable<WorkspaceWindowPlain['id']>, PayloadWindowWorkspace>([]);
 	const isMobile = useMediaQuery('(max-width: 1199px)', true, {
@@ -111,15 +117,9 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 				setCanvasHeight(Math.ceil(windowLists.size / 2) * 2 * 420);
 
 				handleFitWindow();
-
-				if (isMobile) {
-					setTimeout(() => {
-						scrollToBottom();
-					}, 100);
-				}
 			});
 		},
-		[isMobile, windowLists.size],
+		[windowLists.size],
 	);
 
 	useEffect(() => {
@@ -271,13 +271,12 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 										});
 									}}
 								>
-									<WindowAppKarsaWriter />
+									<WindowAppKarsaWriter data={windowItem} />
 								</Window>
 							))}
 						</Window.Group>
 					) : null}
 				</Box>
-				<div ref={targetRefBottom} />
 			</AppPanel>
 		</div>
 	);

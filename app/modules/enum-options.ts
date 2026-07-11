@@ -1,7 +1,18 @@
+import type { LanguageApp } from '~app-modules/schema/app';
 import { TimezoneSchema } from '~app-modules/schema/enum';
 import type { KarsaAppsCategory, KarsaAppsName, UserRole } from '~generated/prisma/enums';
 
 export const amountTokenDaily = 10;
+
+export const labelLanguageApp = {
+	indonesia: 'Bahasa Indonesia',
+	minang: 'Bahasa Minang',
+} as const satisfies Record<LanguageApp, string>;
+
+export const optionsLanguageApp = Object.entries(labelLanguageApp).map(([value, label]) => ({
+	label,
+	value,
+}));
 
 export const labelAppName = {
 	pidato: 'Pidato',

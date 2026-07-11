@@ -2,6 +2,8 @@ import * as z from 'zod';
 import { KarsaAppScalarFieldEnumSchema } from '~generated/prisma-zod/schemas/enums/KarsaAppScalarFieldEnum.schema';
 import { KarsaAppSchema } from '~generated/prisma-zod/schemas/models';
 
+export const LanguageAppSchema = z.enum(['indonesia', 'minang']);
+
 export const KarsaAppSchemaPlain = KarsaAppSchema.omit({
 	token: true,
 	tokenPromo: true,
@@ -44,6 +46,7 @@ export const PayloadUpdateKarsaAppSchema = KarsaAppSchemaPlain.omit({
 		karsaAppId: KarsaAppSchemaPlain.shape.id,
 	});
 
+export type LanguageApp = z.infer<typeof LanguageAppSchema>;
 export type KarsaAppPlain = z.infer<typeof KarsaAppSchemaPlain>;
 export type PayloadQueryKarsaApps = z.infer<typeof PayloadQueryKarsaAppsSchema>;
 export type PayloadCreateKarsaApp = z.infer<typeof PayloadCreateKarsaAppSchema>;
