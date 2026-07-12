@@ -17,9 +17,32 @@ import {
 } from '@mantine/core';
 import { useState, useEffect, useRef } from 'react';
 import { FiZap, FiShield, FiTrendingUp, FiUsers } from 'react-icons/fi';
-import type { MetaFunction } from 'react-router';
+import { metaPublicRoute } from '~app-modules/meta';
+import { authGetSession } from '~app-server/session';
 import Footer from '~app-ui/layouts/footer';
 import { Header } from '~app-ui/layouts/header';
+import { cloudflareContext } from '~workers/app';
+
+import type { Route } from './+types/tentang';
+
+export async function loader({ request, context }: Route.LoaderArgs) {
+	const authSession = await authGetSession(request);
+	const user = authSession.get('user');
+
+	return {
+		user,
+		noIndex: context.get(cloudflareContext).env.NODE_ENV !== 'production',
+	};
+}
+
+export function meta({ loaderData }: Route.MetaArgs) {
+	return metaPublicRoute({
+		title: 'Tentang Perusahaan | KarsaKito',
+		description:
+			'Pelajari identitas, nilai inti, dan visi besar KarsaKito dalam mentransformasi ekonomi kreatif Indonesia.',
+		noIndex: loaderData.noIndex,
+	});
+}
 
 function AnimatedCounter({
 	target,
@@ -75,21 +98,10 @@ function AnimatedCounter({
 	);
 }
 
-export const meta: MetaFunction = () => {
-	return [
-		{ title: 'Tentang Perusahaan | KarsaKito' },
-		{
-			name: 'description',
-			content:
-				'Pelajari identitas, nilai inti, dan visi besar KarsaKito dalam mentransformasi ekonomi kreatif Indonesia.',
-		},
-	];
-};
-
-export default function TentangPage() {
+export default function TentangPage({ loaderData }: Route.ComponentProps) {
 	return (
 		<div style={{ backgroundColor: '#f8f9fa', minHeight: '100vh', overflowX: 'hidden' }}>
-			<Header />
+			<Header authUser={loaderData.user} />
 
 			{/* 1. THE "WHO WE ARE" HERO (Enterprise Dark Aesthetic) */}
 			<section
