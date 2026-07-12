@@ -4,6 +4,7 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
+	"account_id": "d96373b93015a8bf1c6e59a372d7bd2b",
 	"name": "karsakito",
 	"compatibility_date": "2026-07-07",
 	"main": "./workers/app.ts",
