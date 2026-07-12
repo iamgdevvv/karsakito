@@ -292,7 +292,7 @@ export function Header({
 								Layanan
 							</NavLink>
 							<NavLink
-								to="/biaya-langganan"
+								to="/biaya-layanan"
 								className={({ isActive, isPending, isTransitioning }) =>
 									cn('hover:underline', {
 										'text-primary font-semibold': isActive,
@@ -301,7 +301,19 @@ export function Header({
 									})
 								}
 							>
-								Info Harga
+								Biaya Layanan
+							</NavLink>
+							<NavLink
+								to="/hubungi"
+								className={({ isActive, isPending, isTransitioning }) =>
+									cn('hover:underline', {
+										'text-primary font-semibold': isActive,
+										'text-primary font-semibold animate-pulse':
+											isPending || isTransitioning,
+									})
+								}
+							>
+								Hubungi
 							</NavLink>
 							<Group
 								gap={4}
@@ -311,7 +323,7 @@ export function Header({
 									span
 									className="text-dark-100"
 								>
-									Kontribusi
+									KarsaLingo
 								</Text>
 								<Text
 									span
