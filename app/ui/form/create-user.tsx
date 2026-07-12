@@ -42,7 +42,7 @@ export default function FormCreateUser(props: BoxProps) {
 	useEffect(() => {
 		notifications.clean();
 
-		if (!isLoading) {
+		if (!isLoading && fetcher.data) {
 			if (fetcher.data?.error) {
 				setErrorMessage(fetcher.data.error);
 			} else if (fetcher.data?.data) {
@@ -110,7 +110,6 @@ export default function FormCreateUser(props: BoxProps) {
 						label="Timezone"
 						name="timezone"
 						searchable
-						limit={20}
 						key={form.key('timezone')}
 						readOnly={isLoading}
 						data={optionsTimezone}

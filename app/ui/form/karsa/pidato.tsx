@@ -1,12 +1,11 @@
 import {
 	Alert,
+	Autocomplete,
 	Box,
 	Button,
-	Checkbox,
 	Group,
 	NumberInput,
 	Select,
-	SimpleGrid,
 	Stack,
 	Textarea,
 	TextInput,
@@ -15,25 +14,28 @@ import {
 import { schemaResolver, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { useEffect, useMemo, useState } from 'react';
-import { LuCoins } from 'react-icons/lu';
 import { PiCoinsFill } from 'react-icons/pi';
-import { useFetcher, useNavigate } from 'react-router';
-import { labelAppName, optionsAppCategory, optionsAppName } from '~app-modules/enum-options';
+import { useFetcher } from 'react-router';
+import { optionsKarsaWriterAudience, optionsLanguageApp } from '~app-modules/enum-options';
 import {
 	PayloadKarsaPidatoSchema,
+	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
 	type PayloadKarsaPidato,
+	type PayloadSubmissionKarsa,
 } from '~app-modules/schema/karsa';
-import type { ActionCreateKarsaApp } from '~app-server/app';
+import type { PayloadWindowWorkspace } from '~app-modules/schema/workspace';
+import type { ActionSubmissionKarsaAI } from '~app-server/workspace';
 
 export default function FormKarsaPidato({
 	data,
+	onSubmit,
 	...props
 }: BoxProps & {
 	data?: KarsaPlain['promptJson'] | PayloadKarsaPidato;
+	onSubmit: (values: NonNullable<PayloadWindowWorkspace['karsa']>) => void;
 }) {
-	const navigate = useNavigate();
-	const fetcher = useFetcher<ActionCreateKarsaApp>();
+	const fetcher = useFetcher<ActionSubmissionKarsaAI>();
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 	const isLoading = useMemo(() => {
@@ -41,7 +43,17 @@ export default function FormKarsaPidato({
 	}, [fetcher.state]);
 
 	const initialValues = useMemo(() => {
-		return PayloadKarsaPidatoSchema.safeParse(data).data;
+		const payload = PayloadKarsaPidatoSchema.safeParse(data).data;
+
+		return {
+			language: payload?.language || 'indonesia',
+			purpose: payload?.purpose || '',
+			agenda: payload?.agenda || '',
+			speaker: payload?.speaker || '',
+			audience: payload?.audience || '',
+			topic: payload?.topic || '',
+			totalSentence: payload?.totalSentence ?? 28,
+		} satisfies PayloadKarsaPidato;
 	}, [data]);
 
 	const form = useForm<PayloadKarsaPidato>({
@@ -60,18 +72,11 @@ export default function FormKarsaPidato({
 	useEffect(() => {
 		notifications.clean();
 
-		if (!isLoading) {
-			if (fetcher.data?.error) {
+		if (!isLoading && fetcher.data) {
+			if ('error' in fetcher.data) {
 				setErrorMessage(fetcher.data.error);
-			} else if (fetcher.data?.data) {
-				const redirectParams = new URLSearchParams();
-				redirectParams.set('desc', 'createdAt');
-				redirectParams.set(
-					'successMessage',
-					`App ${labelAppName[fetcher.data.data.name]} created successfully`,
-				);
-
-				navigate(`/admin/apps?${redirectParams.toString()}`);
+			} else {
+				onSubmit(fetcher.data.data);
 			}
 		}
 	}, [fetcher.data, isLoading]);
@@ -79,7 +84,7 @@ export default function FormKarsaPidato({
 	return (
 		<Box
 			{...props}
-			data-slot="FormCreateKarsaApp"
+			data-slot="FormKarsaPidato"
 		>
 			{errorMessage ? (
 				<Alert
@@ -92,75 +97,100 @@ export default function FormKarsaPidato({
 			) : null}
 			<fetcher.Form
 				method="post"
-				onSubmit={form.onSubmit((values) => {
+				action="/submission/karsa"
+				onSubmit={form.onSubmit((values, e) => {
+					e?.preventDefault();
 					setErrorMessage(null);
-					fetcher.submit(values, {
-						method: 'post',
-					});
+					const payload = PayloadSubmissionKarsaSchema.safeParse({
+						app: 'pidato',
+						payload: values,
+					} satisfies PayloadSubmissionKarsa);
+
+					if (payload.data) {
+						fetcher.submit(
+							{
+								body: JSON.stringify(payload.data),
+							},
+							{
+								method: 'post',
+							},
+						);
+					} else {
+						setErrorMessage(payload.error.message);
+					}
 				})}
 			>
 				<Stack gap="xs">
 					<Select
-						label="Name"
-						name="name"
-						key={form.key('name')}
+						label="Language"
+						name="language"
+						key={form.key('language')}
 						readOnly={isLoading}
-						data={optionsAppName}
-						{...form.getInputProps('name')}
+						maxDropdownHeight={80}
+						data={optionsLanguageApp}
+						{...form.getInputProps('language')}
+					/>
+					<Autocomplete
+						label="Purpose"
+						name="purpose"
+						key={form.key('purpose')}
+						readOnly={isLoading}
+						maxDropdownHeight={80}
+						data={[
+							'Sambutan',
+							'Pembukaan',
+							'Peresmian',
+							'Penutup',
+							'Ceramah',
+							'Orasi',
+							'Peringatan',
+							'Pertanggungjawaban',
+							'Berita Duka',
+							'Informatif',
+							'Persuasif',
+							'Rekreatif',
+							'Argumentatif',
+							'Deskriptif',
+						]}
+						{...form.getInputProps('purpose')}
 					/>
 					<TextInput
-						label="Label"
-						name="label"
-						key={form.key('label')}
+						label="Agenda"
+						name="agenda"
+						key={form.key('agenda')}
 						readOnly={isLoading}
-						{...form.getInputProps('label')}
+						{...form.getInputProps('agenda')}
 					/>
-					<SimpleGrid
-						cols={{
-							base: 1,
-							sm: 2,
-						}}
-					>
-						<NumberInput
-							label="Token"
-							name="token"
-							key={form.key('token')}
-							readOnly={isLoading}
-							leftSection={<PiCoinsFill size={18} />}
-							{...form.getInputProps('token')}
-						/>
-						<NumberInput
-							label="Token Promo"
-							name="tokenPromo"
-							key={form.key('tokenPromo')}
-							readOnly={isLoading}
-							leftSection={<LuCoins size={18} />}
-							{...form.getInputProps('tokenPromo')}
-						/>
-					</SimpleGrid>
-					<Select
-						label="Category"
-						name="category"
-						key={form.key('category')}
+					<TextInput
+						label="Speaker"
+						name="speaker"
+						key={form.key('speaker')}
 						readOnly={isLoading}
-						data={optionsAppCategory}
-						{...form.getInputProps('category')}
+						{...form.getInputProps('speaker')}
 					/>
-					<Checkbox
-						label="Visible"
-						name="visible"
-						key={form.key('visible')}
+					<Autocomplete
+						label="Audience"
+						name="audience"
+						key={form.key('audience')}
 						readOnly={isLoading}
-						{...form.getInputProps('visible', {
-							type: 'checkbox',
-						})}
+						maxDropdownHeight={80}
+						data={optionsKarsaWriterAudience}
+						{...form.getInputProps('audience')}
 					/>
 					<Textarea
-						label="Description"
-						name="description"
-						key={form.key('description')}
+						label="Topic"
+						name="topic"
+						key={form.key('topic')}
 						readOnly={isLoading}
-						{...form.getInputProps('description')}
+						{...form.getInputProps('topic')}
+					/>
+					<NumberInput
+						label="Total Sentence"
+						name="totalSentence"
+						key={form.key('totalSentence')}
+						readOnly={isLoading}
+						leftSection={<PiCoinsFill size={18} />}
+						{...form.getInputProps('totalSentence')}
 					/>
 					<Group justify="flex-end">
 						<Button
@@ -168,7 +198,7 @@ export default function FormKarsaPidato({
 							loading={isLoading}
 							mt="md"
 						>
-							Create App
+							Submit App
 						</Button>
 					</Group>
 				</Stack>

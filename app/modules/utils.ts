@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from 'clsx';
 import dayjsX from 'dayjs';
 import 'dayjs/locale/id';
 import dayjsLocalizedFormat from 'dayjs/plugin/localizedFormat';
+import dayjsRelativeTime from 'dayjs/plugin/relativeTime';
 import dayjsTimezone from 'dayjs/plugin/timezone';
 import dayjsUTC from 'dayjs/plugin/utc';
 import * as qs from 'qs-esm';
@@ -10,6 +11,7 @@ import { twMerge } from 'tailwind-merge';
 dayjsX.extend(dayjsUTC);
 dayjsX.extend(dayjsTimezone);
 dayjsX.extend(dayjsLocalizedFormat);
+dayjsX.extend(dayjsRelativeTime);
 dayjsX.locale('id');
 
 export function cn(...inputs: ClassValue[]) {

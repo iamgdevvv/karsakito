@@ -10,7 +10,7 @@ export const UserSchemaPlain = UserSchema.omit({
 	timezone: true,
 }).extend({
 	role: UserRoleSchema,
-	isActive: z.union([z.boolean(), z.stringbool()]).nullish(),
+	isActive: z.union([z.boolean(), z.stringbool()]).optional(),
 	timezone: TimezoneSchema,
 });
 

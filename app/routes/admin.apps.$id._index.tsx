@@ -72,7 +72,7 @@ export default function DetailKarsaAppAdminRoute({ loaderData }: Route.Component
 				authUser={loaderData.user}
 				className="site-main"
 			>
-				<Title mb="lg">Detail User</Title>
+				<Title mb="lg">Detail App</Title>
 				<FormUpdateApp
 					data={loaderData.recordApp}
 					maw={400}

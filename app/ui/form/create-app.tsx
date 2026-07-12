@@ -46,7 +46,7 @@ export default function FormCreateKarsaApp(props: BoxProps) {
 	useEffect(() => {
 		notifications.clean();
 
-		if (!isLoading) {
+		if (!isLoading && fetcher.data) {
 			if (fetcher.data?.error) {
 				setErrorMessage(fetcher.data.error);
 			} else if (fetcher.data?.data) {

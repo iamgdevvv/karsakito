@@ -47,7 +47,7 @@ export default function FormRegister(props: BoxProps) {
 	useEffect(() => {
 		notifications.clean();
 
-		if (!isLoading) {
+		if (!isLoading && fetcher.data) {
 			if (fetcher.data?.error) {
 				form.reset();
 

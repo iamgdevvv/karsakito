@@ -38,7 +38,7 @@ export const WorkspaceWindowSchemaPlain = WorkspaceWindowSchema.omit({
 			// defaultX: z.union([z.number(), z.string()]).optional(),
 			// defaultY: z.union([z.number(), z.string()]).optional(),
 		})
-		.nullish() satisfies z.ZodType<
+		.optional() satisfies z.ZodType<
 		| Pick<
 				WindowBaseProps,
 				| 'id'
@@ -89,7 +89,7 @@ export const PayloadWindowWorkspaceSchema = WorkspaceWindowSchemaPlain.pick({
 		updatedAt: true,
 		userId: true,
 		balanceActivityId: true,
-	}).nullish(),
+	}).optional(),
 });
 
 export type WorkspaceWindowPlain = z.infer<typeof WorkspaceWindowSchemaPlain>;

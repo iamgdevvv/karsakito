@@ -71,3 +71,10 @@ export const optionsUserRole = Object.entries(labelUserRole).map(([value, label]
 }));
 
 export const optionsTimezone = Object.values(TimezoneSchema.enum);
+
+export const optionsKarsaWriterAudience = [
+	'Anak-anak',
+	'Muda-mudi',
+	'Orang Tua/Masyarakat Umum',
+	'Tokoh / Pemangku Jabatan',
+];

@@ -1,9 +1,10 @@
 import { type RouterContextProvider } from "react-router";
 import { uuidv7 } from "uuidv7";
 import { PayloadSubmissionKarsaSchema, type KarsaPlain } from "~app-modules/schema/karsa";
+import type { PayloadWindowWorkspace } from "~app-modules/schema/workspace";
 import { cfContext, prismaClient } from "~app-server/context";
 import { authMiddlewareSession } from "~app-server/session";
-import { messageActionError, valueOrSkip } from "~app-server/utils";
+import { messageActionError } from "~app-server/utils";
 import { Prisma } from "~generated/prisma/client";
 
 const karsaAIEndpoint = {
@@ -33,18 +34,39 @@ const karsaAIEndpoint = {
     artefak: "/karsapedia/artefak"
 } as const satisfies Record<KarsaPlain['app'], `/${string}`>
 
-const submissionKarsaAI = async (apiUrl: string, payload: NonNullable<KarsaPlain['promptJson']>) => {
+const submissionKarsaAI = async (apiUrl: string, payload: NonNullable<KarsaPlain['promptJson']>, metadata: Pick<RequestInit, 'headers'> & {
+    Authorization: string
+}) => {
     try {
         const res = await fetch(apiUrl, {
             method: 'POST',
+            headers: {
+                ...metadata.headers,
+                Authorization: metadata.Authorization,
+                accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify(payload),
         })
 
         const data = await res.json() as {
             result: string
+        } | {
+            detail: [
+                {
+                    type: string | 'model_attributes_type',
+                    loc: unknown[],
+                    msg: string,
+                    input: `{${string}}`
+                }
+            ]
         }
 
-        return data.result
+        if ('result' in data) {
+            return data.result
+        }
+
+        return null
     } catch (error) {
         console.log('submissionKarsaAI', error)
 
@@ -58,7 +80,11 @@ export const actionSubmissionKarsaAI = async ({
 }: {
     request: Request
     context: Readonly<RouterContextProvider>
-}) => {
+}): Promise<{
+    data: NonNullable<PayloadWindowWorkspace['karsa']>
+} | {
+    error: string
+}> => {
     try {
         const authSession = await authMiddlewareSession({
             request,
@@ -71,9 +97,19 @@ export const actionSubmissionKarsaAI = async ({
         }
 
         const formData = await request.formData()
-        const body = PayloadSubmissionKarsaSchema.parse(Object.fromEntries(formData))
+        const formBody = formData.get('body')
+
+        if (!formBody) {
+            return {
+                error: 'Bad Request'
+            }
+        }
+
+        const payload = JSON.parse(formBody.toString())
+        const body = PayloadSubmissionKarsaSchema.parse(payload)
 
         const prisma = prismaClient(context);
+        const cfEnv = cfContext(context).env;
 
         const [karsaApp, userBallance] = await prisma.$transaction([
             prisma.karsaApp.findUniqueOrThrow({
@@ -104,7 +140,9 @@ export const actionSubmissionKarsaAI = async ({
             throw new Error("Insufficient tokens to perform this action.");
         }
 
-        const result = await submissionKarsaAI(cfContext(context).env.API_AI_URL + karsaAIEndpoint[body.app], body.payload)
+        const result = await submissionKarsaAI(cfEnv.API_AI_URL + karsaAIEndpoint[body.app], body.payload, {
+            Authorization: `Bearer ${cfEnv.API_AI_KEY}`,
+        })
 
         if (!result) {
             return {
@@ -112,37 +150,18 @@ export const actionSubmissionKarsaAI = async ({
             }
         }
 
-        const karsaId = uuidv7();
-
-        const payloadKarsa: Prisma.KarsaUncheckedCreateWithoutBalanceActivityInput = {
-            id: karsaId,
+        const payloadKarsa = {
+            id: uuidv7(),
             app: body.app,
             promptJson: body.payload,
             result,
             userId: authSession.user.id,
-            workspaceWindow: {
-                connectOrCreate: {
-                    where: {
-                        id: body.windowWorkspace.id
-                    },
-                    create: {
-                        title: body.windowWorkspace.title,
-                        props: body.windowWorkspace.props || Prisma.skip,
-                        workspace: {
-                            connectOrCreate: {
-                                where: {
-                                    id: valueOrSkip(body.workspaceId)
-                                },
-                                create: {
-                                    title: 'My Workspace',
-                                    userId: authSession.user.id
-                                }
-                            }
-                        }
-                    }
+            workspaceWindow: body.windowWorkspaceId ? {
+                connect: {
+                    id: body.windowWorkspaceId
                 }
-            }
-        }
+            } : Prisma.skip
+        } satisfies Prisma.KarsaUncheckedCreateWithoutBalanceActivityInput
 
         let newTokenRegular = userBallance.token;
         let newTokenDaily = userBallance.tokenDaily;
@@ -196,11 +215,13 @@ export const actionSubmissionKarsaAI = async ({
 
         return {
             data: {
-                karsaId
+                id: payloadKarsa.id,
+                promptJson: payloadKarsa.promptJson,
+                result
             }
         }
     } catch (error) {
-        console.log('actionCreateKarsaApp', error)
+        console.log('actionSubmissionKarsaAI', error)
 
         return {
             error: messageActionError(error)

@@ -330,6 +330,13 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 														<Menu.Dropdown>
 															<Menu.Item
 																component={Link}
+																color="blue"
+																to={`/admin/users/${user.id}/ballance`}
+															>
+																Ballance
+															</Menu.Item>
+															<Menu.Item
+																component={Link}
 																to={`/admin/users/${user.id}`}
 															>
 																Update

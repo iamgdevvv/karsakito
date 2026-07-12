@@ -101,7 +101,6 @@ export default function FormProfile({
 						label="Timezone"
 						name="timezone"
 						searchable
-						limit={20}
 						key={form.key('timezone')}
 						readOnly={isLoading}
 						data={optionsTimezone}

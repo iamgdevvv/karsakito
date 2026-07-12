@@ -1,33 +1,29 @@
 import * as z from 'zod';
 import { LanguageAppSchema } from '~app-modules/schema/app';
-import {
-	KarsaSchema,
-	WorkspaceSchema,
-	WorkspaceWindowSchema,
-} from '~generated/prisma-zod/schemas/models';
+import { KarsaSchema, WorkspaceWindowSchema } from '~generated/prisma-zod/schemas/models';
 
 export const KarsaSchemaPlain = KarsaSchema.omit({
 	promptJson: true,
 }).extend({
-	promptJson: z.record(z.string(), z.unknown()).nullish(),
+	promptJson: z.record(z.string(), z.unknown()).optional(),
 });
 
 export const PayloadKarsaPidatoSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	purpose: z.string().nullish(),
-	agenda: z.string().nullish(),
-	speaker: z.string().nullish(),
-	audience: z.string().nullish(),
-	topic: z.string().nullish(),
-	totalSentence: z.number().nonnegative().nullish(),
+	purpose: z.string().nonempty(),
+	agenda: z.string().nonempty(),
+	speaker: z.string().nonempty(),
+	audience: z.string().nonempty(),
+	topic: z.string().nonempty(),
+	totalSentence: z.number().gt(0).nonnegative(),
 });
 
 export const PayloadKarsaPantunSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	type: z.string().nullish(),
-	audience: z.string().nullish(),
-	topic: z.string().nullish(),
-	numberVerses: z.number().nonnegative().nullish(),
+	type: z.string().nonempty(),
+	audience: z.string().nonempty(),
+	topic: z.string().nonempty(),
+	numberVerses: z.number().gt(0).nonnegative(),
 });
 
 export const PayloadKarsaSchemaPlain = KarsaSchemaPlain.omit({
@@ -43,12 +39,7 @@ export const PayloadKarsaSchemaPlain = KarsaSchemaPlain.omit({
 
 export const PayloadSubmissionKarsaSchema = z
 	.object({
-		workspaceId: WorkspaceSchema.shape.id.nullish(),
-		windowWorkspace: WorkspaceWindowSchema.pick({
-			id: true,
-			title: true,
-			props: true,
-		}),
+		windowWorkspaceId: WorkspaceWindowSchema.shape.id.optional(),
 	})
 	.and(
 		z.discriminatedUnion('app', [

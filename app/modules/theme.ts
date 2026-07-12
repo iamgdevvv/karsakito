@@ -1,6 +1,7 @@
 import { Carousel } from '@mantine/carousel';
 import {
 	Alert,
+	Autocomplete,
 	Button,
 	Container,
 	createTheme,
@@ -134,6 +135,20 @@ const theme = createTheme({
 				labelProps: {
 					fz: 'sm',
 					fw: 400,
+				},
+			},
+		}),
+		Autocomplete: Autocomplete.extend({
+			defaultProps: {
+				size: 'md',
+				labelProps: {
+					fz: 'sm',
+					fw: 400,
+				},
+				comboboxProps: {
+					size: 'sm',
+					withinPortal: false,
+					keepMounted: true,
 				},
 			},
 		}),

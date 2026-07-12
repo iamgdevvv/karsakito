@@ -259,19 +259,46 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 									defaultHeight={420}
 									withinPortal={false}
 									controlsPosition="right"
-									{...windowItem}
+									{...windowItem.props}
+									id={id}
+									title={windowItem.title}
 									draggable={isMobile ? 'none' : 'header'}
 									resizable={isMobile ? 'none' : undefined}
 									withToolsButton={!isMobile}
-									id={id}
 									onClose={() => {
 										startActionRenderWindow(() => {
 											windowLists.delete(id);
 											handleFitWindow();
 										});
 									}}
+									onPositionChange={({ x, y }) =>
+										windowLists.set(id, {
+											...windowItem,
+											props: {
+												x,
+												y,
+											},
+										})
+									}
+									onSizeChange={({ width, height }) =>
+										windowLists.set(id, {
+											...windowItem,
+											props: {
+												width,
+												height,
+											},
+										})
+									}
 								>
-									<WindowAppKarsaWriter data={windowItem} />
+									<WindowAppKarsaWriter
+										data={windowItem}
+										onSubmit={(karsa) => {
+											windowLists.set(id, {
+												...windowItem,
+												karsa,
+											});
+										}}
+									/>
 								</Window>
 							))}
 						</Window.Group>

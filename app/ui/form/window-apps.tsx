@@ -3,25 +3,32 @@ import { useState } from 'react';
 import { HiOutlineCommandLine } from 'react-icons/hi2';
 import { IoMdOptions } from 'react-icons/io';
 import type { PayloadWindowWorkspace } from '~app-modules/schema/workspace';
+import FormKarsaPidato from '~app-ui/form/karsa/pidato';
 
 export function WindowAppKarsaWriter({
 	data,
+	onSubmit,
 	...props
-}: TabsProps & {
+}: Omit<TabsProps, 'onSubmit'> & {
 	data: PayloadWindowWorkspace;
+	onSubmit: (values: NonNullable<PayloadWindowWorkspace['karsa']>) => void;
 }) {
-	const [activeTab, setActiveTab] = useState<string | null>(
-		'options' satisfies 'options' | 'result',
-	);
+	const [activeTab, setActiveTab] = useState<'options' | 'result' | null>('options');
 
 	return (
 		<Tabs
 			variant="outline"
 			{...props}
 			value={activeTab}
-			onChange={setActiveTab}
+			onChange={(value) => setActiveTab(value as typeof activeTab)}
 		>
-			<Tabs.List mb="md">
+			<Tabs.List
+				mb="md"
+				pos="sticky"
+				top={0}
+				bg="white"
+				className="z-2"
+			>
 				<Tabs.Tab
 					value="options"
 					leftSection={<IoMdOptions size={12} />}
@@ -63,7 +70,15 @@ export function WindowAppKarsaWriter({
 						backgroundSize: '16px 16px',
 					}}
 				>
-					<Text>{data.app}</Text>
+					{data.app === 'pidato' ? (
+						<FormKarsaPidato
+							data={data}
+							onSubmit={(values) => {
+								onSubmit(values);
+								setActiveTab('result');
+							}}
+						/>
+					) : null}
 				</Box>
 			</Tabs.Panel>
 

@@ -518,10 +518,12 @@ export const actionGetUsers = async <T = User>({
 
 export const actionGetUser = async ({
 	userId,
+	withBalance,
 	request,
 	context
 }: {
 	userId: User['id']
+	withBalance?: boolean
 	request: Request
 	context: Readonly<RouterContextProvider>
 }) => {
@@ -543,6 +545,45 @@ export const actionGetUser = async ({
 			data: await prismaClient(context).user.findUniqueOrThrow({
 				where: {
 					id: userId
+				},
+				include: {
+					balances: withBalance ? {
+						select: {
+							token: true,
+							tokenDaily: true,
+							activities: {
+								where: {
+									createdAt: {
+										gte: dayjs().subtract(1, 'month').startOf('day').toDate()
+									}
+								},
+								select: {
+									type: true,
+									token: true,
+									tokenBefore: true,
+									tokenAfter: true,
+									tokenDailyBefore: true,
+									tokenDailyAfter: true,
+									description: true,
+									createdAt: true,
+									sender: {
+										select: {
+											id: true,
+											name: true
+										}
+									},
+									karsa: {
+										select: {
+											app: true
+										}
+									}
+								},
+								orderBy: {
+									createdAt: 'desc'
+								}
+							}
+						},
+					} : Prisma.skip
 				}
 			})
 		}
