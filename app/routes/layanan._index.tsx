@@ -1,7 +1,11 @@
-import { Container, Grid, Image, Text, Badge, Button, Title, Box, Group } from '@mantine/core';
+import { Badge, Box, Container, Grid, Group, Text, Title } from '@mantine/core';
 import { MdOutlineArrowForwardIos } from 'react-icons/md';
-import { Link } from 'react-router';
+import { metaPublicRoute } from '~app-modules/meta';
 import { authGetSession } from '~app-server/session';
+import { Image } from '~app-ui/components/image';
+import { ButtonLink } from '~app-ui/components/link';
+import Banner from '~app-ui/layouts/banner';
+import Footer from '~app-ui/layouts/footer';
 import { Header } from '~app-ui/layouts/header';
 import { cloudflareContext } from '~workers/app';
 
@@ -13,7 +17,7 @@ const services = [
 		title: 'KarsaLingo',
 		description:
 			'Platform media pembelajaran bahasa daerah interaktif yang dilengkapi dengan evaluasi AI untuk mendukung proses belajar mengajar secara mandiri dan terukur.',
-		image: '/images/logo/Karsa_Lingo.png',
+		image: '/images/logo/logo-karsalingo.svg',
 		badge: 'Pembelajaran',
 	},
 	{
@@ -21,7 +25,7 @@ const services = [
 		title: 'KarsaWriter',
 		description:
 			'Asisten cerdas berbasis AI untuk membantu Anda menyusun dan menciptakan karya tulis berbahasa daerah dengan struktur bahasa yang tepat dan natural.',
-		image: '/images/logo/Karsa_Writer.png',
+		image: '/images/logo/logo-karsawriter.svg',
 		badge: 'Produktivitas',
 	},
 	{
@@ -29,7 +33,7 @@ const services = [
 		title: 'KarsaLator',
 		description:
 			'Layanan penerjemahan bahasa daerah yang akurat dengan mempertimbangkan konteks budaya setempat, sehingga hasil terjemahan tidak kaku dan lebih relevan.',
-		image: '/images/logo/Karsa_Lator.png',
+		image: '/images/logo/logo-karsalator.svg',
 		badge: 'Penerjemahan',
 	},
 	{
@@ -37,7 +41,7 @@ const services = [
 		title: 'KarsaLisa',
 		description:
 			'Fitur unggulan untuk melakukan analisis tingkat kesopanan (unggah-ungguh) dan konteks budaya dalam penggunaan bahasa daerah Anda.',
-		image: '/images/logo/Karsa_Lisa.png',
+		image: '/images/logo/logo-karsalisa.svg',
 		badge: 'Analisis',
 	},
 	{
@@ -45,7 +49,7 @@ const services = [
 		title: 'KarsaPedia',
 		description:
 			'Ensiklopedia budaya daerah yang komprehensif, mendokumentasikan warisan adat, sejarah, tradisi, dan filosofi lokal untuk generasi masa depan.',
-		image: '/images/logo/Karsa_Pedia.png',
+		image: '/images/logo/logo-karsapedia.svg',
 		badge: 'Ensiklopedia',
 	},
 	{
@@ -53,7 +57,7 @@ const services = [
 		title: 'KarsaFrase',
 		description:
 			'Asisten cerdas yang didesain khusus untuk memparafrase dan menyusun ulang kalimat agar terdengar lebih natural sesuai dengan gaya bahasa penutur asli.',
-		image: '/images/logo/Karsa_Frasee.png',
+		image: '/images/logo/logo-karsafrase.svg',
 		badge: 'Penulisan',
 	},
 ];
@@ -68,7 +72,14 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 	};
 }
 
-export default function LayananIndex({ loaderData }: Route.ComponentProps) {
+export function meta({ loaderData }: Route.MetaArgs) {
+	return metaPublicRoute({
+		title: 'Layanan KarsaKito',
+		noIndex: loaderData.noIndex,
+	});
+}
+
+export default function LayananRoute({ loaderData }: Route.ComponentProps) {
 	return (
 		<div className="site">
 			<Header authUser={loaderData.user} />
@@ -81,106 +92,37 @@ export default function LayananIndex({ loaderData }: Route.ComponentProps) {
 						flexDirection: 'column',
 					}}
 				>
-					{/* Hero Section */}
-					<Box
-						bg="linear-gradient(135deg, var(--mantine-color-blue-9) 0%, var(--mantine-color-blue-6) 100%)"
-						pt={{ base: 100, md: 140 }}
-						pb={{ base: 120, md: 200 }}
-						c="white"
-					>
-						<Container size="lg">
-							<Grid
-								align="center"
-								gap={60}
-							>
-								<Grid.Col span={{ base: 12, md: 6 }}>
-									<Badge
-										color="white"
-										c="blue"
-										variant="filled"
-										size="lg"
-										mb="md"
-										radius="xl"
-									>
-										Ekosistem KarsaKito
-									</Badge>
-									<Title
-										order={1}
-										size="3.5rem"
-										fw={900}
-										mb="lg"
-										style={{ lineHeight: 1.1 }}
-									>
-										Solusi Cerdas untuk Warisan Budaya
-									</Title>
-									<Text
-										size="xl"
-										opacity={0.9}
-										mb="xl"
-										maw={500}
-									>
-										Hubungkan seluruh kebutuhan pembelajaran dan produktivitas
-										bahasa daerah Anda ke dalam satu platform AI terpadu.
-									</Text>
-									<Button
-										size="xl"
-										color="white"
-										c="blue"
-										radius="xl"
-										rightSection={<MdOutlineArrowForwardIos size={16} />}
-									>
-										Eksplorasi Layanan
-									</Button>
-								</Grid.Col>
-								<Grid.Col span={{ base: 12, md: 6 }}>
-									<Box
-										bg="white"
-										style={{
-											borderRadius: '2rem',
-											aspectRatio: '4/3',
-											boxShadow: '0 30px 60px rgba(0,0,0,0.2)',
-											display: 'flex',
-											alignItems: 'center',
-											justifyContent: 'center',
-											position: 'relative',
-											overflow: 'hidden',
-										}}
-									>
-										<Image
-											src="/images/logo/Logo_KarsaKito.png"
-											w="65%"
-											style={{
-												filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.15))',
-												transform: 'scale(1.05)',
-											}}
-										/>
-									</Box>
-								</Grid.Col>
-							</Grid>
-						</Container>
-					</Box>
+					<Banner background="/images/karsakito-beranda-banner.jpg">
+						<Text
+							span
+							size="xs"
+							fw={700}
+							c="primary"
+							tt="uppercase"
+						>
+							Ekosistem KarsaKito
+						</Text>
+						<Title>Solusi Cerdas untuk Warisan Budaya</Title>
+						<Text>
+							Hubungkan seluruh kebutuhan pembelajaran dan produktivitas bahasa daerah
+							Anda ke dalam satu platform AI terpadu.
+						</Text>
+					</Banner>
 
 					{/* Zig-Zag Sections (Overlapping Hero) */}
-					<Box
-						style={{ position: 'relative', zIndex: 10 }}
-						mt={{ base: -60, md: -120 }}
-					>
+					<Box>
 						{services.map((service, index) => {
 							const isEven = index % 2 === 0;
 							return (
 								<Box
-									key={service.id}
+									key={`${service.id}-${index}`}
 									bg={isEven ? 'white' : 'gray.0'}
-									py={{ base: 60, md: 100 }}
-									style={
-										index === 0
-											? {
-													borderTopLeftRadius: '3rem',
-													borderTopRightRadius: '3rem',
-													boxShadow: '0 -20px 50px rgba(0,0,0,0.1)',
-												}
-											: {}
-									}
+									py={{
+										base: 48,
+										sm: 60,
+										md: 80,
+										lg: 120,
+									}}
 								>
 									<Container size="lg">
 										<Grid
@@ -192,18 +134,14 @@ export default function LayananIndex({ loaderData }: Route.ComponentProps) {
 												span={{ base: 12, md: 6 }}
 												order={{ base: 1, md: isEven ? 1 : 2 }}
 											>
-												<Box
-													style={{
-														position: 'relative',
-														display: 'flex',
-														justifyContent: 'center',
-														alignItems: 'center',
-														minHeight: 350,
-													}}
+												<Group
+													pos="relative"
+													mih={320}
+													justify="center"
 												>
 													{/* Decorative Background Blob */}
 													<Box
-														bg={isEven ? 'blue.0' : 'white'}
+														bg={isEven ? 'primary.0' : 'white'}
 														style={{
 															position: 'absolute',
 															width: '80%',
@@ -217,14 +155,16 @@ export default function LayananIndex({ loaderData }: Route.ComponentProps) {
 													<Image
 														src={service.image}
 														alt={service.title}
-														w={280}
-														fit="contain"
+														w="auto"
+														h={80}
+														objectFit="contain"
+														className="animate-pulse"
 														style={{
 															zIndex: 1,
 															filter: 'drop-shadow(0 15px 25px rgba(0,0,0,0.08))',
 														}}
 													/>
-												</Box>
+												</Group>
 											</Grid.Col>
 
 											{/* Content Column */}
@@ -233,47 +173,28 @@ export default function LayananIndex({ loaderData }: Route.ComponentProps) {
 												order={{ base: 2, md: isEven ? 2 : 1 }}
 											>
 												<Badge
-													color="blue"
 													variant="light"
-													size="lg"
+													size="xl"
+													fz="xs"
 													mb="sm"
-													radius="sm"
 												>
 													{service.badge}
 												</Badge>
 												<Title
 													order={2}
-													size="2.5rem"
-													fw={800}
 													mb="md"
-													c="dark.8"
-													style={{ lineHeight: 1.2 }}
 												>
 													{service.title}
 												</Title>
-												<Text
-													size="lg"
-													c="dimmed"
-													mb="xl"
-													style={{ lineHeight: 1.7 }}
+												<Text mb="xl">{service.description}</Text>
+												<ButtonLink
+													to={`/layanan/${service.id}`}
+													rightSection={
+														<MdOutlineArrowForwardIos size={12} />
+													}
 												>
-													{service.description}
-												</Text>
-												<Group>
-													<Button
-														component={Link}
-														to={`/layanan/${service.id}`}
-														variant="filled"
-														color="blue"
-														size="md"
-														radius="xl"
-														rightSection={
-															<MdOutlineArrowForwardIos size={12} />
-														}
-													>
-														Pelajari {service.title}
-													</Button>
-												</Group>
+													Pelajari {service.title}
+												</ButtonLink>
 											</Grid.Col>
 										</Grid>
 									</Container>
@@ -281,20 +202,9 @@ export default function LayananIndex({ loaderData }: Route.ComponentProps) {
 							);
 						})}
 					</Box>
-
-					{/* Footer Edge-to-Edge */}
-					<footer className="relative z-20 mt-auto w-full border-t border-slate-900 bg-slate-950 text-white">
-						<div className="mx-auto flex w-full flex-col items-center justify-between gap-4 px-4 py-8 text-xs text-slate-400 sm:flex-row sm:px-6 md:text-sm lg:px-8">
-							<div className="text-center sm:text-left">
-								© 2026 Team Kito. All rights reserved.
-							</div>
-							<div className="text-center font-medium tracking-wide sm:text-right">
-								Hackathon X DIGDAYA 2026 – Bank Indonesia
-							</div>
-						</div>
-					</footer>
 				</Box>
 			</main>
+			<Footer />
 		</div>
 	);
 }

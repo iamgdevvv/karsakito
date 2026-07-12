@@ -1,6 +1,7 @@
 import {
 	Box,
 	Container,
+	Flex,
 	Group,
 	Stack,
 	type ButtonProps,
@@ -22,20 +23,24 @@ type Props = {
 
 export default function Banner({ background, ctas, children, ...props }: Props) {
 	return (
-		<Box
+		<Flex
 			pos="relative"
-			component="section"
+			mih={480}
 			py={{
 				base: 60,
 				sm: 80,
 				lg: 120,
 			}}
 			c="white"
+			direction="column"
+			justify="center"
+			component="section"
 			role="banner"
 			data-slot="Banner"
 			className="bg-cover bg-fixed bg-center bg-no-repeat"
 			style={{
-				backgroundImage: `url(${background})`,
+				...props.style,
+				backgroundImage: background ? `url(${background})` : undefined,
 			}}
 		>
 			{background ? (
@@ -76,6 +81,6 @@ export default function Banner({ background, ctas, children, ...props }: Props) 
 					) : null}
 				</Stack>
 			</Container>
-		</Box>
+		</Flex>
 	);
 }

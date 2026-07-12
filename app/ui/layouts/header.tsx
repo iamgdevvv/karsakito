@@ -268,19 +268,6 @@ export function Header({
 							visibleFrom="lg"
 						>
 							<NavLink
-								to="/"
-								end
-								className={({ isActive, isPending, isTransitioning }) =>
-									cn('hover:underline', {
-										'text-primary font-semibold': isActive,
-										'text-primary font-semibold animate-pulse':
-											isPending || isTransitioning,
-									})
-								}
-							>
-								Beranda
-							</NavLink>
-							<NavLink
 								to="/tentang"
 								className={({ isActive, isPending, isTransitioning }) =>
 									cn('hover:underline', {
@@ -302,7 +289,7 @@ export function Header({
 									})
 								}
 							>
-								Layanan KarsaKito
+								Layanan
 							</NavLink>
 							<NavLink
 								to="/biaya-layanan"

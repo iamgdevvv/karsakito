@@ -1,8 +1,11 @@
-import { Text, Title } from '@mantine/core';
+import { Badge, Box, Container, Flex, Group, SimpleGrid, Stack, Text, Title } from '@mantine/core';
 import { LuArrowRight } from 'react-icons/lu';
 import { metaPublicRoute } from '~app-modules/meta';
 import { authGetSession } from '~app-server/session';
+import { Image } from '~app-ui/components/image';
+import { ButtonLink } from '~app-ui/components/link';
 import Banner from '~app-ui/layouts/banner';
+import Footer from '~app-ui/layouts/footer';
 import { Header } from '~app-ui/layouts/header';
 import { cloudflareContext } from '~workers/app';
 
@@ -68,169 +71,346 @@ export default function HomeRoute({ loaderData }: Route.ComponentProps) {
 				</Banner>
 
 				{/* 1. SEKSI SOCIAL PROOF (Didukung Oleh - Statis & Proporsional) */}
-				<section className="relative z-10 w-full border-y border-slate-200 bg-white px-6 py-14">
-					<p className="mb-10 text-center text-[10px] font-bold tracking-[0.3em] text-slate-400 uppercase">
-						DIDUKUNG &amp; DIPERCAYA OLEH
-					</p>
-					<div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-16 md:gap-24">
-						<img
-							src="/images/bank indonesia.png"
-							alt="Bank Indonesia"
-							className="h-16 w-auto object-contain opacity-80 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 md:h-24"
-						/>
-						<img
-							src="/images/ojk.jpg"
-							alt="OJK"
-							className="h-10 w-auto object-contain opacity-80 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 md:h-14"
-						/>
-						<img
-							src="/images/lppi logo.jpg"
-							alt="LPPI"
-							className="h-14 w-auto object-contain opacity-80 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 md:h-20"
-						/>
-					</div>
-				</section>
+				<Box
+					component="section"
+					bg="white"
+					py={{
+						base: 48,
+						sm: 60,
+						lg: 80,
+					}}
+					className="z-10 w-full md:sticky md:top-16"
+				>
+					<Container>
+						<Stack
+							align="center"
+							gap="xl"
+						>
+							<Text
+								span
+								display="inline-block"
+								size="xs"
+								tt="uppercase"
+								ta="center"
+								c="gray.6"
+							>
+								Didukung &amp; dipercaya oleh
+							</Text>
+							<Flex
+								align="center"
+								wrap="wrap"
+								justify="center"
+								gap={{
+									base: 'lg',
+									md: 'xl',
+									lg: 48,
+								}}
+							>
+								<Image
+									src="/images/logo/logo-bankindonesia.svg"
+									alt="Bank Indonesia"
+									objectFit="contain"
+									w="auto"
+									h="auto"
+									maw={200}
+									mah={60}
+									className="opacity-80 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+								/>
+								<Image
+									src="/images/logo/logo-ojk.svg"
+									alt="OJK"
+									w="auto"
+									h="auto"
+									maw={200}
+									mah={60}
+									className="opacity-80 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+								/>
+								<Image
+									src="/images/logo/logo-lppi.svg"
+									alt="LPPI"
+									w="auto"
+									h="auto"
+									maw={200}
+									mah={60}
+									className="opacity-80 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+								/>
+							</Flex>
+						</Stack>
+					</Container>
+				</Box>
 
 				{/* 1. PANEL 1: PROBLEM VALIDATION (Responsive Sticky - z-10) */}
-				<section className="relative top-16 z-10 flex h-auto w-full items-center border-t border-slate-200 bg-slate-50 px-4 py-16 shadow-[0_-20px_40px_rgba(0,0,0,0.02)] sm:px-6 md:sticky md:h-screen md:py-20 lg:px-8">
-					<div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-8 md:grid-cols-12 md:gap-12">
+				<Box
+					component="section"
+					bg="gray.0"
+					py={{
+						base: 48,
+						sm: 60,
+						lg: 80,
+					}}
+					className="z-10 flex h-auto w-full border-t border-slate-200 shadow-[0_-20px_40px_rgba(0,0,0,0.02)] md:sticky md:top-16"
+				>
+					<Container className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-12">
 						<div className="md:col-span-6">
-							<span className="mb-4 block text-xs font-bold tracking-wider text-red-500">
-								■ PROBLEM VALIDATION
-							</span>
+							<Badge
+								variant="light"
+								color="red"
+								size="lg"
+								fz={10}
+								fw={500}
+								mb="sm"
+							>
+								Problem Validation
+							</Badge>
 							<h2 className="text-2xl leading-tight font-black tracking-tight text-slate-900 sm:text-3xl md:text-5xl">
 								Akar Masalah: Minimnya Dukungan Teknologi Produktivitas Bahasa
 								Daerah.
 							</h2>
 						</div>
-						<div className="text-sm leading-relaxed font-light text-slate-600 sm:text-base md:col-span-6">
-							<p className="mb-6">
+						<Stack className="md:col-span-6">
+							<Text fw={300}>
 								Masyarakat menghadapi hambatan nyata ketika ingin mempelajari,
 								menggunakan, atau menghasilkan karya berbasis bahasa daerah karena
 								kesulitan memahami kosakata, keterbatasan media belajar modern,
 								serta sulitnya mengakses informasi adat secara praktis.
-							</p>
-							<p>
+							</Text>
+							<Text fw={300}>
 								Saat ini teknologi AI global telah membantu penulisan dalam bahasa
 								global, namun dukungan serupa untuk bahasa daerah masih sangat
 								terbatas pada aspek tata bahasa, kesopanan (KarsaLisa), dan
 								pengetahuan adat. Jika dibiarkan, transfer pengetahuan budaya
 								antargenerasi berisiko terputus.
-							</p>
-						</div>
-					</div>
-				</section>
+							</Text>
+						</Stack>
+					</Container>
+				</Box>
 
 				{/* 2. PANEL 2: SOLUTION APPROACH - PART 1 (Responsive Sticky - z-20) */}
-				<section className="relative top-16 z-20 flex h-auto w-full items-center border-t border-slate-200 bg-white px-4 py-16 shadow-[0_-30px_60px_rgba(0,0,0,0.04)] sm:px-6 md:sticky md:h-screen md:py-20 lg:px-8">
-					<div className="mx-auto flex w-full max-w-7xl flex-col justify-center">
-						<span className="mb-4 block text-xs font-bold tracking-wider text-blue-600">
-							■ SOLUTION APPROACH
-						</span>
-						<h2 className="mb-2 text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
-							Ekosistem AI Terintegrasi Berbasis RAG
-						</h2>
-						<p className="mb-8 max-w-4xl text-sm leading-relaxed font-light text-slate-500 sm:text-base md:mb-12 md:text-lg">
-							KarsaKito mengintegrasikan knowledge base budaya terstruktur dengan
-							teknologi Retrieval-Augmented Generation (RAG) untuk menghasilkan
-							respons yang kontekstual dan relevan, diawali melalui implementasi
-							Bahasa Minangkabau.
-						</p>
+				<Box
+					component="section"
+					bg="white"
+					py={{
+						base: 48,
+						sm: 60,
+						lg: 80,
+					}}
+					className="z-20 flex h-auto w-full border-t border-slate-200 shadow-[0_-30px_60px_rgba(0,0,0,0.04)] md:sticky md:top-16"
+				>
+					<Container className="flex w-full flex-col">
+						<Box
+							w="100%"
+							maw={680}
+						>
+							<Badge
+								variant="light"
+								size="lg"
+								fz={10}
+								fw={500}
+								mb="sm"
+							>
+								SOLUTION APPROACH
+							</Badge>
+							<Title
+								order={2}
+								mb="md"
+							>
+								Ekosistem AI Terintegrasi Berbasis RAG
+							</Title>
+							<Text
+								c="gray.6"
+								fz={{
+									base: 'sm',
+									lg: 'md',
+								}}
+							>
+								KarsaKito mengintegrasikan knowledge base budaya terstruktur dengan
+								teknologi Retrieval-Augmented Generation (RAG) untuk menghasilkan
+								respons yang kontekstual dan relevan, diawali melalui implementasi
+								Bahasa Minangkabau.
+							</Text>
+						</Box>
 
-						<div className="flex flex-col border-t border-slate-200">
-							<div className="group grid grid-cols-1 gap-4 border-b border-slate-200 bg-white px-2 py-6 transition-colors duration-300 hover:bg-slate-50/50 md:grid-cols-12 md:gap-6 md:px-4 md:py-8">
-								<div className="font-mono text-sm font-bold text-slate-400 transition-colors group-hover:text-blue-600 md:col-span-1">
+						<SimpleGrid
+							spacing={0}
+							cols={{
+								base: 1,
+								md: 2,
+							}}
+							mt="xl"
+							className="border-y border-slate-200"
+						>
+							<div className="group hover:bg-primary-50 grid grid-cols-1 gap-4 bg-white px-2 py-6 transition-colors duration-300 md:grid-cols-12 md:gap-6 md:px-4 md:py-8">
+								<Text
+									span
+									size="sm"
+									fw={700}
+									className="group-hover:text-primary text-gray-600 transition-colors md:col-span-1"
+								>
 									01
-								</div>
-								<div className="text-lg font-bold text-slate-900 md:col-span-3 md:text-xl">
+								</Text>
+								<Title
+									order={3}
+									fz="md"
+									className="md:col-span-3"
+								>
 									KarsaLingo
-								</div>
-								<div className="text-sm leading-relaxed text-slate-600 md:col-span-8 md:text-base">
+								</Title>
+								<Text
+									size="sm"
+									c="gray.6"
+									className="md:col-span-8"
+								>
 									Media belajar modern, interaktif, dan adaptif untuk penguasaan
 									bahasa daerah yang dirancang khusus untuk membantu transisi
 									pemahaman bahasa lintas generasi.
-								</div>
+								</Text>
 							</div>
-							<div className="group grid grid-cols-1 gap-4 border-b border-slate-200 bg-white px-2 py-6 transition-colors duration-300 hover:bg-slate-50/50 md:grid-cols-12 md:gap-6 md:px-4 md:py-8">
-								<div className="font-mono text-sm font-bold text-slate-400 transition-colors group-hover:text-blue-600 md:col-span-1">
+							<div className="group hover:bg-primary-50 grid grid-cols-1 gap-4 bg-white px-2 py-6 transition-colors duration-300 md:grid-cols-12 md:gap-6 md:px-4 md:py-8">
+								<Text
+									span
+									size="sm"
+									fw={700}
+									className="group-hover:text-primary text-gray-600 transition-colors md:col-span-1"
+								>
 									02
-								</div>
-								<div className="text-lg font-bold text-slate-900 md:col-span-3 md:text-xl">
+								</Text>
+								<Title
+									order={3}
+									fz="md"
+									className="md:col-span-3"
+								>
 									KarsaWriter
-								</div>
-								<div className="text-sm leading-relaxed text-slate-600 md:col-span-8 md:text-base">
+								</Title>
+								<Text
+									size="sm"
+									c="gray.6"
+									className="md:col-span-8"
+								>
 									Asisten produktivitas berbasis kecerdasan buatan untuk menyusun
 									draf konten, naskah kreatif, karya sastra tradisional, serta
 									artikel formal berbahasa lokal secara efisien.
-								</div>
+								</Text>
 							</div>
-						</div>
-					</div>
-				</section>
-
-				{/* 3. PANEL 3: SOLUTION APPROACH - PART 2 (Responsive Sticky - z-30) */}
-				<section className="relative top-16 z-30 flex h-auto w-full items-center border-t border-slate-200 bg-white px-4 py-16 shadow-[0_-30px_60px_rgba(0,0,0,0.04)] sm:px-6 md:sticky md:h-screen md:py-20 lg:px-8">
-					<div className="mx-auto flex w-full max-w-7xl flex-col justify-center">
-						<div className="flex flex-col border-t border-slate-200">
-							<div className="group grid grid-cols-1 gap-2 border-b border-slate-200 bg-white px-2 py-4 transition-colors duration-300 hover:bg-slate-50/50 md:grid-cols-12 md:gap-6 md:px-4 md:py-6">
-								<div className="font-mono text-sm font-bold text-slate-400 transition-colors group-hover:text-blue-600 md:col-span-1">
+							<div className="group hover:bg-primary-50 grid grid-cols-1 gap-2 bg-white px-2 py-4 transition-colors duration-300 md:grid-cols-12 md:gap-6 md:px-4 md:py-6">
+								<Text
+									span
+									size="sm"
+									fw={700}
+									className="group-hover:text-primary text-gray-600 transition-colors md:col-span-1"
+								>
 									03
-								</div>
-								<div className="text-lg font-bold text-slate-900 md:col-span-3 md:text-xl">
+								</Text>
+								<Title
+									order={3}
+									fz="md"
+									className="md:col-span-3"
+								>
 									KarsaLator
-								</div>
-								<div className="text-sm leading-relaxed text-slate-600 md:col-span-8 md:text-base">
+								</Title>
+								<Text
+									size="sm"
+									c="gray.6"
+									className="md:col-span-8"
+								>
 									Sistem translasi kontekstual tingkat lanjut yang akurat,
 									menjamin ketepatan makna berdasarkan basis pengetahuan adat yang
 									dapat dipertanggungjawabkan.
-								</div>
+								</Text>
 							</div>
-							<div className="group grid grid-cols-1 gap-2 border-b border-slate-200 bg-white px-2 py-4 transition-colors duration-300 hover:bg-slate-50/50 md:grid-cols-12 md:gap-6 md:px-4 md:py-6">
-								<div className="font-mono text-sm font-bold text-slate-400 transition-colors group-hover:text-blue-600 md:col-span-1">
+							<div className="group hover:bg-primary-50 grid grid-cols-1 gap-2 bg-white px-2 py-4 transition-colors duration-300 md:grid-cols-12 md:gap-6 md:px-4 md:py-6">
+								<Text
+									span
+									size="sm"
+									fw={700}
+									className="group-hover:text-primary text-gray-600 transition-colors md:col-span-1"
+								>
 									04
-								</div>
-								<div className="text-lg font-bold text-slate-900 md:col-span-3 md:text-xl">
+								</Text>
+								<Title
+									order={3}
+									fz="md"
+									className="md:col-span-3"
+								>
 									KarsaLisa
-								</div>
-								<div className="text-sm leading-relaxed text-slate-600 md:col-span-8 md:text-base">
+								</Title>
+								<Text
+									size="sm"
+									c="gray.6"
+									className="md:col-span-8"
+								>
 									Modul analisis bahasa cerdas untuk mengevaluasi kesopanan
 									berbahasa, ketepatan tata bahasa daerah, serta kecocokan konteks
 									sosial penggunaan kata.
-								</div>
+								</Text>
 							</div>
-							<div className="group grid grid-cols-1 gap-2 border-b border-slate-200 bg-white px-2 py-4 transition-colors duration-300 hover:bg-slate-50/50 md:grid-cols-12 md:gap-6 md:px-4 md:py-6">
-								<div className="font-mono text-sm font-bold text-slate-400 transition-colors group-hover:text-blue-600 md:col-span-1">
+							<div className="group hover:bg-primary-50 grid grid-cols-1 gap-2 bg-white px-2 py-4 transition-colors duration-300 md:grid-cols-12 md:gap-6 md:px-4 md:py-6">
+								<Text
+									span
+									size="sm"
+									fw={700}
+									className="group-hover:text-primary text-gray-600 transition-colors md:col-span-1"
+								>
 									05
-								</div>
-								<div className="text-lg font-bold text-slate-900 md:col-span-3 md:text-xl">
+								</Text>
+								<Title
+									order={3}
+									fz="md"
+									className="md:col-span-3"
+								>
 									KarsaPedia
-								</div>
-								<div className="text-sm leading-relaxed text-slate-600 md:col-span-8 md:text-base">
+								</Title>
+								<Text
+									size="sm"
+									c="gray.6"
+									className="md:col-span-8"
+								>
 									Ensiklopedia warisan budaya dan adat nusantara berbasis
 									Retrieval-Augmented Generation (RAG) yang menyediakan akses
 									informasi tepercaya secara praktis.
-								</div>
+								</Text>
 							</div>
-							<div className="group grid grid-cols-1 gap-2 border-b border-slate-200 bg-white px-2 py-4 transition-colors duration-300 hover:bg-slate-50/50 md:grid-cols-12 md:gap-6 md:px-4 md:py-6">
-								<div className="font-mono text-sm font-bold text-slate-400 transition-colors group-hover:text-blue-600 md:col-span-1">
+							<div className="group hover:bg-primary-50 grid grid-cols-1 gap-2 bg-white px-2 py-4 transition-colors duration-300 md:grid-cols-12 md:gap-6 md:px-4 md:py-6">
+								<Text
+									span
+									size="sm"
+									fw={700}
+									className="group-hover:text-primary text-gray-600 transition-colors md:col-span-1"
+								>
 									06
-								</div>
-								<div className="text-lg font-bold text-slate-900 md:col-span-3 md:text-xl">
+								</Text>
+								<Title
+									order={3}
+									fz="md"
+									className="md:col-span-3"
+								>
 									KarsaFrase
-								</div>
-								<div className="text-sm leading-relaxed text-slate-600 md:col-span-8 md:text-base">
+								</Title>
+								<Text
+									size="sm"
+									c="gray.6"
+									className="md:col-span-8"
+								>
 									Alat restrukturisasi dan parafrase teks otomatis guna mengolah
 									ragam bentuk kalimat bahasa lokal tanpa merubah esensi makna
 									budaya asli.
-								</div>
+								</Text>
 							</div>
-						</div>
-					</div>
-				</section>
+						</SimpleGrid>
+					</Container>
+				</Box>
 
 				{/* 4. PANEL 4: TECHNICAL INNOVATION & DEMAND (Responsive Sticky - z-40) */}
-				<section className="relative top-16 z-40 flex h-auto w-full items-center border-t border-slate-200 bg-slate-50 px-4 py-16 shadow-[0_-30px_50px_rgba(0,0,0,0.05)] sm:px-6 md:sticky md:h-screen md:py-20 lg:px-8">
-					<div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-8 md:grid-cols-2 md:gap-16">
+				{/* <Box
+					component="section"
+					bg="gray.0"
+					py={{
+						base: 48,
+						sm: 60,
+						lg: 80,
+					}}
+					className="z-40 flex h-auto w-full border-t border-slate-200 shadow-[0_-30px_50px_rgba(0,0,0,0.05)] md:sticky md:top-16"
+				>
+					<Container className="grid w-full grid-cols-1 gap-8 md:grid-cols-2 md:gap-16">
 						<div>
 							<h3 className="mb-4 text-xl font-bold text-slate-900 md:text-2xl">
 								Strategi Optimasi Biaya Operasional &amp; Human-in-the-Loop
@@ -255,43 +435,57 @@ export default function HomeRoute({ loaderData }: Route.ComponentProps) {
 								esensial dalam pelestarian budaya lokal.
 							</p>
 						</div>
-					</div>
-				</section>
+					</Container>
+				</Box> */}
 
 				{/* 5. PANEL 5: PREMIUM LIGHT CTA & EDGE-TO-EDGE FOOTER (z-50 - Penutup Mutlak) */}
-				<section className="relative z-50 flex w-full flex-col justify-between border-t border-slate-200 bg-white px-0 pt-24 shadow-[0_-30px_60px_rgba(0,0,0,0.06)]">
-					<div className="mx-auto mb-20 max-w-4xl px-4 text-center md:mb-32">
-						<h2 className="mb-6 text-2xl font-black tracking-tight text-slate-900 sm:text-4xl md:text-6xl">
+				<Box
+					component="section"
+					bg="white"
+					py={{
+						base: 48,
+						sm: 60,
+						lg: 80,
+					}}
+					className="z-50 flex w-full flex-col border-t border-slate-200 shadow-[0_-30px_60px_rgba(0,0,0,0.06)] md:sticky"
+				>
+					<Container
+						size="sm"
+						ta="center"
+					>
+						<Title
+							order={2}
+							mb="md"
+						>
 							Mengakselerasi Warisan Budaya dalam Ekonomi Kreatif Digital Indonesia
-						</h2>
-						<p className="mx-auto mb-8 max-w-2xl text-xs leading-relaxed font-light text-slate-500 sm:text-sm md:text-base">
+						</Title>
+						<Text
+							c="gray.6"
+							fz={{
+								base: 'sm',
+								lg: 'md',
+							}}
+							mb="lg"
+						>
 							Dari penyediaan media belajar modern untuk ekosistem pendidikan hingga
 							penyediaan REST API profesional untuk kreator konten, industri kreatif,
 							dan developer aplikasi pihak ketiga. KarsaKito mentransformasi budaya
 							dari objek dokumentasi pasif menjadi aset produktif bernilai ekonomi
 							tinggi nasional.
-						</p>
-						<a
-							href="/register"
-							className="inline-block w-full rounded-xl bg-blue-600 px-8 py-4 text-center text-base font-bold tracking-wide text-white shadow-xl shadow-blue-600/10 transition-all hover:bg-blue-700 sm:w-auto"
-						>
-							Mulai Akselerasi Sekarang (Freemium)
-						</a>
-					</div>
-
-					{/* Footer Edge-to-Edge */}
-					<footer className="mt-auto w-full border-t border-slate-900 bg-slate-950 text-white">
-						<div className="mx-auto flex w-full flex-col items-center justify-between gap-4 px-4 py-8 text-xs text-slate-400 sm:flex-row sm:px-6 md:text-sm lg:px-8">
-							<div className="text-center sm:text-left">
-								© 2026 Team Kito. All rights reserved.
-							</div>
-							<div className="text-center font-medium tracking-wide sm:text-right">
-								Hackathon X DIGDAYA 2026 – Bank Indonesia
-							</div>
-						</div>
-					</footer>
-				</section>
+						</Text>
+						<Group justify="center">
+							<ButtonLink
+								to="/tentang"
+								variant="light"
+							>
+								Pelajari Selengkapnya
+							</ButtonLink>
+							<ButtonLink to="/apps">Mulai Sekarang</ButtonLink>
+						</Group>
+					</Container>
+				</Box>
 			</main>
+			<Footer />
 		</div>
 	);
 }

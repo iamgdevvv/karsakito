@@ -1,36 +1,29 @@
 import {
-	Container,
-	Grid,
-	Image,
-	Text,
+	Accordion,
 	Badge,
-	Button,
-	Title,
 	Box,
-	Group,
+	Button,
 	Card,
+	Container,
+	Divider,
+	Group,
+	NumberFormatter,
 	SimpleGrid,
 	Table,
-	Accordion,
-	Divider,
+	Text,
+	ThemeIcon,
+	Title,
 } from '@mantine/core';
 import { FiHelpCircle } from 'react-icons/fi';
 import { LuCheck } from 'react-icons/lu';
+import { metaPublicRoute } from '~app-modules/meta';
 import { authGetSession } from '~app-server/session';
+import Banner from '~app-ui/layouts/banner';
+import Footer from '~app-ui/layouts/footer';
 import { Header } from '~app-ui/layouts/header';
 import { cloudflareContext } from '~workers/app';
 
 import type { Route } from './+types/biaya-layanan';
-
-export async function loader({ request, context }: Route.LoaderArgs) {
-	const authSession = await authGetSession(request);
-	const user = authSession.get('user');
-
-	return {
-		user,
-		noIndex: context.get(cloudflareContext).env.NODE_ENV !== 'production',
-	};
-}
 
 const packages = [
 	{
@@ -86,6 +79,23 @@ const tokenRates = [
 	{ feature: 'KarsaFrase (Parafrase Kalimat)', rate: '15 Token / 100 Kata parafrase' },
 ];
 
+export async function loader({ request, context }: Route.LoaderArgs) {
+	const authSession = await authGetSession(request);
+	const user = authSession.get('user');
+
+	return {
+		user,
+		noIndex: context.get(cloudflareContext).env.NODE_ENV !== 'production',
+	};
+}
+
+export function meta({ loaderData }: Route.MetaArgs) {
+	return metaPublicRoute({
+		title: 'Biaya Layanan KarsaKito',
+		noIndex: loaderData.noIndex,
+	});
+}
+
 export default function BiayaLayanan({ loaderData }: Route.ComponentProps) {
 	return (
 		<div className="site">
@@ -97,45 +107,27 @@ export default function BiayaLayanan({ loaderData }: Route.ComponentProps) {
 					style={{ minHeight: '100vh' }}
 				>
 					{/* Hero Section */}
-					<Box
-						bg="linear-gradient(135deg, #0f172a 0%, #1e293b 100%)"
-						pt={{ base: 140, md: 180 }}
-						pb={{ base: 140, md: 200 }}
-						c="white"
+					<Banner
+						background="/images/karsakito-beranda-banner.jpg"
 						ta="center"
+						justify="center"
+						pb="xl"
 					>
-						<Container size="md">
-							<Badge
-								color="blue"
-								variant="filled"
-								size="lg"
-								mb="md"
-								radius="xl"
-							>
-								Fleksibel & Hemat
-							</Badge>
-							<Title
-								order={1}
-								size="3.5rem"
-								fw={900}
-								mb="md"
-								style={{ letterSpacing: '-0.02em' }}
-							>
-								Bayar Sesuai Penggunaan dengan Token
-							</Title>
-							<Text
-								size="xl"
-								opacity={0.8}
-								maw={600}
-								mx="auto"
-								fw={300}
-								style={{ lineHeight: 1.6 }}
-							>
-								Tanpa komitmen bulanan. Beli paket token sesuai kebutuhan Anda, dan
-								gunakan kapan saja tanpa khawatir hangus.
-							</Text>
-						</Container>
-					</Box>
+						<Text
+							span
+							size="xs"
+							fw={700}
+							c="primary"
+							tt="uppercase"
+						>
+							Fleksibel & Hemat
+						</Text>
+						<Title>Bayar Sesuai Penggunaan dengan Token</Title>
+						<Text>
+							Tanpa komitmen bulanan. Beli paket token sesuai kebutuhan Anda, dan
+							gunakan kapan saja tanpa khawatir hangus.
+						</Text>
+					</Banner>
 
 					<Container
 						size="lg"
@@ -146,77 +138,61 @@ export default function BiayaLayanan({ loaderData }: Route.ComponentProps) {
 							cols={{ base: 1, md: 3 }}
 							spacing="xl"
 						>
-							{packages.map((pkg) => (
+							{packages.map((pkg, index) => (
 								<Card
-									key={pkg.name}
+									key={`${pkg.name}-${index}`}
 									shadow="md"
 									padding="xl"
-									radius="lg"
-									withBorder
-									style={{
-										backgroundColor: 'white',
-										display: 'flex',
-										flexDirection: 'column',
-										borderColor: pkg.popular
-											? 'var(--mantine-color-blue-5)'
-											: undefined,
-										borderWidth: pkg.popular ? 2 : 1,
-										position: 'relative',
-										overflow: 'visible',
-										transition: 'transform 200ms ease',
-									}}
-									onMouseEnter={(e) =>
-										(e.currentTarget.style.transform = 'translateY(-5px)')
-									}
-									onMouseLeave={(e) =>
-										(e.currentTarget.style.transform = 'translateY(0)')
-									}
+									radius="xl"
+									bg="white"
+									className="translate-y-0 overflow-visible transition-transform lg:hover:-translate-y-3"
+									bd={pkg.popular ? '2px solid primary' : '1px solid gray.2'}
 								>
 									{pkg.popular && (
 										<Badge
-											color="blue"
 											variant="filled"
-											style={{
-												position: 'absolute',
-												top: -12,
-												left: '50%',
-												transform: 'translateX(-50%)',
-												zIndex: 1,
-											}}
+											size="xl"
+											fz="xs"
+											pos="absolute"
+											top={0}
+											left={'50%'}
+											className="z-1 -translate-1/2"
 										>
 											Paling Populer
 										</Badge>
 									)}
 
 									<Text
-										size="xs"
+										span
+										fz="xs"
 										fw={700}
-										c="dimmed"
+										c="gray.6"
 										tt="uppercase"
 										mb="xs"
 									>
 										{pkg.name}
 									</Text>
 
-									<Group
-										align="flex-end"
-										gap={5}
-										mb="md"
+									<Text
+										span
+										fz={{
+											base: 'xl',
+											lg: 32,
+										}}
+										fw={700}
+										display="inline-block"
 									>
-										<Text
-											size="2.5rem"
-											fw={900}
-											style={{ lineHeight: 1 }}
-										>
-											{pkg.price}
-										</Text>
-									</Group>
+										<NumberFormatter
+											prefix="Rp "
+											value={pkg.price}
+											thousandSeparator
+										/>
+									</Text>
 
 									<Badge
-										color="blue"
 										variant="light"
 										size="xl"
-										radius="sm"
+										fz="xs"
 										mb="lg"
 									>
 										{pkg.tokens}
@@ -224,19 +200,18 @@ export default function BiayaLayanan({ loaderData }: Route.ComponentProps) {
 
 									<Text
 										size="sm"
-										c="dimmed"
+										c="gray.6"
+										mih={{
+											md: 48,
+										}}
 										mb="xl"
-										style={{ minHeight: 40 }}
 									>
 										{pkg.tagline}
 									</Text>
 
-									<Divider my="md" />
+									<Divider mb="md" />
 
-									<Box
-										style={{ flexGrow: 1 }}
-										mb="xl"
-									>
+									<Box mb="xl">
 										{pkg.features.map((feat, idx) => (
 											<Group
 												key={idx}
@@ -245,14 +220,15 @@ export default function BiayaLayanan({ loaderData }: Route.ComponentProps) {
 												wrap="nowrap"
 												align="flex-start"
 											>
-												<LuCheck
-													size={16}
-													color="var(--mantine-color-blue-6)"
-													style={{ flexShrink: 0, marginTop: 3 }}
-												/>
+												<ThemeIcon
+													variant="light"
+													radius="full"
+												>
+													<LuCheck size={16} />
+												</ThemeIcon>
 												<Text
+													span
 													size="sm"
-													c="dark.7"
 												>
 													{feat}
 												</Text>
@@ -262,10 +238,7 @@ export default function BiayaLayanan({ loaderData }: Route.ComponentProps) {
 
 									<Button
 										variant={pkg.popular ? 'filled' : 'outline'}
-										color="blue"
 										fullWidth
-										size="md"
-										radius="md"
 										mt="auto"
 									>
 										Beli Paket
@@ -274,6 +247,7 @@ export default function BiayaLayanan({ loaderData }: Route.ComponentProps) {
 							))}
 						</SimpleGrid>
 
+						{/* REVISI */}
 						{/* Token Consumption Rate Table */}
 						<Box
 							mt={80}
@@ -295,7 +269,7 @@ export default function BiayaLayanan({ loaderData }: Route.ComponentProps) {
 							</Title>
 							<Text
 								size="sm"
-								c="dimmed"
+								c="gray.6"
 								mb="xl"
 								ta="center"
 								maw={500}
@@ -444,19 +418,8 @@ export default function BiayaLayanan({ loaderData }: Route.ComponentProps) {
 						</Box>
 					</Container>
 				</Box>
-
-				{/* Footer Edge-to-Edge */}
-				<footer className="relative z-20 mt-auto w-full border-t border-slate-900 bg-slate-950 text-white">
-					<div className="mx-auto flex w-full flex-col items-center justify-between gap-4 px-4 py-8 text-xs text-slate-400 sm:flex-row sm:px-6 md:text-sm lg:px-8">
-						<div className="text-center sm:text-left">
-							© 2026 Team Kito. All rights reserved.
-						</div>
-						<div className="text-center font-medium tracking-wide sm:text-right">
-							Hackathon X DIGDAYA 2026 – Bank Indonesia
-						</div>
-					</div>
-				</footer>
 			</main>
+			<Footer />
 		</div>
 	);
 }
