@@ -16,6 +16,7 @@ import {
 	TextInput,
 	Tooltip,
 } from '@mantine/core';
+import { DatePickerInput } from '@mantine/dates';
 
 const theme = createTheme({
 	breakpoints: {
@@ -175,6 +176,19 @@ const theme = createTheme({
 				},
 				comboboxProps: {
 					size: 'sm',
+					withinPortal: false,
+					keepMounted: true,
+				},
+			},
+		}),
+		DatePickerInput: DatePickerInput.extend({
+			defaultProps: {
+				size: 'md',
+				labelProps: {
+					fz: 'sm',
+					fw: 400,
+				},
+				popoverProps: {
 					withinPortal: false,
 					keepMounted: true,
 				},

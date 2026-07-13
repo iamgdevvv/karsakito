@@ -1,11 +1,18 @@
-import { Alert, Badge, Button, DataList, Group, Text, Timeline, Title } from '@mantine/core';
+import { Alert, Badge, DataList, Group, Text, Timeline, Title } from '@mantine/core';
+import { DatePickerInput } from '@mantine/dates';
+import { notifications } from '@mantine/notifications';
+import { useCallback, useMemo } from 'react';
 import { LiaMoneyBillWaveSolid } from 'react-icons/lia';
 import { LuGift, LuHandHeart } from 'react-icons/lu';
 import { TbApiApp } from 'react-icons/tb';
-import { replace } from 'react-router';
+import { replace, useSearchParams } from 'react-router';
 import { labelUserRole } from '~app-modules/enum-options';
 import { metaAdminRoute } from '~app-modules/meta';
-import { dayjs } from '~app-modules/utils';
+import {
+	PayloadQueryBalanceUserSchema,
+	type PayloadQueryBalanceUser,
+} from '~app-modules/schema/balance';
+import { dayjs, toPayloadSearchParams } from '~app-modules/utils';
 import { authUserCtx } from '~app-server/context';
 import { authMiddlewareSession } from '~app-server/session';
 import { actionGetUser } from '~app-server/user';
@@ -53,17 +60,38 @@ export async function loader({ request, context, params }: Route.LoaderArgs) {
 
 	return {
 		user,
-		recordUser: recordUser.data,
+		result: recordUser,
 	};
 }
 
 export function meta({ loaderData }: Route.MetaArgs) {
 	return metaAdminRoute({
-		title: `Balance User ${loaderData.recordUser.name}`,
+		title: `Balance User ${loaderData.result.data.name}`,
 	});
 }
 
 export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentProps) {
+	const [searchParams, setSearchParams] = useSearchParams();
+
+	const queryParams = useMemo(() => {
+		return {
+			...PayloadQueryBalanceUserSchema.safeParse(Object.fromEntries(searchParams)).data,
+			...loaderData.result.params,
+		};
+	}, [loaderData.result.params, searchParams]);
+
+	const handlerSearchParams = useCallback(
+		(payload: PayloadQueryBalanceUser) => {
+			setSearchParams(
+				toPayloadSearchParams({
+					...queryParams,
+					...payload,
+				}),
+			);
+		},
+		[queryParams],
+	);
+
 	return (
 		<div className="site">
 			<HeaderAdmin authUser={loaderData.user} />
@@ -75,22 +103,22 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 				<DataList>
 					<DataList.Item>
 						<DataList.ItemLabel>Name</DataList.ItemLabel>
-						<DataList.ItemValue>{loaderData.recordUser.name}</DataList.ItemValue>
+						<DataList.ItemValue>{loaderData.result.data.name}</DataList.ItemValue>
 					</DataList.Item>
 					<DataList.Item>
 						<DataList.ItemLabel>Email</DataList.ItemLabel>
-						<DataList.ItemValue>{loaderData.recordUser.email}</DataList.ItemValue>
+						<DataList.ItemValue>{loaderData.result.data.email}</DataList.ItemValue>
 					</DataList.Item>
 					<DataList.Item>
 						<DataList.ItemLabel>Role</DataList.ItemLabel>
 						<DataList.ItemValue>
-							{labelUserRole[loaderData.recordUser.role]}
+							{labelUserRole[loaderData.result.data.role]}
 						</DataList.ItemValue>
 					</DataList.Item>
 					<DataList.Item>
 						<DataList.ItemLabel>Status</DataList.ItemLabel>
 						<DataList.ItemValue>
-							{loaderData.recordUser.isActive ? (
+							{loaderData.result.data.isActive ? (
 								<Badge
 									size="md"
 									variant="light"
@@ -113,18 +141,18 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 							)}
 						</DataList.ItemValue>
 					</DataList.Item>
-					{loaderData.recordUser.balances ? (
+					{loaderData.result.data.balances ? (
 						<>
 							<DataList.Item>
 								<DataList.ItemLabel>Token</DataList.ItemLabel>
 								<DataList.ItemValue>
-									{loaderData.recordUser.balances.token}
+									{loaderData.result.data.balances.token}
 								</DataList.ItemValue>
 							</DataList.Item>
 							<DataList.Item>
 								<DataList.ItemLabel>Token Daily</DataList.ItemLabel>
 								<DataList.ItemValue>
-									{loaderData.recordUser.balances.tokenDaily}
+									{loaderData.result.data.balances.tokenDaily}
 								</DataList.ItemValue>
 							</DataList.Item>
 						</>
@@ -146,7 +174,7 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 						ml="auto"
 					>
 						<ButtonLink
-							to={`/admin/users/${loaderData.recordUser.id}/balance/update`}
+							to={`/admin/users/${loaderData.result.data.id}/balance/update`}
 							variant="light"
 							size="sm"
 							fz="xs"
@@ -154,25 +182,53 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 						>
 							Adjust Balance
 						</ButtonLink>
-						<Button
-							variant="outline"
+						<DatePickerInput
+							type="range"
 							size="sm"
-							fz="xs"
-							radius="md"
-						>
-							View All Activity
-						</Button>
+							value={[
+								queryParams.activityStartAt
+									? dayjs(
+											queryParams.activityStartAt,
+											loaderData.user.timezone,
+										).toDate()
+									: null,
+								queryParams.activityEndAt
+									? dayjs(
+											queryParams.activityEndAt,
+											loaderData.user.timezone,
+										).toDate()
+									: null,
+							]}
+							onChange={(value) => {
+								const [activityStartAt, activityEndAt] = value || [];
+
+								const payload = PayloadQueryBalanceUserSchema.safeParse({
+									activityStartAt,
+									activityEndAt,
+								});
+
+								if (payload.data) {
+									handlerSearchParams(payload.data);
+								} else {
+									notifications.show({
+										title: 'Error',
+										color: 'orange',
+										message: 'Invalid date range',
+									});
+								}
+							}}
+						/>
 					</Group>
 				</Group>
-				{loaderData.recordUser.balances &&
-				'activities' in loaderData.recordUser.balances ? (
-					loaderData.recordUser.balances.activities.length ? (
+				{loaderData.result.data.balances &&
+				'activities' in loaderData.result.data.balances ? (
+					loaderData.result.data.balances.activities.length ? (
 						<Timeline
-							active={loaderData.recordUser.balances.activities.length}
+							active={loaderData.result.data.balances.activities.length}
 							lineWidth={2}
 							bulletSize={20}
 						>
-							{loaderData.recordUser.balances.activities.map((activity, index) => (
+							{loaderData.result.data.balances.activities.map((activity, index) => (
 								<Timeline.Item
 									key={`${activity.type}-${index}`}
 									bullet={
@@ -222,15 +278,20 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 							))}
 						</Timeline>
 					) : (
-						<Alert
-							color="red"
-							title="Error"
+						<Text
+							c="dimmed"
+							ta="center"
 						>
-							Balance Activity failed to load
-						</Alert>
+							Balance Activity not found
+						</Text>
 					)
 				) : (
-					<Text c="dimmed">Balance Activity not found</Text>
+					<Alert
+						color="red"
+						title="Error"
+					>
+						Balance Activity failed to load
+					</Alert>
 				)}
 			</AdminPanel>
 			<Footer />

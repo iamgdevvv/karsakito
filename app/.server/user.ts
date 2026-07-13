@@ -1,5 +1,6 @@
 import { redirect, type RouterContextProvider } from "react-router";
 import { amountTokenDaily } from "~app-modules/enum-options";
+import { PayloadQueryBalanceUserSchema } from "~app-modules/schema/balance";
 import { PayloadCreateUserSchema, PayloadQueryUsersSchema, PayloadUpdateProfilePasswordSchema, PayloadUpdateProfileSchema, PayloadUpdateUserPasswordSchema, PayloadUpdateUserSchema, type PayloadQueryUsers } from "~app-modules/schema/user";
 import { dayjs, qsParse, valueBooleanOrFalse } from "~app-modules/utils";
 import { prismaClient } from "~app-server/context";
@@ -519,11 +520,13 @@ export const actionGetUsers = async <T = User>({
 export const actionGetUser = async ({
 	userId,
 	withBalance,
+	activityDateRange,
 	request,
 	context
 }: {
 	userId: User['id']
 	withBalance?: boolean
+	activityDateRange?: [Date, Date]
 	request: Request
 	context: Readonly<RouterContextProvider>
 }) => {
@@ -541,6 +544,18 @@ export const actionGetUser = async ({
 			}
 		}
 
+		const searchPayload = qsParse(new URL(request.url).search);
+
+		const queryParams = PayloadQueryBalanceUserSchema.parse(searchPayload);
+
+		if (!queryParams.activityStartAt) {
+			queryParams.activityStartAt = dayjs().startOf('month').toDate();
+		}
+
+		if (!queryParams.activityEndAt) {
+			queryParams.activityEndAt = dayjs().endOf('month').toDate();
+		}
+
 		return {
 			data: await prismaClient(context).user.findUniqueOrThrow({
 				where: {
@@ -554,7 +569,8 @@ export const actionGetUser = async ({
 							activities: {
 								where: {
 									createdAt: {
-										gte: dayjs().subtract(1, 'month').startOf('day').toDate()
+										gte: queryParams.activityStartAt,
+										lte: queryParams.activityEndAt
 									}
 								},
 								select: {
@@ -585,7 +601,8 @@ export const actionGetUser = async ({
 						},
 					} : Prisma.skip
 				}
-			})
+			}),
+			params: queryParams
 		}
 	} catch (error) {
 		console.log('actionGetUser', error)
