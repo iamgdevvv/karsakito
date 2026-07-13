@@ -146,7 +146,10 @@ export const actionSubmissionKarsaAI = async ({
             throw new Error("Insufficient tokens to perform this action.");
         }
 
-        const result = await submissionKarsaAI(cfEnv.API_AI_URL + karsaAIEndpoint[body.app], body.payload, {
+        const result = await submissionKarsaAI(cfEnv.API_AI_URL + karsaAIEndpoint[body.app], {
+            ...body.payload,
+            userId: authSession.user.id
+        }, {
             Authorization: `Bearer ${cfEnv.API_AI_KEY}`,
         })
 
