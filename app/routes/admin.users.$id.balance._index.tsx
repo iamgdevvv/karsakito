@@ -16,7 +16,7 @@ import { LiaMoneyBillWaveSolid } from 'react-icons/lia';
 import { LuGift, LuHandHeart } from 'react-icons/lu';
 import { TbApiApp } from 'react-icons/tb';
 import { replace, useNavigation, useSearchParams } from 'react-router';
-import { labelUserRole } from '~app-modules/enum-options';
+import { labelAppName, labelUserRole } from '~app-modules/enum-options';
 import { metaAdminRoute } from '~app-modules/meta';
 import {
 	PayloadQueryBalanceUserSchema,
@@ -244,7 +244,7 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 						<Timeline
 							active={loaderData.result.data.balances.activities.length}
 							lineWidth={2}
-							bulletSize={20}
+							bulletSize={24}
 						>
 							{loaderData.result.data.balances.activities.map((activity, index) => (
 								<Timeline.Item
@@ -263,17 +263,21 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 									title={
 										<Text
 											span
-											size="xs"
+											size="sm"
 											fw={700}
 										>
 											{activity.type}
+											{activity.type === 'KARSA' && activity.karsa?.app
+												? ` (${labelAppName[activity.karsa.app]})`
+												: ''}
 										</Text>
 									}
 								>
 									{activity.description ? (
 										<Text
 											c="dimmed"
-											size="sm"
+											fw={400}
+											size="xs"
 										>
 											{activity.description}
 										</Text>

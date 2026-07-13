@@ -289,6 +289,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 											},
 										})
 									}
+									className="[&_.mantine-ScrollArea-content]:h-full"
 								>
 									<WindowAppKarsaWriter
 										data={windowItem}

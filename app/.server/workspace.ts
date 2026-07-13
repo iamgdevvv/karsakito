@@ -62,6 +62,12 @@ const submissionKarsaAI = async (apiUrl: string, payload: NonNullable<KarsaPlain
             ]
         }
 
+        console.log({
+            apiUrl,
+            payload,
+            response: data,
+        })
+
         if ('result' in data) {
             return data.result
         }
