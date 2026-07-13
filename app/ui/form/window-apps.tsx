@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { HiOutlineCommandLine } from 'react-icons/hi2';
 import { IoMdOptions } from 'react-icons/io';
 import Markdown from 'react-markdown';
+import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import type { PayloadWindowWorkspace } from '~app-modules/schema/workspace';
 import FormKarsaPidato from '~app-ui/form/karsa/pidato';
@@ -117,8 +118,8 @@ export function WindowAppKarsaWriter({
 						bg="gray.0"
 					>
 						{resultAI ? (
-							<Markdown remarkPlugins={[remarkGfm]}>
-								{resultAI.replace(/\n/g, ` `)}
+							<Markdown remarkPlugins={[remarkGfm, remarkBreaks]}>
+								{resultAI}
 							</Markdown>
 						) : null}
 					</Box>
