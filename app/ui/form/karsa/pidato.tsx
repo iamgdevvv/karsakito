@@ -187,6 +187,7 @@ export default function FormKarsaPidato({
 					<NumberInput
 						label="Total Sentence"
 						name="totalSentence"
+						max={80}
 						key={form.key('totalSentence')}
 						readOnly={isLoading}
 						leftSection={<PiCoinsFill size={18} />}
