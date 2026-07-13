@@ -87,7 +87,7 @@ export default function AppPanel({
 					mt="auto"
 					pt="md"
 					justify="center"
-					className="z-2"
+					className="pointer-events-none z-2"
 				>
 					<Group
 						w="100%"
@@ -105,7 +105,7 @@ export default function AppPanel({
 							sm: 'md',
 							lg: 'xl',
 						}}
-						className="cx-shadow-xs shadow-gray-300"
+						className="cx-shadow-xs pointer-events-auto shadow-gray-300"
 					>
 						{navigations.map((nav, index) => (
 							<Link
