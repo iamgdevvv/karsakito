@@ -1,18 +1,21 @@
 import { Alert, Badge, Button, DataList, Group, Text, Timeline, Title } from '@mantine/core';
+import { LiaMoneyBillWaveSolid } from 'react-icons/lia';
+import { LuGift, LuHandHeart } from 'react-icons/lu';
+import { TbApiApp } from 'react-icons/tb';
 import { replace } from 'react-router';
 import { labelUserRole } from '~app-modules/enum-options';
 import { metaAdminRoute } from '~app-modules/meta';
 import { dayjs } from '~app-modules/utils';
 import { authUserCtx } from '~app-server/context';
 import { authMiddlewareSession } from '~app-server/session';
-import { actionGetUser, actionUpdateUserPassword } from '~app-server/user';
+import { actionGetUser } from '~app-server/user';
 import { messageActionError } from '~app-server/utils';
 import { ButtonLink } from '~app-ui/components/link';
 import Footer from '~app-ui/layouts/footer';
 import { HeaderAdmin } from '~app-ui/layouts/header';
 import { AdminPanel } from '~app-ui/layouts/panel';
 
-import type { Route } from './+types/admin.users.$id._index';
+import type { Route } from './+types/admin.users.$id.balance._index';
 
 const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) => {
 	const authSession = await authMiddlewareSession({
@@ -54,20 +57,13 @@ export async function loader({ request, context, params }: Route.LoaderArgs) {
 	};
 }
 
-export async function action({ request, context }: Route.ActionArgs) {
-	return await actionUpdateUserPassword({
-		request,
-		context,
-	});
-}
-
 export function meta({ loaderData }: Route.MetaArgs) {
 	return metaAdminRoute({
-		title: `Ballance User ${loaderData.recordUser.name}`,
+		title: `Balance User ${loaderData.recordUser.name}`,
 	});
 }
 
-export default function BallanceUserAdminRoute({ loaderData }: Route.ComponentProps) {
+export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentProps) {
 	return (
 		<div className="site">
 			<HeaderAdmin authUser={loaderData.user} />
@@ -75,7 +71,7 @@ export default function BallanceUserAdminRoute({ loaderData }: Route.ComponentPr
 				authUser={loaderData.user}
 				className="site-main"
 			>
-				<Title mb="lg">Ballance User</Title>
+				<Title mb="lg">Balance User</Title>
 				<DataList>
 					<DataList.Item>
 						<DataList.ItemLabel>Name</DataList.ItemLabel>
@@ -143,14 +139,14 @@ export default function BallanceUserAdminRoute({ loaderData }: Route.ComponentPr
 						order={2}
 						fz="xl"
 					>
-						Ballance Activity
+						Balance Activity
 					</Title>
 					<Group
 						gap="xs"
 						ml="auto"
 					>
 						<ButtonLink
-							to={`/admin/users/${loaderData.recordUser.id}/ballance/update`}
+							to={`/admin/users/${loaderData.recordUser.id}/balance/update`}
 							variant="light"
 							size="sm"
 							fz="xs"
@@ -171,10 +167,25 @@ export default function BallanceUserAdminRoute({ loaderData }: Route.ComponentPr
 				{loaderData.recordUser.balances &&
 				'activities' in loaderData.recordUser.balances ? (
 					loaderData.recordUser.balances.activities.length ? (
-						<Timeline>
+						<Timeline
+							active={loaderData.recordUser.balances.activities.length}
+							lineWidth={2}
+							bulletSize={20}
+						>
 							{loaderData.recordUser.balances.activities.map((activity, index) => (
 								<Timeline.Item
 									key={`${activity.type}-${index}`}
+									bullet={
+										activity.type === 'DAILY_BONUS' ? (
+											<LuGift />
+										) : activity.type === 'GIVEAWAY' ? (
+											<LuHandHeart />
+										) : activity.type === 'KARSA' ? (
+											<TbApiApp />
+										) : activity.type === 'PURCHASE' ? (
+											<LiaMoneyBillWaveSolid />
+										) : undefined
+									}
 									title={
 										<Text
 											span
@@ -197,9 +208,15 @@ export default function BallanceUserAdminRoute({ loaderData }: Route.ComponentPr
 									<Text
 										size="xs"
 										mt={4}
-										title={dayjs(activity.createdAt).toString()}
+										title={dayjs(
+											activity.createdAt,
+											loaderData.user.timezone,
+										).toString()}
 									>
-										{dayjs(activity.createdAt).fromNow()}
+										{dayjs(
+											activity.createdAt,
+											loaderData.user.timezone,
+										).fromNow()}
 									</Text>
 								</Timeline.Item>
 							))}
@@ -209,11 +226,11 @@ export default function BallanceUserAdminRoute({ loaderData }: Route.ComponentPr
 							color="red"
 							title="Error"
 						>
-							Ballance Activity failed to load
+							Balance Activity failed to load
 						</Alert>
 					)
 				) : (
-					<Text c="dimmed">Ballance Activity not found</Text>
+					<Text c="dimmed">Balance Activity not found</Text>
 				)}
 			</AdminPanel>
 			<Footer />

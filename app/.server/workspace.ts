@@ -111,7 +111,7 @@ export const actionSubmissionKarsaAI = async ({
         const prisma = prismaClient(context);
         const cfEnv = cfContext(context).env;
 
-        const [karsaApp, userBallance] = await prisma.$transaction([
+        const [karsaApp, userBalance] = await prisma.$transaction([
             prisma.karsaApp.findUniqueOrThrow({
                 where: {
                     name: body.app,
@@ -134,7 +134,7 @@ export const actionSubmissionKarsaAI = async ({
         ])
 
         const karsaAppCostToken = karsaApp.tokenPromo ?? karsaApp.token
-        const userTotalToken = userBallance.tokenDaily + userBallance.token
+        const userTotalToken = userBalance.tokenDaily + userBalance.token
 
         if (userTotalToken < karsaAppCostToken) {
             throw new Error("Insufficient tokens to perform this action.");
@@ -163,16 +163,16 @@ export const actionSubmissionKarsaAI = async ({
             } : Prisma.skip
         } satisfies Prisma.KarsaUncheckedCreateWithoutBalanceActivityInput
 
-        let newTokenRegular = userBallance.token;
-        let newTokenDaily = userBallance.tokenDaily;
+        let newTokenRegular = userBalance.token;
+        let newTokenDaily = userBalance.tokenDaily;
 
-        if (userBallance.tokenDaily >= karsaAppCostToken) {
+        if (userBalance.tokenDaily >= karsaAppCostToken) {
             // Daily tokens are enough to cover the whole cost
-            newTokenDaily = userBallance.tokenDaily - karsaAppCostToken;
+            newTokenDaily = userBalance.tokenDaily - karsaAppCostToken;
         } else {
             // Daily tokens aren't enough, drain them and take the rest from regular tokens
-            const remainingCost = karsaAppCostToken - userBallance.tokenDaily;
-            newTokenRegular = userBallance.token - remainingCost;
+            const remainingCost = karsaAppCostToken - userBalance.tokenDaily;
+            newTokenRegular = userBalance.token - remainingCost;
             newTokenDaily = 0;
         }
 
@@ -181,8 +181,8 @@ export const actionSubmissionKarsaAI = async ({
                 where: {
                     userId: authSession.user.id,
                     // Optimistic concurrency check (ensures balance hasn't changed between read and update)
-                    token: userBallance.token,
-                    tokenDaily: userBallance.tokenDaily
+                    token: userBalance.token,
+                    tokenDaily: userBalance.tokenDaily
                 },
                 data: {
                     token: newTokenRegular,
@@ -191,9 +191,9 @@ export const actionSubmissionKarsaAI = async ({
                         create: {
                             type: 'KARSA',
                             token: karsaAppCostToken,
-                            tokenBefore: userBallance.token,
+                            tokenBefore: userBalance.token,
                             tokenAfter: newTokenRegular,
-                            tokenDailyBefore: userBallance.tokenDaily,
+                            tokenDailyBefore: userBalance.tokenDaily,
                             tokenDailyAfter: newTokenDaily,
                             karsa: {
                                 create: payloadKarsa

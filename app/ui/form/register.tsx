@@ -110,8 +110,9 @@ export default function FormRegister(props: BoxProps) {
 			</Stack>
 			<fetcher.Form
 				method="post"
-				onSubmit={form.onSubmit((values) => {
+				onSubmit={form.onSubmit((values, e) => {
 					setErrorMessage(null);
+					e?.preventDefault();
 					fetcher.submit(values, {
 						method: 'post',
 					});

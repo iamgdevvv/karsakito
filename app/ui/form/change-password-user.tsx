@@ -71,7 +71,8 @@ export default function FormChangePasswordUser({
 			) : null}
 			<fetcher.Form
 				method="post"
-				onSubmit={form.onSubmit((values) => {
+				onSubmit={form.onSubmit((values, e) => {
+					e?.preventDefault();
 					setErrorMessage(null);
 					fetcher.submit(values, {
 						method: 'post',

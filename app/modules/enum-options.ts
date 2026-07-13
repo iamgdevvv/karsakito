@@ -1,6 +1,6 @@
 import type { LanguageApp } from '~app-modules/schema/app';
 import { TimezoneSchema } from '~app-modules/schema/enum';
-import type { KarsaAppsCategory, KarsaAppsName, UserRole } from '~generated/prisma/enums';
+import { type KarsaAppsCategory, type KarsaAppsName, type UserRole } from '~generated/prisma/enums';
 
 export const amountTokenDaily = 10;
 

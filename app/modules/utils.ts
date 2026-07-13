@@ -33,10 +33,8 @@ export const valueBooleanOrFalse = (value?: boolean | null | undefined): boolean
 	return value ?? false;
 };
 
-export function dayjs(date?: dayjsX.ConfigType, timezone?: number) {
-	return dayjsX(date)
-		.startOf('day')
-		.utcOffset(timezone || 7, true);
+export function dayjs(date?: dayjsX.ConfigType, timezone?: number | string) {
+	return dayjsX(date).utcOffset(timezone || 7, true);
 }
 
 export function qsParse(payload: string) {

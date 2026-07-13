@@ -331,9 +331,9 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 															<Menu.Item
 																component={Link}
 																color="blue"
-																to={`/admin/users/${user.id}/ballance`}
+																to={`/admin/users/${user.id}/balance`}
 															>
-																Ballance
+																Balance
 															</Menu.Item>
 															<Menu.Item
 																component={Link}
