@@ -139,7 +139,7 @@ export const actionSubmissionKarsaAI = async ({
             })
         ])
 
-        const karsaAppCostToken = karsaApp.tokenPromo ?? karsaApp.token
+        const karsaAppCostToken = karsaApp.tokenPromo || karsaApp.token
         const userTotalToken = userBalance.tokenDaily + userBalance.token
 
         if (userTotalToken < karsaAppCostToken) {

@@ -5,6 +5,7 @@ import {
 	DataList,
 	Group,
 	Loader,
+	Stack,
 	Text,
 	Timeline,
 	Title,
@@ -273,29 +274,79 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 										</Text>
 									}
 								>
-									{activity.description ? (
-										<Text
-											c="dimmed"
-											fw={400}
-											size="xs"
-										>
-											{activity.description}
-										</Text>
-									) : null}
-
-									<Text
-										size="xs"
-										mt={4}
+									<Stack
+										gap={4}
 										title={dayjs(
 											activity.createdAt,
 											loaderData.user.timezone,
 										).toString()}
 									>
-										{dayjs(
-											activity.createdAt,
-											loaderData.user.timezone,
-										).fromNow()}
-									</Text>
+										<DataList
+											size="xs"
+											gap={2}
+										>
+											<DataList.Item>
+												<DataList.ItemLabel>Token</DataList.ItemLabel>
+												<DataList.ItemValue
+													fw={700}
+													c={activity.type === 'KARSA' ? 'red' : 'green'}
+												>
+													{activity.type === 'KARSA' ? '-' : '+'}
+													{activity.token}
+												</DataList.ItemValue>
+											</DataList.Item>
+											<DataList.Item>
+												<DataList.ItemLabel>
+													Token Before
+												</DataList.ItemLabel>
+												<DataList.ItemValue>
+													{activity.tokenBefore}
+												</DataList.ItemValue>
+											</DataList.Item>
+											<DataList.Item>
+												<DataList.ItemLabel>Token After</DataList.ItemLabel>
+												<DataList.ItemValue>
+													{activity.tokenAfter}
+												</DataList.ItemValue>
+											</DataList.Item>
+											<DataList.Item>
+												<DataList.ItemLabel>
+													Token Daily Before
+												</DataList.ItemLabel>
+												<DataList.ItemValue>
+													{activity.tokenDailyBefore}
+												</DataList.ItemValue>
+											</DataList.Item>
+											<DataList.Item>
+												<DataList.ItemLabel>
+													Token Daily After
+												</DataList.ItemLabel>
+												<DataList.ItemValue>
+													{activity.tokenDailyAfter}
+												</DataList.ItemValue>
+											</DataList.Item>
+										</DataList>
+
+										{activity.description ? (
+											<Text
+												c="dimmed"
+												fw={400}
+												size="xs"
+											>
+												{activity.description}
+											</Text>
+										) : null}
+
+										<Text
+											span
+											size="xs"
+										>
+											{dayjs(
+												activity.createdAt,
+												loaderData.user.timezone,
+											).fromNow()}
+										</Text>
+									</Stack>
 								</Timeline.Item>
 							))}
 						</Timeline>

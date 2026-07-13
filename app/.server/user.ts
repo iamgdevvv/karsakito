@@ -52,8 +52,8 @@ export const actionCreateUser = async ({
 							create: {
 								type: 'DAILY_BONUS',
 								token: amountTokenDaily,
-								tokenBefore: 0,
-								tokenAfter: amountTokenDaily
+								tokenDailyBefore: 0,
+								tokenDailyAfter: amountTokenDaily
 							}
 						}
 					}

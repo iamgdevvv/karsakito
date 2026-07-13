@@ -12,7 +12,6 @@ import {
 	type BoxProps,
 } from '@mantine/core';
 import { schemaResolver, useForm } from '@mantine/form';
-import { notifications } from '@mantine/notifications';
 import { useEffect, useMemo, useState } from 'react';
 import { PiCoinsFill } from 'react-icons/pi';
 import { useFetcher } from 'react-router';
@@ -29,10 +28,12 @@ import type { ActionSubmissionKarsaAI } from '~app-server/workspace';
 
 export default function FormKarsaPidato({
 	data,
+	onSubmitProgress,
 	onSubmit,
 	...props
 }: BoxProps & {
 	data?: KarsaPlain['promptJson'] | PayloadKarsaPidato;
+	onSubmitProgress: () => void;
 	onSubmit: (values: NonNullable<PayloadWindowWorkspace['karsa']>) => void;
 }) {
 	const fetcher = useFetcher<ActionSubmissionKarsaAI>();
@@ -70,8 +71,6 @@ export default function FormKarsaPidato({
 	});
 
 	useEffect(() => {
-		notifications.clean();
-
 		if (!isLoading && fetcher.data) {
 			if ('error' in fetcher.data) {
 				setErrorMessage(fetcher.data.error);
@@ -101,6 +100,7 @@ export default function FormKarsaPidato({
 				onSubmit={form.onSubmit((values, e) => {
 					e?.preventDefault();
 					setErrorMessage(null);
+					onSubmitProgress();
 					const payload = PayloadSubmissionKarsaSchema.safeParse({
 						app: 'pidato',
 						payload: values,

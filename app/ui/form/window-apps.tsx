@@ -1,9 +1,8 @@
 import { Box, Skeleton, Tabs, Text, type TabsProps } from '@mantine/core';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { HiOutlineCommandLine } from 'react-icons/hi2';
 import { IoMdOptions } from 'react-icons/io';
 import Markdown from 'react-markdown';
-import { useNavigation } from 'react-router';
 import remarkGfm from 'remark-gfm';
 import type { PayloadWindowWorkspace } from '~app-modules/schema/workspace';
 import FormKarsaPidato from '~app-ui/form/karsa/pidato';
@@ -16,20 +15,15 @@ export function WindowAppKarsaWriter({
 	data: PayloadWindowWorkspace;
 	onSubmit: (values: NonNullable<PayloadWindowWorkspace['karsa']>) => void;
 }) {
-	const navigation = useNavigation();
 	const [resultAI, setResultAI] = useState<string | null>(null);
 	const [activeTab, setActiveTab] = useState<'options' | 'result' | null>('options');
-
-	useEffect(() => {
-		if (navigation.state === 'submitting' || (navigation.state === 'loading' && !resultAI)) {
-			setActiveTab('result');
-		}
-	}, [navigation.state, resultAI]);
 
 	return (
 		<Tabs
 			variant="outline"
 			{...props}
+			keepMounted
+			keepMountedMode="display-none"
 			value={activeTab}
 			classNames={{
 				root: 'h-full',
@@ -96,10 +90,13 @@ export function WindowAppKarsaWriter({
 					{data.app === 'pidato' ? (
 						<FormKarsaPidato
 							data={data}
+							onSubmitProgress={() => {
+								setResultAI(null);
+								setActiveTab('result');
+							}}
 							onSubmit={(values) => {
 								onSubmit(values);
 								setResultAI(values.result);
-								setActiveTab('result');
 							}}
 						/>
 					) : null}
@@ -107,7 +104,7 @@ export function WindowAppKarsaWriter({
 			</Tabs.Panel>
 
 			<Tabs.Panel value="result">
-				{navigation.state === 'submitting' || navigation.state === 'loading' ? (
+				{resultAI === null ? (
 					<Skeleton
 						w="100%"
 						h="100%"
