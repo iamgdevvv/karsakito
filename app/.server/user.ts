@@ -520,13 +520,11 @@ export const actionGetUsers = async <T = User>({
 export const actionGetUser = async ({
 	userId,
 	withBalance,
-	activityDateRange,
 	request,
 	context
 }: {
 	userId: User['id']
 	withBalance?: boolean
-	activityDateRange?: [Date, Date]
 	request: Request
 	context: Readonly<RouterContextProvider>
 }) => {

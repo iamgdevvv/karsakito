@@ -1,11 +1,21 @@
-import { Alert, Badge, DataList, Group, Text, Timeline, Title } from '@mantine/core';
+import {
+	Alert,
+	Badge,
+	Center,
+	DataList,
+	Group,
+	Loader,
+	Text,
+	Timeline,
+	Title,
+} from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import { notifications } from '@mantine/notifications';
 import { useCallback, useMemo } from 'react';
 import { LiaMoneyBillWaveSolid } from 'react-icons/lia';
 import { LuGift, LuHandHeart } from 'react-icons/lu';
 import { TbApiApp } from 'react-icons/tb';
-import { replace, useSearchParams } from 'react-router';
+import { replace, useNavigation, useSearchParams } from 'react-router';
 import { labelUserRole } from '~app-modules/enum-options';
 import { metaAdminRoute } from '~app-modules/meta';
 import {
@@ -71,6 +81,7 @@ export function meta({ loaderData }: Route.MetaArgs) {
 }
 
 export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentProps) {
+	const navigation = useNavigation();
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	const queryParams = useMemo(() => {
@@ -185,7 +196,8 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 						<DatePickerInput
 							type="range"
 							size="sm"
-							value={[
+							readOnly={navigation.state === 'loading'}
+							defaultValue={[
 								queryParams.activityStartAt
 									? dayjs(
 											queryParams.activityStartAt,
@@ -202,26 +214,32 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 							onChange={(value) => {
 								const [activityStartAt, activityEndAt] = value || [];
 
-								const payload = PayloadQueryBalanceUserSchema.safeParse({
-									activityStartAt,
-									activityEndAt,
-								});
-
-								if (payload.data) {
-									handlerSearchParams(payload.data);
-								} else {
-									notifications.show({
-										title: 'Error',
-										color: 'orange',
-										message: 'Invalid date range',
+								if (activityStartAt && activityEndAt) {
+									const payload = PayloadQueryBalanceUserSchema.safeParse({
+										activityStartAt,
+										activityEndAt,
 									});
+
+									if (payload.data) {
+										handlerSearchParams(payload.data);
+									} else {
+										notifications.show({
+											title: 'Error',
+											color: 'orange',
+											message: 'Invalid date range',
+										});
+									}
 								}
 							}}
 						/>
 					</Group>
 				</Group>
-				{loaderData.result.data.balances &&
-				'activities' in loaderData.result.data.balances ? (
+				{navigation.state === 'loading' ? (
+					<Center>
+						<Loader />
+					</Center>
+				) : loaderData.result.data.balances &&
+				  'activities' in loaderData.result.data.balances ? (
 					loaderData.result.data.balances.activities.length ? (
 						<Timeline
 							active={loaderData.result.data.balances.activities.length}
