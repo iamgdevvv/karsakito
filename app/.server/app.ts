@@ -148,9 +148,11 @@ export const actionDeleteKarsaApp = async ({
 };
 
 export const actionGetKarsaApps = async <T = KarsaApp>({
+    customParams,
     request,
     context
 }: {
+    customParams?: PayloadQueryKarsaApps
     request: Request
     context: Readonly<RouterContextProvider>
 }): Promise<{
@@ -162,7 +164,10 @@ export const actionGetKarsaApps = async <T = KarsaApp>({
     try {
         const searchPayload = qsParse(new URL(request.url).search);
 
-        const queryParams = PayloadQueryKarsaAppsSchema.parse(searchPayload);
+        const queryParams = PayloadQueryKarsaAppsSchema.parse({
+            ...customParams,
+            ...searchPayload,
+        });
 
         const { nextCursor, previousCursor, total, search, asc, desc, select, ...params } = queryParams
 

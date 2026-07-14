@@ -1,7 +1,9 @@
 import { PrismaD1 } from '@prisma/adapter-d1';
+import dayjs from 'dayjs';
+import dayjsTimezone from 'dayjs/plugin/timezone';
+import dayjsUTC from 'dayjs/plugin/utc';
 import { createContext, createRequestHandler, RouterContextProvider } from 'react-router';
 import { amountTokenDaily } from '~app-modules/enum-options';
-import { dayjs } from '~app-modules/utils';
 import { PrismaClient } from '~generated/prisma/client';
 
 export const prismaContext = createContext<PrismaClient>();
@@ -18,6 +20,9 @@ const requestHandler = createRequestHandler(
 	() => import('virtual:react-router/server-build'),
 	import.meta.env.MODE,
 );
+
+dayjs.extend(dayjsUTC);
+dayjs.extend(dayjsTimezone);
 
 export default {
 	async fetch(request, env, ctx) {
@@ -62,10 +67,9 @@ export default {
 			return;
 		}
 
-		const scheduledDate = dayjs(controller.scheduledTime);
-		const now = scheduledDate.utc();
+		const scheduledAt = dayjs(new Date(controller.scheduledTime));
 
-		console.log(`Cron refill tokenDaily processed at ${now.toISOString()}`);
+		console.log(`Cron refill tokenDaily started at ${scheduledAt.toISOString()}`);
 
 		const adapter = new PrismaD1(env.DB);
 		const prisma = new PrismaClient({ adapter });
@@ -81,7 +85,7 @@ export default {
 					.map((u) => u.timezone)
 					.filter((tz) => {
 						try {
-							return scheduledDate.tz(tz).hour() === 0;
+							return scheduledAt.tz(tz).hour() === 0;
 						} catch (e) {
 							console.error(`Invalid timezone in DB: ${tz}`, e);
 							return false;
@@ -158,6 +162,7 @@ export default {
 				);
 			} catch (error) {
 				console.error('Error saat menjalankan refillToken:', error);
+				throw error;
 			}
 		};
 

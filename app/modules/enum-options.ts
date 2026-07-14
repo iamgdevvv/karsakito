@@ -25,7 +25,7 @@ export const labelAppName = {
 	doabersama: 'Doa Bersama',
 	petuah: 'Petuah',
 	tagline: 'Tagline',
-	slogan: 'Sloga',
+	slogan: 'Slogan',
 	motto: 'Motto',
 	tekateki: 'Teka Teki',
 	parafrase: 'Parafrasa',

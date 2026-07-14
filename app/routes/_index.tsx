@@ -224,81 +224,84 @@ export default function AppsRoute({ loaderData }: Route.ComponentProps) {
 							)),
 						)}
 					</SimpleGrid>
-					<Stack
-						gap="xs"
-						h="100%"
-						py="lg"
-						px={{
-							base: 'md',
-							sm: 'lg',
-						}}
-						bg="white"
-						bdrs="lg"
-						bd="1px solid gray.3"
-					>
-						<Title
-							order={2}
-							fz="md"
+					<Box>
+						<Stack
+							pos="sticky"
+							top={20}
+							gap="xs"
+							py="lg"
+							px={{
+								base: 'md',
+								sm: 'lg',
+							}}
+							bg="white"
+							bdrs="lg"
+							bd="1px solid gray.3"
 						>
-							Saved Workspace
-						</Title>
-						<DataList orientation="vertical">
-							<DataList.Item
-								component={Link}
-								// @ts-expect-error
-								to={`/workspace/1`}
-								className="group"
+							<Title
+								order={2}
+								fz="md"
 							>
-								<DataList.ItemLabel fz="xs">
-									{dayjs().format('DD MMM YYYY')}
-								</DataList.ItemLabel>
-								<DataList.ItemValue
-									fz="sm"
-									fw={500}
-									c="primary"
-									className="group-hover:underline"
+								Saved Workspace
+							</Title>
+							<DataList orientation="vertical">
+								<DataList.Item
+									component={Link}
+									// @ts-expect-error
+									to={`/workspace/1`}
+									className="group"
 								>
-									AI Bahan Ajar Budaya Minangkabau
-								</DataList.ItemValue>
-							</DataList.Item>
-							<DataList.Item
-								component={Link}
-								// @ts-expect-error
-								to={`/workspace/1`}
-								className="group"
-							>
-								<DataList.ItemLabel fz="xs">
-									{dayjs().format('DD MMM YYYY')}
-								</DataList.ItemLabel>
-								<DataList.ItemValue
-									fz="sm"
-									fw={500}
-									c="primary"
-									className="group-hover:underline"
+									<DataList.ItemLabel fz="xs">
+										{dayjs().format('DD MMM YYYY')}
+									</DataList.ItemLabel>
+									<DataList.ItemValue
+										fz="sm"
+										fw={500}
+										c="primary"
+										className="group-hover:underline"
+									>
+										AI Bahan Ajar Budaya Minangkabau
+									</DataList.ItemValue>
+								</DataList.Item>
+								<DataList.Item
+									component={Link}
+									// @ts-expect-error
+									to={`/workspace/1`}
+									className="group"
 								>
-									Draft Konten Youtube XXYYZZZ
-								</DataList.ItemValue>
-							</DataList.Item>
-							<DataList.Item
-								component={Link}
-								// @ts-expect-error
-								to={`/workspace/1`}
-								className="group"
-							>
-								<DataList.ItemLabel fz="xs">
-									{dayjs().format('DD MMM YYYY')}
-								</DataList.ItemLabel>
-								<DataList.ItemValue
-									fz="sm"
-									fw={500}
-									c="primary"
-									className="group-hover:underline"
+									<DataList.ItemLabel fz="xs">
+										{dayjs().format('DD MMM YYYY')}
+									</DataList.ItemLabel>
+									<DataList.ItemValue
+										fz="sm"
+										fw={500}
+										c="primary"
+										className="group-hover:underline"
+									>
+										Draft Konten Youtube XXYYZZZ
+									</DataList.ItemValue>
+								</DataList.Item>
+								<DataList.Item
+									component={Link}
+									// @ts-expect-error
+									to={`/workspace/1`}
+									className="group"
 								>
-									Pidato Kunjungan Daerah Bapak XXYYZZ
-								</DataList.ItemValue>
-							</DataList.Item>
-						</DataList>
-					</Stack>
+									<DataList.ItemLabel fz="xs">
+										{dayjs().format('DD MMM YYYY')}
+									</DataList.ItemLabel>
+									<DataList.ItemValue
+										fz="sm"
+										fw={500}
+										c="primary"
+										className="group-hover:underline"
+									>
+										Pidato Kunjungan Daerah Bapak XXYYZZ
+									</DataList.ItemValue>
+								</DataList.Item>
+							</DataList>
+						</Stack>
+					</Box>
 				</SimpleGrid>
 				<Stack
 					mt={{

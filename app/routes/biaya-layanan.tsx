@@ -30,7 +30,13 @@ import type { Route } from './+types/biaya-layanan';
 export async function loader({ request, context }: Route.LoaderArgs) {
 	const authSession = await authGetSession(request);
 	const user = authSession.get('user');
-	const karsaApps = await actionGetKarsaApps({ request, context });
+	const karsaApps = await actionGetKarsaApps({
+		request,
+		context,
+		customParams: {
+			total: 1000,
+		},
+	});
 
 	return {
 		user,
