@@ -59,7 +59,7 @@ export const actionLogin = async ({
 
 		let redirectUrl = _redirect || new URL(request.url).searchParams.get('redirect');
 
-		return replace(redirectUrl || '/apps', {
+		return replace(redirectUrl || '/', {
 			headers: {
 				'Set-Cookie': await authLoginSession(authSession),
 			},

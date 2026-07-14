@@ -1,25 +1,23 @@
+import { Carousel } from '@mantine/carousel';
 import {
+	Accordion,
+	AspectRatio,
 	Badge,
-	Blockquote,
-	Card,
+	Box,
 	Container,
-	Grid,
-	Paper,
+	Flex,
 	SimpleGrid,
 	Stack,
 	Text,
 	Title,
-	rem,
-	Group,
-	Box,
-	Divider,
-	ThemeIcon,
 } from '@mantine/core';
-import { useState, useEffect, useRef } from 'react';
-import { FiZap, FiShield, FiTrendingUp, FiUsers } from 'react-icons/fi';
+import { LuArrowRight } from 'react-icons/lu';
 import { metaPublicRoute } from '~app-modules/meta';
 import { cfContext } from '~app-server/context';
 import { authGetSession } from '~app-server/session';
+import { Image } from '~app-ui/components/image';
+import { TestimonialCard } from '~app-ui/components/testimonial';
+import Banner from '~app-ui/layouts/banner';
 import Footer from '~app-ui/layouts/footer';
 import { Header } from '~app-ui/layouts/header';
 
@@ -37,788 +35,589 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 
 export function meta({ loaderData }: Route.MetaArgs) {
 	return metaPublicRoute({
-		title: 'Tentang Perusahaan | KarsaKito',
+		title: 'KarsaKito',
 		description:
-			'Pelajari identitas, nilai inti, dan visi besar KarsaKito dalam mentransformasi ekonomi kreatif Indonesia.',
+			'Platform AI untuk Mengakselerasi Pemanfaatan Bahasa dan Warisan Budaya Daerah',
 		noIndex: loaderData.noIndex,
 	});
 }
 
-function AnimatedCounter({
-	target,
-	prefix = '',
-	suffix = '',
-	duration = 2000,
-}: {
-	target: number;
-	prefix?: string;
-	suffix?: string;
-	duration?: number;
-}) {
-	const [count, setCount] = useState(0);
-	const [hasStarted, setHasStarted] = useState(false);
-	const ref = useRef<HTMLSpanElement>(null);
+const solutions = [
+	{
+		title: 'KarsaLingo',
+		desc: 'Media belajar modern, interaktif, dan adaptif untuk penguasaan bahasa daerah yang dirancang khusus untuk membantu transisi pemahaman bahasa lintas generasi.',
+	},
+	{
+		title: 'KarsaWriter',
+		desc: 'Asisten produktivitas berbasis kecerdasan buatan untuk menyusun draf konten, naskah kreatif, karya sastra tradisional, serta artikel formal berbahasa lokal secara efisien.',
+	},
+	{
+		title: 'KarsaLator',
+		desc: 'Sistem translasi kontekstual tingkat lanjut yang akurat, menjamin ketepatan makna berdasarkan basis pengetahuan adat yang dapat dipertanggungjawabkan.',
+	},
+	{
+		title: 'KarsaLisa',
+		desc: 'Modul analisis bahasa cerdas untuk mengevaluasi kesopanan berbahasa, ketepatan tata bahasa daerah, serta kecocokan konteks sosial penggunaan kata.',
+	},
+	{
+		title: 'KarsaPedia',
+		desc: 'Ensiklopedia warisan budaya dan adat nusantara berbasis Retrieval-Augmented Generation (RAG) yang menyediakan akses informasi tepercaya secara praktis.',
+	},
+	{
+		title: 'KarsaFrase',
+		desc: 'Alat restrukturisasi dan parafrase teks otomatis guna mengolah ragam bentuk kalimat bahasa lokal tanpa merubah esensi makna budaya asli.',
+	},
+];
 
-	useEffect(() => {
-		const observer = new IntersectionObserver(
-			(entries) => {
-				if (entries[0].isIntersecting && !hasStarted) {
-					setHasStarted(true);
-				}
-			},
-			{ threshold: 0.5 },
-		);
-		if (ref.current) observer.observe(ref.current);
-		return () => observer.disconnect();
-	}, [hasStarted]);
+const teams = [
+	{
+		name: 'Grafis Nuresa',
+		position: 'Project Lead, Business Analyst, dan UI/UX Strategist',
+		desc: 'Memimpin pengembangan produk, menyusun strategi bisnis, merancang pengalaman pengguna, serta memastikan solusi yang dibangun selaras dengan kebutuhan pengguna.',
+		image: '/images/grafis-nuresa.jpg',
+	},
+	{
+		name: 'Muhammad Attan',
+		position: 'AI/Backend Developer',
+		desc: 'Mengembangkan arsitektur backend, mengintegrasikan layanan AI, merancang API, serta memastikan performa, keamanan, dan skalabilitas sistem.',
+		image: '/images/muhammad-attan.jpg',
+	},
+	{
+		name: 'Okyra Asyrafi Guchan',
+		position: 'Full Stack Developer',
+		desc: 'Membangun fitur end-to-end, mengintegrasikan frontend dan backend, serta memastikan implementasi berjalan optimal di seluruh alur aplikasi.',
+		image: '/images/okyra-asyrafi-guchan.jpg',
+	},
+	{
+		name: 'Pandu Pratama Handika',
+		position: 'Frontend Developer',
+		desc: 'Mengimplementasikan antarmuka yang responsif, interaktif, dan mudah digunakan dengan fokus pada performa, aksesibilitas, serta pengalaman pengguna yang konsisten.',
+		image: '/images/pandu-pratama-handika.jpg',
+	},
+];
 
-	useEffect(() => {
-		if (!hasStarted) return;
-		let startTimestamp: number | null = null;
-		const step = (timestamp: number) => {
-			if (!startTimestamp) startTimestamp = timestamp;
-			const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-			const easeProgress = 1 - Math.pow(1 - progress, 4);
-			setCount(Math.floor(easeProgress * target));
-			if (progress < 1) {
-				window.requestAnimationFrame(step);
-			} else {
-				setCount(target);
-			}
-		};
-		window.requestAnimationFrame(step);
-	}, [hasStarted, target, duration]);
+const testimonials = [
+	{
+		quote: "The platform significantly streamlined our content creation workflow while preserving the authenticity of local cultural values. It's intuitive, fast, and delivers consistently high-quality results.",
+		name: 'Sarah Wijaya',
+		position: 'Head of Communications, Nusantara Creative Hub',
+	},
+	{
+		quote: 'We reduced the time needed to prepare educational materials from hours to minutes. This has become an essential tool for our teaching activities.',
+		name: 'Ahmad Pratama',
+		position: 'Lecturer, Faculty of Cultural Studies',
+	},
+	{
+		quote: 'The AI-generated content feels natural and contextually relevant. It has helped our team produce more engaging campaigns with far less effort.',
+		name: 'Michelle Tan',
+		position: 'Digital Marketing Manager',
+	},
+	{
+		quote: 'As a content creator, I appreciate how easy it is to generate ideas and polished drafts without losing my own creative voice.',
+		name: 'Rizky Saputra',
+		position: 'Content Creator',
+	},
+	{
+		quote: 'This solution enables us to promote regional culture more effectively while maintaining accuracy and consistency across our digital channels.',
+		name: 'Dewi Lestari',
+		position: 'Public Relations Officer, Regional Tourism Office',
+	},
+	{
+		quote: 'The user experience is clean and straightforward, making it accessible even for team members with minimal technical experience.',
+		name: 'Kevin Hartono',
+		position: 'Product Manager',
+	},
+];
 
+const faqs = [
+	{
+		title: 'How does the AI generate content?',
+		content:
+			'The AI generates content using a combination of natural language processing and machine learning algorithms.',
+	},
+	{
+		title: 'Can i customize the AI-generated content?',
+		content:
+			'Yes, you can customize the AI-generated content to meet your specific needs untuk Mengakselerasi Pemanfaatan Bahasa dan Warisan Budaya Daerah',
+	},
+	{
+		title: 'What types of content can the AI generate?',
+		content:
+			'The AI can generate a wide range of content types, including text, images, videos, and more.',
+	},
+	{
+		title: 'Is the AI-generated content plagiarism-free?',
+		content:
+			'Yes, the AI-generated content is plagiarism-free and is not copied from other sources.',
+	},
+	{
+		title: 'Does the tool have any limitations?',
+		content: 'The tool has no limitations and can be used for any purpose.',
+	},
+];
+
+export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 	return (
-		<span ref={ref}>
-			{prefix}
-			{count}
-			{suffix}
-		</span>
-	);
-}
-
-export default function TentangPage({ loaderData }: Route.ComponentProps) {
-	return (
-		<div style={{ backgroundColor: '#f8f9fa', minHeight: '100vh', overflowX: 'hidden' }}>
+		<div className="site">
 			<Header authUser={loaderData.user} />
-
-			{/* 1. THE "WHO WE ARE" HERO (Enterprise Dark Aesthetic) */}
-			<section
-				className="relative py-32 md:py-48"
-				style={{
-					backgroundColor: '#0f172a',
-					backgroundImage: 'radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 70%)',
-					borderBottom: '1px solid #1e293b',
-				}}
-			>
-				<Container
-					size="lg"
-					className="relative z-10"
+			<main className="site-main">
+				<Banner
+					background="/images/karsakito-beranda-banner.jpg"
+					ctas={[
+						{
+							label: 'Layanan KarsaKito',
+							to: '/layanan',
+							variant: 'light',
+						},
+						{
+							label: 'Biaya Layanan',
+							to: '/biaya-layanan',
+							rightSection: <LuArrowRight size={20} />,
+						},
+					]}
 				>
-					<Stack
-						align="center"
-						gap="xl"
+					<Text
+						span
+						size="xs"
+						fw={700}
+						c="primary"
+						tt="uppercase"
 					>
-						<Badge
-							size="lg"
-							variant="outline"
-							color="blue.4"
-							radius="sm"
-							style={{
-								letterSpacing: rem(2),
-								backgroundColor: 'rgba(59, 130, 246, 0.1)',
+						KarsaKito
+					</Text>
+					<Title>
+						Platform AI untuk Mengakselerasi Pemanfaatan Bahasa dan Warisan Budaya
+						Daerah
+					</Title>
+					<Text>
+						KarsaKito menghadirkan ekosistem AI yang mengintegrasikan pembelajaran
+						bahasa daerah, pembuatan karya, penerjemahan, parafrase, analisis penggunaan
+						bahasa, serta ensiklopedia budaya dalam satu platform.
+					</Text>
+				</Banner>
+
+				{/* 1. SEKSI SOCIAL PROOF (Didukung Oleh - Statis & Proporsional) */}
+				<Box
+					component="section"
+					bg="white"
+					py={{
+						base: 48,
+						sm: 60,
+						lg: 80,
+					}}
+					className="z-10 w-full md:sticky md:top-16"
+				>
+					<Container>
+						<Stack
+							align="center"
+							gap="xl"
+						>
+							<Text
+								span
+								display="inline-block"
+								size="xs"
+								tt="uppercase"
+								ta="center"
+								c="gray.6"
+							>
+								Didukung &amp; dipercaya oleh
+							</Text>
+							<Flex
+								align="center"
+								wrap="wrap"
+								justify="center"
+								gap={{
+									base: 'lg',
+									md: 'xl',
+									lg: 48,
+								}}
+							>
+								<Image
+									src="/images/logo/logo-bankindonesia.svg"
+									alt="Bank Indonesia"
+									objectFit="contain"
+									w="auto"
+									h="auto"
+									maw={200}
+									mah={60}
+									className="opacity-80 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+								/>
+								<Image
+									src="/images/logo/logo-ojk.svg"
+									alt="OJK"
+									w="auto"
+									h="auto"
+									maw={200}
+									mah={60}
+									className="opacity-80 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+								/>
+								<Image
+									src="/images/logo/logo-lppi.svg"
+									alt="LPPI"
+									w="auto"
+									h="auto"
+									maw={200}
+									mah={60}
+									className="opacity-80 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+								/>
+							</Flex>
+						</Stack>
+					</Container>
+				</Box>
+
+				{/* 2. PANEL 1: PROBLEM VALIDATION (Responsive Sticky - z-10) */}
+				<Box
+					component="section"
+					bg="gray.0"
+					py={{
+						base: 48,
+						sm: 60,
+						lg: 80,
+					}}
+					className="z-10 flex h-auto w-full border-t border-slate-200 shadow-[0_-20px_40px_rgba(0,0,0,0.02)] md:sticky md:top-16"
+				>
+					<Container className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-12">
+						<div className="md:col-span-6">
+							<Badge
+								variant="light"
+								color="red"
+								size="lg"
+								fz={10}
+								fw={500}
+								mb="sm"
+							>
+								Problem Validation
+							</Badge>
+							<h2 className="text-2xl leading-tight font-black tracking-tight text-slate-900 sm:text-3xl md:text-5xl">
+								Akar Masalah: Minimnya Dukungan Teknologi Produktivitas Bahasa
+								Daerah.
+							</h2>
+						</div>
+						<Stack className="md:col-span-6">
+							<Text fw={300}>
+								Masyarakat menghadapi hambatan nyata ketika ingin mempelajari,
+								menggunakan, atau menghasilkan karya berbasis bahasa daerah karena
+								kesulitan memahami kosakata, keterbatasan media belajar modern,
+								serta sulitnya mengakses informasi adat secara praktis.
+							</Text>
+							<Text fw={300}>
+								Saat ini teknologi AI global telah membantu penulisan dalam bahasa
+								global, namun dukungan serupa untuk bahasa daerah masih sangat
+								terbatas pada aspek tata bahasa, kesopanan (KarsaLisa), dan
+								pengetahuan adat. Jika dibiarkan, transfer pengetahuan budaya
+								antargenerasi berisiko terputus.
+							</Text>
+						</Stack>
+					</Container>
+				</Box>
+
+				{/* 3. PANEL 2: SOLUTION APPROACH - PART 1 (Responsive Sticky - z-20) */}
+				<Box
+					pos="relative"
+					component="section"
+					bg="white"
+					py={{
+						base: 48,
+						sm: 60,
+						lg: 80,
+					}}
+					className="z-20"
+				>
+					<Container className="flex w-full flex-col">
+						<Box
+							w="100%"
+							maw={680}
+						>
+							<Badge
+								variant="light"
+								size="lg"
+								fz={10}
+								fw={500}
+								mb="sm"
+							>
+								SOLUTION APPROACH
+							</Badge>
+							<Title
+								order={2}
+								mb="md"
+							>
+								Ekosistem AI Terintegrasi Berbasis RAG
+							</Title>
+							<Text
+								c="gray.6"
+								fz={{
+									base: 'sm',
+									lg: 'md',
+								}}
+							>
+								KarsaKito mengintegrasikan knowledge base budaya terstruktur dengan
+								teknologi Retrieval-Augmented Generation (RAG) untuk menghasilkan
+								respons yang kontekstual dan relevan, diawali melalui implementasi
+								Bahasa Minangkabau.
+							</Text>
+						</Box>
+
+						<SimpleGrid
+							spacing={0}
+							cols={{
+								base: 1,
+								md: 2,
 							}}
+							mt="xl"
+							className="border-y border-slate-200"
 						>
-							TENTANG KARSAKITO
-						</Badge>
-						<Title
-							order={1}
-							fw={900}
-							ta="center"
-							style={{
-								maxWidth: '900px',
-								letterSpacing: '-0.02em',
-								fontSize: 'clamp(3rem, 6vw, 5rem)',
-								lineHeight: 1.1,
-								color: '#ffffff',
-							}}
-						>
-							Membangun Fondasi Digital untuk Budaya Indonesia.
-						</Title>
-						<Text
-							size="xl"
-							ta="center"
-							style={{ maxWidth: '750px', lineHeight: 1.7, color: '#94a3b8' }}
-							fw={300}
-						>
-							KarsaKito bukan sekadar platform pelestarian. Kami adalah perusahaan
-							pengembang infrastruktur kecerdasan buatan terintegrasi yang
-							memberdayakan bahasa dan budaya lokal menjadi aset ekonomi kreatif
-							berskala global.
-						</Text>
-					</Stack>
-				</Container>
-			</section>
-
-			{/* 2. KARSAKITO IN NUMBERS (Corporate Trust Statistics) */}
-			<section
-				className="py-16 md:py-24"
-				style={{
-					backgroundColor: '#ffffff',
-					borderBottom: '1px solid #e2e8f0',
-					boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
-				}}
-			>
-				<Container size="lg">
-					<SimpleGrid
-						cols={{ base: 2, md: 4 }}
-						spacing="xl"
-						verticalSpacing="xl"
-					>
-						<Stack
-							align="center"
-							gap="xs"
-						>
-							<Text
-								size="3.5rem"
-								fw={900}
-								c="blue.6"
-								style={{ lineHeight: 1, letterSpacing: '-0.03em' }}
-							>
-								<AnimatedCounter target={6} />
-							</Text>
-							<Text
-								fw={700}
-								tt="uppercase"
-								size="sm"
-								c="slate.8"
-								style={{ letterSpacing: rem(1) }}
-							>
-								Modul AI
-							</Text>
-							<Text
-								size="sm"
-								c="dimmed"
-								ta="center"
-							>
-								Infrastruktur terintegrasi
-							</Text>
-						</Stack>
-						<Stack
-							align="center"
-							gap="xs"
-						>
-							<Text
-								size="3.5rem"
-								fw={900}
-								c="blue.6"
-								style={{ lineHeight: 1, letterSpacing: '-0.03em' }}
-							>
-								<AnimatedCounter
-									target={31}
-									suffix="+"
-								/>
-							</Text>
-							<Text
-								fw={700}
-								tt="uppercase"
-								size="sm"
-								c="slate.8"
-								style={{ letterSpacing: rem(1) }}
-							>
-								Responden
-							</Text>
-							<Text
-								size="sm"
-								c="dimmed"
-								ta="center"
-							>
-								Validasi pasar awal
-							</Text>
-						</Stack>
-						<Stack
-							align="center"
-							gap="xs"
-						>
-							<Text
-								size="3.5rem"
-								fw={900}
-								c="blue.6"
-								style={{ lineHeight: 1, letterSpacing: '-0.03em' }}
-							>
-								<AnimatedCounter
-									target={100}
-									suffix="%"
-								/>
-							</Text>
-							<Text
-								fw={700}
-								tt="uppercase"
-								size="sm"
-								c="slate.8"
-								style={{ letterSpacing: rem(1) }}
-							>
-								Kurasi Adat
-							</Text>
-							<Text
-								size="sm"
-								c="dimmed"
-								ta="center"
-							>
-								Akurasi konteks budaya
-							</Text>
-						</Stack>
-						<Stack
-							align="center"
-							gap="xs"
-						>
-							<Text
-								size="3.5rem"
-								fw={900}
-								c="blue.6"
-								style={{ lineHeight: 1, letterSpacing: '-0.03em' }}
-							>
-								<AnimatedCounter
-									target={1}
-									prefix="#"
-								/>
-							</Text>
-							<Text
-								fw={700}
-								tt="uppercase"
-								size="sm"
-								c="slate.8"
-								style={{ letterSpacing: rem(1) }}
-							>
-								Pelopor AI
-							</Text>
-							<Text
-								size="sm"
-								c="dimmed"
-								ta="center"
-							>
-								Bahasa Minangkabau
-							</Text>
-						</Stack>
-					</SimpleGrid>
-				</Container>
-			</section>
-
-			{/* 3. OUR VISION & THE THREAT (Split Layout) */}
-			<section className="py-24 md:py-32">
-				<Container size="lg">
-					<Paper
-						withBorder
-						p={{ base: 'xl', md: 80 }}
-						radius="xl"
-						shadow="xl"
-						style={{ overflow: 'hidden', backgroundColor: '#ffffff' }}
-					>
-						<Grid
-							gap={80}
-							align="center"
-						>
-							<Grid.Col span={{ base: 12, md: 6 }}>
-								<Badge
-									size="md"
-									color="red.6"
-									variant="light"
-									mb="xl"
-									style={{ letterSpacing: rem(1.5) }}
-								>
-									URGENSI MASALAH
-								</Badge>
-								<Title
-									order={2}
-									size="h1"
-									fw={900}
-									mb="xl"
-									style={{
-										lineHeight: 1.2,
-										letterSpacing: '-0.02em',
-										color: '#0f172a',
-									}}
-								>
-									Teknologi Global Hadir, Namun Bahasa Daerah Tertinggal.
-								</Title>
-								<Text
-									size="lg"
-									c="slate.6"
-									fw={400}
-									style={{ lineHeight: 1.8 }}
-								>
-									Saat ini, AI mempercepat produktivitas dalam bahasa
-									internasional. Tanpa dukungan teknologi serupa, bahasa daerah
-									berisiko kehilangan relevansi dalam aktivitas digital
-									sehari-hari. Jika dibiarkan, transfer pengetahuan budaya
-									antargenerasi akan perlahan terputus. KarsaKito lahir secara
-									eksklusif untuk menjembatani kesenjangan tersebut.
-								</Text>
-							</Grid.Col>
-
-							<Grid.Col span={{ base: 12, md: 6 }}>
-								<Box
-									p="xl"
-									style={{
-										backgroundColor: '#f8fafc',
-										borderRadius: '16px',
-										borderLeft: '4px solid #2563eb',
-									}}
+							{solutions.map((solution, index) => (
+								<div
+									key={`solution-${index}`}
+									className="group hover:bg-primary-50 grid grid-cols-1 gap-4 bg-white px-2 py-6 transition-colors duration-300 md:grid-cols-12 md:gap-6 md:px-4 md:py-8"
 								>
 									<Text
+										span
 										size="sm"
-										fw={800}
-										c="blue.7"
-										tt="uppercase"
-										mb="lg"
-										style={{ letterSpacing: rem(1.5) }}
+										fw={700}
+										className="group-hover:text-primary text-gray-600 transition-colors md:col-span-1"
 									>
-										Visi Perusahaan
+										{Number(index + 1).toLocaleString('en-US', {
+											minimumIntegerDigits: 2,
+											useGrouping: false,
+										})}
 									</Text>
-									<Blockquote
-										color="blue"
-										cite="– Manifestasi KarsaKito"
-										radius="sm"
-										p={0}
-										style={{ border: 'none' }}
-									>
-										<Text
-											size="xl"
-											fw={500}
-											c="slate.8"
-											style={{ lineHeight: 1.6, fontStyle: 'italic' }}
-										>
-											"Mengubah paradigma: Budaya lokal bukan lagi sekadar
-											sejarah untuk didokumentasikan, melainkan alat
-											produktivitas yang digunakan secara aktif dalam
-											penelitian, karya kreatif, dan industri digital masa
-											depan."
-										</Text>
-									</Blockquote>
-								</Box>
-							</Grid.Col>
-						</Grid>
-					</Paper>
-				</Container>
-			</section>
-
-			{/* 4. CORE VALUES (Replacing Ecosystem) */}
-			<section
-				className="py-24 md:py-32"
-				style={{ backgroundColor: '#0f172a' }}
-			>
-				<Container size="lg">
-					<Stack
-						align="center"
-						mb={80}
-					>
-						<Title
-							order={2}
-							size="h1"
-							fw={900}
-							ta="center"
-							style={{ letterSpacing: '-0.02em', color: '#ffffff' }}
-						>
-							Nilai Inti KarsaKito
-						</Title>
-						<Text
-							ta="center"
-							size="xl"
-							fw={300}
-							style={{ maxWidth: '800px', color: '#94a3b8' }}
-						>
-							Pilar filosofis yang menjadi landasan setiap baris kode, model AI, dan
-							keputusan bisnis yang kami ambil.
-						</Text>
-					</Stack>
-
-					<SimpleGrid
-						cols={{ base: 1, sm: 2 }}
-						spacing="xl"
-						verticalSpacing="xl"
-					>
-						{[
-							{
-								title: 'Inovasi Berkelanjutan',
-								desc: 'Kami mempelopori arsitektur Retrieval-Augmented Generation (RAG) untuk memastikan efisiensi dan akurasi model bahasa berskala masif.',
-								icon: <FiZap size={32} />,
-							},
-							{
-								title: 'Integritas Budaya',
-								desc: 'AI bukan pengganti pakar. Kami menerapkan mekanisme human-in-the-loop untuk menjaga kemurnian dan kesopanan konteks adat.',
-								icon: <FiShield size={32} />,
-							},
-							{
-								title: 'Ekonomi Kreatif',
-								desc: 'Mentransformasi warisan lisan menjadi layanan profesional (B2B/B2C) yang memiliki potensi komersial tinggi di era ekonomi kreator.',
-								icon: <FiTrendingUp size={32} />,
-							},
-							{
-								title: 'Kolaborasi Inklusif',
-								desc: 'Menyediakan ekosistem partisipatif bagi akademisi, institusi, dan pegiat budaya untuk bersama-sama mengkurasi pengetahuan nasional.',
-								icon: <FiUsers size={32} />,
-							},
-						].map((val, i) => (
-							<Card
-								key={i}
-								withBorder
-								radius="xl"
-								padding="xl"
-								style={{
-									background:
-										'linear-gradient(145deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%)',
-									borderColor: 'rgba(51, 65, 85, 0.5)',
-									backdropFilter: 'blur(12px)',
-									boxShadow: '0 10px 30px -10px rgba(0,0,0,0.5)',
-								}}
-								className="group transition-all duration-500 hover:-translate-y-2 hover:border-blue-500/30 hover:shadow-[0_20px_40px_-15px_rgba(59,130,246,0.2)]"
-							>
-								<ThemeIcon
-									size={64}
-									radius="md"
-									variant="gradient"
-									gradient={{ from: 'blue.7', to: 'cyan.5', deg: 135 }}
-									mb="xl"
-									className="transition-transform duration-500 group-hover:scale-110"
-								>
-									{val.icon}
-								</ThemeIcon>
-								<Title
-									order={3}
-									size="h3"
-									fw={800}
-									mb="sm"
-									style={{ color: '#f8fafc', letterSpacing: '-0.01em' }}
-								>
-									{val.title}
-								</Title>
-								<Text
-									size="md"
-									fw={400}
-									style={{ lineHeight: 1.7, color: '#94a3b8' }}
-								>
-									{val.desc}
-								</Text>
-							</Card>
-						))}
-					</SimpleGrid>
-				</Container>
-			</section>
-
-			{/* 5. MARKET READINESS & IMPACT */}
-			<section
-				className="py-24 md:py-32"
-				style={{ backgroundColor: '#ffffff' }}
-			>
-				<Container size="lg">
-					<Stack
-						align="center"
-						mb={80}
-					>
-						<Badge
-							size="md"
-							color="indigo"
-							variant="light"
-							mb="sm"
-							style={{ letterSpacing: rem(1.5) }}
-						>
-							SKALA DAMPAK
-						</Badge>
-						<Title
-							order={2}
-							size="h1"
-							fw={900}
-							ta="center"
-							style={{ letterSpacing: '-0.02em', color: '#0f172a' }}
-						>
-							Infrastruktur untuk Semua Sektor
-						</Title>
-					</Stack>
-
-					<Grid gap="xl">
-						<Grid.Col span={{ base: 12, md: 4 }}>
-							<Paper
-								p="xl"
-								radius="lg"
-								withBorder
-								shadow="sm"
-								style={{ height: '100%', backgroundColor: '#f8fafc' }}
-							>
-								<Text
-									size="xs"
-									fw={800}
-									c="blue.6"
-									mb="lg"
-									tt="uppercase"
-									style={{ letterSpacing: rem(1.5) }}
-								>
-									01 / Akademik
-								</Text>
-								<Title
-									order={3}
-									size="h4"
-									fw={800}
-									mb="md"
-									c="slate.9"
-								>
-									Pelajar & Peneliti
-								</Title>
-								<Text
-									size="sm"
-									c="slate.6"
-									style={{ lineHeight: 1.7 }}
-								>
-									Solusi riset, pengerjaan tugas, dan analisis sastra daerah
-									secara presisi tanpa membuang waktu mencari referensi manual.
-								</Text>
-							</Paper>
-						</Grid.Col>
-						<Grid.Col span={{ base: 12, md: 4 }}>
-							<Paper
-								p="xl"
-								radius="lg"
-								withBorder
-								shadow="sm"
-								style={{ height: '100%', backgroundColor: '#f8fafc' }}
-							>
-								<Text
-									size="xs"
-									fw={800}
-									c="blue.6"
-									mb="lg"
-									tt="uppercase"
-									style={{ letterSpacing: rem(1.5) }}
-								>
-									02 / Industri
-								</Text>
-								<Title
-									order={3}
-									size="h4"
-									fw={800}
-									mb="md"
-									c="slate.9"
-								>
-									Kreator & Penulis
-								</Title>
-								<Text
-									size="sm"
-									c="slate.6"
-									style={{ lineHeight: 1.7 }}
-								>
-									Akselerasi produksi konten naskah, pidato, dan artikel komersial
-									dengan menjaga keaslian gaya bahasa lokal.
-								</Text>
-							</Paper>
-						</Grid.Col>
-						<Grid.Col span={{ base: 12, md: 4 }}>
-							<Paper
-								p="xl"
-								radius="lg"
-								withBorder
-								shadow="sm"
-								style={{ height: '100%', backgroundColor: '#f8fafc' }}
-							>
-								<Text
-									size="xs"
-									fw={800}
-									c="blue.6"
-									mb="lg"
-									tt="uppercase"
-									style={{ letterSpacing: rem(1.5) }}
-								>
-									03 / B2B & Publik
-								</Text>
-								<Title
-									order={3}
-									size="h4"
-									fw={800}
-									mb="md"
-									c="slate.9"
-								>
-									Institusi & Pemerintah
-								</Title>
-								<Text
-									size="sm"
-									c="slate.6"
-									style={{ lineHeight: 1.7 }}
-								>
-									Digitalisasi arsip museum dan integrasi layanan publik daerah
-									melalui kapabilitas API bahasa dari KarsaKito.
-								</Text>
-							</Paper>
-						</Grid.Col>
-					</Grid>
-				</Container>
-			</section>
-
-			{/* 6. TIM PENGEMBANG (Technical Practitioners) */}
-			<section
-				className="py-24 md:py-32"
-				style={{ backgroundColor: '#f8f9fa' }}
-			>
-				<Container size="lg">
-					<Title
-						order={2}
-						size="h1"
-						fw={900}
-						ta="center"
-						mb="md"
-						style={{ letterSpacing: '-0.02em', color: '#0f172a' }}
-					>
-						Tim Pengembang KarsaKito
-					</Title>
-					<Text
-						ta="center"
-						size="lg"
-						fw={400}
-						style={{ maxWidth: '800px', margin: '0 auto 80px', color: '#64748b' }}
-					>
-						Kolaborasi talenta teknis dan pakar domain budaya yang mendedikasikan
-						keahliannya untuk membangun infrastruktur AI bahasa daerah.
-					</Text>
-
-					<SimpleGrid
-						cols={{ base: 1, sm: 2, lg: 4 }}
-						spacing="xl"
-					>
-						{[
-							{
-								name: 'Grafis Nuresa',
-								image: null,
-								role: 'Project Lead & Business Analyst',
-								desc: 'Memimpin strategisasi produk, pemetaan ekosistem bisnis, dan perumusan model monetisasi ekonomi kreatif yang berkelanjutan.',
-							},
-							{
-								name: 'Muhammad Attan',
-								image: '/images/attan.png',
-								role: 'Lead AI & Backend Architect',
-								desc: 'Arsitek utama sistem RAG dan integrasi LLM. Bertanggung jawab atas pengelolaan infrastruktur server dan orkestrasi knowledge base.',
-							},
-							{
-								name: 'Okyra Asyrafi Guchan',
-								image: null,
-								role: 'Head of UI/UX & Frontend',
-								desc: 'Sutradara pengalaman pengguna (UX) dan rekayasa antarmuka. Memastikan setiap interaksi terasa berkelas, mulus, dan responsif.',
-							},
-							{
-								name: 'Pandu Pratama Handika',
-								image: '/images/pandu.png',
-								role: 'Frontend Dev & Domain Expert',
-								desc: 'Mengeksekusi rekayasa klien (client-side) sekaligus berperan esensial sebagai validator mutu budaya dan bahasa pada setiap luaran sistem.',
-							},
-						].map((member, i) => (
-							<Card
-								key={i}
-								withBorder
-								radius="xl"
-								padding={0}
-								shadow="md"
-								style={{
-									backgroundColor: '#ffffff',
-									display: 'flex',
-									flexDirection: 'column',
-									overflow: 'hidden',
-								}}
-								className="transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
-							>
-								{/* Profile Photo (Aspect Ratio 4:5 for Portraits) */}
-								<Box
-									style={{
-										width: '100%',
-										aspectRatio: '4/5',
-										backgroundColor: '#e2e8f0',
-										display: 'flex',
-										alignItems: 'center',
-										justifyContent: 'center',
-										position: 'relative',
-										overflow: 'hidden',
-									}}
-								>
-									{member.image ? (
-										<img
-											src={member.image}
-											alt={member.name}
-											style={{
-												width: '100%',
-												height: '100%',
-												objectFit: 'cover',
-												objectPosition: 'center',
-												position: 'absolute',
-												top: 0,
-												left: 0,
-											}}
-										/>
-									) : (
-										<Text
-											size="2rem"
-											fw={900}
-											c="slate.4"
-											style={{ letterSpacing: rem(1) }}
-										>
-											{member.name
-												.split(' ')
-												.map((n) => n[0])
-												.join('')
-												.substring(0, 2)}
-										</Text>
-									)}
-								</Box>
-
-								{/* Content Box */}
-								<Box
-									p="xl"
-									style={{
-										flexGrow: 1,
-										display: 'flex',
-										flexDirection: 'column',
-									}}
-								>
 									<Title
 										order={3}
-										size="h4"
-										fw={900}
-										c="slate.9"
-										mb={4}
-										style={{ letterSpacing: '-0.02em' }}
+										fz="lg"
+										className="md:col-span-3"
 									>
-										{member.name}
+										{solution.title}
 									</Title>
 									<Text
-										size="xs"
-										fw={800}
-										c="blue.6"
-										tt="uppercase"
-										mb="lg"
-										style={{ letterSpacing: rem(1) }}
+										c="gray.6"
+										fw={300}
+										className="md:col-span-8"
 									>
-										{member.role}
+										{solution.desc}
 									</Text>
+								</div>
+							))}
+						</SimpleGrid>
+					</Container>
+				</Box>
 
-									<Divider
-										mb="lg"
-										color="slate.1"
+				<Box
+					pos="relative"
+					component="section"
+					bg="gray.0"
+					py={{
+						base: 48,
+						sm: 60,
+						lg: 80,
+					}}
+					className="z-20"
+				>
+					<Container>
+						<Stack
+							gap="sm"
+							w="100%"
+							maw={600}
+							mx="auto"
+							ta="center"
+							align="center"
+						>
+							<Badge
+								variant="light"
+								size="lg"
+								fz={10}
+								fw={500}
+							>
+								Tim Kito
+							</Badge>
+							<Title order={2}>Orang-orang di Balik KarsaKito</Title>
+						</Stack>
+						<SimpleGrid
+							mt="xl"
+							cols={{
+								base: 1,
+								sm: 2,
+								md: 4,
+							}}
+						>
+							{teams.map((team, index) => (
+								<AspectRatio
+									key={`team-${index}`}
+									ratio={2 / 3}
+									pos="relative"
+									px="lg"
+									py="xl"
+									bdrs="xl"
+									className="group overflow-hidden"
+								>
+									<Image
+										src={team.image}
+										pos="absolute"
+										top={0}
+										left={0}
+										w="100%"
+										h="100%"
+										className="z-1"
 									/>
-
-									<Text
-										size="sm"
-										c="slate.6"
-										fw={400}
-										style={{ lineHeight: 1.6 }}
+									<Box
+										pos="absolute"
+										top={0}
+										left={0}
+										w="100%"
+										h="100%"
+										className="group-hover:to-dark/80 z-2 bg-linear-to-t from-black to-transparent transition-colors"
+									/>
+									<Stack
+										pos="relative"
+										mt="auto"
+										gap="xs"
+										justify="flex-end"
+										c="white"
+										className="z-3"
 									>
-										{member.desc}
-									</Text>
-								</Box>
-							</Card>
-						))}
-					</SimpleGrid>
-				</Container>
-			</section>
+										<Text
+											mb="lg"
+											className="transition group-hover:opacity-100 lg:opacity-0"
+										>
+											{team.desc}
+										</Text>
+										<Text
+											span
+											size="sm"
+											fw={300}
+										>
+											{team.position}
+										</Text>
+										<Title
+											order={3}
+											fz="md"
+										>
+											{team.name}
+										</Title>
+									</Stack>
+								</AspectRatio>
+							))}
+						</SimpleGrid>
+					</Container>
+				</Box>
 
-			{/* FOOTER */}
-			<div className="border-t border-slate-900 bg-slate-950">
-				<Footer />
-			</div>
+				<Box
+					pos="relative"
+					component="section"
+					bg="white"
+					py={{
+						base: 48,
+						sm: 60,
+						lg: 80,
+					}}
+					className="z-20"
+				>
+					<Container>
+						<Stack
+							gap="sm"
+							w="100%"
+							maw={600}
+							mx="auto"
+							ta="center"
+							align="center"
+						>
+							<Badge
+								variant="light"
+								size="lg"
+								fz={10}
+								fw={500}
+							>
+								Community Voice
+							</Badge>
+							<Title order={2}>Apa Kata Mereka Tentang KarsaKito?</Title>
+						</Stack>
+						<Carousel
+							slideSize="50%"
+							slideGap={{
+								base: 'md',
+								lg: 'lg',
+							}}
+							w="100%"
+							mt="xl"
+							withControls={false}
+							withIndicators
+							classNames={{
+								indicators: 'static! mt-8',
+								indicator:
+									'border border-primary bg-primary-4! [&[data-active]]:bg-primary!',
+							}}
+						>
+							{testimonials.map((testimonial, index) => (
+								<Carousel.Slide key={`testimonial-${index}`}>
+									<TestimonialCard
+										h="100%"
+										data={testimonial}
+									/>
+								</Carousel.Slide>
+							))}
+						</Carousel>
+					</Container>
+				</Box>
+
+				<Box
+					pos="relative"
+					component="section"
+					bg="gray.0"
+					py={{
+						base: 48,
+						sm: 60,
+						lg: 80,
+					}}
+					className="z-20"
+				>
+					<Container size="sm">
+						<Stack
+							gap="sm"
+							ta="center"
+							align="center"
+						>
+							<Badge
+								variant="light"
+								size="lg"
+								fz={10}
+								fw={500}
+							>
+								FAQ
+							</Badge>
+							<Title order={2}>Frequently Asked Questions</Title>
+							<Text>
+								Everything you need to know about the product and other information.
+							</Text>
+						</Stack>
+
+						<Accordion
+							variant="separated"
+							mt="xl"
+							order={3}
+							defaultValue={faqs[0].title}
+						>
+							{faqs.map((faq, index) => (
+								<Accordion.Item
+									key={`faq-${index}`}
+									value={faq.title}
+								>
+									<Accordion.Control>
+										<Text
+											span
+											fz="sm"
+											fw={500}
+										>
+											{faq.title}
+										</Text>
+									</Accordion.Control>
+									<Accordion.Panel fz="sm">{faq.content}</Accordion.Panel>
+								</Accordion.Item>
+							))}
+						</Accordion>
+					</Container>
+				</Box>
+			</main>
+			<Footer />
 		</div>
 	);
 }

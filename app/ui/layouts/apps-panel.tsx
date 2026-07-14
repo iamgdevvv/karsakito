@@ -11,18 +11,18 @@ import { Link } from '~app-ui/components/link';
 
 const navigations = [
 	{
-		label: 'Apps',
-		value: '/apps',
+		label: 'Home',
+		value: '/',
 		icon: <TbAppsFilled />,
 	},
 	{
 		label: 'Workspace',
-		value: '/apps/workspace',
+		value: '/workspace',
 		icon: <RiPencilAiFill />,
 	},
 	{
 		label: 'Saved',
-		value: '/apps/workspace/saved',
+		value: '/workspace/saved',
 		icon: <MdSave />,
 	},
 	{
