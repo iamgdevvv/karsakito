@@ -8,14 +8,22 @@ import {
 	Divider,
 	Group,
 	NumberFormatter,
+	Paper,
 	SimpleGrid,
 	Table,
 	Text,
 	ThemeIcon,
 	Title,
 } from '@mantine/core';
-import { FiHelpCircle } from 'react-icons/fi';
 import { LuCheck } from 'react-icons/lu';
+import {
+	IconSchool,
+	IconPencil,
+	IconLanguage,
+	IconUserCheck,
+	IconSearch,
+	IconArrowsShuffle,
+} from '@tabler/icons-react';
 import { metaPublicRoute } from '~app-modules/meta';
 import { authGetSession } from '~app-server/session';
 import Banner from '~app-ui/layouts/banner';
@@ -70,13 +78,61 @@ const packages = [
 	},
 ];
 
-const tokenRates = [
-	{ feature: 'KarsaLingo (Pembelajaran)', rate: '100 Token / Sesi Latihan' },
-	{ feature: 'KarsaWriter (Asisten Tulis)', rate: '15 Token / 100 Kata AI' },
-	{ feature: 'KarsaLator (Penerjemahan)', rate: '10 Token / 100 Kata terjemahan' },
-	{ feature: 'KarsaLisa (Analisis Kesopanan)', rate: '20 Token / 100 Kata analisis' },
-	{ feature: 'KarsaPedia (Ensiklopedia RAG)', rate: '50 Token / Kueri Ensiklopedia' },
-	{ feature: 'KarsaFrase (Parafrase Kalimat)', rate: '15 Token / 100 Kata parafrase' },
+const servicesCatalog = [
+	{
+		title: 'KarsaLingo',
+		category: 'Pembelajaran',
+		description: 'Berlatih dan tingkatkan kemampuan bahasa Anda dengan interaksi AI cerdas.',
+		price: '100',
+		unit: 'Token / Sesi',
+		icon: IconSchool,
+		color: 'blue',
+	},
+	{
+		title: 'KarsaWriter',
+		category: 'Asisten Tulis',
+		description: 'Bantuan menyusun kerangka tulisan, artikel, dan konten dengan cepat.',
+		price: '15',
+		unit: 'Token / 100 Kata',
+		icon: IconPencil,
+		color: 'teal',
+	},
+	{
+		title: 'KarsaLator',
+		category: 'Penerjemahan',
+		description: 'Penerjemahan teks dari dan ke bahasa Minang dengan akurasi tinggi.',
+		price: '10',
+		unit: 'Token / 100 Kata',
+		icon: IconLanguage,
+		color: 'grape',
+	},
+	{
+		title: 'KarsaLisa',
+		category: 'Analisis Kesopanan',
+		description: 'Evaluasi tata bahasa dan tingkat kesopanan kalimat Anda.',
+		price: '20',
+		unit: 'Token / 100 Kata',
+		icon: IconUserCheck,
+		color: 'pink',
+	},
+	{
+		title: 'KarsaPedia',
+		category: 'Ensiklopedia RAG',
+		description: 'Pencarian informasi budaya dan sejarah berbasis AI Knowledge Base.',
+		price: '50',
+		unit: 'Token / Kueri',
+		icon: IconSearch,
+		color: 'orange',
+	},
+	{
+		title: 'KarsaFrase',
+		category: 'Parafrase Kalimat',
+		description: 'Ubah struktur kalimat tanpa mengubah makna dan konteks asli.',
+		price: '15',
+		unit: 'Token / 100 Kata',
+		icon: IconArrowsShuffle,
+		color: 'cyan',
+	},
 ];
 
 export async function loader({ request, context }: Route.LoaderArgs) {
@@ -279,143 +335,143 @@ export default function BiayaLayanan({ loaderData }: Route.ComponentProps) {
 								dikurangi berdasarkan tarif modul layanan di bawah ini.
 							</Text>
 
-							<Table
-								striped
-								highlightOnHover
-								withTableBorder
-								withColumnBorders
+							<SimpleGrid
+								cols={{ base: 1, sm: 2, md: 3 }}
+								spacing="lg"
+								mt="xl"
 							>
-								<Table.Thead bg="gray.1">
-									<Table.Tr>
-										<Table.Th>
-											<Text fw={700}>Modul Layanan</Text>
-										</Table.Th>
-										<Table.Th>
-											<Text fw={700}>Tarif Konsumsi Token</Text>
-										</Table.Th>
-									</Table.Tr>
-								</Table.Thead>
-								<Table.Tbody>
-									{tokenRates.map((rate) => (
-										<Table.Tr key={rate.feature}>
-											<Table.Td>
-												<Text
-													fw={600}
-													size="sm"
-												>
-													{rate.feature}
+								{servicesCatalog.map((service) => {
+									const Icon = service.icon;
+									return (
+										<Card
+											key={service.title}
+											shadow="sm"
+											padding="xl"
+											radius="md"
+											withBorder
+											className="transition-transform lg:hover:-translate-y-2 hover:shadow-md"
+											style={{ display: 'flex', flexDirection: 'column' }}
+										>
+											<Group justify="space-between" mb="md">
+												<ThemeIcon size={48} radius="md" variant="light" color={service.color}>
+													<Icon size={28} stroke={1.5} />
+												</ThemeIcon>
+												<Badge color={service.color} variant="light" size="lg">
+													{service.category}
+												</Badge>
+											</Group>
+
+											<Text fw={700} size="lg">
+												{service.title}
+											</Text>
+
+											<Text size="sm" c="gray.6" mt="xs" mb="xl" style={{ flexGrow: 1 }}>
+												{service.description}
+											</Text>
+
+											<Group gap={6} align="baseline" mt="auto">
+												<Text fw={800} size="xl" c="primary">
+													{service.price}
 												</Text>
-											</Table.Td>
-											<Table.Td>
-												<Text size="sm">{rate.rate}</Text>
-											</Table.Td>
-										</Table.Tr>
-									))}
-								</Table.Tbody>
-							</Table>
+												<Text size="sm" fw={600} c="gray.7">
+													{service.unit}
+												</Text>
+											</Group>
+										</Card>
+									);
+								})}
+							</SimpleGrid>
 						</Box>
 
 						{/* FAQ Accordion */}
-						<Box
-							mt={80}
-							maw={800}
-							mx="auto"
-						>
-							<Title
-								order={2}
-								size="1.8rem"
-								fw={800}
-								mb="xl"
-								ta="center"
+						<Container size="md" mt={80}>
+							<Paper
+								withBorder
+								shadow="sm"
+								radius="lg"
+								p={{ base: 'xl', md: 40 }}
+								bg="gray.0"
 							>
-								Pertanyaan yang Sering Diajukan
-							</Title>
+								<Title
+									order={2}
+									size="1.8rem"
+									fw={800}
+									mb="xl"
+									ta="center"
+								>
+									Pertanyaan yang Sering Diajukan
+								</Title>
 
-							<Accordion
-								variant="separated"
-								radius="md"
-							>
-								<Accordion.Item value="what-is-token">
-									<Accordion.Control
-										icon={
-											<FiHelpCircle
-												size={18}
-												color="var(--mantine-color-blue-6)"
-											/>
-										}
-									>
-										Apa yang dimaksud dengan Token KarsaKito?
-									</Accordion.Control>
-									<Accordion.Panel>
-										Token adalah satuan kredit yang digunakan untuk menggunakan
-										fitur kecerdasan buatan (AI) di platform KarsaKito. Setiap
-										pemanggilan AI seperti terjemahan, pembuatan artikel,
-										pembelajaran, atau pencarian ensiklopedia memerlukan
-										sejumlah token sesuai tarif yang berlaku.
-									</Accordion.Panel>
-								</Accordion.Item>
+								<Accordion
+									variant="separated"
+									radius="md"
+									styles={{
+										item: { backgroundColor: 'white', border: '1px solid var(--mantine-color-gray-2)' },
+										control: { padding: 'var(--mantine-spacing-md)' },
+										content: { padding: 'var(--mantine-spacing-md)', paddingTop: 0 }
+									}}
+								>
+									<Accordion.Item value="what-is-token">
+										<Accordion.Control>
+											<Text fw={600}>Apa yang dimaksud dengan Token KarsaKito?</Text>
+										</Accordion.Control>
+										<Accordion.Panel>
+											<Text c="gray.7" lh={1.6}>
+												Token adalah satuan kredit yang digunakan untuk menggunakan
+												fitur kecerdasan buatan (AI) di platform KarsaKito. Setiap
+												pemanggilan AI seperti terjemahan, pembuatan artikel,
+												pembelajaran, atau pencarian ensiklopedia memerlukan
+												sejumlah token sesuai tarif yang berlaku.
+											</Text>
+										</Accordion.Panel>
+									</Accordion.Item>
 
-								<Accordion.Item value="expiry">
-									<Accordion.Control
-										icon={
-											<FiHelpCircle
-												size={18}
-												color="var(--mantine-color-blue-6)"
-											/>
-										}
-									>
-										Apakah token KarsaKito memiliki masa kadaluwarsa?
-									</Accordion.Control>
-									<Accordion.Panel>
-										Tidak. Seluruh token yang Anda beli tidak memiliki masa
-										kadaluwarsa. Token akan tetap tersimpan di akun Anda dan
-										hanya akan berkurang saat Anda menggunakannya untuk
-										berinteraksi dengan layanan AI kami.
-									</Accordion.Panel>
-								</Accordion.Item>
+									<Accordion.Item value="expiry">
+										<Accordion.Control>
+											<Text fw={600}>Apakah token KarsaKito memiliki masa kadaluwarsa?</Text>
+										</Accordion.Control>
+										<Accordion.Panel>
+											<Text c="gray.7" lh={1.6}>
+												Tidak. Seluruh token yang Anda beli tidak memiliki masa
+												kadaluwarsa. Token akan tetap tersimpan di akun Anda dan
+												hanya akan berkurang saat Anda menggunakannya untuk
+												berinteraksi dengan layanan AI kami.
+											</Text>
+										</Accordion.Panel>
+									</Accordion.Item>
 
-								<Accordion.Item value="how-to-topup">
-									<Accordion.Control
-										icon={
-											<FiHelpCircle
-												size={18}
-												color="var(--mantine-color-blue-6)"
-											/>
-										}
-									>
-										Bagaimana cara melakukan pembayaran dan top-up?
-									</Accordion.Control>
-									<Accordion.Panel>
-										Anda dapat melakukan pembelian token langsung dari dashboard
-										akun Anda melalui berbagai metode pembayaran aman di
-										Indonesia seperti QRIS, Transfer Bank (Virtual Account),
-										E-Wallet (GoPay, OVO, Dana), maupun Kartu Kredit. Token Anda
-										akan langsung bertambah secara instan setelah pembayaran
-										diverifikasi.
-									</Accordion.Panel>
-								</Accordion.Item>
+									<Accordion.Item value="how-to-topup">
+										<Accordion.Control>
+											<Text fw={600}>Bagaimana cara melakukan pembayaran dan top-up?</Text>
+										</Accordion.Control>
+										<Accordion.Panel>
+											<Text c="gray.7" lh={1.6}>
+												Anda dapat melakukan pembelian token langsung dari dashboard
+												akun Anda melalui berbagai metode pembayaran aman di
+												Indonesia seperti QRIS, Transfer Bank (Virtual Account),
+												E-Wallet (GoPay, OVO, Dana), maupun Kartu Kredit. Token Anda
+												akan langsung bertambah secara instan setelah pembayaran
+												diverifikasi.
+											</Text>
+										</Accordion.Panel>
+									</Accordion.Item>
 
-								<Accordion.Item value="api-access">
-									<Accordion.Control
-										icon={
-											<FiHelpCircle
-												size={18}
-												color="var(--mantine-color-blue-6)"
-											/>
-										}
-									>
-										Apakah saya bisa menggunakan token saya untuk integrasi API
-										pihak ketiga?
-									</Accordion.Control>
-									<Accordion.Panel>
-										Ya, bagi pemilik Paket Rajo, Anda dapat men-generate API Key
-										dari dashboard KarsaKito Anda. API tersebut dapat
-										diintegrasikan dengan aplikasi, website, atau chatbot milik
-										institusi Anda sendiri dengan tarif token yang sama.
-									</Accordion.Panel>
-								</Accordion.Item>
-							</Accordion>
-						</Box>
+									<Accordion.Item value="api-access">
+										<Accordion.Control>
+											<Text fw={600}>Apakah saya bisa menggunakan token saya untuk integrasi API pihak ketiga?</Text>
+										</Accordion.Control>
+										<Accordion.Panel>
+											<Text c="gray.7" lh={1.6}>
+												Ya, bagi pemilik Paket Rajo, Anda dapat men-generate API Key
+												dari dashboard KarsaKito Anda. API tersebut dapat
+												diintegrasikan dengan aplikasi, website, atau chatbot milik
+												institusi Anda sendiri dengan tarif token yang sama.
+											</Text>
+										</Accordion.Panel>
+									</Accordion.Item>
+								</Accordion>
+							</Paper>
+						</Container>
 					</Container>
 				</Box>
 			</main>
