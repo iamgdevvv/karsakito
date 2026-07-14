@@ -124,21 +124,14 @@ const faqs = [
 	},
 ];
 
-export default function BiayaLayanan({ loaderData }: Route.ComponentProps) {
+export default function BiayaLayananRoute({ loaderData }: Route.ComponentProps) {
 	return (
 		<div className="site">
 			<Header authUser={loaderData.user} />
 			<main className="site-main">
 				<Box
 					bg="gray.0"
-					pos="relative"
 					component="section"
-					py={{
-						base: 48,
-						sm: 60,
-						lg: 80,
-					}}
-					className="z-10"
 				>
 					{/* Hero Section */}
 					<Banner
