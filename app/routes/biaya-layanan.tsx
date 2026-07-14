@@ -15,7 +15,6 @@ import {
 	ThemeIcon,
 	Title,
 } from '@mantine/core';
-import { LuCheck } from 'react-icons/lu';
 import {
 	IconSchool,
 	IconPencil,
@@ -24,6 +23,7 @@ import {
 	IconSearch,
 	IconArrowsShuffle,
 } from '@tabler/icons-react';
+import { LuCheck } from 'react-icons/lu';
 import { metaPublicRoute } from '~app-modules/meta';
 import { authGetSession } from '~app-server/session';
 import Banner from '~app-ui/layouts/banner';
@@ -349,31 +349,67 @@ export default function BiayaLayanan({ loaderData }: Route.ComponentProps) {
 											padding="xl"
 											radius="md"
 											withBorder
-											className="transition-transform lg:hover:-translate-y-2 hover:shadow-md"
+											className="transition-transform hover:shadow-md lg:hover:-translate-y-2"
 											style={{ display: 'flex', flexDirection: 'column' }}
 										>
-											<Group justify="space-between" mb="md">
-												<ThemeIcon size={48} radius="md" variant="light" color={service.color}>
-													<Icon size={28} stroke={1.5} />
+											<Group
+												justify="space-between"
+												mb="md"
+											>
+												<ThemeIcon
+													size={48}
+													radius="md"
+													variant="light"
+													color={service.color}
+												>
+													<Icon
+														size={28}
+														stroke={1.5}
+													/>
 												</ThemeIcon>
-												<Badge color={service.color} variant="light" size="lg">
+												<Badge
+													color={service.color}
+													variant="light"
+													size="lg"
+												>
 													{service.category}
 												</Badge>
 											</Group>
 
-											<Text fw={700} size="lg">
+											<Text
+												fw={700}
+												size="lg"
+											>
 												{service.title}
 											</Text>
 
-											<Text size="sm" c="gray.6" mt="xs" mb="xl" style={{ flexGrow: 1 }}>
+											<Text
+												size="sm"
+												c="gray.6"
+												mt="xs"
+												mb="xl"
+												style={{ flexGrow: 1 }}
+											>
 												{service.description}
 											</Text>
 
-											<Group gap={6} align="baseline" mt="auto">
-												<Text fw={800} size="xl" c="primary">
+											<Group
+												gap={6}
+												align="baseline"
+												mt="auto"
+											>
+												<Text
+													fw={800}
+													size="xl"
+													c="primary"
+												>
 													{service.price}
 												</Text>
-												<Text size="sm" fw={600} c="gray.7">
+												<Text
+													size="sm"
+													fw={600}
+													c="gray.7"
+												>
 													{service.unit}
 												</Text>
 											</Group>
@@ -384,7 +420,10 @@ export default function BiayaLayanan({ loaderData }: Route.ComponentProps) {
 						</Box>
 
 						{/* FAQ Accordion */}
-						<Container size="md" mt={80}>
+						<Container
+							size="md"
+							mt={80}
+						>
 							<Paper
 								withBorder
 								shadow="sm"
@@ -406,51 +445,75 @@ export default function BiayaLayanan({ loaderData }: Route.ComponentProps) {
 									variant="separated"
 									radius="md"
 									styles={{
-										item: { backgroundColor: 'white', border: '1px solid var(--mantine-color-gray-2)' },
+										item: {
+											backgroundColor: 'white',
+											border: '1px solid var(--mantine-color-gray-2)',
+										},
 										control: { padding: 'var(--mantine-spacing-md)' },
-										content: { padding: 'var(--mantine-spacing-md)', paddingTop: 0 }
+										content: {
+											padding: 'var(--mantine-spacing-md)',
+											paddingTop: 0,
+										},
 									}}
 								>
 									<Accordion.Item value="what-is-token">
 										<Accordion.Control>
-											<Text fw={600}>Apa yang dimaksud dengan Token KarsaKito?</Text>
+											<Text fw={600}>
+												Apa yang dimaksud dengan Token KarsaKito?
+											</Text>
 										</Accordion.Control>
 										<Accordion.Panel>
-											<Text c="gray.7" lh={1.6}>
-												Token adalah satuan kredit yang digunakan untuk menggunakan
-												fitur kecerdasan buatan (AI) di platform KarsaKito. Setiap
-												pemanggilan AI seperti terjemahan, pembuatan artikel,
-												pembelajaran, atau pencarian ensiklopedia memerlukan
-												sejumlah token sesuai tarif yang berlaku.
+											<Text
+												c="gray.7"
+												lh={1.6}
+											>
+												Token adalah satuan kredit yang digunakan untuk
+												menggunakan fitur kecerdasan buatan (AI) di platform
+												KarsaKito. Setiap pemanggilan AI seperti terjemahan,
+												pembuatan artikel, pembelajaran, atau pencarian
+												ensiklopedia memerlukan sejumlah token sesuai tarif
+												yang berlaku.
 											</Text>
 										</Accordion.Panel>
 									</Accordion.Item>
 
 									<Accordion.Item value="expiry">
 										<Accordion.Control>
-											<Text fw={600}>Apakah token KarsaKito memiliki masa kadaluwarsa?</Text>
+											<Text fw={600}>
+												Apakah token KarsaKito memiliki masa kadaluwarsa?
+											</Text>
 										</Accordion.Control>
 										<Accordion.Panel>
-											<Text c="gray.7" lh={1.6}>
-												Tidak. Seluruh token yang Anda beli tidak memiliki masa
-												kadaluwarsa. Token akan tetap tersimpan di akun Anda dan
-												hanya akan berkurang saat Anda menggunakannya untuk
-												berinteraksi dengan layanan AI kami.
+											<Text
+												c="gray.7"
+												lh={1.6}
+											>
+												Tidak. Seluruh token yang Anda beli tidak memiliki
+												masa kadaluwarsa. Token akan tetap tersimpan di akun
+												Anda dan hanya akan berkurang saat Anda
+												menggunakannya untuk berinteraksi dengan layanan AI
+												kami.
 											</Text>
 										</Accordion.Panel>
 									</Accordion.Item>
 
 									<Accordion.Item value="how-to-topup">
 										<Accordion.Control>
-											<Text fw={600}>Bagaimana cara melakukan pembayaran dan top-up?</Text>
+											<Text fw={600}>
+												Bagaimana cara melakukan pembayaran dan top-up?
+											</Text>
 										</Accordion.Control>
 										<Accordion.Panel>
-											<Text c="gray.7" lh={1.6}>
-												Anda dapat melakukan pembelian token langsung dari dashboard
-												akun Anda melalui berbagai metode pembayaran aman di
-												Indonesia seperti QRIS, Transfer Bank (Virtual Account),
-												E-Wallet (GoPay, OVO, Dana), maupun Kartu Kredit. Token Anda
-												akan langsung bertambah secara instan setelah pembayaran
+											<Text
+												c="gray.7"
+												lh={1.6}
+											>
+												Anda dapat melakukan pembelian token langsung dari
+												dashboard akun Anda melalui berbagai metode
+												pembayaran aman di Indonesia seperti QRIS, Transfer
+												Bank (Virtual Account), E-Wallet (GoPay, OVO, Dana),
+												maupun Kartu Kredit. Token Anda akan langsung
+												bertambah secara instan setelah pembayaran
 												diverifikasi.
 											</Text>
 										</Accordion.Panel>
@@ -458,14 +521,21 @@ export default function BiayaLayanan({ loaderData }: Route.ComponentProps) {
 
 									<Accordion.Item value="api-access">
 										<Accordion.Control>
-											<Text fw={600}>Apakah saya bisa menggunakan token saya untuk integrasi API pihak ketiga?</Text>
+											<Text fw={600}>
+												Apakah saya bisa menggunakan token saya untuk
+												integrasi API pihak ketiga?
+											</Text>
 										</Accordion.Control>
 										<Accordion.Panel>
-											<Text c="gray.7" lh={1.6}>
-												Ya, bagi pemilik Paket Rajo, Anda dapat men-generate API Key
-												dari dashboard KarsaKito Anda. API tersebut dapat
-												diintegrasikan dengan aplikasi, website, atau chatbot milik
-												institusi Anda sendiri dengan tarif token yang sama.
+											<Text
+												c="gray.7"
+												lh={1.6}
+											>
+												Ya, bagi pemilik Paket Rajo, Anda dapat men-generate
+												API Key dari dashboard KarsaKito Anda. API tersebut
+												dapat diintegrasikan dengan aplikasi, website, atau
+												chatbot milik institusi Anda sendiri dengan tarif
+												token yang sama.
 											</Text>
 										</Accordion.Panel>
 									</Accordion.Item>

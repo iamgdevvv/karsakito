@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
 import { Card, RingProgress, Text, Group } from '@mantine/core';
+import { useState, useEffect } from 'react';
 
 export function useCountUp(target: number, duration: number = 2000) {
 	const [count, setCount] = useState(0);
@@ -41,21 +41,41 @@ export function AnimatedStat({ target, label, color }: AnimatedStatProps) {
 	const currentCount = useCountUp(target, 2000);
 
 	return (
-		<Card shadow="sm" padding="xl" radius="lg" withBorder style={{ borderColor: '#e2e8f0' }}>
-			<Group justify="center" mb="md">
+		<Card
+			shadow="sm"
+			padding="xl"
+			radius="lg"
+			withBorder
+			style={{ borderColor: '#e2e8f0' }}
+		>
+			<Group
+				justify="center"
+				mb="md"
+			>
 				<RingProgress
 					size={140}
 					roundCaps
 					thickness={14}
 					sections={[{ value: currentCount, color }]}
 					label={
-						<Text c={color} fw={800} ta="center" size="xl">
+						<Text
+							c={color}
+							fw={800}
+							ta="center"
+							size="xl"
+						>
 							{currentCount}%
 						</Text>
 					}
 				/>
 			</Group>
-			<Text ta="center" size="lg" fw={500} c="slate.7" style={{ lineHeight: 1.6 }}>
+			<Text
+				ta="center"
+				size="lg"
+				fw={500}
+				c="slate.7"
+				style={{ lineHeight: 1.6 }}
+			>
 				{label}
 			</Text>
 		</Card>
