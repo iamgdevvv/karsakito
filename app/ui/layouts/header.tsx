@@ -41,7 +41,7 @@ function MenuActionUser({
 		return (
 			<ButtonLink
 				variant="light"
-				to={navigation.location?.pathname || '/apps'}
+				to={navigation.location?.pathname || '/'}
 				size="sm"
 				fz="sm"
 				radius="full"
@@ -340,7 +340,7 @@ export function Header({
 								<>
 									<ButtonLink
 										variant="outline"
-										to="/apps"
+										to="/"
 										size="sm"
 										fz="sm"
 										radius="full"
@@ -365,7 +365,7 @@ export function Header({
 											</ThemeIcon>
 										}
 									>
-										Apps
+										Mulai
 									</ButtonLink>
 									<MenuActionUser data={authUser} />
 								</>
@@ -390,7 +390,7 @@ export function Header({
 										Daftar
 									</ButtonLink>
 									<ButtonLink
-										to="/apps"
+										to="/"
 										variant="light"
 										size="sm"
 										fz="sm"
@@ -408,7 +408,7 @@ export function Header({
 										<Text
 											visibleFrom="lg"
 											span
-											fz="inherit"
+											inherit
 										>
 											Mulai Sekarang
 										</Text>
@@ -420,7 +420,7 @@ export function Header({
 										>
 											<Text
 												span
-												fz="inherit"
+												inherit
 											>
 												Mulai
 											</Text>

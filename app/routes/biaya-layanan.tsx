@@ -8,23 +8,17 @@ import {
 	Divider,
 	Group,
 	NumberFormatter,
-	Paper,
 	SimpleGrid,
-	Table,
+	Stack,
 	Text,
 	ThemeIcon,
 	Title,
 } from '@mantine/core';
-import {
-	IconSchool,
-	IconPencil,
-	IconLanguage,
-	IconUserCheck,
-	IconSearch,
-	IconArrowsShuffle,
-} from '@tabler/icons-react';
 import { LuCheck } from 'react-icons/lu';
+import { TbApiApp } from 'react-icons/tb';
+import { labelAppCategory } from '~app-modules/enum-options';
 import { metaPublicRoute } from '~app-modules/meta';
+import { actionGetKarsaApps } from '~app-server/app';
 import { authGetSession } from '~app-server/session';
 import Banner from '~app-ui/layouts/banner';
 import Footer from '~app-ui/layouts/footer';
@@ -32,6 +26,25 @@ import { Header } from '~app-ui/layouts/header';
 import { cloudflareContext } from '~workers/app';
 
 import type { Route } from './+types/biaya-layanan';
+
+export async function loader({ request, context }: Route.LoaderArgs) {
+	const authSession = await authGetSession(request);
+	const user = authSession.get('user');
+	const karsaApps = await actionGetKarsaApps({ request, context });
+
+	return {
+		user,
+		karsaApps,
+		noIndex: context.get(cloudflareContext).env.NODE_ENV !== 'production',
+	};
+}
+
+export function meta({ loaderData }: Route.MetaArgs) {
+	return metaPublicRoute({
+		title: 'Biaya Layanan KarsaKito',
+		noIndex: loaderData.noIndex,
+	});
+}
 
 const packages = [
 	{
@@ -78,79 +91,32 @@ const packages = [
 	},
 ];
 
-const servicesCatalog = [
+const faqs = [
 	{
-		title: 'KarsaLingo',
-		category: 'Pembelajaran',
-		description: 'Berlatih dan tingkatkan kemampuan bahasa Anda dengan interaksi AI cerdas.',
-		price: '100',
-		unit: 'Token / Sesi',
-		icon: IconSchool,
-		color: 'blue',
+		title: 'How does the AI generate content?',
+		content:
+			'The AI generates content using a combination of natural language processing and machine learning algorithms.',
 	},
 	{
-		title: 'KarsaWriter',
-		category: 'Asisten Tulis',
-		description: 'Bantuan menyusun kerangka tulisan, artikel, dan konten dengan cepat.',
-		price: '15',
-		unit: 'Token / 100 Kata',
-		icon: IconPencil,
-		color: 'teal',
+		title: 'Can i customize the AI-generated content?',
+		content:
+			'Yes, you can customize the AI-generated content to meet your specific needs untuk Mengakselerasi Pemanfaatan Bahasa dan Warisan Budaya Daerah',
 	},
 	{
-		title: 'KarsaLator',
-		category: 'Penerjemahan',
-		description: 'Penerjemahan teks dari dan ke bahasa Minang dengan akurasi tinggi.',
-		price: '10',
-		unit: 'Token / 100 Kata',
-		icon: IconLanguage,
-		color: 'grape',
+		title: 'What types of content can the AI generate?',
+		content:
+			'The AI can generate a wide range of content types, including text, images, videos, and more.',
 	},
 	{
-		title: 'KarsaLisa',
-		category: 'Analisis Kesopanan',
-		description: 'Evaluasi tata bahasa dan tingkat kesopanan kalimat Anda.',
-		price: '20',
-		unit: 'Token / 100 Kata',
-		icon: IconUserCheck,
-		color: 'pink',
+		title: 'Is the AI-generated content plagiarism-free?',
+		content:
+			'Yes, the AI-generated content is plagiarism-free and is not copied from other sources.',
 	},
 	{
-		title: 'KarsaPedia',
-		category: 'Ensiklopedia RAG',
-		description: 'Pencarian informasi budaya dan sejarah berbasis AI Knowledge Base.',
-		price: '50',
-		unit: 'Token / Kueri',
-		icon: IconSearch,
-		color: 'orange',
-	},
-	{
-		title: 'KarsaFrase',
-		category: 'Parafrase Kalimat',
-		description: 'Ubah struktur kalimat tanpa mengubah makna dan konteks asli.',
-		price: '15',
-		unit: 'Token / 100 Kata',
-		icon: IconArrowsShuffle,
-		color: 'cyan',
+		title: 'Does the tool have any limitations?',
+		content: 'The tool has no limitations and can be used for any purpose.',
 	},
 ];
-
-export async function loader({ request, context }: Route.LoaderArgs) {
-	const authSession = await authGetSession(request);
-	const user = authSession.get('user');
-
-	return {
-		user,
-		noIndex: context.get(cloudflareContext).env.NODE_ENV !== 'production',
-	};
-}
-
-export function meta({ loaderData }: Route.MetaArgs) {
-	return metaPublicRoute({
-		title: 'Biaya Layanan KarsaKito',
-		noIndex: loaderData.noIndex,
-	});
-}
 
 export default function BiayaLayanan({ loaderData }: Route.ComponentProps) {
 	return (
@@ -159,8 +125,14 @@ export default function BiayaLayanan({ loaderData }: Route.ComponentProps) {
 			<main className="site-main">
 				<Box
 					bg="gray.0"
-					pb={80}
-					style={{ minHeight: '100vh' }}
+					pos="relative"
+					component="section"
+					py={{
+						base: 48,
+						sm: 60,
+						lg: 80,
+					}}
+					className="z-10"
 				>
 					{/* Hero Section */}
 					<Banner
@@ -187,18 +159,24 @@ export default function BiayaLayanan({ loaderData }: Route.ComponentProps) {
 
 					<Container
 						size="lg"
-						style={{ marginTop: '-80px', zIndex: 10, position: 'relative' }}
+						mt={-80}
 					>
 						{/* Pricing Cards Grid */}
 						<SimpleGrid
-							cols={{ base: 1, md: 3 }}
+							cols={{
+								base: 1,
+								md: 3,
+							}}
 							spacing="xl"
 						>
 							{packages.map((pkg, index) => (
 								<Card
 									key={`${pkg.name}-${index}`}
 									shadow="md"
-									padding="xl"
+									p={{
+										base: 'lg',
+										md: 'xl',
+									}}
 									radius="xl"
 									bg="white"
 									className="translate-y-0 overflow-visible transition-transform lg:hover:-translate-y-3"
@@ -295,6 +273,8 @@ export default function BiayaLayanan({ loaderData }: Route.ComponentProps) {
 									<Button
 										variant={pkg.popular ? 'filled' : 'outline'}
 										fullWidth
+										size="lg"
+										fz="md"
 										mt="auto"
 									>
 										Beli Paket
@@ -302,31 +282,28 @@ export default function BiayaLayanan({ loaderData }: Route.ComponentProps) {
 								</Card>
 							))}
 						</SimpleGrid>
+					</Container>
+				</Box>
 
-						{/* REVISI */}
-						{/* Token Consumption Rate Table */}
-						<Box
-							mt={80}
-							p={{ base: 'lg', md: 'xl' }}
-							style={{
-								backgroundColor: 'white',
-								borderRadius: '16px',
-								border: '1px solid #e2e8f0',
-							}}
+				<Box
+					component="section"
+					py={{
+						base: 48,
+						sm: 60,
+						lg: 80,
+					}}
+				>
+					<Container>
+						<Stack
+							gap="xs"
+							w="100%"
+							maw={600}
+							mx="auto"
+							ta="center"
 						>
-							<Title
-								order={2}
-								size="1.8rem"
-								fw={800}
-								mb="xs"
-								ta="center"
-							>
-								Tarif Penggunaan Token
-							</Title>
+							<Title order={2}>Tarif Penggunaan Token</Title>
 							<Text
-								size="sm"
 								c="gray.6"
-								mb="xl"
 								ta="center"
 								maw={500}
 								mx="auto"
@@ -334,214 +311,162 @@ export default function BiayaLayanan({ loaderData }: Route.ComponentProps) {
 								Setiap kali Anda menggunakan layanan AI, saldo token Anda akan
 								dikurangi berdasarkan tarif modul layanan di bawah ini.
 							</Text>
+						</Stack>
 
-							<SimpleGrid
-								cols={{ base: 1, sm: 2, md: 3 }}
-								spacing="lg"
-								mt="xl"
-							>
-								{servicesCatalog.map((service) => {
-									const Icon = service.icon;
-									return (
-										<Card
-											key={service.title}
-											shadow="sm"
-											padding="xl"
-											radius="md"
-											withBorder
-											className="transition-transform hover:shadow-md lg:hover:-translate-y-2"
-											style={{ display: 'flex', flexDirection: 'column' }}
+						<SimpleGrid
+							mt="xl"
+							spacing="lg"
+							cols={{ base: 1, sm: 2, md: 3 }}
+						>
+							{loaderData.karsaApps.data.map((karsaApp, index) => {
+								return (
+									<Stack
+										key={`${karsaApp.id}-${index}`}
+										gap={0}
+										p={{
+											base: 'lg',
+											md: 'xl',
+										}}
+										bdrs="xl"
+										bg="gray.0"
+										bd="1px solid gray.4"
+										className="shadow-md transition not-hover:shadow-transparent lg:hover:-translate-y-2"
+									>
+										<Group
+											justify="space-between"
+											mb="md"
 										>
-											<Group
-												justify="space-between"
-												mb="md"
+											<ThemeIcon
+												size={48}
+												radius="md"
+												variant="light"
 											>
-												<ThemeIcon
-													size={48}
-													radius="md"
-													variant="light"
-													color={service.color}
-												>
-													<Icon
-														size={28}
-														stroke={1.5}
-													/>
-												</ThemeIcon>
-												<Badge
-													color={service.color}
-													variant="light"
-													size="lg"
-												>
-													{service.category}
-												</Badge>
-											</Group>
-
-											<Text
-												fw={700}
+												<TbApiApp size={28} />
+											</ThemeIcon>
+											<Badge
+												variant="light"
 												size="lg"
+												fz="xs"
+												fw={500}
 											>
-												{service.title}
-											</Text>
+												{labelAppCategory[karsaApp.category]}
+											</Badge>
+										</Group>
 
+										<Title
+											order={3}
+											fw={700}
+											fz="lg"
+										>
+											{karsaApp.label}
+										</Title>
+
+										{karsaApp.description ? (
 											<Text
 												size="sm"
 												c="gray.6"
+												fw={300}
 												mt="xs"
 												mb="xl"
 												style={{ flexGrow: 1 }}
 											>
-												{service.description}
+												{karsaApp.description}
 											</Text>
+										) : null}
 
-											<Group
-												gap={6}
-												align="baseline"
-												mt="auto"
+										<Group
+											gap={6}
+											align="baseline"
+											mt="auto"
+										>
+											<Text
+												fw={700}
+												size="xl"
+												c="primary"
 											>
-												<Text
-													fw={800}
-													size="xl"
-													c="primary"
-												>
-													{service.price}
-												</Text>
-												<Text
-													size="sm"
-													fw={600}
-													c="gray.7"
-												>
-													{service.unit}
-												</Text>
-											</Group>
-										</Card>
-									);
-								})}
-							</SimpleGrid>
-						</Box>
+												{karsaApp.tokenPromo ? (
+													<Text
+														span
+														inherit
+													>
+														{karsaApp.tokenPromo}
+														<Text
+															span
+															display="inline-block"
+															fz="0.68em"
+															td="line-through"
+															c="gray.6"
+															ml={2}
+														>
+															{karsaApp.token}
+														</Text>
+													</Text>
+												) : (
+													karsaApp.token
+												)}
+											</Text>
+											<Text size="sm">Token/sesi</Text>
+										</Group>
+									</Stack>
+								);
+							})}
+						</SimpleGrid>
+					</Container>
+				</Box>
 
-						{/* FAQ Accordion */}
-						<Container
-							size="md"
-							mt={80}
+				<Box
+					component="section"
+					bg="gray.0"
+					py={{
+						base: 48,
+						sm: 60,
+						lg: 80,
+					}}
+				>
+					<Container size="sm">
+						<Stack
+							gap="sm"
+							ta="center"
+							align="center"
 						>
-							<Paper
-								withBorder
-								shadow="sm"
-								radius="lg"
-								p={{ base: 'xl', md: 40 }}
-								bg="gray.0"
+							<Badge
+								variant="light"
+								size="lg"
+								fz={10}
+								fw={500}
 							>
-								<Title
-									order={2}
-									size="1.8rem"
-									fw={800}
-									mb="xl"
-									ta="center"
+								FAQ
+							</Badge>
+							<Title order={2}>Frequently Asked Questions</Title>
+							<Text>
+								Everything you need to know about the product and other information.
+							</Text>
+						</Stack>
+
+						<Accordion
+							variant="separated"
+							mt="xl"
+							order={3}
+							defaultValue={faqs[0].title}
+						>
+							{faqs.map((faq, index) => (
+								<Accordion.Item
+									key={`faq-${index}`}
+									value={faq.title}
 								>
-									Pertanyaan yang Sering Diajukan
-								</Title>
-
-								<Accordion
-									variant="separated"
-									radius="md"
-									styles={{
-										item: {
-											backgroundColor: 'white',
-											border: '1px solid var(--mantine-color-gray-2)',
-										},
-										control: { padding: 'var(--mantine-spacing-md)' },
-										content: {
-											padding: 'var(--mantine-spacing-md)',
-											paddingTop: 0,
-										},
-									}}
-								>
-									<Accordion.Item value="what-is-token">
-										<Accordion.Control>
-											<Text fw={600}>
-												Apa yang dimaksud dengan Token KarsaKito?
-											</Text>
-										</Accordion.Control>
-										<Accordion.Panel>
-											<Text
-												c="gray.7"
-												lh={1.6}
-											>
-												Token adalah satuan kredit yang digunakan untuk
-												menggunakan fitur kecerdasan buatan (AI) di platform
-												KarsaKito. Setiap pemanggilan AI seperti terjemahan,
-												pembuatan artikel, pembelajaran, atau pencarian
-												ensiklopedia memerlukan sejumlah token sesuai tarif
-												yang berlaku.
-											</Text>
-										</Accordion.Panel>
-									</Accordion.Item>
-
-									<Accordion.Item value="expiry">
-										<Accordion.Control>
-											<Text fw={600}>
-												Apakah token KarsaKito memiliki masa kadaluwarsa?
-											</Text>
-										</Accordion.Control>
-										<Accordion.Panel>
-											<Text
-												c="gray.7"
-												lh={1.6}
-											>
-												Tidak. Seluruh token yang Anda beli tidak memiliki
-												masa kadaluwarsa. Token akan tetap tersimpan di akun
-												Anda dan hanya akan berkurang saat Anda
-												menggunakannya untuk berinteraksi dengan layanan AI
-												kami.
-											</Text>
-										</Accordion.Panel>
-									</Accordion.Item>
-
-									<Accordion.Item value="how-to-topup">
-										<Accordion.Control>
-											<Text fw={600}>
-												Bagaimana cara melakukan pembayaran dan top-up?
-											</Text>
-										</Accordion.Control>
-										<Accordion.Panel>
-											<Text
-												c="gray.7"
-												lh={1.6}
-											>
-												Anda dapat melakukan pembelian token langsung dari
-												dashboard akun Anda melalui berbagai metode
-												pembayaran aman di Indonesia seperti QRIS, Transfer
-												Bank (Virtual Account), E-Wallet (GoPay, OVO, Dana),
-												maupun Kartu Kredit. Token Anda akan langsung
-												bertambah secara instan setelah pembayaran
-												diverifikasi.
-											</Text>
-										</Accordion.Panel>
-									</Accordion.Item>
-
-									<Accordion.Item value="api-access">
-										<Accordion.Control>
-											<Text fw={600}>
-												Apakah saya bisa menggunakan token saya untuk
-												integrasi API pihak ketiga?
-											</Text>
-										</Accordion.Control>
-										<Accordion.Panel>
-											<Text
-												c="gray.7"
-												lh={1.6}
-											>
-												Ya, bagi pemilik Paket Rajo, Anda dapat men-generate
-												API Key dari dashboard KarsaKito Anda. API tersebut
-												dapat diintegrasikan dengan aplikasi, website, atau
-												chatbot milik institusi Anda sendiri dengan tarif
-												token yang sama.
-											</Text>
-										</Accordion.Panel>
-									</Accordion.Item>
-								</Accordion>
-							</Paper>
-						</Container>
+									<Accordion.Control>
+										<Text
+											span
+											fz="sm"
+											fw={500}
+										>
+											{faq.title}
+										</Text>
+									</Accordion.Control>
+									<Accordion.Panel fz="sm">{faq.content}</Accordion.Panel>
+								</Accordion.Item>
+							))}
+						</Accordion>
 					</Container>
 				</Box>
 			</main>

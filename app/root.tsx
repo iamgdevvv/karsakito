@@ -40,7 +40,6 @@ import Footer from '~app-ui/layouts/footer';
 import type { Route } from './+types/root';
 
 import './styles/app.css';
-import './styles/mantine.css';
 
 export const links: Route.LinksFunction = () => [
 	{ rel: 'preconnect', href: 'https://fonts.googleapis.com' },

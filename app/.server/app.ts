@@ -160,22 +160,6 @@ export const actionGetKarsaApps = async <T = KarsaApp>({
     previousCursor: KarsaApp['id'] | null;
 }> => {
     try {
-        const authSession = await authMiddlewareSession({
-            guard: {
-                role: ['ADMIN', 'STAFF'],
-            },
-            request,
-        });
-
-        if ('error' in authSession) {
-            return {
-                data: [],
-                params: null,
-                nextCursor: null,
-                previousCursor: null,
-            }
-        }
-
         const searchPayload = qsParse(new URL(request.url).search);
 
         const queryParams = PayloadQueryKarsaAppsSchema.parse(searchPayload);

@@ -17,7 +17,7 @@ const authMiddleware: Route.MiddlewareFunction = async ({ request }) => {
 			throw replace('/admin');
 		}
 
-		throw replace('/apps');
+		throw replace('/');
 	}
 };
 

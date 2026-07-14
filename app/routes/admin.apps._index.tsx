@@ -315,8 +315,7 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 													{app.tokenPromo ? (
 														<Text
 															span
-															fz="inherit"
-															fw="inherit"
+															inherit
 														>
 															{app.tokenPromo}
 															<Text

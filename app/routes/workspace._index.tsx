@@ -31,7 +31,7 @@ import { WindowAppKarsaWriter } from '~app-ui/form/window-apps';
 import FormWindowWorkspace from '~app-ui/form/window-workspace';
 import AppPanel from '~app-ui/layouts/apps-panel';
 
-import type { Route } from './+types/apps.workspace._index';
+import type { Route } from './+types/workspace._index';
 
 const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) => {
 	const authSession = await authGetSession(request);
@@ -40,7 +40,7 @@ const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) =>
 	if (!user) {
 		const redirectParams = new URLSearchParams();
 		const queryParams = request.url.split('?')[1];
-		let redirectLink = '/apps/workspace';
+		let redirectLink = '/workspace';
 
 		if (queryParams) {
 			redirectLink += `?${queryParams}`;
