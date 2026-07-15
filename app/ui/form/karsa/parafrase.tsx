@@ -4,35 +4,36 @@ import {
 	Box,
 	Button,
 	Group,
-	NumberInput,
 	Select,
 	Stack,
 	Textarea,
-	TextInput,
 	type BoxProps,
 } from '@mantine/core';
 import { schemaResolver, useForm } from '@mantine/form';
 import { useEffect, useMemo, useState } from 'react';
-import { PiTextColumns } from 'react-icons/pi';
 import { useFetcher } from 'react-router';
-import { optionsKarsaWriterAudience, optionsLanguageApp } from '~app-modules/enum-options';
 import {
-	PayloadKarsaPidatoSchema,
+	optionsKarsaFrasePreference,
+	optionsKarsaFraseTone,
+	optionsLanguageApp,
+} from '~app-modules/enum-options';
+import {
+	PayloadKarsaParafraseSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
-	type PayloadKarsaPidato,
+	type PayloadKarsaParafrase,
 	type PayloadSubmissionKarsa,
 } from '~app-modules/schema/karsa';
 import type { PayloadWindowWorkspace } from '~app-modules/schema/workspace';
 import type { ActionSubmissionKarsaAI } from '~app-server/workspace';
 
-export default function FormKarsaPidato({
+export default function FormKarsaParafrase({
 	data,
 	onSubmitProgress,
 	onSubmit,
 	...props
 }: BoxProps & {
-	data?: KarsaPlain['promptJson'] | PayloadKarsaPidato;
+	data?: KarsaPlain['promptJson'] | PayloadKarsaParafrase;
 	onSubmitProgress: () => void;
 	onSubmit: (values: NonNullable<PayloadWindowWorkspace['karsa']>) => void;
 }) {
@@ -44,22 +45,20 @@ export default function FormKarsaPidato({
 	}, [fetcher.state]);
 
 	const initialValues = useMemo(() => {
-		const payload = PayloadKarsaPidatoSchema.safeParse(data).data;
+		const payload = PayloadKarsaParafraseSchema.safeParse(data).data;
 
 		return {
-			language: payload?.language || 'indonesia',
-			purpose: payload?.purpose || '',
-			agenda: payload?.agenda || '',
-			speaker: payload?.speaker || '',
-			audience: payload?.audience || '',
-			topic: payload?.topic || '',
-			totalSentence: payload?.totalSentence ?? 28,
-		} satisfies PayloadKarsaPidato;
+			sourceLanguage: payload?.sourceLanguage || 'indonesia',
+			targetLanguage: payload?.sourceLanguage || 'indonesia',
+			tone: payload?.tone || '',
+			preference: payload?.preference || '',
+			text: payload?.text || '',
+		} satisfies PayloadKarsaParafrase;
 	}, [data]);
 
-	const form = useForm<PayloadKarsaPidato>({
+	const form = useForm<PayloadKarsaParafrase>({
 		mode: 'uncontrolled',
-		validate: schemaResolver(PayloadKarsaPidatoSchema, { sync: true }),
+		validate: schemaResolver(PayloadKarsaParafraseSchema, { sync: true }),
 		onSubmitPreventDefault: 'validation-failed',
 		initialValues,
 		onValuesChange: () => {
@@ -83,7 +82,7 @@ export default function FormKarsaPidato({
 	return (
 		<Box
 			{...props}
-			data-slot="FormKarsaPidato"
+			data-slot="FormKarsaParafrase"
 		>
 			{errorMessage ? (
 				<Alert
@@ -102,7 +101,7 @@ export default function FormKarsaPidato({
 					setErrorMessage(null);
 					onSubmitProgress();
 					const payload = PayloadSubmissionKarsaSchema.safeParse({
-						app: 'pidato',
+						app: 'parafrase',
 						payload: values,
 					} satisfies PayloadSubmissionKarsa);
 
@@ -122,76 +121,47 @@ export default function FormKarsaPidato({
 			>
 				<Stack gap="xs">
 					<Select
-						label="Language"
-						name="language"
-						key={form.key('language')}
+						label="Source Language"
+						name="sourceLanguage"
+						key={form.key('sourceLanguage')}
 						readOnly={isLoading}
 						maxDropdownHeight={80}
 						data={optionsLanguageApp}
-						{...form.getInputProps('language')}
+						{...form.getInputProps('sourceLanguage')}
 					/>
-					<Autocomplete
-						label="Purpose"
-						name="purpose"
-						key={form.key('purpose')}
+					<Select
+						label="Target Language"
+						name="targetLanguage"
+						key={form.key('targetLanguage')}
 						readOnly={isLoading}
 						maxDropdownHeight={80}
-						data={[
-							'Sambutan',
-							'Pembukaan',
-							'Peresmian',
-							'Penutup',
-							'Ceramah',
-							'Orasi',
-							'Peringatan',
-							'Pertanggungjawaban',
-							'Berita Duka',
-							'Informatif',
-							'Persuasif',
-							'Rekreatif',
-							'Argumentatif',
-							'Deskriptif',
-						]}
-						{...form.getInputProps('purpose')}
-					/>
-					<TextInput
-						label="Agenda"
-						name="agenda"
-						key={form.key('agenda')}
-						readOnly={isLoading}
-						{...form.getInputProps('agenda')}
-					/>
-					<TextInput
-						label="Speaker"
-						name="speaker"
-						key={form.key('speaker')}
-						readOnly={isLoading}
-						{...form.getInputProps('speaker')}
+						data={optionsLanguageApp}
+						{...form.getInputProps('targetLanguage')}
 					/>
 					<Autocomplete
-						label="Audience"
-						name="audience"
-						key={form.key('audience')}
+						label="Tone"
+						name="tone"
+						key={form.key('tone')}
 						readOnly={isLoading}
 						maxDropdownHeight={80}
-						data={optionsKarsaWriterAudience}
-						{...form.getInputProps('audience')}
+						data={optionsKarsaFraseTone}
+						{...form.getInputProps('tone')}
+					/>
+					<Autocomplete
+						label="Preference"
+						name="preference"
+						key={form.key('preference')}
+						readOnly={isLoading}
+						maxDropdownHeight={80}
+						data={optionsKarsaFrasePreference}
+						{...form.getInputProps('preference')}
 					/>
 					<Textarea
-						label="Topic"
-						name="topic"
-						key={form.key('topic')}
+						label="Text"
+						name="text"
+						key={form.key('text')}
 						readOnly={isLoading}
-						{...form.getInputProps('topic')}
-					/>
-					<NumberInput
-						label="Total Sentence"
-						name="totalSentence"
-						max={80}
-						key={form.key('totalSentence')}
-						readOnly={isLoading}
-						leftSection={<PiTextColumns size={18} />}
-						{...form.getInputProps('totalSentence')}
+						{...form.getInputProps('text')}
 					/>
 					<Group justify="flex-end">
 						<Button

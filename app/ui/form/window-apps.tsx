@@ -6,7 +6,18 @@ import Markdown from 'react-markdown';
 import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import type { PayloadWindowWorkspace } from '~app-modules/schema/workspace';
+import FormKarsaAdaptasiDialek from '~app-ui/form/karsa/adaptasi-dialek';
+import FormKarsaCeritaPanjang from '~app-ui/form/karsa/cerita-panjang';
+import FormKarsaCeritaPendek from '~app-ui/form/karsa/cerita-pendek';
+import FormKarsaDoaBersama from '~app-ui/form/karsa/doa-bersama';
+import FormKarsaMotto from '~app-ui/form/karsa/motto';
+import FormKarsaParafrase from '~app-ui/form/karsa/parafrase';
+import FormKarsaPetuah from '~app-ui/form/karsa/petuah';
 import FormKarsaPidato from '~app-ui/form/karsa/pidato';
+import FormKarsaRangkuman from '~app-ui/form/karsa/rangkuman';
+import FormKarsaSlogan from '~app-ui/form/karsa/slogan';
+import FormKarsaTagline from '~app-ui/form/karsa/tagline';
+import FormKarsaTekaTeki from '~app-ui/form/karsa/teka-teki';
 
 export function WindowAppKarsaWriter({
 	data,
@@ -90,6 +101,138 @@ export function WindowAppKarsaWriter({
 				>
 					{data.app === 'pidato' ? (
 						<FormKarsaPidato
+							data={data}
+							onSubmitProgress={() => {
+								setResultAI(null);
+								setActiveTab('result');
+							}}
+							onSubmit={(values) => {
+								onSubmit(values);
+								setResultAI(values.result);
+							}}
+						/>
+					) : data.app === 'petuah' ? (
+						<FormKarsaPetuah
+							data={data}
+							onSubmitProgress={() => {
+								setResultAI(null);
+								setActiveTab('result');
+							}}
+							onSubmit={(values) => {
+								onSubmit(values);
+								setResultAI(values.result);
+							}}
+						/>
+					) : data.app === 'tagline' ? (
+						<FormKarsaTagline
+							data={data}
+							onSubmitProgress={() => {
+								setResultAI(null);
+								setActiveTab('result');
+							}}
+							onSubmit={(values) => {
+								onSubmit(values);
+								setResultAI(values.result);
+							}}
+						/>
+					) : data.app === 'slogan' ? (
+						<FormKarsaSlogan
+							data={data}
+							onSubmitProgress={() => {
+								setResultAI(null);
+								setActiveTab('result');
+							}}
+							onSubmit={(values) => {
+								onSubmit(values);
+								setResultAI(values.result);
+							}}
+						/>
+					) : data.app === 'motto' ? (
+						<FormKarsaMotto
+							data={data}
+							onSubmitProgress={() => {
+								setResultAI(null);
+								setActiveTab('result');
+							}}
+							onSubmit={(values) => {
+								onSubmit(values);
+								setResultAI(values.result);
+							}}
+						/>
+					) : data.app === 'ceritapendek' ? (
+						<FormKarsaCeritaPendek
+							data={data}
+							onSubmitProgress={() => {
+								setResultAI(null);
+								setActiveTab('result');
+							}}
+							onSubmit={(values) => {
+								onSubmit(values);
+								setResultAI(values.result);
+							}}
+						/>
+					) : data.app === 'ceritapanjang' ? (
+						<FormKarsaCeritaPanjang
+							data={data}
+							onSubmitProgress={() => {
+								setResultAI(null);
+								setActiveTab('result');
+							}}
+							onSubmit={(values) => {
+								onSubmit(values);
+								setResultAI(values.result);
+							}}
+						/>
+					) : data.app === 'doabersama' ? (
+						<FormKarsaDoaBersama
+							data={data}
+							onSubmitProgress={() => {
+								setResultAI(null);
+								setActiveTab('result');
+							}}
+							onSubmit={(values) => {
+								onSubmit(values);
+								setResultAI(values.result);
+							}}
+						/>
+					) : data.app === 'tekateki' ? (
+						<FormKarsaTekaTeki
+							data={data}
+							onSubmitProgress={() => {
+								setResultAI(null);
+								setActiveTab('result');
+							}}
+							onSubmit={(values) => {
+								onSubmit(values);
+								setResultAI(values.result);
+							}}
+						/>
+					) : data.app === 'parafrase' ? (
+						<FormKarsaParafrase
+							data={data}
+							onSubmitProgress={() => {
+								setResultAI(null);
+								setActiveTab('result');
+							}}
+							onSubmit={(values) => {
+								onSubmit(values);
+								setResultAI(values.result);
+							}}
+						/>
+					) : data.app === 'rangkuman' ? (
+						<FormKarsaRangkuman
+							data={data}
+							onSubmitProgress={() => {
+								setResultAI(null);
+								setActiveTab('result');
+							}}
+							onSubmit={(values) => {
+								onSubmit(values);
+								setResultAI(values.result);
+							}}
+						/>
+					) : data.app === 'adaptasidialek' ? (
+						<FormKarsaAdaptasiDialek
 							data={data}
 							onSubmitProgress={() => {
 								setResultAI(null);

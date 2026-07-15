@@ -17,22 +17,22 @@ import { PiTextColumns } from 'react-icons/pi';
 import { useFetcher } from 'react-router';
 import { optionsKarsaWriterAudience, optionsLanguageApp } from '~app-modules/enum-options';
 import {
-	PayloadKarsaPidatoSchema,
+	PayloadKarsaCeritaPanjangSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
-	type PayloadKarsaPidato,
+	type PayloadKarsaCeritaPanjang,
 	type PayloadSubmissionKarsa,
 } from '~app-modules/schema/karsa';
 import type { PayloadWindowWorkspace } from '~app-modules/schema/workspace';
 import type { ActionSubmissionKarsaAI } from '~app-server/workspace';
 
-export default function FormKarsaPidato({
+export default function FormKarsaCeritaPanjang({
 	data,
 	onSubmitProgress,
 	onSubmit,
 	...props
 }: BoxProps & {
-	data?: KarsaPlain['promptJson'] | PayloadKarsaPidato;
+	data?: KarsaPlain['promptJson'] | PayloadKarsaCeritaPanjang;
 	onSubmitProgress: () => void;
 	onSubmit: (values: NonNullable<PayloadWindowWorkspace['karsa']>) => void;
 }) {
@@ -44,22 +44,21 @@ export default function FormKarsaPidato({
 	}, [fetcher.state]);
 
 	const initialValues = useMemo(() => {
-		const payload = PayloadKarsaPidatoSchema.safeParse(data).data;
+		const payload = PayloadKarsaCeritaPanjangSchema.safeParse(data).data;
 
 		return {
 			language: payload?.language || 'indonesia',
-			purpose: payload?.purpose || '',
-			agenda: payload?.agenda || '',
-			speaker: payload?.speaker || '',
+			genre: payload?.genre || '',
 			audience: payload?.audience || '',
+			morale: payload?.morale || '',
 			topic: payload?.topic || '',
-			totalSentence: payload?.totalSentence ?? 28,
-		} satisfies PayloadKarsaPidato;
+			totalParagraph: payload?.totalParagraph ?? 48,
+		} satisfies PayloadKarsaCeritaPanjang;
 	}, [data]);
 
-	const form = useForm<PayloadKarsaPidato>({
+	const form = useForm<PayloadKarsaCeritaPanjang>({
 		mode: 'uncontrolled',
-		validate: schemaResolver(PayloadKarsaPidatoSchema, { sync: true }),
+		validate: schemaResolver(PayloadKarsaCeritaPanjangSchema, { sync: true }),
 		onSubmitPreventDefault: 'validation-failed',
 		initialValues,
 		onValuesChange: () => {
@@ -83,7 +82,7 @@ export default function FormKarsaPidato({
 	return (
 		<Box
 			{...props}
-			data-slot="FormKarsaPidato"
+			data-slot="FormKarsaCeritaPanjang"
 		>
 			{errorMessage ? (
 				<Alert
@@ -102,7 +101,7 @@ export default function FormKarsaPidato({
 					setErrorMessage(null);
 					onSubmitProgress();
 					const payload = PayloadSubmissionKarsaSchema.safeParse({
-						app: 'pidato',
+						app: 'ceritapendek',
 						payload: values,
 					} satisfies PayloadSubmissionKarsa);
 
@@ -131,42 +130,22 @@ export default function FormKarsaPidato({
 						{...form.getInputProps('language')}
 					/>
 					<Autocomplete
-						label="Purpose"
-						name="purpose"
-						key={form.key('purpose')}
+						label="Genre"
+						name="genre"
+						key={form.key('genre')}
 						readOnly={isLoading}
 						maxDropdownHeight={80}
 						data={[
-							'Sambutan',
-							'Pembukaan',
-							'Peresmian',
-							'Penutup',
-							'Ceramah',
-							'Orasi',
-							'Peringatan',
-							'Pertanggungjawaban',
-							'Berita Duka',
-							'Informatif',
-							'Persuasif',
-							'Rekreatif',
-							'Argumentatif',
-							'Deskriptif',
+							'Fabel (Cerita Binatang)',
+							'Dongeng',
+							'Legenda',
+							'Mitos',
+							'Kehidupan Sehari-hari (Realita)',
+							'Sage',
+							'Komedi / Jenaka',
+							'Horor / Misteri / Gaib',
 						]}
-						{...form.getInputProps('purpose')}
-					/>
-					<TextInput
-						label="Agenda"
-						name="agenda"
-						key={form.key('agenda')}
-						readOnly={isLoading}
-						{...form.getInputProps('agenda')}
-					/>
-					<TextInput
-						label="Speaker"
-						name="speaker"
-						key={form.key('speaker')}
-						readOnly={isLoading}
-						{...form.getInputProps('speaker')}
+						{...form.getInputProps('genre')}
 					/>
 					<Autocomplete
 						label="Audience"
@@ -177,6 +156,13 @@ export default function FormKarsaPidato({
 						data={optionsKarsaWriterAudience}
 						{...form.getInputProps('audience')}
 					/>
+					<TextInput
+						label="Morale"
+						name="morale"
+						key={form.key('morale')}
+						readOnly={isLoading}
+						{...form.getInputProps('morale')}
+					/>
 					<Textarea
 						label="Topic"
 						name="topic"
@@ -185,13 +171,13 @@ export default function FormKarsaPidato({
 						{...form.getInputProps('topic')}
 					/>
 					<NumberInput
-						label="Total Sentence"
-						name="totalSentence"
-						max={80}
-						key={form.key('totalSentence')}
+						label="Jumlah Kata"
+						name="totalParagraph"
+						max={120}
+						key={form.key('totalParagraph')}
 						readOnly={isLoading}
 						leftSection={<PiTextColumns size={18} />}
-						{...form.getInputProps('totalSentence')}
+						{...form.getInputProps('totalParagraph')}
 					/>
 					<Group justify="flex-end">
 						<Button

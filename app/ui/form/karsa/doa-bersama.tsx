@@ -8,31 +8,30 @@ import {
 	Select,
 	Stack,
 	Textarea,
-	TextInput,
 	type BoxProps,
 } from '@mantine/core';
 import { schemaResolver, useForm } from '@mantine/form';
 import { useEffect, useMemo, useState } from 'react';
 import { PiTextColumns } from 'react-icons/pi';
 import { useFetcher } from 'react-router';
-import { optionsKarsaWriterAudience, optionsLanguageApp } from '~app-modules/enum-options';
+import { optionsLanguageApp } from '~app-modules/enum-options';
 import {
-	PayloadKarsaPidatoSchema,
+	PayloadKarsaDoaBersamaSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
-	type PayloadKarsaPidato,
+	type PayloadKarsaDoaBersama,
 	type PayloadSubmissionKarsa,
 } from '~app-modules/schema/karsa';
 import type { PayloadWindowWorkspace } from '~app-modules/schema/workspace';
 import type { ActionSubmissionKarsaAI } from '~app-server/workspace';
 
-export default function FormKarsaPidato({
+export default function FormKarsaDoaBersama({
 	data,
 	onSubmitProgress,
 	onSubmit,
 	...props
 }: BoxProps & {
-	data?: KarsaPlain['promptJson'] | PayloadKarsaPidato;
+	data?: KarsaPlain['promptJson'] | PayloadKarsaDoaBersama;
 	onSubmitProgress: () => void;
 	onSubmit: (values: NonNullable<PayloadWindowWorkspace['karsa']>) => void;
 }) {
@@ -44,22 +43,19 @@ export default function FormKarsaPidato({
 	}, [fetcher.state]);
 
 	const initialValues = useMemo(() => {
-		const payload = PayloadKarsaPidatoSchema.safeParse(data).data;
+		const payload = PayloadKarsaDoaBersamaSchema.safeParse(data).data;
 
 		return {
 			language: payload?.language || 'indonesia',
-			purpose: payload?.purpose || '',
-			agenda: payload?.agenda || '',
-			speaker: payload?.speaker || '',
-			audience: payload?.audience || '',
+			religion: payload?.religion || '',
 			topic: payload?.topic || '',
-			totalSentence: payload?.totalSentence ?? 28,
-		} satisfies PayloadKarsaPidato;
+			totalSentence: payload?.totalSentence ?? 16,
+		} satisfies PayloadKarsaDoaBersama;
 	}, [data]);
 
-	const form = useForm<PayloadKarsaPidato>({
+	const form = useForm<PayloadKarsaDoaBersama>({
 		mode: 'uncontrolled',
-		validate: schemaResolver(PayloadKarsaPidatoSchema, { sync: true }),
+		validate: schemaResolver(PayloadKarsaDoaBersamaSchema, { sync: true }),
 		onSubmitPreventDefault: 'validation-failed',
 		initialValues,
 		onValuesChange: () => {
@@ -83,7 +79,7 @@ export default function FormKarsaPidato({
 	return (
 		<Box
 			{...props}
-			data-slot="FormKarsaPidato"
+			data-slot="FormKarsaDoaBersama"
 		>
 			{errorMessage ? (
 				<Alert
@@ -102,7 +98,7 @@ export default function FormKarsaPidato({
 					setErrorMessage(null);
 					onSubmitProgress();
 					const payload = PayloadSubmissionKarsaSchema.safeParse({
-						app: 'pidato',
+						app: 'doabersama',
 						payload: values,
 					} satisfies PayloadSubmissionKarsa);
 
@@ -131,51 +127,13 @@ export default function FormKarsaPidato({
 						{...form.getInputProps('language')}
 					/>
 					<Autocomplete
-						label="Purpose"
-						name="purpose"
-						key={form.key('purpose')}
+						label="Religion"
+						name="religion"
+						key={form.key('religion')}
 						readOnly={isLoading}
 						maxDropdownHeight={80}
-						data={[
-							'Sambutan',
-							'Pembukaan',
-							'Peresmian',
-							'Penutup',
-							'Ceramah',
-							'Orasi',
-							'Peringatan',
-							'Pertanggungjawaban',
-							'Berita Duka',
-							'Informatif',
-							'Persuasif',
-							'Rekreatif',
-							'Argumentatif',
-							'Deskriptif',
-						]}
-						{...form.getInputProps('purpose')}
-					/>
-					<TextInput
-						label="Agenda"
-						name="agenda"
-						key={form.key('agenda')}
-						readOnly={isLoading}
-						{...form.getInputProps('agenda')}
-					/>
-					<TextInput
-						label="Speaker"
-						name="speaker"
-						key={form.key('speaker')}
-						readOnly={isLoading}
-						{...form.getInputProps('speaker')}
-					/>
-					<Autocomplete
-						label="Audience"
-						name="audience"
-						key={form.key('audience')}
-						readOnly={isLoading}
-						maxDropdownHeight={80}
-						data={optionsKarsaWriterAudience}
-						{...form.getInputProps('audience')}
+						data={['Umum', 'Islam', 'Kristen', 'Katolik', 'Budha', 'Hindu', 'Konghucu']}
+						{...form.getInputProps('religion')}
 					/>
 					<Textarea
 						label="Topic"
@@ -185,9 +143,9 @@ export default function FormKarsaPidato({
 						{...form.getInputProps('topic')}
 					/>
 					<NumberInput
-						label="Total Sentence"
+						label="Jumlah Kalimat"
 						name="totalSentence"
-						max={80}
+						max={28}
 						key={form.key('totalSentence')}
 						readOnly={isLoading}
 						leftSection={<PiTextColumns size={18} />}
