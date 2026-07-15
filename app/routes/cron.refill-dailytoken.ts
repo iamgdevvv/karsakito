@@ -108,10 +108,13 @@ export async function loader({ context, request }: Route.LoaderArgs) {
 			}
 		}
 
-		console.log(`Berhasil melakukan refill daily token untuk ${transactions.length} users.`);
+		console.log(
+			`Berhasil melakukan refill daily token untuk ${transactions.length} users, pada timezones: ${targetTimezones.join(', ')}`,
+		);
 
 		return {
 			result: `Berhasil melakukan refill daily token untuk ${transactions.length} users.`,
+			timezones: targetTimezones,
 		};
 	} catch (error) {
 		console.error('Error saat menjalankan refillToken:', error);

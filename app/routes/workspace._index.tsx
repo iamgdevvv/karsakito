@@ -183,10 +183,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 	return (
 		<div className="site">
 			<AppPanel className="site-main">
-				<Group
-					gap={6}
-					justify="flex-end"
-				>
+				<Group gap={6}>
 					<Popover
 						opened={openBalanceUser}
 						width={200}
