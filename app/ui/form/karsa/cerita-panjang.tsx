@@ -28,11 +28,13 @@ import type { ActionSubmissionKarsaAI } from '~app-server/workspace';
 
 export default function FormKarsaCeritaPanjang({
 	data,
+	onError,
 	onSubmitProgress,
 	onSubmit,
 	...props
 }: BoxProps & {
 	data?: KarsaPlain['promptJson'] | PayloadKarsaCeritaPanjang;
+	onError: (message: string) => void;
 	onSubmitProgress: () => void;
 	onSubmit: (values: NonNullable<PayloadWindowWorkspace['karsa']>) => void;
 }) {
@@ -72,6 +74,7 @@ export default function FormKarsaCeritaPanjang({
 	useEffect(() => {
 		if (!isLoading && fetcher.data) {
 			if ('error' in fetcher.data) {
+				onError(fetcher.data.error);
 				setErrorMessage(fetcher.data.error);
 			} else {
 				onSubmit(fetcher.data.data);
@@ -115,6 +118,7 @@ export default function FormKarsaCeritaPanjang({
 							},
 						);
 					} else {
+						onError(payload.error.message);
 						setErrorMessage(payload.error.message);
 					}
 				})}

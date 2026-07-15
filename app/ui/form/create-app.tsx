@@ -114,6 +114,9 @@ export default function FormCreateKarsaApp(props: BoxProps) {
 							key={form.key('token')}
 							readOnly={isLoading}
 							leftSection={<PiCoinsFill size={18} />}
+							leftSectionProps={{
+								color: 'yellow',
+							}}
 							{...form.getInputProps('token')}
 						/>
 						<NumberInput
@@ -122,6 +125,9 @@ export default function FormCreateKarsaApp(props: BoxProps) {
 							key={form.key('tokenPromo')}
 							readOnly={isLoading}
 							leftSection={<LuCoins size={18} />}
+							leftSectionProps={{
+								color: 'blue',
+							}}
 							{...form.getInputProps('tokenPromo')}
 						/>
 					</SimpleGrid>

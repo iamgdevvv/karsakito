@@ -14,23 +14,23 @@ import { useEffect, useMemo, useState } from 'react';
 import { useFetcher } from 'react-router';
 import { optionsLanguageApp } from '~app-modules/enum-options';
 import {
-	PayloadKarsaAdaptasiDialekSchema,
+	PayloadKarsaTerjemahanDokumenSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
-	type PayloadKarsaAdaptasiDialek,
+	type PayloadKarsaTerjemahanDokumen,
 	type PayloadSubmissionKarsa,
 } from '~app-modules/schema/karsa';
 import type { PayloadWindowWorkspace } from '~app-modules/schema/workspace';
 import type { ActionSubmissionKarsaAI } from '~app-server/workspace';
 
-export default function FormKarsaAdaptasiDialek({
+export default function FormKarsaTerjemahanDokumen({
 	data,
 	onError,
 	onSubmitProgress,
 	onSubmit,
 	...props
 }: BoxProps & {
-	data?: KarsaPlain['promptJson'] | PayloadKarsaAdaptasiDialek;
+	data?: KarsaPlain['promptJson'] | PayloadKarsaTerjemahanDokumen;
 	onError: (message: string) => void;
 	onSubmitProgress: () => void;
 	onSubmit: (values: NonNullable<PayloadWindowWorkspace['karsa']>) => void;
@@ -43,19 +43,19 @@ export default function FormKarsaAdaptasiDialek({
 	}, [fetcher.state]);
 
 	const initialValues = useMemo(() => {
-		const payload = PayloadKarsaAdaptasiDialekSchema.safeParse(data).data;
+		const payload = PayloadKarsaTerjemahanDokumenSchema.safeParse(data).data;
 
 		return {
 			sourceLanguage: payload?.sourceLanguage || 'indonesia',
-			targetLanguage: payload?.sourceLanguage || 'indonesia',
-			dialect: payload?.dialect || '',
-			text: payload?.text || '',
-		} satisfies PayloadKarsaAdaptasiDialek;
+			targetLanguage: payload?.sourceLanguage || 'minang',
+			info: payload?.info || '',
+			selectionText: payload?.selectionText || '',
+		} satisfies PayloadKarsaTerjemahanDokumen;
 	}, [data]);
 
-	const form = useForm<PayloadKarsaAdaptasiDialek>({
+	const form = useForm<PayloadKarsaTerjemahanDokumen>({
 		mode: 'uncontrolled',
-		validate: schemaResolver(PayloadKarsaAdaptasiDialekSchema, { sync: true }),
+		validate: schemaResolver(PayloadKarsaTerjemahanDokumenSchema, { sync: true }),
 		onSubmitPreventDefault: 'validation-failed',
 		initialValues,
 		onValuesChange: () => {
@@ -80,7 +80,7 @@ export default function FormKarsaAdaptasiDialek({
 	return (
 		<Box
 			{...props}
-			data-slot="FormKarsaAdaptasiDialek"
+			data-slot="FormKarsaTerjemahanDokumen"
 		>
 			{errorMessage ? (
 				<Alert
@@ -99,7 +99,7 @@ export default function FormKarsaAdaptasiDialek({
 					setErrorMessage(null);
 					onSubmitProgress();
 					const payload = PayloadSubmissionKarsaSchema.safeParse({
-						app: 'adaptasidialek',
+						app: 'terjemahandokumen',
 						payload: values,
 					} satisfies PayloadSubmissionKarsa);
 
@@ -138,18 +138,18 @@ export default function FormKarsaAdaptasiDialek({
 						{...form.getInputProps('targetLanguage')}
 					/>
 					<TextInput
-						label="Dialect"
-						name="dialect"
-						key={form.key('dialect')}
+						label="Info"
+						name="info"
+						key={form.key('info')}
 						readOnly={isLoading}
-						{...form.getInputProps('dialect')}
+						{...form.getInputProps('info')}
 					/>
 					<Textarea
-						label="Text"
-						name="text"
-						key={form.key('text')}
-						readOnly={isLoading}
-						{...form.getInputProps('text')}
+						label="Selection Text"
+						name="selectionText"
+						key={form.key('selectionText')}
+						readOnly={true}
+						{...form.getInputProps('selectionText')}
 					/>
 					<Group justify="flex-end">
 						<Button

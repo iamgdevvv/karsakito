@@ -27,11 +27,13 @@ import type { ActionSubmissionKarsaAI } from '~app-server/workspace';
 
 export default function FormKarsaTagline({
 	data,
+	onError,
 	onSubmitProgress,
 	onSubmit,
 	...props
 }: BoxProps & {
 	data?: KarsaPlain['promptJson'] | PayloadKarsaTagline;
+	onError: (message: string) => void;
 	onSubmitProgress: () => void;
 	onSubmit: (values: NonNullable<PayloadWindowWorkspace['karsa']>) => void;
 }) {
@@ -71,6 +73,7 @@ export default function FormKarsaTagline({
 	useEffect(() => {
 		if (!isLoading && fetcher.data) {
 			if ('error' in fetcher.data) {
+				onError(fetcher.data.error);
 				setErrorMessage(fetcher.data.error);
 			} else {
 				onSubmit(fetcher.data.data);
@@ -114,6 +117,7 @@ export default function FormKarsaTagline({
 							},
 						);
 					} else {
+						onError(payload.error.message);
 						setErrorMessage(payload.error.message);
 					}
 				})}

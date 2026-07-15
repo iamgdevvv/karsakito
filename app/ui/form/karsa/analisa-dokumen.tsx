@@ -1,5 +1,6 @@
 import {
 	Alert,
+	Autocomplete,
 	Box,
 	Button,
 	Group,
@@ -12,25 +13,25 @@ import {
 import { schemaResolver, useForm } from '@mantine/form';
 import { useEffect, useMemo, useState } from 'react';
 import { useFetcher } from 'react-router';
-import { optionsLanguageApp } from '~app-modules/enum-options';
+import { optionsKarsaLisaAudience, optionsLanguageApp } from '~app-modules/enum-options';
 import {
-	PayloadKarsaAdaptasiDialekSchema,
+	PayloadKarsaAnalisaDokumenSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
-	type PayloadKarsaAdaptasiDialek,
+	type PayloadKarsaAnalisaDokumen,
 	type PayloadSubmissionKarsa,
 } from '~app-modules/schema/karsa';
 import type { PayloadWindowWorkspace } from '~app-modules/schema/workspace';
 import type { ActionSubmissionKarsaAI } from '~app-server/workspace';
 
-export default function FormKarsaAdaptasiDialek({
+export default function FormKarsaAnalisaDokumen({
 	data,
 	onError,
 	onSubmitProgress,
 	onSubmit,
 	...props
 }: BoxProps & {
-	data?: KarsaPlain['promptJson'] | PayloadKarsaAdaptasiDialek;
+	data?: KarsaPlain['promptJson'] | PayloadKarsaAnalisaDokumen;
 	onError: (message: string) => void;
 	onSubmitProgress: () => void;
 	onSubmit: (values: NonNullable<PayloadWindowWorkspace['karsa']>) => void;
@@ -43,19 +44,19 @@ export default function FormKarsaAdaptasiDialek({
 	}, [fetcher.state]);
 
 	const initialValues = useMemo(() => {
-		const payload = PayloadKarsaAdaptasiDialekSchema.safeParse(data).data;
+		const payload = PayloadKarsaAnalisaDokumenSchema.safeParse(data).data;
 
 		return {
-			sourceLanguage: payload?.sourceLanguage || 'indonesia',
-			targetLanguage: payload?.sourceLanguage || 'indonesia',
-			dialect: payload?.dialect || '',
-			text: payload?.text || '',
-		} satisfies PayloadKarsaAdaptasiDialek;
+			language: payload?.language || 'indonesia',
+			info: payload?.info || '',
+			audience: payload?.audience || '',
+			selectionText: payload?.selectionText || '',
+		} satisfies PayloadKarsaAnalisaDokumen;
 	}, [data]);
 
-	const form = useForm<PayloadKarsaAdaptasiDialek>({
+	const form = useForm<PayloadKarsaAnalisaDokumen>({
 		mode: 'uncontrolled',
-		validate: schemaResolver(PayloadKarsaAdaptasiDialekSchema, { sync: true }),
+		validate: schemaResolver(PayloadKarsaAnalisaDokumenSchema, { sync: true }),
 		onSubmitPreventDefault: 'validation-failed',
 		initialValues,
 		onValuesChange: () => {
@@ -80,7 +81,7 @@ export default function FormKarsaAdaptasiDialek({
 	return (
 		<Box
 			{...props}
-			data-slot="FormKarsaAdaptasiDialek"
+			data-slot="FormKarsaAnalisaDokumen"
 		>
 			{errorMessage ? (
 				<Alert
@@ -99,7 +100,7 @@ export default function FormKarsaAdaptasiDialek({
 					setErrorMessage(null);
 					onSubmitProgress();
 					const payload = PayloadSubmissionKarsaSchema.safeParse({
-						app: 'adaptasidialek',
+						app: 'analisadokumen',
 						payload: values,
 					} satisfies PayloadSubmissionKarsa);
 
@@ -120,36 +121,35 @@ export default function FormKarsaAdaptasiDialek({
 			>
 				<Stack gap="xs">
 					<Select
-						label="Source Language"
-						name="sourceLanguage"
-						key={form.key('sourceLanguage')}
+						label="Language"
+						name="language"
+						key={form.key('language')}
 						readOnly={isLoading}
 						maxDropdownHeight={80}
 						data={optionsLanguageApp}
-						{...form.getInputProps('sourceLanguage')}
+						{...form.getInputProps('language')}
 					/>
-					<Select
-						label="Target Language"
-						name="targetLanguage"
-						key={form.key('targetLanguage')}
+					<Autocomplete
+						label="Audience"
+						name="audience"
+						key={form.key('audience')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
-						data={optionsLanguageApp}
-						{...form.getInputProps('targetLanguage')}
+						data={optionsKarsaLisaAudience}
+						{...form.getInputProps('audience')}
 					/>
 					<TextInput
-						label="Dialect"
-						name="dialect"
-						key={form.key('dialect')}
+						label="Info"
+						name="info"
+						key={form.key('info')}
 						readOnly={isLoading}
-						{...form.getInputProps('dialect')}
+						{...form.getInputProps('info')}
 					/>
 					<Textarea
 						label="Text"
-						name="text"
-						key={form.key('text')}
-						readOnly={isLoading}
-						{...form.getInputProps('text')}
+						name="selectionText"
+						key={form.key('selectionText')}
+						readOnly={true}
+						{...form.getInputProps('selectionText')}
 					/>
 					<Group justify="flex-end">
 						<Button

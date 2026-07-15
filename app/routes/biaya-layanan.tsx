@@ -19,11 +19,11 @@ import { TbApiApp } from 'react-icons/tb';
 import { labelAppCategory } from '~app-modules/enum-options';
 import { metaPublicRoute } from '~app-modules/meta';
 import { actionGetKarsaApps } from '~app-server/app';
+import { cfContext } from '~app-server/context';
 import { authGetSession } from '~app-server/session';
 import Banner from '~app-ui/layouts/banner';
 import Footer from '~app-ui/layouts/footer';
 import { Header } from '~app-ui/layouts/header';
-import { cloudflareContext } from '~workers/app';
 
 import type { Route } from './+types/biaya-layanan';
 
@@ -41,7 +41,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 	return {
 		user,
 		karsaApps,
-		noIndex: context.get(cloudflareContext).env.NODE_ENV !== 'production',
+		noIndex: cfContext(context).env.NODE_ENV !== 'production',
 	};
 }
 

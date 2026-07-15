@@ -27,11 +27,13 @@ import type { ActionSubmissionKarsaAI } from '~app-server/workspace';
 
 export default function FormKarsaDoaBersama({
 	data,
+	onError,
 	onSubmitProgress,
 	onSubmit,
 	...props
 }: BoxProps & {
 	data?: KarsaPlain['promptJson'] | PayloadKarsaDoaBersama;
+	onError: (message: string) => void;
 	onSubmitProgress: () => void;
 	onSubmit: (values: NonNullable<PayloadWindowWorkspace['karsa']>) => void;
 }) {
@@ -69,6 +71,7 @@ export default function FormKarsaDoaBersama({
 	useEffect(() => {
 		if (!isLoading && fetcher.data) {
 			if ('error' in fetcher.data) {
+				onError(fetcher.data.error);
 				setErrorMessage(fetcher.data.error);
 			} else {
 				onSubmit(fetcher.data.data);
@@ -112,6 +115,7 @@ export default function FormKarsaDoaBersama({
 							},
 						);
 					} else {
+						onError(payload.error.message);
 						setErrorMessage(payload.error.message);
 					}
 				})}

@@ -17,10 +17,14 @@ import {
 import type { KarsaApp } from '~generated/prisma/browser';
 
 export default function FormWindowWorkspace({
+	viewMode,
+	defaultValues,
 	optionApps,
 	onSubmit,
 	...props
 }: BoxProps & {
+	viewMode?: 'window' | 'simple';
+	defaultValues?: PayloadWindowWorkspace;
 	optionApps: Record<
 		KarsaApp['category'],
 		(ComboboxItem & { description: KarsaApp['description'] })[]
@@ -29,13 +33,18 @@ export default function FormWindowWorkspace({
 }) {
 	const form = useForm<PayloadWindowWorkspace>({
 		validate: schemaResolver(PayloadWindowWorkspaceSchema, { sync: true }),
+		initialValues: defaultValues,
 	});
 
 	useEffect(() => {
 		if (!form.values.id) {
 			form.setFieldValue('id', crypto.randomUUID());
 		}
-	}, [form.values.id]);
+
+		if (!form.values.title) {
+			form.setFieldValue('title', 'New Workspace');
+		}
+	}, []);
 
 	return (
 		<Box
@@ -45,15 +54,18 @@ export default function FormWindowWorkspace({
 			onSubmit={form.onSubmit(onSubmit)}
 		>
 			<Stack gap={6}>
-				<TextInput
-					label="Title"
-					size="sm"
-					labelProps={{
-						fz: 'xs',
-					}}
-					key={form.key('title')}
-					{...form.getInputProps('title')}
-				/>
+				{viewMode !== 'simple' ? (
+					<TextInput
+						label="Title"
+						size="sm"
+						labelProps={{
+							fz: 'xs',
+						}}
+						key={form.key('title')}
+						{...form.getInputProps('title')}
+					/>
+				) : null}
+
 				<Select
 					label="Choose App"
 					size="sm"
@@ -66,16 +78,29 @@ export default function FormWindowWorkspace({
 					}))}
 					key={form.key('app')}
 					{...form.getInputProps('app')}
+					onChange={(value) => {
+						form.getInputProps('app').onChange(value);
+
+						if (viewMode === 'simple') {
+							onSubmit({
+								...form.values,
+								app: value,
+							});
+						}
+					}}
 				/>
-				<Button
-					type="submit"
-					size="md"
-					fz="sm"
-					mt={6}
-					// disabled={!form.isValid() || Object.keys(form.errors).length > 0}
-				>
-					Create Window
-				</Button>
+
+				{viewMode !== 'simple' ? (
+					<Button
+						type="submit"
+						size="md"
+						fz="sm"
+						mt={6}
+						disabled={!form.isValid() || Object.keys(form.errors).length > 0}
+					>
+						Create Window
+					</Button>
+				) : null}
 			</Stack>
 		</Box>
 	);

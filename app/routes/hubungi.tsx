@@ -16,10 +16,10 @@ import {
 import { useForm } from '@mantine/form';
 import { FiMail, FiMapPin, FiPhone, FiSend } from 'react-icons/fi';
 import { metaPublicRoute } from '~app-modules/meta';
+import { cfContext } from '~app-server/context';
 import { authGetSession } from '~app-server/session';
 import Banner from '~app-ui/layouts/banner';
 import { Header } from '~app-ui/layouts/header';
-import { cloudflareContext } from '~workers/app';
 
 import type { Route } from './+types/hubungi';
 
@@ -29,7 +29,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 
 	return {
 		user,
-		noIndex: context.get(cloudflareContext).env.NODE_ENV !== 'production',
+		noIndex: cfContext(context).env.NODE_ENV !== 'production',
 	};
 }
 

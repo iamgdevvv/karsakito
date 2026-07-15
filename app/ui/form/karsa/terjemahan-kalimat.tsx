@@ -1,12 +1,12 @@
 import {
 	Alert,
+	Autocomplete,
 	Box,
 	Button,
 	Group,
 	Select,
 	Stack,
 	Textarea,
-	TextInput,
 	type BoxProps,
 } from '@mantine/core';
 import { schemaResolver, useForm } from '@mantine/form';
@@ -14,23 +14,23 @@ import { useEffect, useMemo, useState } from 'react';
 import { useFetcher } from 'react-router';
 import { optionsLanguageApp } from '~app-modules/enum-options';
 import {
-	PayloadKarsaAdaptasiDialekSchema,
+	PayloadKarsaTerjemahanKalimatSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
-	type PayloadKarsaAdaptasiDialek,
+	type PayloadKarsaTerjemahanKalimat,
 	type PayloadSubmissionKarsa,
 } from '~app-modules/schema/karsa';
 import type { PayloadWindowWorkspace } from '~app-modules/schema/workspace';
 import type { ActionSubmissionKarsaAI } from '~app-server/workspace';
 
-export default function FormKarsaAdaptasiDialek({
+export default function FormKarsaTerjemahanKalimat({
 	data,
 	onError,
 	onSubmitProgress,
 	onSubmit,
 	...props
 }: BoxProps & {
-	data?: KarsaPlain['promptJson'] | PayloadKarsaAdaptasiDialek;
+	data?: KarsaPlain['promptJson'] | PayloadKarsaTerjemahanKalimat;
 	onError: (message: string) => void;
 	onSubmitProgress: () => void;
 	onSubmit: (values: NonNullable<PayloadWindowWorkspace['karsa']>) => void;
@@ -43,19 +43,19 @@ export default function FormKarsaAdaptasiDialek({
 	}, [fetcher.state]);
 
 	const initialValues = useMemo(() => {
-		const payload = PayloadKarsaAdaptasiDialekSchema.safeParse(data).data;
+		const payload = PayloadKarsaTerjemahanKalimatSchema.safeParse(data).data;
 
 		return {
 			sourceLanguage: payload?.sourceLanguage || 'indonesia',
-			targetLanguage: payload?.sourceLanguage || 'indonesia',
-			dialect: payload?.dialect || '',
+			targetLanguage: payload?.sourceLanguage || 'minang',
+			usage: payload?.usage || '',
 			text: payload?.text || '',
-		} satisfies PayloadKarsaAdaptasiDialek;
+		} satisfies PayloadKarsaTerjemahanKalimat;
 	}, [data]);
 
-	const form = useForm<PayloadKarsaAdaptasiDialek>({
+	const form = useForm<PayloadKarsaTerjemahanKalimat>({
 		mode: 'uncontrolled',
-		validate: schemaResolver(PayloadKarsaAdaptasiDialekSchema, { sync: true }),
+		validate: schemaResolver(PayloadKarsaTerjemahanKalimatSchema, { sync: true }),
 		onSubmitPreventDefault: 'validation-failed',
 		initialValues,
 		onValuesChange: () => {
@@ -80,7 +80,7 @@ export default function FormKarsaAdaptasiDialek({
 	return (
 		<Box
 			{...props}
-			data-slot="FormKarsaAdaptasiDialek"
+			data-slot="FormKarsaTerjemahanKalimat"
 		>
 			{errorMessage ? (
 				<Alert
@@ -99,7 +99,7 @@ export default function FormKarsaAdaptasiDialek({
 					setErrorMessage(null);
 					onSubmitProgress();
 					const payload = PayloadSubmissionKarsaSchema.safeParse({
-						app: 'adaptasidialek',
+						app: 'terjemahankalimat',
 						payload: values,
 					} satisfies PayloadSubmissionKarsa);
 
@@ -125,7 +125,9 @@ export default function FormKarsaAdaptasiDialek({
 						key={form.key('sourceLanguage')}
 						readOnly={isLoading}
 						maxDropdownHeight={80}
-						data={optionsLanguageApp}
+						data={optionsLanguageApp.filter(
+							(item) => item.value !== form.values.targetLanguage,
+						)}
 						{...form.getInputProps('sourceLanguage')}
 					/>
 					<Select
@@ -134,15 +136,23 @@ export default function FormKarsaAdaptasiDialek({
 						key={form.key('targetLanguage')}
 						readOnly={isLoading}
 						maxDropdownHeight={80}
-						data={optionsLanguageApp}
+						data={optionsLanguageApp.filter(
+							(item) => item.value !== form.values.sourceLanguage,
+						)}
 						{...form.getInputProps('targetLanguage')}
 					/>
-					<TextInput
-						label="Dialect"
-						name="dialect"
-						key={form.key('dialect')}
+					<Autocomplete
+						label="Usage"
+						name="usage"
+						key={form.key('usage')}
 						readOnly={isLoading}
-						{...form.getInputProps('dialect')}
+						data={[
+							'Percakapan Non-Formal',
+							'Percakapan Formal',
+							'Surat Resmi',
+							'Surat Pribadi',
+						]}
+						{...form.getInputProps('usage')}
 					/>
 					<Textarea
 						label="Text"

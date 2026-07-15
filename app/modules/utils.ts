@@ -85,6 +85,34 @@ export function queryParamsToString(payload: URLSearchParams) {
 	return `?${payload.toString()}`;
 }
 
+export function parseFormData(formData: FormData) {
+	const parseData = Object.fromEntries(formData) as Record<string, unknown>;
+
+	Object.entries(parseData).forEach(([key, value]) => {
+		if (value === 'true') {
+			parseData[key] = true;
+		} else if (value === 'false') {
+			parseData[key] = false;
+		} else if (value === 'null') {
+			parseData[key] = null;
+		} else if (value === 'undefined') {
+			parseData[key] = undefined;
+		} else if (value === 'NaN') {
+			parseData[key] = undefined;
+		} else if (value === 'Infinity') {
+			parseData[key] = undefined;
+		} else if (value === '-Infinity') {
+			parseData[key] = undefined;
+		} else if (value === '') {
+			parseData[key] = undefined;
+		} else if (Number(value)) {
+			parseData[key] = Number(value);
+		}
+	});
+
+	return parseData;
+}
+
 export function findActiveNavigation(
 	navs: {
 		value: string;

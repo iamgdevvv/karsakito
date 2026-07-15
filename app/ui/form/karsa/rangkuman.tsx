@@ -12,11 +12,7 @@ import {
 import { schemaResolver, useForm } from '@mantine/form';
 import { useEffect, useMemo, useState } from 'react';
 import { useFetcher } from 'react-router';
-import {
-	optionsKarsaFrasePreference,
-	optionsKarsaFraseTone,
-	optionsLanguageApp,
-} from '~app-modules/enum-options';
+import { optionsKarsaFrasePreference, optionsLanguageApp } from '~app-modules/enum-options';
 import {
 	PayloadKarsaRangkumanSchema,
 	PayloadSubmissionKarsaSchema,
@@ -29,11 +25,13 @@ import type { ActionSubmissionKarsaAI } from '~app-server/workspace';
 
 export default function FormKarsaRangkuman({
 	data,
+	onError,
 	onSubmitProgress,
 	onSubmit,
 	...props
 }: BoxProps & {
 	data?: KarsaPlain['promptJson'] | PayloadKarsaRangkuman;
+	onError: (message: string) => void;
 	onSubmitProgress: () => void;
 	onSubmit: (values: NonNullable<PayloadWindowWorkspace['karsa']>) => void;
 }) {
@@ -50,7 +48,6 @@ export default function FormKarsaRangkuman({
 		return {
 			sourceLanguage: payload?.sourceLanguage || 'indonesia',
 			targetLanguage: payload?.sourceLanguage || 'indonesia',
-			tone: payload?.tone || '',
 			style: payload?.style || '',
 			preference: payload?.preference || '',
 			text: payload?.text || '',
@@ -73,6 +70,7 @@ export default function FormKarsaRangkuman({
 	useEffect(() => {
 		if (!isLoading && fetcher.data) {
 			if ('error' in fetcher.data) {
+				onError(fetcher.data.error);
 				setErrorMessage(fetcher.data.error);
 			} else {
 				onSubmit(fetcher.data.data);
@@ -116,6 +114,7 @@ export default function FormKarsaRangkuman({
 							},
 						);
 					} else {
+						onError(payload.error.message);
 						setErrorMessage(payload.error.message);
 					}
 				})}
@@ -138,15 +137,6 @@ export default function FormKarsaRangkuman({
 						maxDropdownHeight={80}
 						data={optionsLanguageApp}
 						{...form.getInputProps('targetLanguage')}
-					/>
-					<Autocomplete
-						label="Tone"
-						name="tone"
-						key={form.key('tone')}
-						readOnly={isLoading}
-						maxDropdownHeight={80}
-						data={optionsKarsaFraseTone}
-						{...form.getInputProps('tone')}
 					/>
 					<Autocomplete
 						label="Style"

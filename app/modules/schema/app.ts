@@ -32,6 +32,7 @@ export const PayloadCreateKarsaAppSchema = KarsaAppSchemaPlain.omit({
 	id: true,
 	createdAt: true,
 	updatedAt: true,
+	visible: true,
 }).extend({
 	visible: KarsaAppSchemaPlain.shape.visible.optional(),
 });

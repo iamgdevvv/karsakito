@@ -2,7 +2,7 @@ import { redirect, type RouterContextProvider } from "react-router";
 import { amountTokenDaily } from "~app-modules/enum-options";
 import { PayloadQueryBalanceUserSchema } from "~app-modules/schema/balance";
 import { PayloadCreateUserSchema, PayloadQueryUsersSchema, PayloadUpdateProfilePasswordSchema, PayloadUpdateProfileSchema, PayloadUpdateUserPasswordSchema, PayloadUpdateUserSchema, type PayloadQueryUsers } from "~app-modules/schema/user";
-import { dayjs, qsParse, valueBooleanOrFalse } from "~app-modules/utils";
+import { dayjs, parseFormData, qsParse, valueBooleanOrFalse } from "~app-modules/utils";
 import { prismaClient } from "~app-server/context";
 import { authGetSession, authLoginSession, authMiddlewareSession } from "~app-server/session";
 import { hashCreds, messageActionError, valueOrSkip, verifyCreds } from "~app-server/utils";
@@ -30,7 +30,7 @@ export const actionCreateUser = async ({
 		}
 
 		const formData = await request.formData()
-		const body = PayloadCreateUserSchema.parse(Object.fromEntries(formData))
+		const body = PayloadCreateUserSchema.parse(parseFormData(formData))
 
 		const { password, ...payload } = body;
 
@@ -99,7 +99,7 @@ export const actionUpdateUser = async ({
 		}
 
 		const formData = await request.formData()
-		const body = PayloadUpdateUserSchema.parse(Object.fromEntries(formData))
+		const body = PayloadUpdateUserSchema.parse(parseFormData(formData))
 
 		const resultUser = await prismaClient(context).user.update({
 			where: {
@@ -150,7 +150,7 @@ export const actionUpdateUserPassword = async ({
 		}
 
 		const formData = await request.formData()
-		const body = PayloadUpdateUserPasswordSchema.parse(Object.fromEntries(formData))
+		const body = PayloadUpdateUserPasswordSchema.parse(parseFormData(formData))
 
 		const { password, ...payload } = body;
 
@@ -247,7 +247,7 @@ export const actionUpdateProfile = async ({
 		const userId = authSession.user.id
 
 		const formData = await request.formData()
-		const body = PayloadUpdateProfileSchema.parse(Object.fromEntries(formData))
+		const body = PayloadUpdateProfileSchema.parse(parseFormData(formData))
 
 		const resultUser = await prismaClient(context).user.update({
 			where: {
@@ -299,7 +299,7 @@ export const actionChangePassword = async ({
 		const userId = authSession.user.id
 
 		const formData = await request.formData()
-		const body = PayloadUpdateProfilePasswordSchema.parse(Object.fromEntries(formData))
+		const body = PayloadUpdateProfilePasswordSchema.parse(parseFormData(formData))
 
 		const { password, curentPassword, confirmPassword } = body;
 
@@ -525,6 +525,7 @@ export const actionGetUser = async ({
 }: {
 	userId: User['id']
 	withBalance?: boolean
+	withBalanceActivities?: boolean
 	request: Request
 	context: Readonly<RouterContextProvider>
 }) => {

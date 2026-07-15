@@ -1,4 +1,4 @@
-import { Box, Skeleton, Tabs, Text, type TabsProps } from '@mantine/core';
+import { Box, Skeleton, Tabs, Text, Typography, type TabsProps } from '@mantine/core';
 import { useState } from 'react';
 import { HiOutlineCommandLine } from 'react-icons/hi2';
 import { IoMdOptions } from 'react-icons/io';
@@ -7,6 +7,8 @@ import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import type { PayloadWindowWorkspace } from '~app-modules/schema/workspace';
 import FormKarsaAdaptasiDialek from '~app-ui/form/karsa/adaptasi-dialek';
+import FormKarsaAnalisaDokumen from '~app-ui/form/karsa/analisa-dokumen';
+import FormKarsaAnalisaKalimat from '~app-ui/form/karsa/analisa-kalimat';
 import FormKarsaCeritaPanjang from '~app-ui/form/karsa/cerita-panjang';
 import FormKarsaCeritaPendek from '~app-ui/form/karsa/cerita-pendek';
 import FormKarsaDoaBersama from '~app-ui/form/karsa/doa-bersama';
@@ -18,6 +20,8 @@ import FormKarsaRangkuman from '~app-ui/form/karsa/rangkuman';
 import FormKarsaSlogan from '~app-ui/form/karsa/slogan';
 import FormKarsaTagline from '~app-ui/form/karsa/tagline';
 import FormKarsaTekaTeki from '~app-ui/form/karsa/teka-teki';
+import FormKarsaTerjemahanDokumen from '~app-ui/form/karsa/terjemahan-dokumen';
+import FormKarsaTerjemahanKalimat from '~app-ui/form/karsa/terjemahan-kalimat';
 
 export function WindowAppKarsaWriter({
 	data,
@@ -44,10 +48,6 @@ export function WindowAppKarsaWriter({
 			onChange={(value) => {
 				const valueTab = value as typeof activeTab;
 				setActiveTab(valueTab);
-
-				if (valueTab === 'result') {
-					setResultAI(null);
-				}
 			}}
 		>
 			<Tabs.List
@@ -102,6 +102,9 @@ export function WindowAppKarsaWriter({
 					{data.app === 'pidato' ? (
 						<FormKarsaPidato
 							data={data}
+							onError={() => {
+								setActiveTab('options');
+							}}
 							onSubmitProgress={() => {
 								setResultAI(null);
 								setActiveTab('result');
@@ -114,6 +117,9 @@ export function WindowAppKarsaWriter({
 					) : data.app === 'petuah' ? (
 						<FormKarsaPetuah
 							data={data}
+							onError={() => {
+								setActiveTab('options');
+							}}
 							onSubmitProgress={() => {
 								setResultAI(null);
 								setActiveTab('result');
@@ -126,6 +132,9 @@ export function WindowAppKarsaWriter({
 					) : data.app === 'tagline' ? (
 						<FormKarsaTagline
 							data={data}
+							onError={() => {
+								setActiveTab('options');
+							}}
 							onSubmitProgress={() => {
 								setResultAI(null);
 								setActiveTab('result');
@@ -138,6 +147,9 @@ export function WindowAppKarsaWriter({
 					) : data.app === 'slogan' ? (
 						<FormKarsaSlogan
 							data={data}
+							onError={() => {
+								setActiveTab('options');
+							}}
 							onSubmitProgress={() => {
 								setResultAI(null);
 								setActiveTab('result');
@@ -150,6 +162,9 @@ export function WindowAppKarsaWriter({
 					) : data.app === 'motto' ? (
 						<FormKarsaMotto
 							data={data}
+							onError={() => {
+								setActiveTab('options');
+							}}
 							onSubmitProgress={() => {
 								setResultAI(null);
 								setActiveTab('result');
@@ -162,6 +177,9 @@ export function WindowAppKarsaWriter({
 					) : data.app === 'ceritapendek' ? (
 						<FormKarsaCeritaPendek
 							data={data}
+							onError={() => {
+								setActiveTab('options');
+							}}
 							onSubmitProgress={() => {
 								setResultAI(null);
 								setActiveTab('result');
@@ -174,6 +192,9 @@ export function WindowAppKarsaWriter({
 					) : data.app === 'ceritapanjang' ? (
 						<FormKarsaCeritaPanjang
 							data={data}
+							onError={() => {
+								setActiveTab('options');
+							}}
 							onSubmitProgress={() => {
 								setResultAI(null);
 								setActiveTab('result');
@@ -186,6 +207,9 @@ export function WindowAppKarsaWriter({
 					) : data.app === 'doabersama' ? (
 						<FormKarsaDoaBersama
 							data={data}
+							onError={() => {
+								setActiveTab('options');
+							}}
 							onSubmitProgress={() => {
 								setResultAI(null);
 								setActiveTab('result');
@@ -198,6 +222,9 @@ export function WindowAppKarsaWriter({
 					) : data.app === 'tekateki' ? (
 						<FormKarsaTekaTeki
 							data={data}
+							onError={() => {
+								setActiveTab('options');
+							}}
 							onSubmitProgress={() => {
 								setResultAI(null);
 								setActiveTab('result');
@@ -210,6 +237,9 @@ export function WindowAppKarsaWriter({
 					) : data.app === 'parafrase' ? (
 						<FormKarsaParafrase
 							data={data}
+							onError={() => {
+								setActiveTab('options');
+							}}
 							onSubmitProgress={() => {
 								setResultAI(null);
 								setActiveTab('result');
@@ -222,6 +252,9 @@ export function WindowAppKarsaWriter({
 					) : data.app === 'rangkuman' ? (
 						<FormKarsaRangkuman
 							data={data}
+							onError={() => {
+								setActiveTab('options');
+							}}
 							onSubmitProgress={() => {
 								setResultAI(null);
 								setActiveTab('result');
@@ -234,6 +267,69 @@ export function WindowAppKarsaWriter({
 					) : data.app === 'adaptasidialek' ? (
 						<FormKarsaAdaptasiDialek
 							data={data}
+							onError={() => {
+								setActiveTab('options');
+							}}
+							onSubmitProgress={() => {
+								setResultAI(null);
+								setActiveTab('result');
+							}}
+							onSubmit={(values) => {
+								onSubmit(values);
+								setResultAI(values.result);
+							}}
+						/>
+					) : data.app === 'terjemahankalimat' ? (
+						<FormKarsaTerjemahanKalimat
+							data={data}
+							onError={() => {
+								setActiveTab('options');
+							}}
+							onSubmitProgress={() => {
+								setResultAI(null);
+								setActiveTab('result');
+							}}
+							onSubmit={(values) => {
+								onSubmit(values);
+								setResultAI(values.result);
+							}}
+						/>
+					) : data.app === 'terjemahandokumen' ? (
+						<FormKarsaTerjemahanDokumen
+							data={data}
+							onError={() => {
+								setActiveTab('options');
+							}}
+							onSubmitProgress={() => {
+								setResultAI(null);
+								setActiveTab('result');
+							}}
+							onSubmit={(values) => {
+								onSubmit(values);
+								setResultAI(values.result);
+							}}
+						/>
+					) : data.app === 'analisakalimat' ? (
+						<FormKarsaAnalisaKalimat
+							data={data}
+							onError={() => {
+								setActiveTab('options');
+							}}
+							onSubmitProgress={() => {
+								setResultAI(null);
+								setActiveTab('result');
+							}}
+							onSubmit={(values) => {
+								onSubmit(values);
+								setResultAI(values.result);
+							}}
+						/>
+					) : data.app === 'analisadokumen' ? (
+						<FormKarsaAnalisaDokumen
+							data={data}
+							onError={() => {
+								setActiveTab('options');
+							}}
 							onSubmitProgress={() => {
 								setResultAI(null);
 								setActiveTab('result');
@@ -261,9 +357,11 @@ export function WindowAppKarsaWriter({
 						bg="gray.0"
 					>
 						{resultAI ? (
-							<Markdown remarkPlugins={[remarkGfm, remarkBreaks]}>
-								{resultAI}
-							</Markdown>
+							<Typography>
+								<Markdown remarkPlugins={[remarkGfm, remarkBreaks]}>
+									{resultAI}
+								</Markdown>
+							</Typography>
 						) : null}
 					</Box>
 				)}

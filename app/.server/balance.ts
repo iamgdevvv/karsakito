@@ -1,5 +1,6 @@
 import { type RouterContextProvider } from "react-router";
 import { PayloadUpdateBalanceSchema } from "~app-modules/schema/balance";
+import { parseFormData } from "~app-modules/utils";
 import { prismaClient } from "~app-server/context";
 import { authMiddlewareSession } from "~app-server/session";
 import { messageActionError, valueNullOrSkip } from "~app-server/utils";
@@ -29,7 +30,7 @@ export const actionUpdateBalanceUser = async ({
         }
 
         const formData = await request.formData()
-        const body = PayloadUpdateBalanceSchema.parse(Object.fromEntries(formData))
+        const body = PayloadUpdateBalanceSchema.parse(parseFormData(formData))
 
         const prisma = prismaClient(context)
 
@@ -73,6 +74,34 @@ export const actionUpdateBalanceUser = async ({
         }
     } catch (error) {
         console.log('actionUpdateBalanceUser', error)
+
+        return {
+            error: messageActionError(error)
+        }
+    }
+};
+
+export const actionGetBalanceUser = async ({
+    userId,
+    context
+}: {
+    userId: string
+    context: Readonly<RouterContextProvider>
+}) => {
+    try {
+        return {
+            data: await prismaClient(context).balance.findUniqueOrThrow({
+            where: {
+                userId
+            },
+            select: {
+                token: true,
+                tokenDaily: true
+            }
+        })
+        }
+    } catch (error) {
+        console.log('actionGetBalanceUser', error)
 
         return {
             error: messageActionError(error)

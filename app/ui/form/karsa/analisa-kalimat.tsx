@@ -1,36 +1,36 @@
 import {
 	Alert,
+	Autocomplete,
 	Box,
 	Button,
 	Group,
 	Select,
 	Stack,
 	Textarea,
-	TextInput,
 	type BoxProps,
 } from '@mantine/core';
 import { schemaResolver, useForm } from '@mantine/form';
 import { useEffect, useMemo, useState } from 'react';
 import { useFetcher } from 'react-router';
-import { optionsLanguageApp } from '~app-modules/enum-options';
+import { optionsKarsaLisaAudience, optionsLanguageApp } from '~app-modules/enum-options';
 import {
-	PayloadKarsaAdaptasiDialekSchema,
+	PayloadKarsaAnalisaKalimatSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
-	type PayloadKarsaAdaptasiDialek,
+	type PayloadKarsaAnalisaKalimat,
 	type PayloadSubmissionKarsa,
 } from '~app-modules/schema/karsa';
 import type { PayloadWindowWorkspace } from '~app-modules/schema/workspace';
 import type { ActionSubmissionKarsaAI } from '~app-server/workspace';
 
-export default function FormKarsaAdaptasiDialek({
+export default function FormKarsaAnalisaKalimat({
 	data,
 	onError,
 	onSubmitProgress,
 	onSubmit,
 	...props
 }: BoxProps & {
-	data?: KarsaPlain['promptJson'] | PayloadKarsaAdaptasiDialek;
+	data?: KarsaPlain['promptJson'] | PayloadKarsaAnalisaKalimat;
 	onError: (message: string) => void;
 	onSubmitProgress: () => void;
 	onSubmit: (values: NonNullable<PayloadWindowWorkspace['karsa']>) => void;
@@ -43,19 +43,18 @@ export default function FormKarsaAdaptasiDialek({
 	}, [fetcher.state]);
 
 	const initialValues = useMemo(() => {
-		const payload = PayloadKarsaAdaptasiDialekSchema.safeParse(data).data;
+		const payload = PayloadKarsaAnalisaKalimatSchema.safeParse(data).data;
 
 		return {
-			sourceLanguage: payload?.sourceLanguage || 'indonesia',
-			targetLanguage: payload?.sourceLanguage || 'indonesia',
-			dialect: payload?.dialect || '',
+			language: payload?.language || 'indonesia',
+			audience: payload?.audience || '',
 			text: payload?.text || '',
-		} satisfies PayloadKarsaAdaptasiDialek;
+		} satisfies PayloadKarsaAnalisaKalimat;
 	}, [data]);
 
-	const form = useForm<PayloadKarsaAdaptasiDialek>({
+	const form = useForm<PayloadKarsaAnalisaKalimat>({
 		mode: 'uncontrolled',
-		validate: schemaResolver(PayloadKarsaAdaptasiDialekSchema, { sync: true }),
+		validate: schemaResolver(PayloadKarsaAnalisaKalimatSchema, { sync: true }),
 		onSubmitPreventDefault: 'validation-failed',
 		initialValues,
 		onValuesChange: () => {
@@ -80,7 +79,7 @@ export default function FormKarsaAdaptasiDialek({
 	return (
 		<Box
 			{...props}
-			data-slot="FormKarsaAdaptasiDialek"
+			data-slot="FormKarsaAnalisaKalimat"
 		>
 			{errorMessage ? (
 				<Alert
@@ -99,7 +98,7 @@ export default function FormKarsaAdaptasiDialek({
 					setErrorMessage(null);
 					onSubmitProgress();
 					const payload = PayloadSubmissionKarsaSchema.safeParse({
-						app: 'adaptasidialek',
+						app: 'analisakalimat',
 						payload: values,
 					} satisfies PayloadSubmissionKarsa);
 
@@ -120,29 +119,21 @@ export default function FormKarsaAdaptasiDialek({
 			>
 				<Stack gap="xs">
 					<Select
-						label="Source Language"
-						name="sourceLanguage"
-						key={form.key('sourceLanguage')}
+						label="Language"
+						name="language"
+						key={form.key('language')}
 						readOnly={isLoading}
 						maxDropdownHeight={80}
 						data={optionsLanguageApp}
-						{...form.getInputProps('sourceLanguage')}
+						{...form.getInputProps('language')}
 					/>
-					<Select
-						label="Target Language"
-						name="targetLanguage"
-						key={form.key('targetLanguage')}
+					<Autocomplete
+						label="Audience"
+						name="audience"
+						key={form.key('audience')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
-						data={optionsLanguageApp}
-						{...form.getInputProps('targetLanguage')}
-					/>
-					<TextInput
-						label="Dialect"
-						name="dialect"
-						key={form.key('dialect')}
-						readOnly={isLoading}
-						{...form.getInputProps('dialect')}
+						data={optionsKarsaLisaAudience}
+						{...form.getInputProps('audience')}
 					/>
 					<Textarea
 						label="Text"

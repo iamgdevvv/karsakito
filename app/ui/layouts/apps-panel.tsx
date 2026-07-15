@@ -1,5 +1,5 @@
 import { Scene } from '@gfazioli/mantine-scene';
-import { Container, Flex, Group, Text, ThemeIcon, type FlexProps } from '@mantine/core';
+import { Container, Flex, Group, Stack, Text, ThemeIcon, type FlexProps } from '@mantine/core';
 import { useMemo } from 'react';
 import { HiUser } from 'react-icons/hi2';
 import { MdSave } from 'react-icons/md';
@@ -14,21 +14,25 @@ const navigations = [
 		label: 'Home',
 		value: '/',
 		icon: <TbAppsFilled />,
+		disabled: false,
 	},
 	{
 		label: 'Workspace',
 		value: '/workspace',
 		icon: <RiPencilAiFill />,
+		disabled: false,
 	},
 	{
 		label: 'Saved',
 		value: '/workspace/saved',
 		icon: <MdSave />,
+		disabled: true,
 	},
 	{
 		label: 'Profile',
 		value: '/dashboard',
 		icon: <HiUser />,
+		disabled: false,
 	},
 ];
 
@@ -107,48 +111,94 @@ export default function AppPanel({
 						}}
 						className="cx-shadow-xs pointer-events-auto shadow-gray-300"
 					>
-						{navigations.map((nav, index) => (
-							<Link
-								key={`${nav.value}-${index}`}
-								to={nav.value}
-								display="flex"
-								className={cn(
-									'flex-col items-center gap-0.5',
-									navigation.state === 'loading' && 'animate-pulse',
-								)}
-							>
-								<ThemeIcon
-									radius="full"
-									variant={
-										selectedPanel && selectedPanel.value === nav.value
-											? 'filled'
-											: 'transparent'
-									}
-									color={
-										selectedPanel && selectedPanel.value === nav.value
-											? 'primary'
-											: 'dark'
-									}
+						{navigations.map((nav, index) => {
+							if (nav.disabled) {
+								return (
+									<Stack
+										gap={2}
+										align="center"
+										ta="center"
+									>
+										<ThemeIcon
+											radius="full"
+											variant="transparent"
+											color="gray.6"
+										>
+											{nav.icon}
+										</ThemeIcon>
+										<Stack
+											gap={0}
+											align="center"
+										>
+											<Text
+												span
+												fz={{
+													base: 10,
+													lg: 'xs',
+												}}
+												lh={1}
+												c="gray"
+												td="line-through"
+											>
+												{nav.label}
+											</Text>
+											<Text
+												span
+												fz={10}
+												lh={1}
+												c="gray"
+												fw={600}
+											>
+												Soon
+											</Text>
+										</Stack>
+									</Stack>
+								);
+							}
+
+							return (
+								<Link
+									key={`${nav.value}-${index}`}
+									to={nav.value}
+									display="flex"
+									className={cn(
+										'flex-col items-center gap-0.5',
+										navigation.state === 'loading' && 'animate-pulse',
+									)}
 								>
-									{nav.icon}
-								</ThemeIcon>
-								<Text
-									span
-									fz={{
-										base: 10,
-										lg: 'xs',
-									}}
-									c={
-										selectedPanel && selectedPanel.value === nav.value
-											? 'primary'
-											: undefined
-									}
-									fw={600}
-								>
-									{nav.label}
-								</Text>
-							</Link>
-						))}
+									<ThemeIcon
+										radius="full"
+										variant={
+											selectedPanel && selectedPanel.value === nav.value
+												? 'filled'
+												: 'transparent'
+										}
+										color={
+											selectedPanel && selectedPanel.value === nav.value
+												? 'primary'
+												: 'dark'
+										}
+									>
+										{nav.icon}
+									</ThemeIcon>
+									<Text
+										span
+										fz={{
+											base: 10,
+											lg: 'xs',
+										}}
+										c={
+											selectedPanel && selectedPanel.value === nav.value
+												? 'primary'
+												: undefined
+										}
+										fw={600}
+									>
+										{nav.label}
+									</Text>
+								</Link>
+							);
+						})}
 					</Group>
 				</Group>
 			</Container>

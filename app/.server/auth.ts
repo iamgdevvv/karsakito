@@ -1,6 +1,7 @@
 import { replace, type RouterContextProvider } from "react-router";
 import { amountTokenDaily } from "~app-modules/enum-options";
 import { PayloadLoginSchema, PayloadRegisterSchema } from "~app-modules/schema/auth";
+import { parseFormData } from "~app-modules/utils";
 import { prismaClient } from "~app-server/context";
 import { authGetSession, authLoginSession } from "~app-server/session";
 import { hashCreds, messageActionError, verifyCreds } from "~app-server/utils";
@@ -14,7 +15,7 @@ export const actionLogin = async ({
 }) => {
 	try {
 		const formData = await request.formData()
-		const body = PayloadLoginSchema.parse(Object.fromEntries(formData))
+		const body = PayloadLoginSchema.parse(parseFormData(formData))
 
 		const { password, _redirect, ...payload } = body;
 
@@ -82,7 +83,7 @@ export const actionRegister = async ({
 }) => {
 	try {
 		const formData = await request.formData()
-		const body = PayloadRegisterSchema.parse(Object.fromEntries(formData))
+		const body = PayloadRegisterSchema.parse(parseFormData(formData))
 
 		const { password, ...payload } = body;
 

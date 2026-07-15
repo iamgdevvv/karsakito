@@ -32,7 +32,6 @@ import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/nprogress/styles.css';
 import '@mantine/spotlight/styles.css';
-import '@mantine/tiptap/styles.css';
 
 import { ButtonLink } from '~app-ui/components/link';
 import Footer from '~app-ui/layouts/footer';

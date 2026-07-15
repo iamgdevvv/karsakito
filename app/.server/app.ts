@@ -1,7 +1,7 @@
 import type { ComboboxItem } from "@mantine/core";
 import { type RouterContextProvider } from "react-router";
 import { PayloadCreateKarsaAppSchema, PayloadQueryKarsaAppsSchema, PayloadUpdateKarsaAppSchema, type PayloadQueryKarsaApps } from "~app-modules/schema/app";
-import { dayjs, qsParse, valueBooleanOrFalse } from "~app-modules/utils";
+import { dayjs, parseFormData, qsParse, valueBooleanOrFalse } from "~app-modules/utils";
 import { prismaClient } from "~app-server/context";
 import { authMiddlewareSession } from "~app-server/session";
 import { messageActionError, valueNullOrSkip, valueOrSkip } from "~app-server/utils";
@@ -29,7 +29,7 @@ export const actionCreateKarsaApp = async ({
         }
 
         const formData = await request.formData()
-        const body = PayloadCreateKarsaAppSchema.parse(Object.fromEntries(formData))
+        const body = PayloadCreateKarsaAppSchema.parse(parseFormData(formData))
 
         return {
             data: await prismaClient(context).karsaApp.create({
@@ -70,7 +70,7 @@ export const actionUpdateKarsaApp = async ({
         }
 
         const formData = await request.formData()
-        const body = PayloadUpdateKarsaAppSchema.parse(Object.fromEntries(formData))
+        const body = PayloadUpdateKarsaAppSchema.parse(parseFormData(formData))
 
         const resultKarsaApp = await prismaClient(context).karsaApp.update({
             where: {
@@ -217,7 +217,7 @@ export const actionGetKarsaApps = async <T = KarsaApp>({
             })));
         }
 
-        const pageSize = Number(total || 10);
+        const pageSize = Number(total || 8);
         const takeAmount = pageSize + 1;
         let cursorId = nextCursor;
         let isBackward = false;
@@ -368,6 +368,8 @@ export const actionGetKarsaAppsByCategory = async ({
                 name: true,
                 label: true,
                 visible: true,
+                token: true,
+                tokenPromo: true,
                 category: true,
                 description: true
             },
@@ -376,7 +378,7 @@ export const actionGetKarsaAppsByCategory = async ({
         karsaApps.forEach((app) => {
             karsaAppWithCategories[app.category].push({
                 value: app.name,
-                label: app.label,
+                label: `${app.label} — ${app.visible ? `🪙${app.tokenPromo || app.token}` : 'Soon'}`,
                 description: app.description,
                 disabled: !app.visible,
             })

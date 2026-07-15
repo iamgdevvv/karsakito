@@ -234,3 +234,12 @@ img {
 .mantine-Window-header .mantine-ActionIcon-root {
 	@apply size-4;
 }
+
+.mantine-Typography-root {
+	--title-h1: 1.5rem;
+	--title-h2: 1.4rem;
+	--title-h3: 1.3rem;
+	--title-h4: 1.2rem;
+	--title-h5: 1.1rem;
+	--title-h6: 1rem;
+}

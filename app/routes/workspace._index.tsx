@@ -1,18 +1,26 @@
 import { Window, type WindowGroupContextValue } from '@gfazioli/mantine-window';
 import {
 	ActionIcon,
+	Badge,
 	Box,
 	Button,
 	Divider,
+	Flex,
 	Group,
 	LoadingOverlay,
 	Popover,
+	SegmentedControl,
+	Stack,
+	Text,
+	ThemeIcon,
 	Tooltip,
 } from '@mantine/core';
 import { useFullscreenDocument, useMap, useMediaQuery } from '@mantine/hooks';
-import { useCallback, useEffect, useRef, useState, useTransition } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from 'react';
 import { BsArrowsFullscreen } from 'react-icons/bs';
+import { LuCoins } from 'react-icons/lu';
 import { MdOutlineFitScreen, MdSaveAs } from 'react-icons/md';
+import { PiCoinsFill } from 'react-icons/pi';
 import { VscEmptyWindow } from 'react-icons/vsc';
 import { replace, useSearchParams } from 'react-router';
 import { labelAppName } from '~app-modules/enum-options';
@@ -22,8 +30,8 @@ import {
 	type PayloadWindowWorkspace,
 	type WorkspaceWindowPlain,
 } from '~app-modules/schema/workspace';
-import { slugify } from '~app-modules/utils';
 import { actionGetKarsaAppsByCategory } from '~app-server/app';
+import { actionGetBalanceUser } from '~app-server/balance';
 import { authUserCtx } from '~app-server/context';
 import { authGetSession } from '~app-server/session';
 import { actionSubmissionKarsaAI } from '~app-server/workspace';
@@ -58,10 +66,17 @@ export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
 export async function loader({ context }: Route.LoaderArgs) {
 	const user = context.get(authUserCtx)!;
-	const optionApps = await actionGetKarsaAppsByCategory({ context });
+	const [optionApps, userBalance] = await Promise.all([
+		actionGetKarsaAppsByCategory({ context }),
+		actionGetBalanceUser({
+			userId: user.id,
+			context,
+		}),
+	]);
 
 	return {
 		user,
+		userBalance,
 		optionApps,
 	};
 }
@@ -81,11 +96,12 @@ export function meta(_: Route.MetaArgs) {
 }
 
 export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps) {
-	const [searchParams] = useSearchParams();
+	const [searchParams, setSearchParams] = useSearchParams();
 	const [isFirstRender, setIsFirstRender] = useState(false);
 	const { fullscreen, toggle: toggleFullscreen } = useFullscreenDocument();
 	const [isLoadingRenderWindow, startActionRenderWindow] = useTransition();
 	const [openFormNewWindow, setOpenFormNewWindow] = useState(false);
+	const [openBalanceUser, setOpenBalanceUser] = useState(false);
 	const refCanvas = useRef<HTMLDivElement>(null);
 	const groupRef = useRef<WindowGroupContextValue>(null);
 	const [canvasHeight, setCanvasHeight] = useState<number | undefined>(800);
@@ -93,6 +109,22 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 	const isMobile = useMediaQuery('(max-width: 1199px)', true, {
 		getInitialValueInEffect: true,
 	});
+
+	const viewMode = useMemo(() => {
+		const paramViewMode = searchParams.get('viewMode');
+
+		if (paramViewMode === 'window') {
+			return 'window';
+		}
+
+		return 'simple';
+	}, [searchParams]);
+
+	const simpleKarsaSelected = useMemo(() => {
+		const [first] = windowLists.keys();
+
+		return windowLists.get(first);
+	}, [windowLists]);
 
 	const handleFitWindow = useCallback(() => {
 		if (groupRef.current) {
@@ -132,7 +164,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 
 					const param = PayloadWindowWorkspaceSchema.safeParse({
 						id: crypto.randomUUID(),
-						title: `Karsa ${labelAppName[app]}`,
+						title: `Workspace ${labelAppName[app]}`,
 						app,
 					} satisfies PayloadWindowWorkspace);
 
@@ -156,59 +188,186 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 					justify="flex-end"
 				>
 					<Popover
-						opened={openFormNewWindow}
-						onChange={setOpenFormNewWindow}
+						opened={openBalanceUser}
 						width={200}
+						radius="lg"
 						position="bottom-start"
 						shadow="md"
 					>
 						<Popover.Target>
-							<Button
+							<Badge
+								size="xl"
+								mih={36}
+								px="sm"
+								fz="xs"
+								fw={500}
+								variant="light"
+								color="yellow"
+								tt="capitalize"
+								onMouseEnter={() => setOpenBalanceUser(true)}
+								onMouseLeave={() => setOpenBalanceUser(false)}
+							>
+								🪙{' '}
+								<Text
+									span
+									inherit
+									fw={700}
+								>
+									{Number(loaderData.userBalance.data?.token || 0) +
+										Number(loaderData.userBalance.data?.tokenDaily || 0)}
+								</Text>
+							</Badge>
+						</Popover.Target>
+						<Popover.Dropdown>
+							<Stack gap="xs">
+								<Flex align="center">
+									<ThemeIcon
+										w={24}
+										h={24}
+										variant="light"
+										color="yellow"
+										radius="full"
+										mr={6}
+									>
+										<PiCoinsFill size={18} />
+									</ThemeIcon>
+									<Text
+										span
+										size="sm"
+										fw={500}
+									>
+										{loaderData.userBalance.data?.token || 0} Token
+									</Text>
+								</Flex>
+								<Flex align="center">
+									<ThemeIcon
+										w={24}
+										h={24}
+										variant="light"
+										color="blue"
+										radius="full"
+										mr={6}
+									>
+										<LuCoins size={18} />
+									</ThemeIcon>
+									<Text
+										span
+										size="sm"
+										fw={500}
+									>
+										{loaderData.userBalance.data?.tokenDaily || 0} Token Daily
+									</Text>
+								</Flex>
+							</Stack>
+						</Popover.Dropdown>
+					</Popover>
+
+					<SegmentedControl
+						mr="auto"
+						withItemsBorders={false}
+						classNames={{
+							label: 'text-xs min-h-7 flex items-center justify-center',
+						}}
+						value={viewMode}
+						onChange={(value) => {
+							setSearchParams({ viewMode: value });
+						}}
+						data={[
+							{ label: 'Simple', value: 'simple' },
+							{ label: 'Window (Beta)', value: 'window' },
+						]}
+					/>
+
+					{viewMode === 'window' ? (
+						<>
+							<Popover
+								opened={openFormNewWindow}
+								onChange={setOpenFormNewWindow}
+								width={280}
+								radius="lg"
+								position="bottom-end"
+								shadow="md"
+							>
+								<Popover.Target>
+									<Button
+										size="sm"
+										variant="light"
+										leftSection={<VscEmptyWindow size={18} />}
+										onClick={() => setOpenFormNewWindow(true)}
+									>
+										<Text
+											span
+											inherit
+											visibleFrom="sm"
+										>
+											Add Window
+										</Text>
+										<Text
+											span
+											inherit
+											hiddenFrom="sm"
+										>
+											Add new
+										</Text>
+									</Button>
+									{/* <Button
 								size="sm"
 								variant="light"
 								mr="auto"
-								leftSection={<VscEmptyWindow size={18} />}
+								pl="xs"
+								pr="sm"
 								onClick={() => setOpenFormNewWindow(true)}
 							>
-								Add Window
-							</Button>
-						</Popover.Target>
-						<Popover.Dropdown>
-							<FormWindowWorkspace
-								optionApps={loaderData.optionApps}
-								onSubmit={(value) => {
-									handleAddWindow({
-										...value,
-										id: slugify(value.title),
-									});
-									setOpenFormNewWindow(false);
-								}}
-							/>
-						</Popover.Dropdown>
-					</Popover>
-					<Tooltip
-						fz="xs"
-						label="Save Workspace"
-					>
-						<ActionIcon
-							size="lg"
-							variant="light"
-						>
-							<MdSaveAs size={20} />
-						</ActionIcon>
-					</Tooltip>
-					<Tooltip
-						fz="xs"
-						label="Fit Window"
-					>
-						<ActionIcon
-							size="lg"
-							variant="light"
-							onClick={handleFitWindow}
-						>
-							<MdOutlineFitScreen size={20} />
-						</ActionIcon>
-					</Tooltip>
+								<ThemeIcon variant="transparent">
+									<VscEmptyWindow size={18} />
+								</ThemeIcon>
+								<Text
+									span
+									inherit
+									display="inline-block"
+									ml={4}
+									visibleFrom="sm"
+								>
+									Add Window
+								</Text>
+							</Button> */}
+								</Popover.Target>
+								<Popover.Dropdown>
+									<FormWindowWorkspace
+										optionApps={loaderData.optionApps}
+										onSubmit={(value) => {
+											handleAddWindow(value);
+											setOpenFormNewWindow(false);
+										}}
+									/>
+								</Popover.Dropdown>
+							</Popover>
+							<Tooltip
+								fz="xs"
+								label="Save Workspace"
+							>
+								<ActionIcon
+									size="lg"
+									variant="light"
+								>
+									<MdSaveAs size={20} />
+								</ActionIcon>
+							</Tooltip>
+							<Tooltip
+								fz="xs"
+								label="Fit Window"
+							>
+								<ActionIcon
+									size="lg"
+									variant="light"
+									onClick={handleFitWindow}
+								>
+									<MdOutlineFitScreen size={20} />
+								</ActionIcon>
+							</Tooltip>
+						</>
+					) : null}
+
 					<Tooltip
 						fz="xs"
 						label="Fullscreen"
@@ -231,7 +390,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 					bg="gray.1"
 					bdrs="xl"
 					p="xs"
-					h={canvasHeight}
+					mih={canvasHeight}
 					flex="1 1 auto"
 					className="z-1"
 				>
@@ -244,65 +403,110 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 						}}
 					/>
 					{refCanvas.current ? (
-						<Window.Group
-							groupRef={groupRef}
-							w="100%"
-							h="100%"
-						>
-							{Array.from(windowLists).map(([id, windowItem], index) => (
-								<Window
-									opened
-									key={`${id}-${index}`}
-									defaultX={index * 10}
-									defaultY={index * 10}
-									maxWidth="100%"
-									defaultHeight={420}
-									withinPortal={false}
-									controlsPosition="right"
-									{...windowItem.props}
-									id={id}
-									title={windowItem.title}
-									draggable={isMobile ? 'none' : 'header'}
-									resizable={isMobile ? 'none' : undefined}
-									withToolsButton={!isMobile}
-									onClose={() => {
-										startActionRenderWindow(() => {
-											windowLists.delete(id);
-											handleFitWindow();
-										});
-									}}
-									onPositionChange={({ x, y }) =>
-										windowLists.set(id, {
-											...windowItem,
-											props: {
-												x,
-												y,
-											},
-										})
-									}
-									onSizeChange={({ width, height }) =>
-										windowLists.set(id, {
-											...windowItem,
-											props: {
-												width,
-												height,
-											},
-										})
-									}
-									className="[&_.mantine-ScrollArea-content]:h-full"
-								>
-									<WindowAppKarsaWriter
-										data={windowItem}
-										onSubmit={(karsa) => {
+						viewMode === 'window' ? (
+							<Window.Group
+								groupRef={groupRef}
+								w="100%"
+								h="100%"
+							>
+								{Array.from(windowLists).map(([id, windowItem], index) => (
+									<Window
+										opened
+										key={`${id}-${index}`}
+										defaultX={index * 10}
+										defaultY={index * 10}
+										maxWidth="100%"
+										defaultHeight={420}
+										withinPortal={false}
+										controlsPosition="right"
+										{...windowItem.props}
+										id={id}
+										title={windowItem.title}
+										draggable={isMobile ? 'none' : 'header'}
+										resizable={isMobile ? 'none' : undefined}
+										withToolsButton={!isMobile}
+										onClose={() => {
+											startActionRenderWindow(() => {
+												windowLists.delete(id);
+												handleFitWindow();
+											});
+										}}
+										onPositionChange={({ x, y }) =>
 											windowLists.set(id, {
 												...windowItem,
+												props: {
+													x,
+													y,
+												},
+											})
+										}
+										onSizeChange={({ width, height }) =>
+											windowLists.set(id, {
+												...windowItem,
+												props: {
+													width,
+													height,
+												},
+											})
+										}
+										className="[&_.mantine-ScrollArea-content]:h-full"
+									>
+										<WindowAppKarsaWriter
+											data={windowItem}
+											onSubmit={(karsa) => {
+												windowLists.set(id, {
+													...windowItem,
+													karsa,
+												});
+											}}
+										/>
+									</Window>
+								))}
+							</Window.Group>
+						) : (
+							<Box
+								w="100%"
+								maw={600}
+								mx="auto"
+								bg="white"
+								bdrs="xl"
+								my="sm"
+								p={{
+									base: 'md',
+									sm: 'lg',
+									lg: 'xl',
+								}}
+							>
+								<FormWindowWorkspace
+									key={simpleKarsaSelected?.id || null}
+									viewMode={viewMode}
+									defaultValues={simpleKarsaSelected}
+									optionApps={loaderData.optionApps}
+									mb="lg"
+									onSubmit={(value) => {
+										if (simpleKarsaSelected) {
+											windowLists.set(simpleKarsaSelected.id, {
+												...value,
+												id: simpleKarsaSelected.id,
+											});
+										} else {
+											handleAddWindow(value);
+										}
+									}}
+								/>
+								{simpleKarsaSelected ? (
+									<WindowAppKarsaWriter
+										data={simpleKarsaSelected}
+										onSubmit={(karsa) => {
+											windowLists.set(simpleKarsaSelected.id, {
+												...simpleKarsaSelected,
 												karsa,
 											});
 										}}
 									/>
-								</Window>
-							))}
-						</Window.Group>
+								) : null}
+							</Box>
+						)
 					) : null}
 				</Box>
 			</AppPanel>

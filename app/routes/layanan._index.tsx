@@ -2,6 +2,7 @@ import { Carousel } from '@mantine/carousel';
 import { Accordion, Badge, Box, Container, Grid, Group, Stack, Text, Title } from '@mantine/core';
 import { MdOutlineArrowForwardIos } from 'react-icons/md';
 import { metaPublicRoute } from '~app-modules/meta';
+import { cfContext } from '~app-server/context';
 import { authGetSession } from '~app-server/session';
 import { Image } from '~app-ui/components/image';
 import { ButtonLink } from '~app-ui/components/link';
@@ -9,7 +10,6 @@ import { TestimonialCard } from '~app-ui/components/testimonial';
 import Banner from '~app-ui/layouts/banner';
 import Footer from '~app-ui/layouts/footer';
 import { Header } from '~app-ui/layouts/header';
-import { cloudflareContext } from '~workers/app';
 
 import type { Route } from './+types/layanan._index';
 
@@ -70,7 +70,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 
 	return {
 		user,
-		noIndex: context.get(cloudflareContext).env.NODE_ENV !== 'production',
+		noIndex: cfContext(context).env.NODE_ENV !== 'production',
 	};
 }
 

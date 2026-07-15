@@ -79,6 +79,11 @@ export const optionsKarsaWriterAudience = [
 	'Tokoh / Pemangku Jabatan',
 ];
 
-export const optionsKarsaFraseTone = ['Santai', 'Formal', 'Puitis', 'Netral'];
-
 export const optionsKarsaFrasePreference = ['Ringkas', 'Normal', 'Elaborasi'];
+
+export const optionsKarsaLisaAudience = [
+	'Orang Tua',
+	'Teman Sebaya',
+	'Lebih Muda',
+	'Saudara Sebaya',
+];

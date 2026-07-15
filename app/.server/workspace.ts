@@ -1,6 +1,6 @@
 import { type RouterContextProvider } from "react-router";
 import { uuidv7 } from "uuidv7";
-import { PayloadSubmissionKarsaSchema, type KarsaPlain } from "~app-modules/schema/karsa";
+import { PayloadSubmissionKarsaSchema, type KarsaPlain, type PayloadKarsaAnalisa, type PayloadKarsaTranslate } from "~app-modules/schema/karsa";
 import type { PayloadWindowWorkspace } from "~app-modules/schema/workspace";
 import { cfContext, prismaClient } from "~app-server/context";
 import { authMiddlewareSession } from "~app-server/session";
@@ -65,7 +65,7 @@ const submissionKarsaAI = async (apiUrl: string, payload: NonNullable<KarsaPlain
         console.log({
             apiUrl,
             payload,
-            response: data,
+            response: JSON.stringify(data, null, 2),
         })
 
         if ('result' in data) {
@@ -146,8 +146,40 @@ export const actionSubmissionKarsaAI = async ({
             throw new Error("Insufficient tokens to perform this action.");
         }
 
+        let submissionPayload: KarsaPlain['promptJson'] = body.payload
+
+        if (body.app === 'terjemahankalimat') {
+            submissionPayload = {
+                source_language: body.payload.sourceLanguage,
+                target_language: body.payload.targetLanguage,
+                info: `Nuansa penggunaan ${body.payload.usage}`,
+                text: body.payload.text
+            } satisfies PayloadKarsaTranslate
+        } else if (body.app === 'terjemahandokumen') {
+            submissionPayload = {
+                source_language: body.payload.sourceLanguage,
+                target_language: body.payload.targetLanguage,
+                info: body.payload.info,
+                text: body.payload.selectionText
+            } satisfies PayloadKarsaTranslate
+        } else if(body.app === 'analisakalimat') {
+            submissionPayload = {
+                language: body.payload.language,
+                info: "",
+                audience: body.payload.audience,
+                text: body.payload.text
+            } satisfies PayloadKarsaAnalisa
+        } else if(body.app === 'analisadokumen') {
+            submissionPayload = {
+                language: body.payload.language,
+                info: body.payload.info,
+                audience: body.payload.audience,
+                text: body.payload.selectionText
+            } satisfies PayloadKarsaAnalisa
+        }
+
         const result = await submissionKarsaAI(cfEnv.API_AI_URL + karsaAIEndpoint[body.app], {
-            ...body.payload,
+            ...submissionPayload,
             userId: authSession.user.id
         }, {
             Authorization: `Bearer ${cfEnv.API_AI_KEY}`,

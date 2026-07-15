@@ -29,9 +29,6 @@
 			"custom_domain": true,
 		},
 	],
-	"triggers": {
-		"crons": ["1 * * * *"],
-	},
 	"d1_databases": [
 		{
 			"binding": "DB",
