@@ -2,7 +2,7 @@ import type { LanguageApp } from '~app-modules/schema/app';
 import { TimezoneSchema } from '~app-modules/schema/enum';
 import { type KarsaAppsCategory, type KarsaAppsName, type UserRole } from '~generated/prisma/enums';
 
-export const amountTokenDaily = 10;
+export const amountTokenDaily = 100;
 
 export const labelLanguageApp = {
 	indonesia: 'Bahasa Indonesia',
