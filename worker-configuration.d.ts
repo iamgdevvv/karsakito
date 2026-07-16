@@ -15,7 +15,7 @@ interface __BaseEnv_Env {
 }
 declare namespace Cloudflare {
 	interface GlobalProps {
-		mainModule: typeof import("./workers/app");
+		mainModule: typeof import('./workers/app');
 	}
 	interface Env extends __BaseEnv_Env {}
 }
@@ -24,7 +24,18 @@ type StringifyValues<EnvType extends Record<string, unknown>> = {
 	[Binding in keyof EnvType]: EnvType[Binding] extends string ? EnvType[Binding] : string;
 };
 declare namespace NodeJS {
-	interface ProcessEnv extends StringifyValues<Pick<Cloudflare.Env, "NODE_ENV" | "NODE_VERSION" | "DATABASE_URL" | "SESSION_SECRET" | "API_AI_URL" | "API_AI_KEY" | "BREVO_API_KEY">> {}
+	interface ProcessEnv extends StringifyValues<
+		Pick<
+			Cloudflare.Env,
+			| 'NODE_ENV'
+			| 'NODE_VERSION'
+			| 'DATABASE_URL'
+			| 'SESSION_SECRET'
+			| 'API_AI_URL'
+			| 'API_AI_KEY'
+			| 'BREVO_API_KEY'
+		>
+	> {}
 }
 
 // Begin runtime types
