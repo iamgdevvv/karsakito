@@ -132,6 +132,11 @@ export default function BiayaLayananRoute({ loaderData }: Route.ComponentProps) 
 				<Box
 					bg="gray.0"
 					component="section"
+					pb={{
+						base: 48,
+						sm: 60,
+						lg: 80,
+					}}
 				>
 					{/* Hero Section */}
 					<Banner

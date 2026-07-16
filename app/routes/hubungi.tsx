@@ -1,5 +1,7 @@
 import {
+	Accordion,
 	Anchor,
+	Badge,
 	Box,
 	Button,
 	Card,
@@ -40,7 +42,34 @@ export function meta({ loaderData }: Route.MetaArgs) {
 	});
 }
 
-export default function Hubungi({ loaderData }: Route.ComponentProps) {
+const faqs = [
+	{
+		title: 'How does the AI generate content?',
+		content:
+			'The AI generates content using a combination of natural language processing and machine learning algorithms.',
+	},
+	{
+		title: 'Can i customize the AI-generated content?',
+		content:
+			'Yes, you can customize the AI-generated content to meet your specific needs untuk Mengakselerasi Pemanfaatan Bahasa dan Warisan Budaya Daerah',
+	},
+	{
+		title: 'What types of content can the AI generate?',
+		content:
+			'The AI can generate a wide range of content types, including text, images, videos, and more.',
+	},
+	{
+		title: 'Is the AI-generated content plagiarism-free?',
+		content:
+			'Yes, the AI-generated content is plagiarism-free and is not copied from other sources.',
+	},
+	{
+		title: 'Does the tool have any limitations?',
+		content: 'The tool has no limitations and can be used for any purpose.',
+	},
+];
+
+export default function HubungiRoute({ loaderData }: Route.ComponentProps) {
 	const form = useForm({
 		initialValues: {
 			name: '',
@@ -69,8 +98,12 @@ export default function Hubungi({ loaderData }: Route.ComponentProps) {
 			<main className="site-main">
 				<Box
 					bg="gray.0"
-					pb={80}
-					style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}
+					component="section"
+					pb={{
+						base: 48,
+						sm: 60,
+						lg: 80,
+					}}
 				>
 					{/* Hero Section */}
 					<Banner
@@ -98,7 +131,7 @@ export default function Hubungi({ loaderData }: Route.ComponentProps) {
 
 					<Container
 						size="lg"
-						style={{ marginTop: '-60px', zIndex: 10, position: 'relative' }}
+						mt={-80}
 					>
 						<Grid
 							gap="xl"
@@ -329,17 +362,62 @@ export default function Hubungi({ loaderData }: Route.ComponentProps) {
 					</Container>
 				</Box>
 
-				{/* Footer Edge-to-Edge */}
-				<footer className="relative z-20 mt-auto w-full border-t border-slate-900 bg-slate-950 text-white">
-					<div className="mx-auto flex w-full flex-col items-center justify-between gap-4 px-4 py-8 text-xs text-slate-400 sm:flex-row sm:px-6 md:text-sm lg:px-8">
-						<div className="text-center sm:text-left">
-							© 2026 Team Kito. All rights reserved.
-						</div>
-						<div className="text-center font-medium tracking-wide sm:text-right">
-							Hackathon X DIGDAYA 2026 – Bank Indonesia
-						</div>
-					</div>
-				</footer>
+				<Box
+					pos="relative"
+					component="section"
+					py={{
+						base: 48,
+						sm: 60,
+						lg: 80,
+					}}
+					className="z-20"
+				>
+					<Container size="sm">
+						<Stack
+							gap="sm"
+							ta="center"
+							align="center"
+						>
+							<Badge
+								variant="light"
+								size="lg"
+								fz={10}
+								fw={500}
+							>
+								FAQ
+							</Badge>
+							<Title order={2}>Frequently Asked Questions</Title>
+							<Text>
+								Everything you need to know about the product and other information.
+							</Text>
+						</Stack>
+
+						<Accordion
+							variant="separated"
+							mt="xl"
+							order={3}
+							defaultValue={faqs[0].title}
+						>
+							{faqs.map((faq, index) => (
+								<Accordion.Item
+									key={`faq-${index}`}
+									value={faq.title}
+								>
+									<Accordion.Control>
+										<Text
+											span
+											fz="sm"
+											fw={500}
+										>
+											{faq.title}
+										</Text>
+									</Accordion.Control>
+									<Accordion.Panel fz="sm">{faq.content}</Accordion.Panel>
+								</Accordion.Item>
+							))}
+						</Accordion>
+					</Container>
+				</Box>
 			</main>
 		</div>
 	);
