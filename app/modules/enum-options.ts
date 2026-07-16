@@ -7,6 +7,8 @@ export const amountTokenDaily = 100;
 export const labelLanguageApp = {
 	indonesia: 'Bahasa Indonesia',
 	minang: 'Bahasa Minang',
+	jawa: 'Bahasa Jawa',
+	sunda: 'Bahasa Sunda',
 } as const satisfies Record<LanguageApp, string>;
 
 export const optionsLanguageApp = Object.entries(labelLanguageApp).map(([value, label]) => ({

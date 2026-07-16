@@ -1,9 +1,10 @@
+import { BrevoClient } from '@getbrevo/brevo';
 import { PrismaD1 } from '@prisma/adapter-d1';
 import { createContext, createRequestHandler, RouterContextProvider } from 'react-router';
 import { PrismaClient } from '~generated/prisma/client';
 
 export const prismaContext = createContext<PrismaClient>();
-
+export const brevoContext = createContext<BrevoClient>();
 export const cloudflareContext = createContext<{
 	env: Env;
 	ctx: ExecutionContext;
@@ -25,6 +26,12 @@ export default {
 		const context = new RouterContextProvider();
 
 		context.set(prismaContext, prisma);
+		context.set(
+			brevoContext,
+			new BrevoClient({
+				apiKey: env.BREVO_API_KEY,
+			}),
+		);
 		context.set(cloudflareContext, {
 			env,
 			ctx,

@@ -3,23 +3,21 @@ import {
 	Anchor,
 	Badge,
 	Box,
-	Button,
 	Card,
 	Container,
 	Grid,
 	Group,
 	Stack,
 	Text,
-	TextInput,
-	Textarea,
 	ThemeIcon,
 	Title,
 } from '@mantine/core';
-import { useForm } from '@mantine/form';
-import { FiMail, FiMapPin, FiPhone, FiSend } from 'react-icons/fi';
+import { FiMail, FiMapPin } from 'react-icons/fi';
 import { metaPublicRoute } from '~app-modules/meta';
 import { cfContext } from '~app-server/context';
+import { actionSendEmailContact } from '~app-server/email';
 import { authGetSession } from '~app-server/session';
+import FormContact from '~app-ui/form/contact';
 import Banner from '~app-ui/layouts/banner';
 import { Header } from '~app-ui/layouts/header';
 
@@ -69,29 +67,14 @@ const faqs = [
 	},
 ];
 
-export default function HubungiRoute({ loaderData }: Route.ComponentProps) {
-	const form = useForm({
-		initialValues: {
-			name: '',
-			email: '',
-			phone: '',
-			organization: '',
-			message: '',
-		},
-		validate: {
-			name: (value) => (value.trim().length < 2 ? 'Nama harus diisi' : null),
-			email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Email tidak valid'),
-			phone: (value) => (value.trim().length < 5 ? 'Nomor telepon tidak valid' : null),
-			message: (value) => (value.trim().length < 10 ? 'Pesan minimal 10 karakter' : null),
-		},
+export async function action({ request, context }: Route.ActionArgs) {
+	return await actionSendEmailContact({
+		request,
+		context,
 	});
+}
 
-	const handleSubmit = (values: typeof form.values) => {
-		console.log(values);
-		alert('Pesan Anda berhasil dikirim! Tim kami akan menghubungi Anda segera.');
-		form.reset();
-	};
-
+export default function HubungiRoute({ loaderData }: Route.ComponentProps) {
 	return (
 		<div className="site">
 			<Header authUser={loaderData.user} />
@@ -138,7 +121,7 @@ export default function HubungiRoute({ loaderData }: Route.ComponentProps) {
 							align="stretch"
 						>
 							{/* Left Column: Contact info */}
-							<Grid.Col span={{ base: 12, md: 5 }}>
+							<Grid.Col span={{ base: 12, md: 4 }}>
 								<Card
 									shadow="md"
 									padding="xl"
@@ -182,58 +165,12 @@ export default function HubungiRoute({ loaderData }: Route.ComponentProps) {
 													Email Resmi
 												</Text>
 												<Anchor
-													href="mailto:info@karsakito.ai"
+													href="mailto:info@karsakito.web.id"
 													target="_blank"
 													size="sm"
 													underline="hover"
 												>
-													info@karsakito.ai
-												</Anchor>
-												<Anchor
-													href="mailto:kemitraan@karsakito.ai"
-													target="_blank"
-													size="sm"
-													underline="hover"
-												>
-													kemitraan@karsakito.ai
-												</Anchor>
-											</Stack>
-										</Group>
-
-										<Group
-											align="flex-start"
-											wrap="nowrap"
-										>
-											<ThemeIcon
-												size={44}
-												variant="light"
-												style={{ flexShrink: 0 }}
-											>
-												<FiPhone size={20} />
-											</ThemeIcon>
-											<Stack gap={4}>
-												<Text
-													span
-													fw={700}
-													size="sm"
-												>
-													Telepon & WhatsApp
-												</Text>
-												<Anchor
-													href="tel:+6281234567890"
-													target="_blank"
-													size="sm"
-													underline="hover"
-												>
-													+62 812-3456-7890 (Kantor)
-												</Anchor>
-												<Anchor
-													href="tel:+6289618711317"
-													target="_blank"
-													size="sm"
-													underline="hover"
-												>
-													+62 896-1871-1317 (KarsaKito WhatsApp)
+													info@karsakito.web.id
 												</Anchor>
 											</Stack>
 										</Group>
@@ -261,10 +198,7 @@ export default function HubungiRoute({ loaderData }: Route.ComponentProps) {
 													size="sm"
 													c="gray.6"
 												>
-													PT. Sinergi Karsa Nusantara
-													<br />
-													Rumah Budaya KarsaKito, Jl. Khatib Sulaiman No.
-													42, Padang, Sumatera Barat, Indonesia
+													KarsaKito, Indonesia
 												</Text>
 											</Stack>
 										</Group>
@@ -273,7 +207,7 @@ export default function HubungiRoute({ loaderData }: Route.ComponentProps) {
 							</Grid.Col>
 
 							{/* Right Column: Form */}
-							<Grid.Col span={{ base: 12, md: 7 }}>
+							<Grid.Col span={{ base: 12, md: 8 }}>
 								<Card
 									shadow="md"
 									padding="xl"
@@ -295,67 +229,7 @@ export default function HubungiRoute({ loaderData }: Route.ComponentProps) {
 										Anda kembali dalam waktu 1x24 jam.
 									</Text>
 
-									<form onSubmit={form.onSubmit(handleSubmit)}>
-										<Stack gap="md">
-											<Grid gap="md">
-												<Grid.Col span={{ base: 12, sm: 6 }}>
-													<TextInput
-														key={form.key('name')}
-														label="Nama Lengkap"
-														placeholder="Nama Anda"
-														{...form.getInputProps('name')}
-													/>
-												</Grid.Col>
-												<Grid.Col span={{ base: 12, sm: 6 }}>
-													<TextInput
-														key={form.key('email')}
-														label="Alamat Email"
-														placeholder="nama@email.com"
-														{...form.getInputProps('email')}
-													/>
-												</Grid.Col>
-											</Grid>
-
-											<Grid gap="md">
-												<Grid.Col span={{ base: 12, sm: 6 }}>
-													<TextInput
-														key={form.key('phone')}
-														label="Nomor WhatsApp"
-														placeholder="0812xxxxxx"
-														{...form.getInputProps('phone')}
-													/>
-												</Grid.Col>
-												<Grid.Col span={{ base: 12, sm: 6 }}>
-													<TextInput
-														key={form.key('organization')}
-														label="Nama Instansi / Komunitas"
-														placeholder="Nama organisasi (opsional)"
-														{...form.getInputProps('organization')}
-													/>
-												</Grid.Col>
-											</Grid>
-
-											<Textarea
-												key={form.key('message')}
-												label="Pesan Anda"
-												placeholder="Tuliskan pertanyaan, ide kolaborasi, atau kebutuhan Anda..."
-												minRows={4}
-												{...form.getInputProps('message')}
-											/>
-
-											<Group
-												justify="flex-end"
-												mt="xs"
-											>
-												<Button
-													type="submit"
-													rightSection={<FiSend size={16} />}
-												>
-													Kirim Pesan
-												</Button>
-											</Group>
-										</Stack>
-									</form>
+									<FormContact />
 								</Card>
 							</Grid.Col>
 						</Grid>

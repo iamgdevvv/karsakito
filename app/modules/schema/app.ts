@@ -2,7 +2,7 @@ import * as z from 'zod';
 import { KarsaAppScalarFieldEnumSchema } from '~generated/prisma-zod/schemas/enums/KarsaAppScalarFieldEnum.schema';
 import { KarsaAppSchema } from '~generated/prisma-zod/schemas/models';
 
-export const LanguageAppSchema = z.enum(['indonesia', 'minang']);
+export const LanguageAppSchema = z.enum(['indonesia', 'minang', 'jawa', 'sunda']);
 
 export const KarsaAppSchemaPlain = KarsaAppSchema.omit({
 	token: true,

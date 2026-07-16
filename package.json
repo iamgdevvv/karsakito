@@ -21,10 +21,10 @@
 		"cf-typegen": "wrangler types"
 	},
 	"dependencies": {
+		"@getbrevo/brevo": "^6.0.2",
 		"@gfazioli/mantine-scene": "^2.2.7",
 		"@gfazioli/mantine-window": "^3.1.10",
 		"@mantine/carousel": "^9.4.1",
-		"@mantine/code-highlight": "^9.4.1",
 		"@mantine/core": "^9.4.1",
 		"@mantine/dates": "^9.4.1",
 		"@mantine/form": "^9.4.1",
