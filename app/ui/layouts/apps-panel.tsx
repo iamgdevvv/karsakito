@@ -136,20 +136,9 @@ export default function AppPanel({
 													base: 10,
 													lg: 'xs',
 												}}
-												lh={1}
 												c="gray"
-												td="line-through"
 											>
 												{nav.label}
-											</Text>
-											<Text
-												span
-												fz={10}
-												lh={1}
-												c="gray"
-												fw={600}
-											>
-												Soon
 											</Text>
 										</Stack>
 									</Stack>

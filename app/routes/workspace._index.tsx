@@ -271,7 +271,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 						}}
 						data={[
 							{ label: 'Simple', value: 'simple' },
-							{ label: 'Window (Beta)', value: 'window' },
+							{ label: 'Kreator', value: 'window' },
 						]}
 					/>
 

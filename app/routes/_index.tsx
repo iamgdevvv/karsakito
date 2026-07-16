@@ -1,19 +1,8 @@
-import {
-	Accordion,
-	Badge,
-	Box,
-	DataList,
-	Group,
-	SimpleGrid,
-	Stack,
-	Text,
-	Title,
-} from '@mantine/core';
+import { Accordion, Badge, Box, Group, SimpleGrid, Stack, Text, Title } from '@mantine/core';
 import { LuArrowUpRight } from 'react-icons/lu';
 import { labelAppCategory } from '~app-modules/enum-options';
 import { metaPublicRoute } from '~app-modules/meta';
 import type { KarsaAppPlain } from '~app-modules/schema/app';
-import { dayjs } from '~app-modules/utils';
 import { actionGetKarsaAppsByCategory } from '~app-server/app';
 import { cfContext } from '~app-server/context';
 import { authGetSession } from '~app-server/session';
@@ -150,19 +139,55 @@ export default function AppsRoute({ loaderData }: Route.ComponentProps) {
 					mt="xl"
 					cols={{
 						base: 1,
-						md: 4,
+						sm: 2,
+						md: 3,
+						lg: 4,
 					}}
 				>
-					<SimpleGrid
-						cols={{
-							base: 1,
-							sm: 2,
-							md: 3,
-						}}
-						className="md:col-span-3"
-					>
-						{Object.entries(loaderData.optionApps).map(([category, apps]) =>
-							apps.map((app, index) => (
+					{Object.entries(loaderData.optionApps).map(([category, apps]) =>
+						apps.map((app, index) => {
+							if (app.disabled) {
+								return (
+									<Stack
+										key={`${app.value}-${index}`}
+										gap="xs"
+										py="lg"
+										px={{
+											base: 'md',
+											sm: 'lg',
+										}}
+										bg="gray.1"
+										bdrs="lg"
+										bd="1px solid gray.3"
+										className="group"
+									>
+										<Badge
+											variant="light"
+											fz={8}
+										>
+											{
+												labelAppCategory[
+													category as KarsaAppPlain['category']
+												]
+											}
+										</Badge>
+										<Title
+											order={2}
+											fz="md"
+										>
+											{app.label}
+										</Title>
+										<Text
+											fz="sm"
+											lineClamp={4}
+										>
+											{app.description}
+										</Text>
+									</Stack>
+								);
+							}
+
+							return (
 								<Link
 									key={`${app.value}-${index}`}
 									to={`/workspace?app=${app.value}`}
@@ -221,87 +246,9 @@ export default function AppsRoute({ loaderData }: Route.ComponentProps) {
 										</Group>
 									</Stack>
 								</Link>
-							)),
-						)}
-					</SimpleGrid>
-					<Box>
-						<Stack
-							pos="sticky"
-							top={20}
-							gap="xs"
-							py="lg"
-							px={{
-								base: 'md',
-								sm: 'lg',
-							}}
-							bg="white"
-							bdrs="lg"
-							bd="1px solid gray.3"
-						>
-							<Title
-								order={2}
-								fz="md"
-							>
-								Saved Workspace
-							</Title>
-							<DataList orientation="vertical">
-								<DataList.Item
-									component={Link}
-									// @ts-expect-error
-									to={`/workspace/1`}
-									className="group"
-								>
-									<DataList.ItemLabel fz="xs">
-										{dayjs().format('DD MMM YYYY')}
-									</DataList.ItemLabel>
-									<DataList.ItemValue
-										fz="sm"
-										fw={500}
-										c="primary"
-										className="group-hover:underline"
-									>
-										AI Bahan Ajar Budaya Minangkabau
-									</DataList.ItemValue>
-								</DataList.Item>
-								<DataList.Item
-									component={Link}
-									// @ts-expect-error
-									to={`/workspace/1`}
-									className="group"
-								>
-									<DataList.ItemLabel fz="xs">
-										{dayjs().format('DD MMM YYYY')}
-									</DataList.ItemLabel>
-									<DataList.ItemValue
-										fz="sm"
-										fw={500}
-										c="primary"
-										className="group-hover:underline"
-									>
-										Draft Konten Youtube XXYYZZZ
-									</DataList.ItemValue>
-								</DataList.Item>
-								<DataList.Item
-									component={Link}
-									// @ts-expect-error
-									to={`/workspace/1`}
-									className="group"
-								>
-									<DataList.ItemLabel fz="xs">
-										{dayjs().format('DD MMM YYYY')}
-									</DataList.ItemLabel>
-									<DataList.ItemValue
-										fz="sm"
-										fw={500}
-										c="primary"
-										className="group-hover:underline"
-									>
-										Pidato Kunjungan Daerah Bapak XXYYZZ
-									</DataList.ItemValue>
-								</DataList.Item>
-							</DataList>
-						</Stack>
-					</Box>
+							);
+						}),
+					)}
 				</SimpleGrid>
 				<Stack
 					mt={{
