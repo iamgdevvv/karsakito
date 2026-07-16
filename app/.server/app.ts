@@ -80,6 +80,7 @@ export const actionUpdateKarsaApp = async ({
                 name: valueOrSkip(body.name),
                 category: valueOrSkip(body.category),
                 label: valueOrSkip(body.label),
+                description: valueNullOrSkip(body.description),
                 token: valueOrSkip(body.token),
                 tokenPromo: valueNullOrSkip(body.tokenPromo),
                 visible: valueBooleanOrFalse(body.visible),
