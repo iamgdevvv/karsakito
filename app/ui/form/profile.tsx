@@ -22,9 +22,12 @@ export default function FormProfile({
 	}, [fetcher.state]);
 
 	const initialValues = useMemo((): PayloadUpdateProfile => {
+		const timezone = PayloadUpdateProfileSchema.shape.timezone.safeParse(data.timezone);
+
 		return {
 			name: data.name,
 			email: data.email,
+			timezone: timezone.data,
 		};
 	}, [data]);
 

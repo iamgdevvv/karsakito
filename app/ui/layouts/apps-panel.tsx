@@ -79,25 +79,48 @@ export default function AppPanel({
 				bdrs={{
 					sm: 'xl',
 				}}
-				p="md"
+				pb={{
+					sm: 'md',
+				}}
+				pt="md"
 				className="z-2 flex-col"
 			>
 				{children}
 				<Group
 					gap={0}
 					pos="sticky"
-					bottom={16}
-					w="100%"
+					w={{
+						base: 'calc(100% + 32px)',
+						sm: 'auto',
+					}}
+					miw={{
+						base: 'calc(100% + 32px)',
+						sm: 'auto',
+					}}
+					mx={{
+						base: -16,
+						sm: 0,
+					}}
+					bottom={{
+						base: 0,
+						sm: 16,
+					}}
 					mt="auto"
 					pt="md"
 					justify="center"
 					className="pointer-events-none z-2"
 				>
 					<Group
+						gap={0}
 						w="100%"
-						maw={400}
+						maw={{
+							sm: 400,
+						}}
 						grow
-						bdrs="full"
+						bdrs={{
+							base: '20px 20px 0 0',
+							sm: 'full',
+						}}
 						bg="white"
 						justify="space-evenly"
 						py={{
