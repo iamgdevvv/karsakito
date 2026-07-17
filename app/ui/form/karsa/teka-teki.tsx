@@ -110,6 +110,7 @@ export default function FormKarsaTekaTeki({
 							},
 							{
 								method: 'post',
+								action: '/submission/karsa',
 							},
 						);
 					} else {

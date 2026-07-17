@@ -111,6 +111,7 @@ export default function FormKarsaRangkuman({
 							},
 							{
 								method: 'post',
+								action: '/submission/karsa',
 							},
 						);
 					} else {

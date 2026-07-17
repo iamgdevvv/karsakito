@@ -110,6 +110,7 @@ export default function FormKarsaParafrase({
 							},
 							{
 								method: 'post',
+								action: '/submission/karsa',
 							},
 						);
 					} else {

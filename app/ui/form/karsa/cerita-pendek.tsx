@@ -115,6 +115,7 @@ export default function FormKarsaCeritaPendek({
 							},
 							{
 								method: 'post',
+								action: '/submission/karsa',
 							},
 						);
 					} else {

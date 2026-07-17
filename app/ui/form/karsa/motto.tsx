@@ -113,6 +113,7 @@ export default function FormKarsaMotto({
 							},
 							{
 								method: 'post',
+								action: '/submission/karsa',
 							},
 						);
 					} else {

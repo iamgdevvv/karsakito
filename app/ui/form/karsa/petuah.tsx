@@ -109,6 +109,7 @@ export default function FormKarsaPetuah({
 							},
 							{
 								method: 'post',
+								action: '/submission/karsa',
 							},
 						);
 					} else {

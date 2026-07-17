@@ -116,6 +116,7 @@ export default function FormKarsaPidato({
 							},
 							{
 								method: 'post',
+								action: '/submission/karsa',
 							},
 						);
 					} else {

@@ -113,6 +113,7 @@ export default function FormKarsaSlogan({
 							},
 							{
 								method: 'post',
+								action: '/submission/karsa',
 							},
 						);
 					} else {

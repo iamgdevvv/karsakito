@@ -110,6 +110,7 @@ export default function FormKarsaAdaptasiDialek({
 							},
 							{
 								method: 'post',
+								action: '/submission/karsa',
 							},
 						);
 					} else {

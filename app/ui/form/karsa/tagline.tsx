@@ -114,6 +114,7 @@ export default function FormKarsaTagline({
 							},
 							{
 								method: 'post',
+								action: '/submission/karsa',
 							},
 						);
 					} else {

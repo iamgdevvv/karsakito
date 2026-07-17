@@ -111,6 +111,7 @@ export default function FormKarsaAnalisaDokumen({
 							},
 							{
 								method: 'post',
+								action: '/submission/karsa',
 							},
 						);
 					} else {

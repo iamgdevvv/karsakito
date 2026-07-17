@@ -109,6 +109,7 @@ export default function FormKarsaAnalisaKalimat({
 							},
 							{
 								method: 'post',
+								action: '/submission/karsa',
 							},
 						);
 					} else {

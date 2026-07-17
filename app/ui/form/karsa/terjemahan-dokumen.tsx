@@ -110,6 +110,7 @@ export default function FormKarsaTerjemahanDokumen({
 							},
 							{
 								method: 'post',
+								action: '/submission/karsa',
 							},
 						);
 					} else {

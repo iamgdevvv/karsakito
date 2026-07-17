@@ -34,7 +34,6 @@ import { actionGetKarsaAppsByCategory } from '~app-server/app';
 import { actionGetBalanceUser } from '~app-server/balance';
 import { authUserCtx } from '~app-server/context';
 import { authGetSession } from '~app-server/session';
-import { actionSubmissionKarsaAI } from '~app-server/workspace';
 import { WindowAppKarsaWriter } from '~app-ui/form/window-apps';
 import FormWindowWorkspace from '~app-ui/form/window-workspace';
 import AppPanel from '~app-ui/layouts/apps-panel';
@@ -79,13 +78,6 @@ export async function loader({ context }: Route.LoaderArgs) {
 		userBalance,
 		optionApps,
 	};
-}
-
-export async function action({ request, context }: Route.ActionArgs) {
-	return await actionSubmissionKarsaAI({
-		request,
-		context,
-	});
 }
 
 export function meta(_: Route.MetaArgs) {
@@ -450,6 +442,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 									>
 										<WindowAppKarsaWriter
 											data={windowItem}
+											mode={viewMode}
 											onSubmit={(karsa) => {
 												windowLists.set(id, {
 													...windowItem,
@@ -494,6 +487,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 								{simpleKarsaSelected ? (
 									<WindowAppKarsaWriter
 										data={simpleKarsaSelected}
+										mode={viewMode}
 										onSubmit={(karsa) => {
 											windowLists.set(simpleKarsaSelected.id, {
 												...simpleKarsaSelected,

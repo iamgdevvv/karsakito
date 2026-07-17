@@ -243,3 +243,7 @@ img {
 	--title-h5: 1.1rem;
 	--title-h6: 1rem;
 }
+
+.mantine-Modal-inner {
+	@apply left-0;
+}

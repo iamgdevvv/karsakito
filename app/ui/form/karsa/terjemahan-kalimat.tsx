@@ -110,6 +110,7 @@ export default function FormKarsaTerjemahanKalimat({
 							},
 							{
 								method: 'post',
+								action: '/submission/karsa',
 							},
 						);
 					} else {

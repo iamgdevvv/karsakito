@@ -240,6 +240,12 @@ export const PayloadSubmissionKarsaSchema = z
 		]),
 	);
 
+export const PayloadSubmissionReactionKarsaSchema = z.object({
+	karsaId: KarsaSchemaPlain.shape.id,
+	reaction: KarsaSchemaPlain.shape.reaction.unwrap().unwrap(),
+	feedback: KarsaSchemaPlain.shape.feedback.unwrap().unwrap().nonempty(),
+});
+
 export type KarsaPlain = z.infer<typeof KarsaSchemaPlain>;
 export type PayloadKarsaPidato = z.infer<typeof PayloadKarsaPidatoSchema>;
 export type PayloadKarsaPantun = z.infer<typeof PayloadKarsaPantunSchema>;
@@ -261,3 +267,4 @@ export type PayloadKarsaAnalisa = z.infer<typeof PayloadKarsaAnalisaSchema>;
 export type PayloadKarsaAnalisaKalimat = z.infer<typeof PayloadKarsaAnalisaKalimatSchema>;
 export type PayloadKarsaAnalisaDokumen = z.infer<typeof PayloadKarsaAnalisaDokumenSchema>;
 export type PayloadSubmissionKarsa = z.infer<typeof PayloadSubmissionKarsaSchema>;
+export type PayloadSubmissionReactionKarsa = z.infer<typeof PayloadSubmissionReactionKarsaSchema>;

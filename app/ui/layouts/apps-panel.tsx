@@ -115,6 +115,7 @@ export default function AppPanel({
 							if (nav.disabled) {
 								return (
 									<Stack
+										key={`${nav.value}-${index}`}
 										gap={2}
 										align="center"
 										ta="center"

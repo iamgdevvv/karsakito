@@ -112,6 +112,7 @@ export default function FormKarsaDoaBersama({
 							},
 							{
 								method: 'post',
+								action: '/submission/karsa',
 							},
 						);
 					} else {
