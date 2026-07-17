@@ -60,10 +60,10 @@ export const actionUpdateBalanceUser = async ({
                             type: body.type,
                             description: body.description,
                             token: body.token,
-                            tokenBefore: body.type !== 'DAILY_BONUS' ? userBalance.token : Prisma.skip,
-                            tokenAfter: body.type !== 'DAILY_BONUS' ? newToken : Prisma.skip,
-                            tokenDailyBefore: body.type === 'DAILY_BONUS' ? userBalance.tokenDaily : Prisma.skip,
-                            tokenDailyAfter: body.type === 'DAILY_BONUS' ? newTokenDaily : Prisma.skip,
+                            tokenBefore: body.type !== 'DAILY_BONUS' ? userBalance.token : userBalance.token,
+                            tokenAfter: body.type !== 'DAILY_BONUS' ? newToken : userBalance.token,
+                            tokenDailyBefore: body.type === 'DAILY_BONUS' ? userBalance.tokenDaily : userBalance.tokenDaily,
+                            tokenDailyAfter: body.type === 'DAILY_BONUS' ? newTokenDaily : userBalance.tokenDaily,
                         }
                     }
                 },
