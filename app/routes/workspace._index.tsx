@@ -410,7 +410,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 										controlsPosition="right"
 										{...windowItem.props}
 										id={id}
-										title={windowItem.title}
+										title={`${windowItem.title} - ${labelAppName[windowItem.app]}`}
 										draggable={isMobile ? 'none' : 'header'}
 										resizable={isMobile ? 'none' : undefined}
 										withToolsButton={!isMobile}
