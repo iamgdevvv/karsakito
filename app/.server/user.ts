@@ -99,11 +99,11 @@ export const actionUpdateUser = async ({
 		}
 
 		const formData = await request.formData()
-		const body = PayloadUpdateUserSchema.parse(parseFormData(formData))
+		const { userId, ...body } = PayloadUpdateUserSchema.parse(parseFormData(formData))
 
 		const resultUser = await prismaClient(context).user.update({
 			where: {
-				id: body.userId
+				id: userId
 			},
 			data: body,
 			select: {

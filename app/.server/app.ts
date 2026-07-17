@@ -70,11 +70,11 @@ export const actionUpdateKarsaApp = async ({
         }
 
         const formData = await request.formData()
-        const body = PayloadUpdateKarsaAppSchema.parse(parseFormData(formData))
+        const { karsaAppId, ...body} = PayloadUpdateKarsaAppSchema.parse(parseFormData(formData))
 
         const resultKarsaApp = await prismaClient(context).karsaApp.update({
             where: {
-                id: body.karsaAppId
+                id: karsaAppId
             },
             data: body,
             select: {
