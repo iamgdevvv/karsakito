@@ -96,7 +96,6 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 	const [openBalanceUser, setOpenBalanceUser] = useState(false);
 	const refCanvas = useRef<HTMLDivElement>(null);
 	const groupRef = useRef<WindowGroupContextValue>(null);
-	const [canvasHeight, setCanvasHeight] = useState<number | undefined>(800);
 	const windowLists = useMap<NonNullable<WorkspaceWindowPlain['id']>, PayloadWindowWorkspace>([]);
 	const isMobile = useMediaQuery('(max-width: 1199px)', true, {
 		getInitialValueInEffect: true,
@@ -138,8 +137,6 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 			startActionRenderWindow(() => {
 				windowLists.set(params.id, params);
 
-				setCanvasHeight(Math.ceil(windowLists.size / 2) * 2 * 420);
-
 				handleFitWindow();
 			});
 		},
@@ -156,7 +153,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 
 					const param = PayloadWindowWorkspaceSchema.safeParse({
 						id: crypto.randomUUID(),
-						title: `Workspace ${labelAppName[app]}`,
+						title: 'My Workspace',
 						app,
 					} satisfies PayloadWindowWorkspace);
 
@@ -164,11 +161,11 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 						startActionRenderWindow(() => {
 							handleAddWindow(param.data);
 						});
-
-						setIsFirstRender(true);
 					}
 				}
 			});
+
+			setIsFirstRender(true);
 		}
 	}, [isFirstRender, refCanvas.current]);
 
@@ -299,27 +296,6 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 											Add new
 										</Text>
 									</Button>
-									{/* <Button
-								size="sm"
-								variant="light"
-								mr="auto"
-								pl="xs"
-								pr="sm"
-								onClick={() => setOpenFormNewWindow(true)}
-							>
-								<ThemeIcon variant="transparent">
-									<VscEmptyWindow size={18} />
-								</ThemeIcon>
-								<Text
-									span
-									inherit
-									display="inline-block"
-									ml={4}
-									visibleFrom="sm"
-								>
-									Add Window
-								</Text>
-							</Button> */}
 								</Popover.Target>
 								<Popover.Dropdown>
 									<FormWindowWorkspace
@@ -338,6 +314,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 								<ActionIcon
 									size="lg"
 									variant="light"
+									disabled
 								>
 									<MdSaveAs size={20} />
 								</ActionIcon>
@@ -379,12 +356,12 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 					bg="gray.1"
 					bdrs="xl"
 					p="xs"
-					mih={canvasHeight}
+					mih={windowLists.size * 600}
 					flex="1 1 auto"
 					className="z-1"
 				>
 					<LoadingOverlay
-						visible={!refCanvas.current || isLoadingRenderWindow}
+						visible={isLoadingRenderWindow}
 						zIndex={10}
 						overlayProps={{
 							radius: 'sm',
@@ -402,10 +379,11 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 									<Window
 										opened
 										key={`${id}-${index}`}
-										defaultX={index * 10}
-										defaultY={index * 10}
+										defaultX={isMobile ? 0 : index * 10}
+										defaultY={isMobile ? 0 : index * 10}
 										maxWidth="100%"
-										defaultHeight={420}
+										maw="100%"
+										defaultHeight={600}
 										withinPortal={false}
 										controlsPosition="right"
 										{...windowItem.props}
