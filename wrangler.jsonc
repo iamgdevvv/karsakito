@@ -18,6 +18,10 @@
 			"enabled": true,
 		},
 	},
+	"vars": {
+		"NODE_ENV": "production",
+		"NODE_VERSION": "24",
+	},
 	"upload_source_maps": true,
 	"compatibility_flags": ["nodejs_compat"],
 	"workers_dev": true,

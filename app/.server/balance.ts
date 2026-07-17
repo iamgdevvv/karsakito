@@ -3,7 +3,7 @@ import { PayloadUpdateBalanceSchema } from "~app-modules/schema/balance";
 import { parseFormData } from "~app-modules/utils";
 import { prismaClient } from "~app-server/context";
 import { authMiddlewareSession } from "~app-server/session";
-import { messageActionError, valueNullOrSkip } from "~app-server/utils";
+import { messageActionError } from "~app-server/utils";
 import { Prisma } from "~generated/prisma/client";
 
 export const actionUpdateBalanceUser = async ({
@@ -58,7 +58,7 @@ export const actionUpdateBalanceUser = async ({
                     activities: {
                         create: {
                             type: body.type,
-                            description: valueNullOrSkip(body.description),
+                            description: body.description,
                             token: body.token,
                             tokenBefore: body.type !== 'DAILY_BONUS' ? userBalance.token : Prisma.skip,
                             tokenAfter: body.type !== 'DAILY_BONUS' ? newToken : Prisma.skip,

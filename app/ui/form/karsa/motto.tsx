@@ -127,7 +127,7 @@ export default function FormKarsaMotto({
 						name="language"
 						key={form.key('language')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={optionsLanguageApp}
 						{...form.getInputProps('language')}
 					/>
@@ -150,7 +150,7 @@ export default function FormKarsaMotto({
 						name="tone"
 						key={form.key('tone')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={['Klasik', 'Singkat', 'Kiasan']}
 						{...form.getInputProps('tone')}
 					/>

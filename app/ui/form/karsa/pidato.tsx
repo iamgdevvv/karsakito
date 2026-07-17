@@ -130,7 +130,7 @@ export default function FormKarsaPidato({
 						name="language"
 						key={form.key('language')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={optionsLanguageApp}
 						{...form.getInputProps('language')}
 					/>
@@ -139,7 +139,7 @@ export default function FormKarsaPidato({
 						name="purpose"
 						key={form.key('purpose')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={[
 							'Sambutan',
 							'Pembukaan',
@@ -177,7 +177,7 @@ export default function FormKarsaPidato({
 						name="audience"
 						key={form.key('audience')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={optionsKarsaWriterAudience}
 						{...form.getInputProps('audience')}
 					/>

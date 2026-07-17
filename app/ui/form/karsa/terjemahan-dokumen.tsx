@@ -124,7 +124,7 @@ export default function FormKarsaTerjemahanDokumen({
 						name="sourceLanguage"
 						key={form.key('sourceLanguage')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={optionsLanguageApp}
 						{...form.getInputProps('sourceLanguage')}
 					/>
@@ -133,7 +133,7 @@ export default function FormKarsaTerjemahanDokumen({
 						name="targetLanguage"
 						key={form.key('targetLanguage')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={optionsLanguageApp}
 						{...form.getInputProps('targetLanguage')}
 					/>

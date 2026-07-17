@@ -105,12 +105,7 @@ export const actionUpdateUser = async ({
 			where: {
 				id: body.userId
 			},
-			data: {
-				name: valueOrSkip(body.name),
-				email: valueOrSkip(body.email),
-				role: valueOrSkip(body.role),
-				isActive: valueBooleanOrFalse(body.isActive),
-			},
+			data: body,
 			select: {
 				name: true
 			}
@@ -253,10 +248,7 @@ export const actionUpdateProfile = async ({
 			where: {
 				id: userId
 			},
-			data: {
-				name: valueOrSkip(body.name),
-				email: valueOrSkip(body.email),
-			},
+			data: body,
 		})
 
 		const authNewSession = await authGetSession(request);

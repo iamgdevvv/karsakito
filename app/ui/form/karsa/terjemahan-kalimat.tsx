@@ -124,7 +124,7 @@ export default function FormKarsaTerjemahanKalimat({
 						name="sourceLanguage"
 						key={form.key('sourceLanguage')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={optionsLanguageApp.filter(
 							(item) => item.value !== form.values.targetLanguage,
 						)}
@@ -135,7 +135,7 @@ export default function FormKarsaTerjemahanKalimat({
 						name="targetLanguage"
 						key={form.key('targetLanguage')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={optionsLanguageApp.filter(
 							(item) => item.value !== form.values.sourceLanguage,
 						)}

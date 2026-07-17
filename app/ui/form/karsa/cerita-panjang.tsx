@@ -129,7 +129,7 @@ export default function FormKarsaCeritaPanjang({
 						name="language"
 						key={form.key('language')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={optionsLanguageApp}
 						{...form.getInputProps('language')}
 					/>
@@ -138,7 +138,7 @@ export default function FormKarsaCeritaPanjang({
 						name="genre"
 						key={form.key('genre')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={[
 							'Fabel (Cerita Binatang)',
 							'Dongeng',
@@ -156,7 +156,7 @@ export default function FormKarsaCeritaPanjang({
 						name="audience"
 						key={form.key('audience')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={optionsKarsaWriterAudience}
 						{...form.getInputProps('audience')}
 					/>

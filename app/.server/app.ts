@@ -1,7 +1,7 @@
 import type { ComboboxItem } from "@mantine/core";
 import { type RouterContextProvider } from "react-router";
 import { PayloadCreateKarsaAppSchema, PayloadQueryKarsaAppsSchema, PayloadUpdateKarsaAppSchema, type PayloadQueryKarsaApps } from "~app-modules/schema/app";
-import { dayjs, parseFormData, qsParse, valueBooleanOrFalse } from "~app-modules/utils";
+import { dayjs, parseFormData, qsParse } from "~app-modules/utils";
 import { prismaClient } from "~app-server/context";
 import { authMiddlewareSession } from "~app-server/session";
 import { messageActionError, valueNullOrSkip, valueOrSkip } from "~app-server/utils";
@@ -76,15 +76,7 @@ export const actionUpdateKarsaApp = async ({
             where: {
                 id: body.karsaAppId
             },
-            data: {
-                name: valueOrSkip(body.name),
-                category: valueOrSkip(body.category),
-                label: valueOrSkip(body.label),
-                description: valueNullOrSkip(body.description),
-                token: valueOrSkip(body.token),
-                tokenPromo: valueNullOrSkip(body.tokenPromo),
-                visible: valueBooleanOrFalse(body.visible),
-            },
+            data: body,
             select: {
                 name: true
             }

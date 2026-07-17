@@ -127,7 +127,7 @@ export default function FormKarsaSlogan({
 						name="language"
 						key={form.key('language')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={optionsLanguageApp}
 						{...form.getInputProps('language')}
 					/>
@@ -143,7 +143,7 @@ export default function FormKarsaSlogan({
 						name="audience"
 						key={form.key('audience')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={optionsKarsaWriterAudience}
 						{...form.getInputProps('audience')}
 					/>
@@ -152,7 +152,7 @@ export default function FormKarsaSlogan({
 						name="tone"
 						key={form.key('tone')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={[
 							'Tegas',
 							'Instruktif',

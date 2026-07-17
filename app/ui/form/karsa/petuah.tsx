@@ -123,7 +123,7 @@ export default function FormKarsaPetuah({
 						name="language"
 						key={form.key('language')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={optionsLanguageApp}
 						{...form.getInputProps('language')}
 					/>
@@ -132,7 +132,7 @@ export default function FormKarsaPetuah({
 						name="style"
 						key={form.key('style')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={['Filosofis', 'Puitis', 'Tegas', 'Lembut', 'Singkat']}
 						{...form.getInputProps('style')}
 					/>

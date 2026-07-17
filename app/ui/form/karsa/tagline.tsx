@@ -128,7 +128,7 @@ export default function FormKarsaTagline({
 						name="language"
 						key={form.key('language')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={optionsLanguageApp}
 						{...form.getInputProps('language')}
 					/>
@@ -151,7 +151,7 @@ export default function FormKarsaTagline({
 						name="audience"
 						key={form.key('audience')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={optionsKarsaWriterAudience}
 						{...form.getInputProps('audience')}
 					/>
@@ -160,7 +160,7 @@ export default function FormKarsaTagline({
 						name="tone"
 						key={form.key('tone')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={[
 							'Unik',
 							'Mudah Diingat',

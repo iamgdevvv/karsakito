@@ -126,7 +126,7 @@ export default function FormKarsaDoaBersama({
 						name="language"
 						key={form.key('language')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={optionsLanguageApp}
 						{...form.getInputProps('language')}
 					/>
@@ -135,7 +135,7 @@ export default function FormKarsaDoaBersama({
 						name="religion"
 						key={form.key('religion')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={['Umum', 'Islam', 'Kristen', 'Katolik', 'Budha', 'Hindu', 'Konghucu']}
 						{...form.getInputProps('religion')}
 					/>

@@ -14,7 +14,11 @@ export const valueOrSkip = <T>(value?: T | null | undefined): T | typeof Prisma.
 	return value ?? Prisma.skip;
 };
 
-export const valueNullOrSkip = <T>(value?: T | null | undefined): T | null => {
+export const valueNullOrSkip = <T>(value?: T | null | undefined): T | null | typeof Prisma.skip => {
+	if (typeof value === 'undefined') {
+		return Prisma.skip;
+	}
+
 	return value ?? null;
 };
 

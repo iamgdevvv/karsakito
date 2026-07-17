@@ -124,7 +124,7 @@ export default function FormKarsaTekaTeki({
 						name="language"
 						key={form.key('language')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={optionsLanguageApp}
 						{...form.getInputProps('language')}
 					/>
@@ -133,7 +133,7 @@ export default function FormKarsaTekaTeki({
 						name="type"
 						key={form.key('type')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={[
 							'Deskripsi Benda',
 							'Deskripsi Hewan',
@@ -151,7 +151,7 @@ export default function FormKarsaTekaTeki({
 						name="level"
 						key={form.key('level')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={['Mudah', 'Sedang', 'Sulit']}
 						{...form.getInputProps('level')}
 					/>

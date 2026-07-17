@@ -125,7 +125,7 @@ export default function FormKarsaRangkuman({
 						name="sourceLanguage"
 						key={form.key('sourceLanguage')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={optionsLanguageApp}
 						{...form.getInputProps('sourceLanguage')}
 					/>
@@ -134,7 +134,7 @@ export default function FormKarsaRangkuman({
 						name="targetLanguage"
 						key={form.key('targetLanguage')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={optionsLanguageApp}
 						{...form.getInputProps('targetLanguage')}
 					/>
@@ -143,7 +143,7 @@ export default function FormKarsaRangkuman({
 						name="style"
 						key={form.key('style')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={['Bullet Poin', 'Paragraph']}
 						{...form.getInputProps('style')}
 					/>
@@ -152,7 +152,7 @@ export default function FormKarsaRangkuman({
 						name="preference"
 						key={form.key('preference')}
 						readOnly={isLoading}
-						maxDropdownHeight={80}
+						maxDropdownHeight={160}
 						data={optionsKarsaFrasePreference}
 						{...form.getInputProps('preference')}
 					/>
