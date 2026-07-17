@@ -20,8 +20,140 @@ export const PayloadKarsaPidatoSchema = z.object({
 
 export const PayloadKarsaPantunSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	type: z.string().nonempty(),
+	type: z.enum([
+		'Nasihat',
+		'Jenaka',
+		'Cinta',
+		'Persahabatan',
+		'Petuah',
+		'Pendidikan',
+		'Agama',
+		'Budaya',
+		'Adat',
+		'Penyambutan',
+		'Perpisahan',
+		'Ucapan Selamat',
+		'Terima Kasih',
+		'Permintaan Maaf',
+		'Sindiran',
+		'Kritik',
+		'Teka-Teki',
+		'Anak-anak',
+		'Lingkungan',
+		'Kebangsaan',
+	]).default('Nasihat'),
 	audience: z.string().nonempty(),
+	topic: z.string().nonempty(),
+	numberVerses: z.number().gt(0).nonnegative(),
+});
+
+export const PayloadKarsaSyairSchema = z.object({
+	language: LanguageAppSchema.default('indonesia'),
+	type: z
+		.enum([
+			'Nasihat',
+			'Jenaka',
+			'Cinta',
+			'Persahabatan',
+			'Petuah',
+			'Pendidikan',
+			'Agama',
+			'Budaya',
+			'Adat',
+			'Penyambutan',
+			'Perpisahan',
+			'Ucapan Selamat',
+			'Terima Kasih',
+			'Permintaan Maaf',
+			'Sindiran',
+			'Kritik',
+			'Teka-Teki',
+			'Anak-anak',
+			'Lingkungan',
+			'Kepemimpinan',
+			'Kebangsaan',
+		])
+		.default('Nasihat'),
+	audience: z.string().nonempty(),
+	tone: z.enum(['Klasik/Sastra Tinggi', 'Baku/Standar', 'Populer/Santai']).default('Baku/Standar'),
+	topic: z.string().nonempty(),
+	numberVerses: z.number().gt(0).nonnegative(),
+});
+
+export const PayloadKarsaPuisiSchema = z.object({
+	language: LanguageAppSchema.default('indonesia'),
+	type: z
+		.enum([
+			'Nasihat',
+			'Jenaka',
+			'Cinta',
+			'Persahabatan',
+			'Petuah',
+			'Pendidikan',
+			'Agama',
+			'Budaya',
+			'Adat',
+			'Penyambutan',
+			'Perpisahan',
+			'Ucapan Selamat',
+			'Terima Kasih',
+			'Permintaan Maaf',
+			'Sindiran',
+			'Kritik',
+			'Teka-Teki',
+			'Anak-anak',
+			'Lingkungan',
+			'Kepemimpinan',
+			'Kebangsaan',
+		])
+		.default('Nasihat'),
+	audience: z.string().nonempty(),
+	style: z
+		.enum(['Bebas (Kontemporer)', 'Berima Rapat (A-A-A-A)', 'Berima Silang (A-B-A-B)'])
+		.default('Bebas (Kontemporer)'),
+	effect: z
+		.enum([
+			'Dominan Metafora (Kiasan)',
+			'Dominan Personifikasi',
+			'Lugas (Tanpa Kiasan Rumit)',
+			'Campuran (Dinamis)',
+		])
+		.default('Campuran (Dinamis)'),
+	topic: z.string().nonempty(),
+	numberVerses: z.number().gt(0).nonnegative(),
+});
+
+export const PayloadKarsaHymneSchema = z.object({
+	language: LanguageAppSchema.default('indonesia'),
+	type: z
+		.enum([
+			'Nasihat',
+			'Jenaka',
+			'Cinta',
+			'Persahabatan',
+			'Petuah',
+			'Pendidikan',
+			'Agama',
+			'Budaya',
+			'Adat',
+			'Penyambutan',
+			'Perpisahan',
+			'Ucapan Selamat',
+			'Terima Kasih',
+			'Permintaan Maaf',
+			'Sindiran',
+			'Kritik',
+			'Teka-Teki',
+			'Anak-anak',
+			'Lingkungan',
+			'Kepemimpinan',
+			'Kebangsaan',
+		])
+		.default('Nasihat'),
+	institution: z.string().nonempty(),
+	structure: z
+		.enum(['Dengan Reff (Chorus Berulang)', 'Tanpa Reff (Strofik / Mengalir)', 'Bentuk Mars (Cepat & Tegas)'])
+		.default('Dengan Reff (Chorus Berulang)'),
 	topic: z.string().nonempty(),
 	numberVerses: z.number().gt(0).nonnegative(),
 });
@@ -178,6 +310,18 @@ export const PayloadSubmissionKarsaSchema = z
 				payload: PayloadKarsaPantunSchema,
 			}),
 			z.object({
+				app: z.literal(KarsaSchemaPlain.shape.app.enum.syair),
+				payload: PayloadKarsaSyairSchema,
+			}),
+			z.object({
+				app: z.literal(KarsaSchemaPlain.shape.app.enum.puisi),
+				payload: PayloadKarsaPuisiSchema,
+			}),
+			z.object({
+				app: z.literal(KarsaSchemaPlain.shape.app.enum.hymne),
+				payload: PayloadKarsaHymneSchema,
+			}),
+			z.object({
 				app: z.literal(KarsaSchemaPlain.shape.app.enum.petuah),
 				payload: PayloadKarsaPetuahSchema,
 			}),
@@ -249,6 +393,9 @@ export const PayloadSubmissionReactionKarsaSchema = z.object({
 export type KarsaPlain = z.infer<typeof KarsaSchemaPlain>;
 export type PayloadKarsaPidato = z.infer<typeof PayloadKarsaPidatoSchema>;
 export type PayloadKarsaPantun = z.infer<typeof PayloadKarsaPantunSchema>;
+export type PayloadKarsaSyair = z.infer<typeof PayloadKarsaSyairSchema>;
+export type PayloadKarsaPuisi = z.infer<typeof PayloadKarsaPuisiSchema>;
+export type PayloadKarsaHymne = z.infer<typeof PayloadKarsaHymneSchema>;
 export type PayloadKarsaPetuah = z.infer<typeof PayloadKarsaPetuahSchema>;
 export type PayloadKarsaTagline = z.infer<typeof PayloadKarsaTaglineSchema>;
 export type PayloadKarsaSlogan = z.infer<typeof PayloadKarsaSloganSchema>;
