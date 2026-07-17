@@ -83,10 +83,16 @@ export const actionUpdateBalanceUser = async ({
 
 export const actionGetBalanceUser = async ({
     userId,
-    context
+    context,
+    withActivities,
+    activityStartAt,
+    activityEndAt
 }: {
     userId: string
     context: Readonly<RouterContextProvider>
+    withActivities?: boolean
+    activityStartAt?: Date | null
+    activityEndAt?: Date | null
 }) => {
     try {
         return {
@@ -96,7 +102,42 @@ export const actionGetBalanceUser = async ({
             },
             select: {
                 token: true,
-                tokenDaily: true
+                tokenDaily: true,
+                activities: withActivities
+                    ? {
+                        where: {
+                            createdAt: {
+                                gte: activityStartAt ?? undefined,
+                                lte: activityEndAt ?? undefined
+                            }
+                        },
+                        select: {
+                            id: true,
+                            type: true,
+                            token: true,
+                            tokenBefore: true,
+                            tokenAfter: true,
+                            tokenDailyBefore: true,
+                            tokenDailyAfter: true,
+                            description: true,
+                            createdAt: true,
+                            sender: {
+                                select: {
+                                    id: true,
+                                    name: true
+                                }
+                            },
+                            karsa: {
+                                select: {
+                                    app: true
+                                }
+                            }
+                        },
+                        orderBy: {
+                            createdAt: 'desc'
+                        }
+                    }
+                    : false
             }
         })
         }
@@ -109,5 +150,7 @@ export const actionGetBalanceUser = async ({
     }
 };
 
+
+export type ActionGetBalanceUser = Awaited<ReturnType<typeof actionGetBalanceUser>>;
 
 export type ActionUpdateBalanceUser = Awaited<ReturnType<typeof actionUpdateBalanceUser>>;
