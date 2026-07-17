@@ -1,6 +1,6 @@
 import { Carousel } from '@mantine/carousel';
 import { Accordion, Badge, Box, Container, Grid, Group, Stack, Text, Title } from '@mantine/core';
-import { MdOutlineArrowForwardIos } from 'react-icons/md';
+import { LuArrowUpRight } from 'react-icons/lu';
 import { metaPublicRoute } from '~app-modules/meta';
 import { cfContext } from '~app-server/context';
 import { authGetSession } from '~app-server/session';
@@ -10,18 +10,11 @@ import { TestimonialCard } from '~app-ui/components/testimonial';
 import Banner from '~app-ui/layouts/banner';
 import Footer from '~app-ui/layouts/footer';
 import { Header } from '~app-ui/layouts/header';
+import type { KarsaAppsCategory } from '~generated/prisma/enums';
 
 import type { Route } from './+types/layanan._index';
 
 const services = [
-	{
-		id: 'karsalingo',
-		title: 'KarsaLingo',
-		description:
-			'Platform media pembelajaran bahasa daerah interaktif yang dilengkapi dengan evaluasi AI untuk mendukung proses belajar mengajar secara mandiri dan terukur.',
-		image: '/images/logo/logo-karsalingo.svg',
-		badge: 'Pembelajaran',
-	},
 	{
 		id: 'karsawriter',
 		title: 'KarsaWriter',
@@ -29,6 +22,7 @@ const services = [
 			'Asisten cerdas berbasis AI untuk membantu Anda menyusun dan menciptakan karya tulis berbahasa daerah dengan struktur bahasa yang tepat dan natural.',
 		image: '/images/logo/logo-karsawriter.svg',
 		badge: 'Produktivitas',
+		visible: true,
 	},
 	{
 		id: 'karsalator',
@@ -37,6 +31,7 @@ const services = [
 			'Layanan penerjemahan bahasa daerah yang akurat dengan mempertimbangkan konteks budaya setempat, sehingga hasil terjemahan tidak kaku dan lebih relevan.',
 		image: '/images/logo/logo-karsalator.svg',
 		badge: 'Penerjemahan',
+		visible: true,
 	},
 	{
 		id: 'karsalisa',
@@ -45,14 +40,7 @@ const services = [
 			'Fitur unggulan untuk melakukan analisis tingkat kesopanan (unggah-ungguh) dan konteks budaya dalam penggunaan bahasa daerah Anda.',
 		image: '/images/logo/logo-karsalisa.svg',
 		badge: 'Analisis',
-	},
-	{
-		id: 'karsapedia',
-		title: 'KarsaPedia',
-		description:
-			'Ensiklopedia budaya daerah yang komprehensif, mendokumentasikan warisan adat, sejarah, tradisi, dan filosofi lokal untuk generasi masa depan.',
-		image: '/images/logo/logo-karsapedia.svg',
-		badge: 'Ensiklopedia',
+		visible: true,
 	},
 	{
 		id: 'karsafrase',
@@ -61,8 +49,34 @@ const services = [
 			'Asisten cerdas yang didesain khusus untuk memparafrase dan menyusun ulang kalimat agar terdengar lebih natural sesuai dengan gaya bahasa penutur asli.',
 		image: '/images/logo/logo-karsafrase.svg',
 		badge: 'Penulisan',
+		visible: true,
 	},
-];
+	{
+		id: 'karsapedia',
+		title: 'KarsaPedia',
+		description:
+			'Ensiklopedia budaya daerah yang komprehensif, mendokumentasikan warisan adat, sejarah, tradisi, dan filosofi lokal untuk generasi masa depan.',
+		image: '/images/logo/logo-karsapedia.svg',
+		badge: 'Ensiklopedia',
+		visible: false,
+	},
+	{
+		id: 'karsalingo',
+		title: 'KarsaLingo',
+		description:
+			'Platform media pembelajaran bahasa daerah interaktif yang dilengkapi dengan evaluasi AI untuk mendukung proses belajar mengajar secara mandiri dan terukur.',
+		image: '/images/logo/logo-karsalingo.svg',
+		badge: 'Pembelajaran',
+		visible: false,
+	},
+] as const satisfies {
+	id: KarsaAppsCategory | 'karsalingo';
+	title: string;
+	description: string;
+	image: string;
+	badge: string;
+	visible: boolean;
+}[];
 
 export async function loader({ request, context }: Route.LoaderArgs) {
 	const authSession = await authGetSession(request);
@@ -245,18 +259,44 @@ export default function LayananRoute({ loaderData }: Route.ComponentProps) {
 												<Title
 													order={2}
 													mb="md"
+													c={!service.visible ? 'dark.2' : undefined}
 												>
 													{service.title}
+													{!service.visible ? (
+														<Text
+															component="sup"
+															fz={10}
+															fw={700}
+															top="-1em"
+															c="primary"
+														>
+															{' '}
+															(Soon)
+														</Text>
+													) : null}
 												</Title>
-												<Text mb="xl">{service.description}</Text>
-												<ButtonLink
-													to={`/layanan/${service.id}`}
-													rightSection={
-														<MdOutlineArrowForwardIos size={12} />
-													}
-												>
-													Pelajari {service.title}
-												</ButtonLink>
+												<Text>{service.description}</Text>
+												{service.visible ? (
+													<Group
+														mt="xl"
+														gap="xs"
+													>
+														<ButtonLink
+															to="/"
+															rightSection={
+																<LuArrowUpRight size={18} />
+															}
+														>
+															Gunakan {service.title}
+														</ButtonLink>
+														<ButtonLink
+															to="/biaya-layanan"
+															variant="subtle"
+														>
+															Biaya {service.title}
+														</ButtonLink>
+													</Group>
+												) : null}
 											</Grid.Col>
 										</Grid>
 									</Container>

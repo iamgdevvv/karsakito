@@ -321,12 +321,13 @@ export function Header({
 							>
 								<Text
 									span
-									className="text-dark-100"
+									c="dark.1"
 								>
 									KarsaLingo
 								</Text>
 								<Text
-									span
+									component="sup"
+									top={0}
 									fz={10}
 									fw={700}
 									c="primary"

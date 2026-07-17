@@ -36,7 +36,6 @@
 		"@prisma/client": "^7.8.0",
 		"@react-router/cloudflare": "^8.2.0",
 		"@react-router/fs-routes": "^8.2.0",
-		"@tabler/icons-react": "^3.44.0",
 		"bcryptjs": "^3.0.3",
 		"clsx": "^2.1.1",
 		"dayjs": "^1.11.21",
@@ -65,7 +64,7 @@
 		"@types/node": "^26.1.1",
 		"@types/react": "^19.2.17",
 		"@types/react-dom": "^19.2.3",
-		"autoprefixer": "^10.5.3",
+		"autoprefixer": "^10.5.4",
 		"babel-plugin-react-compiler": "^1.0.0",
 		"oxfmt": "^0.59.0",
 		"oxlint": "^1.74.0",
@@ -74,9 +73,9 @@
 		"postcss-simple-vars": "^7.0.1",
 		"prisma": "^7.8.0",
 		"prisma-zod-generator": "^2.1.4",
-		"tailwindcss": "^4.3.2",
+		"tailwindcss": "^4.3.3",
 		"typescript": "^6.0.3",
-		"vite": "^8.1.4",
+		"vite": "^8.1.5",
 		"wrangler": "^4.111.0"
 	},
 	"browserslist": {
