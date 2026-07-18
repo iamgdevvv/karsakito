@@ -21,19 +21,19 @@ import { PiCoinsFill, PiListChecksFill, PiLightningFill } from 'react-icons/pi';
 import { TbApiApp } from 'react-icons/tb';
 import { replace, useNavigation, useSearchParams } from 'react-router';
 import { labelAppName } from '~app-modules/enum-options';
-import type { KarsaAppsName } from '~generated/prisma/enums';
 import { metaDashboardRoute } from '~app-modules/meta';
 import {
 	PayloadQueryBalanceUserSchema,
 	type PayloadQueryBalanceUser,
 } from '~app-modules/schema/balance';
 import { dayjs, toPayloadSearchParams } from '~app-modules/utils';
-import { actionGetBalanceUser, type ActionGetBalanceUser } from '~app-server/balance';
+import { actionGetBalanceUser } from '~app-server/balance';
 import { authUserCtx } from '~app-server/context';
 import { authGetSession } from '~app-server/session';
 import Footer from '~app-ui/layouts/footer';
 import { HeaderDashboard } from '~app-ui/layouts/header';
 import { DashboardPanel } from '~app-ui/layouts/panel';
+import type { KarsaAppsName } from '~generated/prisma/enums';
 
 import type { Route } from './+types/dashboard.usage';
 
@@ -85,8 +85,9 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 	const user = context.get(authUserCtx)!;
 
 	const url = new URL(request.url);
-	const parsedParams =
-		PayloadQueryBalanceUserSchema.safeParse(Object.fromEntries(url.searchParams)).data;
+	const parsedParams = PayloadQueryBalanceUserSchema.safeParse(
+		Object.fromEntries(url.searchParams),
+	).data;
 
 	// Default: filter ke hari ini (sesuai timezone user) kalau tidak ada filter di URL.
 	const hasFilterInUrl = Boolean(parsedParams?.activityStartAt && parsedParams?.activityEndAt);
@@ -233,10 +234,16 @@ export default function UsageDashboardRoute({ loaderData }: Route.ComponentProps
 						readOnly={navigation.state === 'loading'}
 						defaultValue={[
 							loaderData.params.activityStartAt
-								? dayjs(loaderData.params.activityStartAt, loaderData.user.timezone).toDate()
+								? dayjs(
+										loaderData.params.activityStartAt,
+										loaderData.user.timezone,
+									).toDate()
 								: null,
 							loaderData.params.activityEndAt
-								? dayjs(loaderData.params.activityEndAt, loaderData.user.timezone).toDate()
+								? dayjs(
+										loaderData.params.activityEndAt,
+										loaderData.user.timezone,
+									).toDate()
 								: null,
 						]}
 						onChange={(value) => {
@@ -326,7 +333,10 @@ export default function UsageDashboardRoute({ loaderData }: Route.ComponentProps
 							>
 								<Stack
 									gap={2}
-									title={dayjs(activity.createdAt, loaderData.user.timezone).toString()}
+									title={dayjs(
+										activity.createdAt,
+										loaderData.user.timezone,
+									).toString()}
 								>
 									<DataList
 										size="xs"
@@ -335,7 +345,8 @@ export default function UsageDashboardRoute({ loaderData }: Route.ComponentProps
 										<DataList.Item>
 											<DataList.ItemLabel>Saldo Harian</DataList.ItemLabel>
 											<DataList.ItemValue fw={600}>
-												{activity.tokenDailyBefore} → {activity.tokenDailyAfter}
+												{activity.tokenDailyBefore} →{' '}
+												{activity.tokenDailyAfter}
 											</DataList.ItemValue>
 										</DataList.Item>
 									</DataList>
@@ -355,7 +366,10 @@ export default function UsageDashboardRoute({ loaderData }: Route.ComponentProps
 										size="xs"
 										c="dimmed"
 									>
-										{dayjs(activity.createdAt, loaderData.user.timezone).fromNow()}
+										{dayjs(
+											activity.createdAt,
+											loaderData.user.timezone,
+										).fromNow()}
 									</Text>
 								</Stack>
 							</Timeline.Item>

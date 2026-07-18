@@ -106,7 +106,8 @@ export default function FormTopup({ ...props }: BoxProps) {
 				: null;
 
 	// Estimasi token dari nominal custom (mock rate).
-	const estimatedToken = isCustom && !customError ? Math.floor(customPriceNumber * TOKEN_PER_RUPIAH) : 0;
+	const estimatedToken =
+		isCustom && !customError ? Math.floor(customPriceNumber * TOKEN_PER_RUPIAH) : 0;
 
 	// Ringkasan dipakai bersama: paket tetap atau custom.
 	const summary = isCustom

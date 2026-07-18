@@ -49,7 +49,11 @@ const optionsKarsaPuisiType = [
 	'Kebangsaan',
 ];
 
-const optionsKarsaPuisiStyle = ['Bebas (Kontemporer)', 'Berima Rapat (A-A-A-A)', 'Berima Silang (A-B-A-B)'];
+const optionsKarsaPuisiStyle = [
+	'Bebas (Kontemporer)',
+	'Berima Rapat (A-A-A-A)',
+	'Berima Silang (A-B-A-B)',
+];
 
 const optionsKarsaPuisiEffect = [
 	'Dominan Metafora (Kiasan)',

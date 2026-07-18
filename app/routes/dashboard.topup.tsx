@@ -3,10 +3,10 @@ import { replace } from 'react-router';
 import { metaDashboardRoute } from '~app-modules/meta';
 import { authUserCtx } from '~app-server/context';
 import { authGetSession } from '~app-server/session';
+import FormTopup from '~app-ui/form/topup';
 import Footer from '~app-ui/layouts/footer';
 import { HeaderDashboard } from '~app-ui/layouts/header';
 import { DashboardPanel } from '~app-ui/layouts/panel';
-import FormTopup from '~app-ui/form/topup';
 
 import type { Route } from './+types/dashboard.topup';
 
