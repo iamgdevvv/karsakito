@@ -1,6 +1,5 @@
 import {
 	Alert,
-	Badge,
 	Box,
 	Button,
 	Group,
@@ -23,40 +22,38 @@ type TokenPackage = {
 	description: string;
 	icon: React.ReactNode;
 	color: string;
-	popular?: boolean;
 };
 
 const tokenPackages: TokenPackage[] = [
 	{
 		id: 'pkg-50',
 		token: 200,
-		label: 'Starter',
-		description: 'Cocok untuk coba-coba',
+		label: 'Awal',
+		description: 'Contoh untuk mencoba beberapa kebutuhan',
 		icon: <LuSparkles size={22} />,
 		color: 'teal',
 	},
 	{
 		id: 'pkg-100',
 		token: 500,
-		label: 'Basic',
-		description: 'Paling laris untuk harian',
+		label: 'Rutin',
+		description: 'Contoh untuk kebutuhan rutin',
 		icon: <LuGift size={22} />,
 		color: 'grape',
-		popular: true,
 	},
 	{
 		id: 'pkg-200',
 		token: 800,
-		label: 'Plus',
-		description: 'Lebih hemat untuk produktif',
+		label: 'Kebutuhan besar',
+		description: 'Contoh untuk kebutuhan yang lebih banyak',
 		icon: <LuGem size={22} />,
 		color: 'blue',
 	},
 	{
 		id: 'pkg-500',
 		token: 1000,
-		label: 'Pro',
-		description: 'Untuk pengguna aktif',
+		label: 'Penggunaan Extra',
+		description: 'Contoh untuk penggunaan yang lebih sering',
 		icon: <LuCrown size={22} />,
 		color: 'orange',
 	},
@@ -85,7 +82,7 @@ export default function FormTopup({ ...props }: BoxProps) {
 	const summaryBiling = useMemo(() => {
 		if (isCustom && customPrice) {
 			return {
-				label: 'Custom',
+				label: 'Nominal lain',
 				token: customToken,
 				price: customPrice,
 			};
@@ -105,11 +102,11 @@ export default function FormTopup({ ...props }: BoxProps) {
 	const customPriceError = useMemo(() => {
 		if (isCustom && customPrice !== undefined) {
 			if (customPrice < MIN_CUSTOM_PRICE) {
-				return `Minimal ${displayPrice(MIN_CUSTOM_PRICE)}`;
+				return `Nominal minimum ${displayPrice(MIN_CUSTOM_PRICE)}`;
 			}
 
 			if (customPrice % CUSTOM_PRICE_STEP !== 0) {
-				return `Harus kelipatan ${displayPrice(CUSTOM_PRICE_STEP)} (contoh: 10.000, 11.000)`;
+				return `Gunakan kelipatan ${displayPrice(CUSTOM_PRICE_STEP)} (contoh: 10.000 atau 11.000)`;
 			}
 		}
 
@@ -132,14 +129,15 @@ export default function FormTopup({ ...props }: BoxProps) {
 					size="sm"
 					fw={500}
 				>
-					Topup Token akan segera hadir.
+					Pembelian Token sedang disiapkan.
 				</Text>{' '}
 				<Text
 					span
 					size="sm"
 					c="dimmed"
 				>
-					Saat ini Anda masih bisa memakai Token Harian (gratis, reset tiap hari).
+					Anda tetap memperoleh 100 Token harian yang diperbarui setiap pukul 00.00 sesuai
+					zona waktu Anda.
 				</Text>
 			</Alert>
 
@@ -148,7 +146,7 @@ export default function FormTopup({ ...props }: BoxProps) {
 				fw={600}
 				mb="xs"
 			>
-				Pilih Paket Token
+				Pilih nominal untuk simulasi
 			</Text>
 
 			<Stack
@@ -200,16 +198,6 @@ export default function FormTopup({ ...props }: BoxProps) {
 											>
 												{pkg.label}
 											</Text>
-											{pkg.popular ? (
-												<Badge
-													size="xs"
-													variant="light"
-													color="primary"
-													tt="none"
-												>
-													Pilihan Terbaik
-												</Badge>
-											) : null}
 										</Group>
 										<Text
 											size="xs"
@@ -281,15 +269,15 @@ export default function FormTopup({ ...props }: BoxProps) {
 									size="sm"
 									fw={700}
 								>
-									Custom
+									Nominal lain
 								</Text>
 								<Text
 									size="xs"
 									c="dimmed"
 								>
 									{customPrice && !customPriceError
-										? `${displayPrice(customPrice)} • ${customToken} token`
-										: `Masukkan nominal sendiri (min. ${displayPrice(MIN_CUSTOM_PRICE)})`}
+										? `${displayPrice(customPrice)}, sekitar ${customToken} Token`
+										: `Masukkan nominal untuk simulasi (min. ${displayPrice(MIN_CUSTOM_PRICE)})`}
 								</Text>
 							</Stack>
 						</Group>
@@ -320,15 +308,15 @@ export default function FormTopup({ ...props }: BoxProps) {
 							size="sm"
 							c="dimmed"
 						>
-							{isCustom ? 'Estimasi Token' : 'Paket'}
+							Estimasi kebutuhan Token
 						</Text>
 						<Text
 							size="sm"
 							fw={600}
 						>
 							{isCustom
-								? `${summaryBiling.token} token`
-								: `${summaryBiling.label} (${summaryBiling.token} token)`}
+								? `${summaryBiling.token} Token`
+								: `${summaryBiling.label} (${summaryBiling.token} Token)`}
 						</Text>
 					</Group>
 					<Group justify="space-between">
@@ -336,7 +324,7 @@ export default function FormTopup({ ...props }: BoxProps) {
 							size="sm"
 							c="dimmed"
 						>
-							Total Pembayaran
+							Estimasi biaya
 						</Text>
 						<Text
 							size="md"
@@ -346,6 +334,12 @@ export default function FormTopup({ ...props }: BoxProps) {
 							{displayPrice(summaryBiling.price)}
 						</Text>
 					</Group>
+					<Text
+						size="xs"
+						c="dimmed"
+					>
+						Estimasi ini bukan harga final. Pembelian Token belum tersedia.
+					</Text>
 				</Stack>
 			) : null}
 
@@ -359,7 +353,7 @@ export default function FormTopup({ ...props }: BoxProps) {
 					disabled
 					leftSection={<PiHandCoinsFill size={18} />}
 				>
-					Coming Soon
+					Pembelian Token sedang disiapkan
 				</Button>
 			</Group>
 
@@ -372,7 +366,7 @@ export default function FormTopup({ ...props }: BoxProps) {
 						size="md"
 						fw={700}
 					>
-						Topup Custom
+						Simulasi nominal
 					</Text>
 				}
 				size="sm"
@@ -380,14 +374,14 @@ export default function FormTopup({ ...props }: BoxProps) {
 			>
 				<Stack gap="md">
 					<NumberInput
-						label="Nominal Topup"
+						label="Nominal untuk simulasi"
 						description={
 							<Text
 								span
 								size="xs"
 							>
-								Min. {displayPrice(MIN_CUSTOM_PRICE)}, kelipatan{' '}
-								{displayPrice(CUSTOM_PRICE_STEP)} (tanpa titik/koma)
+								Masukkan nominal tanpa titik atau koma untuk melihat perkiraan
+								Token. Pembelian belum tersedia.
 							</Text>
 						}
 						placeholder="Contoh: 15000"
@@ -399,6 +393,7 @@ export default function FormTopup({ ...props }: BoxProps) {
 						min={MIN_CUSTOM_PRICE}
 						step={CUSTOM_PRICE_STEP}
 						error={customPriceError}
+						required
 					/>
 
 					{customPrice && customPrice >= MIN_CUSTOM_PRICE ? (
@@ -414,13 +409,13 @@ export default function FormTopup({ ...props }: BoxProps) {
 									size="xs"
 									c="dimmed"
 								>
-									Estimasi Token
+									Jumlah Token
 								</Text>
 								<Text
 									size="sm"
 									fw={700}
 								>
-									{customToken} token
+									{customToken} Token
 								</Text>
 							</Stack>
 							<Stack

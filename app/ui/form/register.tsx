@@ -54,7 +54,7 @@ export default function FormRegister(props: BoxProps) {
 				setErrorMessage(fetcher.data.error);
 			} else if (fetcher.data?.data) {
 				const redirectParams = new URLSearchParams();
-				redirectParams.set('successMessage', 'You have successfully registered');
+				redirectParams.set('successMessage', 'Pendaftaran berhasil. Silakan masuk.');
 
 				navigate(`/login?${redirectParams.toString()}`, {
 					replace: true,
@@ -96,13 +96,13 @@ export default function FormRegister(props: BoxProps) {
 					order={2}
 					fz="xl"
 				>
-					Sign up
+					Daftar
 				</Title>
-				<Text size="sm">Create a new account</Text>
+				<Text size="sm">Buat akun untuk mulai menggunakan KarsaKito.</Text>
 				{errorMessage ? (
 					<Alert
 						color="red"
-						title="Error"
+						title="Terjadi kendala"
 					>
 						{errorMessage}
 					</Alert>
@@ -120,25 +120,31 @@ export default function FormRegister(props: BoxProps) {
 			>
 				<Stack gap="xs">
 					<TextInput
-						label="Name"
+						label="Nama"
+						placeholder="Contoh: Sari Wulandari"
 						name="name"
 						key={form.key('name')}
 						readOnly={isLoading}
+						required
 						{...form.getInputProps('name')}
 					/>
 					<TextInput
 						type="email"
-						label="Email"
+						label="Alamat email"
+						placeholder="nama@contoh.com"
 						name="email"
 						key={form.key('email')}
 						readOnly={isLoading}
+						required
 						{...form.getInputProps('email')}
 					/>
 					<PasswordInput
-						label="Password"
+						label="Kata sandi"
+						placeholder="Buat kata sandi untuk akun Anda"
 						name="password"
 						key={form.key('password')}
 						readOnly={isLoading}
+						required
 						{...form.getInputProps('password')}
 					/>
 					<Button
@@ -148,7 +154,7 @@ export default function FormRegister(props: BoxProps) {
 						loading={isLoading}
 						mt="md"
 					>
-						Register
+						Daftar
 					</Button>
 				</Stack>
 			</fetcher.Form>
@@ -158,7 +164,7 @@ export default function FormRegister(props: BoxProps) {
 						span
 						fz={10}
 					>
-						OR CONTINUE WITH
+						ATAU LANJUTKAN DENGAN
 					</Text>
 				}
 				my="lg"
@@ -174,7 +180,7 @@ export default function FormRegister(props: BoxProps) {
 					/>
 				}
 			>
-				Continue with Google (Soon)
+				Daftar dengan Google (belum tersedia)
 			</Button>
 			<Text
 				span
@@ -183,13 +189,13 @@ export default function FormRegister(props: BoxProps) {
 				fz="sm"
 				mt="lg"
 			>
-				Already have an account?{' '}
+				Sudah punya akun?{' '}
 				<Link
 					to={`/login${queryParamsToString(searchParams)}`}
 					c="primary"
 					td="underline"
 				>
-					Sign in
+					Masuk
 				</Link>
 			</Text>
 		</Box>

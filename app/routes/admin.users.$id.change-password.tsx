@@ -59,7 +59,7 @@ export async function action({ request, context }: Route.ActionArgs) {
 
 export function meta({ loaderData }: Route.MetaArgs) {
 	return metaAdminRoute({
-		title: `Change Password User ${loaderData.recordUser.name}`,
+		title: `Ubah kata sandi ${loaderData.recordUser.name}`,
 	});
 }
 
@@ -71,7 +71,7 @@ export default function ChangePasswordUserAdminRoute({ loaderData }: Route.Compo
 				authUser={loaderData.user}
 				className="site-main"
 			>
-				<Title mb="lg">Change Password User</Title>
+				<Title mb="lg">Ubah kata sandi Pengguna</Title>
 				<FormChangePasswordUser
 					data={loaderData.recordUser}
 					maw={400}

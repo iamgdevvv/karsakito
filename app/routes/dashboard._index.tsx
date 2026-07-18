@@ -54,7 +54,7 @@ export default function DashboardRoute({ loaderData }: Route.ComponentProps) {
 		<div className="site">
 			<HeaderDashboard authUser={loaderData.user} />
 			<DashboardPanel className="site-main">
-				<Title mb="lg">Quick Actions</Title>
+				<Title mb="lg">Akses cepat</Title>
 				<SimpleGrid
 					cols={{
 						base: 2,

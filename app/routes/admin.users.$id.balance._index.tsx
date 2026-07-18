@@ -18,7 +18,7 @@ import { LiaMoneyBillWaveSolid } from 'react-icons/lia';
 import { LuGift, LuHandHeart } from 'react-icons/lu';
 import { TbApiApp } from 'react-icons/tb';
 import { replace, useNavigation, useSearchParams } from 'react-router';
-import { labelAppName, labelUserRole } from '~app-modules/enum-options';
+import { labelActivityType, labelAppName, labelUserRole } from '~app-modules/enum-options';
 import { metaAdminRoute } from '~app-modules/meta';
 import {
 	PayloadQueryBalanceUserSchema,
@@ -78,7 +78,7 @@ export async function loader({ request, context, params }: Route.LoaderArgs) {
 
 export function meta({ loaderData }: Route.MetaArgs) {
 	return metaAdminRoute({
-		title: `Balance User ${loaderData.result.data.name}`,
+		title: `Saldo Token ${loaderData.result.data.name}`,
 	});
 }
 
@@ -112,18 +112,18 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 				authUser={loaderData.user}
 				className="site-main"
 			>
-				<Title mb="lg">Balance User</Title>
+				<Title mb="lg">Saldo Token Pengguna</Title>
 				<DataList>
 					<DataList.Item>
-						<DataList.ItemLabel>Name</DataList.ItemLabel>
+						<DataList.ItemLabel>Nama</DataList.ItemLabel>
 						<DataList.ItemValue>{loaderData.result.data.name}</DataList.ItemValue>
 					</DataList.Item>
 					<DataList.Item>
-						<DataList.ItemLabel>Email</DataList.ItemLabel>
+						<DataList.ItemLabel>Alamat email</DataList.ItemLabel>
 						<DataList.ItemValue>{loaderData.result.data.email}</DataList.ItemValue>
 					</DataList.Item>
 					<DataList.Item>
-						<DataList.ItemLabel>Role</DataList.ItemLabel>
+						<DataList.ItemLabel>Peran</DataList.ItemLabel>
 						<DataList.ItemValue>
 							{labelUserRole[loaderData.result.data.role]}
 						</DataList.ItemValue>
@@ -139,7 +139,7 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 									tt="none"
 									fw={500}
 								>
-									Active
+									Aktif
 								</Badge>
 							) : (
 								<Badge
@@ -149,7 +149,7 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 									tt="none"
 									fw={500}
 								>
-									Inactive
+									Tidak aktif
 								</Badge>
 							)}
 						</DataList.ItemValue>
@@ -163,7 +163,7 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 								</DataList.ItemValue>
 							</DataList.Item>
 							<DataList.Item>
-								<DataList.ItemLabel>Token Daily</DataList.ItemLabel>
+								<DataList.ItemLabel>Token Harian</DataList.ItemLabel>
 								<DataList.ItemValue>
 									{loaderData.result.data.balances.tokenDaily}
 								</DataList.ItemValue>
@@ -180,7 +180,7 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 						order={2}
 						fz="xl"
 					>
-						Balance Activity
+						Riwayat Token
 					</Title>
 					<Group
 						gap="xs"
@@ -193,11 +193,12 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 							fz="xs"
 							radius="md"
 						>
-							Adjust Balance
+							Sesuaikan Token
 						</ButtonLink>
 						<DatePickerInput
 							type="range"
 							size="sm"
+							placeholder="Pilih rentang tanggal"
 							readOnly={navigation.state === 'loading'}
 							defaultValue={[
 								queryParams.activityStartAt
@@ -226,9 +227,10 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 										handlerSearchParams(payload.data);
 									} else {
 										notifications.show({
-											title: 'Error',
+											title: 'Rentang tanggal tidak valid',
 											color: 'orange',
-											message: 'Invalid date range',
+											message:
+												'Pilih tanggal mulai dan tanggal akhir yang valid.',
 										});
 									}
 								}
@@ -270,7 +272,7 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 													size="sm"
 													fw={700}
 												>
-													{activity.type}
+													{labelActivityType[activity.type]}
 													{activity.type === 'KARSA' &&
 													activity.karsa?.app
 														? ` (${labelAppName[activity.karsa.app]})`
@@ -307,7 +309,7 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 													</DataList.Item>
 													<DataList.Item>
 														<DataList.ItemLabel>
-															Token Before
+															Token sebelumnya
 														</DataList.ItemLabel>
 														<DataList.ItemValue>
 															{activity.tokenBefore}
@@ -315,7 +317,7 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 													</DataList.Item>
 													<DataList.Item>
 														<DataList.ItemLabel>
-															Token After
+															Token setelahnya
 														</DataList.ItemLabel>
 														<DataList.ItemValue>
 															{activity.tokenAfter}
@@ -323,7 +325,7 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 													</DataList.Item>
 													<DataList.Item>
 														<DataList.ItemLabel>
-															Token Daily Before
+															Token Harian sebelumnya
 														</DataList.ItemLabel>
 														<DataList.ItemValue>
 															{activity.tokenDailyBefore}
@@ -331,7 +333,7 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 													</DataList.Item>
 													<DataList.Item>
 														<DataList.ItemLabel>
-															Token Daily After
+															Token Harian setelahnya
 														</DataList.ItemLabel>
 														<DataList.ItemValue>
 															{activity.tokenDailyAfter}
@@ -369,15 +371,15 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 							c="dimmed"
 							ta="center"
 						>
-							Balance Activity not found
+							Belum ada riwayat Token.
 						</Text>
 					)
 				) : (
 					<Alert
 						color="red"
-						title="Error"
+						title="Riwayat Token tidak tersedia"
 					>
-						Balance Activity failed to load
+						Riwayat Token belum dapat dimuat.
 					</Alert>
 				)}
 			</AdminPanel>

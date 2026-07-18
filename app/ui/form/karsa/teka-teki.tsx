@@ -85,7 +85,7 @@ export default function FormKarsaTekaTeki({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -121,8 +121,10 @@ export default function FormKarsaTekaTeki({
 			>
 				<Stack gap="xs">
 					<Select
-						label="Language"
+						label="Pilih Bahasa"
+						required
 						name="language"
+						placeholder="Pilih bahasa"
 						key={form.key('language')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -130,10 +132,12 @@ export default function FormKarsaTekaTeki({
 						{...form.getInputProps('language')}
 					/>
 					<Autocomplete
-						label="Type"
+						label="Jenis"
 						name="type"
+						required
 						key={form.key('type')}
 						readOnly={isLoading}
+						placeholder="Pilih atau tulis jenis teka-teki"
 						maxDropdownHeight={160}
 						data={[
 							'Deskripsi Benda',
@@ -148,19 +152,23 @@ export default function FormKarsaTekaTeki({
 						{...form.getInputProps('type')}
 					/>
 					<Autocomplete
-						label="Level"
+						label="Tingkat kesulitan"
 						name="level"
+						required
 						key={form.key('level')}
 						readOnly={isLoading}
+						placeholder="Pilih atau tulis tingkat kesulitan"
 						maxDropdownHeight={160}
 						data={['Mudah', 'Sedang', 'Sulit']}
 						{...form.getInputProps('level')}
 					/>
 					<Textarea
-						label="Topic"
+						label="Topik"
 						name="topic"
+						required
 						key={form.key('topic')}
 						readOnly={isLoading}
+						placeholder="Contoh: hewan laut untuk anak sekolah dasar"
 						{...form.getInputProps('topic')}
 					/>
 					<Group justify="flex-end">
@@ -169,7 +177,7 @@ export default function FormKarsaTekaTeki({
 							loading={isLoading}
 							mt="md"
 						>
-							Submit App
+							Buat teka-teki
 						</Button>
 					</Group>
 				</Stack>

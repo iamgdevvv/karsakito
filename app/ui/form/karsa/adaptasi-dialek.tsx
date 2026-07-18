@@ -85,7 +85,7 @@ export default function FormKarsaAdaptasiDialek({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -121,8 +121,9 @@ export default function FormKarsaAdaptasiDialek({
 			>
 				<Stack gap="xs">
 					<Select
-						label="Source Language"
+						label="Bahasa sumber"
 						name="sourceLanguage"
+						placeholder="Pilih bahasa sumber"
 						key={form.key('sourceLanguage')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -130,8 +131,9 @@ export default function FormKarsaAdaptasiDialek({
 						{...form.getInputProps('sourceLanguage')}
 					/>
 					<Select
-						label="Target Language"
+						label="Bahasa tujuan"
 						name="targetLanguage"
+						placeholder="Pilih bahasa tujuan"
 						key={form.key('targetLanguage')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -139,17 +141,21 @@ export default function FormKarsaAdaptasiDialek({
 						{...form.getInputProps('targetLanguage')}
 					/>
 					<TextInput
-						label="Dialect"
+						label="Dialek"
 						name="dialect"
+						required
 						key={form.key('dialect')}
 						readOnly={isLoading}
+						placeholder="Contoh: dialek Minang Bukittinggi"
 						{...form.getInputProps('dialect')}
 					/>
 					<Textarea
-						label="Text"
+						label="Teks"
 						name="text"
+						required
 						key={form.key('text')}
 						readOnly={isLoading}
+						placeholder="Tulis teks yang ingin diadaptasi."
 						{...form.getInputProps('text')}
 					/>
 					<Group justify="flex-end">
@@ -158,7 +164,7 @@ export default function FormKarsaAdaptasiDialek({
 							loading={isLoading}
 							mt="md"
 						>
-							Submit App
+							Adaptasikan teks
 						</Button>
 					</Group>
 				</Stack>

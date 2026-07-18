@@ -90,7 +90,7 @@ export default function AdminRoute({ loaderData }: Route.ComponentProps) {
 							}}
 							className="z-2"
 						>
-							Manage Apps
+							Kelola Aplikasi
 						</Text>
 						<ThemeIcon
 							variant="transparent"
@@ -133,7 +133,7 @@ export default function AdminRoute({ loaderData }: Route.ComponentProps) {
 							}}
 							className="z-2"
 						>
-							Manage Users
+							Kelola Pengguna
 						</Text>
 						<ThemeIcon
 							variant="transparent"

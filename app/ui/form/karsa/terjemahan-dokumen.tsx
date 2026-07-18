@@ -85,7 +85,7 @@ export default function FormKarsaTerjemahanDokumen({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -121,8 +121,9 @@ export default function FormKarsaTerjemahanDokumen({
 			>
 				<Stack gap="xs">
 					<Select
-						label="Source Language"
+						label="Bahasa sumber"
 						name="sourceLanguage"
+						placeholder="Pilih bahasa sumber"
 						key={form.key('sourceLanguage')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -130,8 +131,9 @@ export default function FormKarsaTerjemahanDokumen({
 						{...form.getInputProps('sourceLanguage')}
 					/>
 					<Select
-						label="Target Language"
+						label="Bahasa tujuan"
 						name="targetLanguage"
+						placeholder="Pilih bahasa tujuan"
 						key={form.key('targetLanguage')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -139,17 +141,21 @@ export default function FormKarsaTerjemahanDokumen({
 						{...form.getInputProps('targetLanguage')}
 					/>
 					<TextInput
-						label="Info"
+						label="Keterangan"
 						name="info"
+						required
 						key={form.key('info')}
 						readOnly={isLoading}
+						placeholder="Contoh: pengumuman untuk warga"
 						{...form.getInputProps('info')}
 					/>
 					<Textarea
-						label="Selection Text"
+						label="Teks terpilih"
 						name="selectionText"
+						required
 						key={form.key('selectionText')}
 						readOnly={true}
+						placeholder="Pilih teks dari dokumen untuk diterjemahkan."
 						{...form.getInputProps('selectionText')}
 					/>
 					<Group justify="flex-end">
@@ -158,7 +164,7 @@ export default function FormKarsaTerjemahanDokumen({
 							loading={isLoading}
 							mt="md"
 						>
-							Submit App
+							Terjemahkan teks
 						</Button>
 					</Group>
 				</Stack>

@@ -51,7 +51,7 @@ export default function FormCreateUser(props: BoxProps) {
 				redirectParams.set('desc', 'createdAt');
 				redirectParams.set(
 					'successMessage',
-					`User ${fetcher.data.data.name} created successfully`,
+					`Pengguna ${fetcher.data.data.name} berhasil dibuat.`,
 				);
 
 				navigate(`/admin/users?${redirectParams.toString()}`);
@@ -67,7 +67,7 @@ export default function FormCreateUser(props: BoxProps) {
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -85,39 +85,47 @@ export default function FormCreateUser(props: BoxProps) {
 			>
 				<Stack gap="xs">
 					<TextInput
-						label="Name"
+						label="Nama"
+						placeholder="Contoh: Sari Wulandari"
 						name="name"
 						key={form.key('name')}
 						readOnly={isLoading}
+						required
 						{...form.getInputProps('name')}
 					/>
 					<TextInput
 						type="email"
-						label="Email"
+						label="Alamat email"
+						placeholder="nama@contoh.com"
 						name="email"
 						key={form.key('email')}
 						readOnly={isLoading}
+						required
 						{...form.getInputProps('email')}
 					/>
 					<Select
-						label="Role"
+						label="Peran"
+						placeholder="Pilih peran"
 						name="role"
 						key={form.key('role')}
 						readOnly={isLoading}
+						required
 						data={optionsUserRole}
 						{...form.getInputProps('role')}
 					/>
 					<Select
-						label="Timezone"
+						label="Zona waktu"
+						placeholder="Pilih zona waktu"
 						name="timezone"
 						searchable
 						key={form.key('timezone')}
 						readOnly={isLoading}
+						required
 						data={optionsTimezone}
 						{...form.getInputProps('timezone')}
 					/>
 					<Checkbox
-						label="Activate User"
+						label="Aktifkan Pengguna"
 						name="isActive"
 						key={form.key('isActive')}
 						readOnly={isLoading}
@@ -126,10 +134,12 @@ export default function FormCreateUser(props: BoxProps) {
 						})}
 					/>
 					<PasswordInput
-						label="Password"
+						label="Kata sandi"
+						placeholder="Masukkan kata sandi"
 						name="password"
 						key={form.key('password')}
 						readOnly={isLoading}
+						required
 						{...form.getInputProps('password')}
 					/>
 					<Group justify="flex-end">
@@ -138,7 +148,7 @@ export default function FormCreateUser(props: BoxProps) {
 							loading={isLoading}
 							mt="md"
 						>
-							Create User
+							Buat Pengguna
 						</Button>
 					</Group>
 				</Stack>

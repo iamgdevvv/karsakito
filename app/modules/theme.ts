@@ -237,10 +237,10 @@ const theme = createTheme({
 					align: 'start',
 				},
 				previousControlProps: {
-					'aria-label': 'Previous slide',
+					'aria-label': 'Slide sebelumnya',
 				},
 				nextControlProps: {
-					'aria-label': 'Next slide',
+					'aria-label': 'Slide berikutnya',
 				},
 			},
 		}),

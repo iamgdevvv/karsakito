@@ -17,6 +17,7 @@ import {
 import { LuCheck } from 'react-icons/lu';
 import { TbApiApp } from 'react-icons/tb';
 import { labelAppCategory } from '~app-modules/enum-options';
+import { getPublicFaqs } from '~app-modules/faqs';
 import { metaPublicRoute } from '~app-modules/meta';
 import { actionGetKarsaApps } from '~app-server/app';
 import { cfContext } from '~app-server/context';
@@ -35,6 +36,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 		context,
 		customParams: {
 			total: 1000,
+			visible: true,
 		},
 	});
 
@@ -48,81 +50,56 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 export function meta({ loaderData }: Route.MetaArgs) {
 	return metaPublicRoute({
 		title: 'Biaya Layanan KarsaKito',
+		description:
+			'Lihat estimasi harga Token KarsaKito dan tarif penggunaan Token untuk tool yang tersedia.',
 		noIndex: loaderData.noIndex,
 	});
 }
 
 const packages = [
 	{
-		name: 'Paket Sutan',
-		tagline: 'Cocok untuk pelajar dan eksplorasi dasar.',
-		price: 'Rp 15.000',
-		tokens: '100.000 Token',
-		popular: false,
+		name: '200 Token',
+		tagline: 'Untuk mencoba beberapa kebutuhan di KarsaKito.',
+		price: 10_000,
+		tokens: 200,
 		features: [
-			'Akses ke seluruh 6 modul AI',
-			'Minangkabau RAG Knowledge Base',
-			'Masa aktif selamanya (no expiry)',
-			'Standar kuota API',
+			'Token digunakan untuk memakai fitur KarsaKito',
+			'Token tidak memiliki masa berlaku',
 		],
 	},
 	{
-		name: 'Paket Datuk',
-		tagline: 'Pilihan terbaik untuk kreator dan peneliti budaya.',
-		price: 'Rp 50.000',
-		tokens: '500.000 Token',
-		popular: true,
+		name: '500 Token',
+		tagline: 'Untuk kebutuhan rutin saat menulis dan mengolah teks.',
+		price: 25_000,
+		tokens: 500,
 		features: [
-			'Akses ke seluruh 6 modul AI',
-			'Minangkabau RAG Knowledge Base',
-			'Masa aktif selamanya (no expiry)',
-			'Prioritas pemrosesan server AI',
-			'Dukungan email prioritas',
+			'Token digunakan untuk memakai fitur KarsaKito',
+			'Token tidak memiliki masa berlaku',
 		],
 	},
 	{
-		name: 'Paket Rajo',
-		tagline: 'Ideal untuk instansi, sekolah, dan developer.',
-		price: 'Rp 150.000',
-		tokens: '2.000.000 Token',
-		popular: false,
+		name: '800 Token',
+		tagline: 'Untuk pekerjaan yang lebih banyak dalam satu periode.',
+		price: 40_000,
+		tokens: 800,
 		features: [
-			'Akses ke seluruh 6 modul AI',
-			'Minangkabau RAG Knowledge Base',
-			'Masa aktif selamanya (no expiry)',
-			'Prioritas pemrosesan server tertinggi',
-			'Akses Kunci API untuk integrasi aplikasi',
-			'Dedicated support channel',
+			'Token digunakan untuk memakai fitur KarsaKito',
+			'Token tidak memiliki masa berlaku',
+		],
+	},
+	{
+		name: '1.000 Token',
+		tagline: 'Untuk Pengguna yang ingin menyiapkan Token lebih banyak.',
+		price: 50_000,
+		tokens: 1_000,
+		features: [
+			'Token digunakan untuk memakai fitur KarsaKito',
+			'Token tidak memiliki masa berlaku',
 		],
 	},
 ];
 
-const faqs = [
-	{
-		title: 'How does the AI generate content?',
-		content:
-			'The AI generates content using a combination of natural language processing and machine learning algorithms.',
-	},
-	{
-		title: 'Can i customize the AI-generated content?',
-		content:
-			'Yes, you can customize the AI-generated content to meet your specific needs untuk Mengakselerasi Pemanfaatan Bahasa dan Warisan Budaya Daerah',
-	},
-	{
-		title: 'What types of content can the AI generate?',
-		content:
-			'The AI can generate a wide range of content types, including text, images, videos, and more.',
-	},
-	{
-		title: 'Is the AI-generated content plagiarism-free?',
-		content:
-			'Yes, the AI-generated content is plagiarism-free and is not copied from other sources.',
-	},
-	{
-		title: 'Does the tool have any limitations?',
-		content: 'The tool has no limitations and can be used for any purpose.',
-	},
-];
+const faqs = getPublicFaqs(['token'], { featuredOnly: true });
 
 export default function BiayaLayananRoute({ loaderData }: Route.ComponentProps) {
 	return (
@@ -152,12 +129,13 @@ export default function BiayaLayananRoute({ loaderData }: Route.ComponentProps) 
 							c="primary"
 							tt="uppercase"
 						>
-							Fleksibel & Hemat
+							Estimasi Harga
 						</Text>
-						<Title>Bayar Sesuai Penggunaan dengan Token</Title>
+						<Title>Kenali estimasi harga Token</Title>
 						<Text>
-							Tanpa komitmen bulanan. Beli paket token sesuai kebutuhan Anda, dan
-							gunakan kapan saja tanpa khawatir hangus.
+							Token digunakan untuk memakai fitur KarsaKito, bukan untuk membayar API
+							AI. Pembelian Token sedang disiapkan; harga berikut adalah estimasi Rp50
+							per Token.
 						</Text>
 					</Banner>
 
@@ -169,9 +147,10 @@ export default function BiayaLayananRoute({ loaderData }: Route.ComponentProps) 
 						<SimpleGrid
 							cols={{
 								base: 1,
-								md: 3,
+								md: 2,
+								lg: 4,
 							}}
-							spacing="xl"
+							spacing="xs"
 						>
 							{packages.map((pkg, index) => (
 								<Card
@@ -184,22 +163,8 @@ export default function BiayaLayananRoute({ loaderData }: Route.ComponentProps) 
 									radius="xl"
 									bg="white"
 									className="translate-y-0 overflow-visible transition-transform lg:hover:-translate-y-3"
-									bd={pkg.popular ? '2px solid primary' : '1px solid gray.2'}
+									bd="1px solid gray.2"
 								>
-									{pkg.popular && (
-										<Badge
-											variant="filled"
-											size="xl"
-											fz="xs"
-											pos="absolute"
-											top={0}
-											left={'50%'}
-											className="z-1 -translate-1/2"
-										>
-											Paling Populer
-										</Badge>
-									)}
-
 									<Text
 										span
 										fz="xs"
@@ -221,7 +186,7 @@ export default function BiayaLayananRoute({ loaderData }: Route.ComponentProps) 
 										display="inline-block"
 									>
 										<NumberFormatter
-											prefix="Rp "
+											prefix="Rp"
 											value={pkg.price}
 											thousandSeparator
 										/>
@@ -229,11 +194,14 @@ export default function BiayaLayananRoute({ loaderData }: Route.ComponentProps) 
 
 									<Badge
 										variant="light"
-										size="xl"
 										fz="xs"
 										mb="lg"
 									>
-										{pkg.tokens}
+										<NumberFormatter
+											value={pkg.tokens}
+											thousandSeparator
+											suffix=" Token"
+										/>
 									</Badge>
 
 									<Text
@@ -261,8 +229,9 @@ export default function BiayaLayananRoute({ loaderData }: Route.ComponentProps) 
 												<ThemeIcon
 													variant="light"
 													radius="full"
+													size="sm"
 												>
-													<LuCheck size={16} />
+													<LuCheck size={12} />
 												</ThemeIcon>
 												<Text
 													span
@@ -275,17 +244,28 @@ export default function BiayaLayananRoute({ loaderData }: Route.ComponentProps) 
 									</Box>
 
 									<Button
-										variant={pkg.popular ? 'filled' : 'outline'}
+										variant="outline"
 										fullWidth
 										size="lg"
 										fz="md"
 										mt="auto"
+										disabled
 									>
-										Beli Paket
+										Belum tersedia
 									</Button>
 								</Card>
 							))}
 						</SimpleGrid>
+						<Text
+							ta="center"
+							c="gray.6"
+							size="sm"
+							mt="xl"
+						>
+							Nominal lain dapat diperkirakan mulai Rp10.000 dalam kelipatan Rp1.000.
+							Estimasi hargga Rp50 per Token serta saat ini pembelian Token belum
+							tersedia.
+						</Text>
 					</Container>
 				</Box>
 
@@ -305,15 +285,15 @@ export default function BiayaLayananRoute({ loaderData }: Route.ComponentProps) 
 							mx="auto"
 							ta="center"
 						>
-							<Title order={2}>Tarif Penggunaan Token</Title>
+							<Title order={2}>Tarif penggunaan Token</Title>
 							<Text
 								c="gray.6"
 								ta="center"
 								maw={500}
 								mx="auto"
 							>
-								Setiap kali Anda menggunakan layanan AI, saldo token Anda akan
-								dikurangi berdasarkan tarif modul layanan di bawah ini.
+								Setiap tool membutuhkan jumlah Token per sesi yang berbeda. Token
+								Harian digunakan lebih dahulu saat Anda memakai tool.
 							</Text>
 						</Stack>
 
@@ -409,7 +389,7 @@ export default function BiayaLayananRoute({ loaderData }: Route.ComponentProps) 
 													karsaApp.token
 												)}
 											</Text>
-											<Text size="sm">Token/sesi</Text>
+											<Text size="sm">Token per sesi</Text>
 										</Group>
 									</Stack>
 								);
@@ -441,10 +421,8 @@ export default function BiayaLayananRoute({ loaderData }: Route.ComponentProps) 
 							>
 								FAQ
 							</Badge>
-							<Title order={2}>Frequently Asked Questions</Title>
-							<Text>
-								Everything you need to know about the product and other information.
-							</Text>
+							<Title order={2}>Pertanyaan yang sering ditanyakan</Title>
+							<Text>Pahami cara kerja Token dan penggunaan tool KarsaKito.</Text>
 						</Stack>
 
 						<Accordion

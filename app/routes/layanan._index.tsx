@@ -1,6 +1,7 @@
 import { Carousel } from '@mantine/carousel';
 import { Accordion, Badge, Box, Container, Grid, Group, Stack, Text, Title } from '@mantine/core';
 import { LuArrowUpRight } from 'react-icons/lu';
+import { getPublicFaqs } from '~app-modules/faqs';
 import { metaPublicRoute } from '~app-modules/meta';
 import { cfContext } from '~app-server/context';
 import { authGetSession } from '~app-server/session';
@@ -18,8 +19,7 @@ const services = [
 	{
 		id: 'karsawriter',
 		title: 'KarsaWriter',
-		description:
-			'Asisten cerdas berbasis AI untuk membantu Anda menyusun dan menciptakan karya tulis berbahasa daerah dengan struktur bahasa yang tepat dan natural.',
+		description: 'Susun draf teks dengan topik, tujuan, audiens, dan gaya yang lebih jelas.',
 		image: '/images/logo/logo-karsawriter.svg',
 		badge: 'Produktivitas',
 		visible: true,
@@ -28,7 +28,7 @@ const services = [
 		id: 'karsalator',
 		title: 'KarsaLator',
 		description:
-			'Layanan penerjemahan bahasa daerah yang akurat dengan mempertimbangkan konteks budaya setempat, sehingga hasil terjemahan tidak kaku dan lebih relevan.',
+			'Terjemahkan teks, lalu tinjau dan sesuaikan hasilnya dengan konteks penggunaan.',
 		image: '/images/logo/logo-karsalator.svg',
 		badge: 'Penerjemahan',
 		visible: true,
@@ -37,7 +37,7 @@ const services = [
 		id: 'karsalisa',
 		title: 'KarsaLisa',
 		description:
-			'Fitur unggulan untuk melakukan analisis tingkat kesopanan (unggah-ungguh) dan konteks budaya dalam penggunaan bahasa daerah Anda.',
+			'Tinjau pilihan bahasa dan konteks penggunaan agar komunikasi Anda lebih sesuai kebutuhan.',
 		image: '/images/logo/logo-karsalisa.svg',
 		badge: 'Analisis',
 		visible: true,
@@ -46,7 +46,7 @@ const services = [
 		id: 'karsafrase',
 		title: 'KarsaFrase',
 		description:
-			'Asisten cerdas yang didesain khusus untuk memparafrase dan menyusun ulang kalimat agar terdengar lebih natural sesuai dengan gaya bahasa penutur asli.',
+			'Susun ulang teks tanpa mengubah inti pesan agar lebih ringkas, jelas, atau sesuai gaya yang Anda pilih.',
 		image: '/images/logo/logo-karsafrase.svg',
 		badge: 'Penulisan',
 		visible: true,
@@ -55,18 +55,18 @@ const services = [
 		id: 'karsapedia',
 		title: 'KarsaPedia',
 		description:
-			'Ensiklopedia budaya daerah yang komprehensif, mendokumentasikan warisan adat, sejarah, tradisi, dan filosofi lokal untuk generasi masa depan.',
+			'Dalam pengembangan sebagai ruang pengetahuan untuk membantu pencarian informasi seputar Bahasa Nusantara.',
 		image: '/images/logo/logo-karsapedia.svg',
-		badge: 'Ensiklopedia',
+		badge: 'Roadmap',
 		visible: false,
 	},
 	{
 		id: 'karsalingo',
 		title: 'KarsaLingo',
 		description:
-			'Platform media pembelajaran bahasa daerah interaktif yang dilengkapi dengan evaluasi AI untuk mendukung proses belajar mengajar secara mandiri dan terukur.',
+			'Dalam pengembangan untuk mendukung proses belajar Bahasa Nusantara melalui pengalaman yang lebih terarah.',
 		image: '/images/logo/logo-karsalingo.svg',
-		badge: 'Pembelajaran',
+		badge: 'Roadmap',
 		visible: false,
 	},
 ] as const satisfies {
@@ -91,69 +91,38 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 export function meta({ loaderData }: Route.MetaArgs) {
 	return metaPublicRoute({
 		title: 'Layanan KarsaKito',
+		description:
+			'Pilih tool KarsaKito untuk membantu menyusun, menyempurnakan, menerjemahkan, dan mengolah teks berbasis Bahasa Nusantara.',
 		noIndex: loaderData.noIndex,
 	});
 }
 
 const testimonials = [
 	{
-		quote: "The platform significantly streamlined our content creation workflow while preserving the authenticity of local cultural values. It's intuitive, fast, and delivers consistently high-quality results.",
-		name: 'Sarah Wijaya',
-		position: 'Head of Communications, Nusantara Creative Hub',
+		quote: 'Mulai dari topik dan tujuan untuk menyusun draf caption, naskah, atau ide konten yang dapat disesuaikan lagi.',
+		name: 'Kreator konten',
+		position: 'Ilustrasi pengalaman Pengguna',
 	},
 	{
-		quote: 'We reduced the time needed to prepare educational materials from hours to minutes. This has become an essential tool for our teaching activities.',
-		name: 'Ahmad Pratama',
-		position: 'Lecturer, Faculty of Cultural Studies',
+		quote: 'Gunakan hasil sebagai titik awal untuk merangkum, menyusun ulang, atau menyesuaikan teks sebelum dipakai dalam tugas.',
+		name: 'Pelajar dan mahasiswa',
+		position: 'Ilustrasi pengalaman Pengguna',
 	},
 	{
-		quote: 'The AI-generated content feels natural and contextually relevant. It has helped our team produce more engaging campaigns with far less effort.',
-		name: 'Michelle Tan',
-		position: 'Digital Marketing Manager',
+		quote: 'Siapkan draf komunikasi dengan tujuan dan audiens yang jelas, lalu tinjau kembali sebelum dibagikan.',
+		name: 'Humas dan organisasi',
+		position: 'Ilustrasi pengalaman Pengguna',
 	},
 	{
-		quote: 'As a content creator, I appreciate how easy it is to generate ideas and polished drafts without losing my own creative voice.',
-		name: 'Rizky Saputra',
-		position: 'Content Creator',
-	},
-	{
-		quote: 'This solution enables us to promote regional culture more effectively while maintaining accuracy and consistency across our digital channels.',
-		name: 'Dewi Lestari',
-		position: 'Public Relations Officer, Regional Tourism Office',
-	},
-	{
-		quote: 'The user experience is clean and straightforward, making it accessible even for team members with minimal technical experience.',
-		name: 'Kevin Hartono',
-		position: 'Product Manager',
+		quote: 'Terjemahkan atau tinjau pilihan bahasa sebagai bahan kerja, lalu sesuaikan hasilnya dengan konteks dan pengetahuan Anda.',
+		name: 'Pengguna Bahasa Nusantara',
+		position: 'Ilustrasi pengalaman Pengguna',
 	},
 ];
 
-const faqs = [
-	{
-		title: 'How does the AI generate content?',
-		content:
-			'The AI generates content using a combination of natural language processing and machine learning algorithms.',
-	},
-	{
-		title: 'Can i customize the AI-generated content?',
-		content:
-			'Yes, you can customize the AI-generated content to meet your specific needs untuk Mengakselerasi Pemanfaatan Bahasa dan Warisan Budaya Daerah',
-	},
-	{
-		title: 'What types of content can the AI generate?',
-		content:
-			'The AI can generate a wide range of content types, including text, images, videos, and more.',
-	},
-	{
-		title: 'Is the AI-generated content plagiarism-free?',
-		content:
-			'Yes, the AI-generated content is plagiarism-free and is not copied from other sources.',
-	},
-	{
-		title: 'Does the tool have any limitations?',
-		content: 'The tool has no limitations and can be used for any purpose.',
-	},
-];
+const faqs = getPublicFaqs(['layanan', 'hasil', 'token'], {
+	featuredOnly: true,
+});
 
 export default function LayananRoute({ loaderData }: Route.ComponentProps) {
 	return (
@@ -176,12 +145,12 @@ export default function LayananRoute({ loaderData }: Route.ComponentProps) {
 							c="primary"
 							tt="uppercase"
 						>
-							Ekosistem KarsaKito
+							Tool Produktivitas
 						</Text>
-						<Title>Solusi Cerdas untuk Warisan Budaya</Title>
+						<Title>Selesaikan pekerjaan berbasis bahasa dengan lebih terarah</Title>
 						<Text>
-							Hubungkan seluruh kebutuhan pembelajaran dan produktivitas bahasa daerah
-							Anda ke dalam satu platform AI terpadu.
+							Pilih tool sesuai kebutuhan, isi parameter yang relevan, lalu gunakan
+							hasilnya sebagai draf untuk melanjutkan pekerjaan.
 						</Text>
 					</Banner>
 
@@ -271,7 +240,7 @@ export default function LayananRoute({ loaderData }: Route.ComponentProps) {
 															c="primary"
 														>
 															{' '}
-															(Soon)
+															(Segera)
 														</Text>
 													) : null}
 												</Title>
@@ -293,7 +262,7 @@ export default function LayananRoute({ loaderData }: Route.ComponentProps) {
 															to="/biaya-layanan"
 															variant="subtle"
 														>
-															Biaya {service.title}
+															Lihat Tarif Token
 														</ButtonLink>
 													</Group>
 												) : null}
@@ -331,7 +300,7 @@ export default function LayananRoute({ loaderData }: Route.ComponentProps) {
 									fz={10}
 									fw={500}
 								>
-									Community Voice
+									Suara Pengguna
 								</Badge>
 								<Title order={2}>Apa Kata Mereka Tentang KarsaKito?</Title>
 							</Stack>
@@ -351,11 +320,11 @@ export default function LayananRoute({ loaderData }: Route.ComponentProps) {
 										'border border-primary bg-primary-4! [&[data-active]]:bg-primary!',
 								}}
 							>
-								{testimonials.map((testimonial, index) => (
-									<Carousel.Slide key={`testimonial-${index}`}>
+								{testimonials.map((story, index) => (
+									<Carousel.Slide key={`illustrative-story-${index}`}>
 										<TestimonialCard
 											h="100%"
-											data={testimonial}
+											data={story}
 										/>
 									</Carousel.Slide>
 								))}
@@ -388,10 +357,10 @@ export default function LayananRoute({ loaderData }: Route.ComponentProps) {
 								>
 									FAQ
 								</Badge>
-								<Title order={2}>Frequently Asked Questions</Title>
+								<Title order={2}>Pertanyaan yang sering ditanyakan</Title>
 								<Text>
-									Everything you need to know about the product and other
-									information.
+									Kenali cara kerja KarsaKito, penggunaan Token, dan langkah awal
+									untuk memulai.
 								</Text>
 							</Stack>
 

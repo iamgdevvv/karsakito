@@ -60,7 +60,7 @@ export async function action({ request, context }: Route.ActionArgs) {
 
 export function meta({ loaderData }: Route.MetaArgs) {
 	return metaAdminRoute({
-		title: `App ${labelAppName[loaderData.recordApp.name]}`,
+		title: `Aplikasi ${labelAppName[loaderData.recordApp.name]}`,
 	});
 }
 
@@ -72,7 +72,7 @@ export default function DetailKarsaAppAdminRoute({ loaderData }: Route.Component
 				authUser={loaderData.user}
 				className="site-main"
 			>
-				<Title mb="lg">Detail App</Title>
+				<Title mb="lg">Detail Aplikasi</Title>
 				<FormUpdateApp
 					data={loaderData.recordApp}
 					maw={400}

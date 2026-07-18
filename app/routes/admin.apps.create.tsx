@@ -49,7 +49,7 @@ export async function action({ request, context }: Route.ActionArgs) {
 
 export function meta(_: Route.MetaArgs) {
 	return metaAdminRoute({
-		title: 'Create App',
+		title: 'Buat Aplikasi',
 	});
 }
 
@@ -61,7 +61,7 @@ export default function CreateKarsaAppAdminRoute({ loaderData }: Route.Component
 				authUser={loaderData.app}
 				className="site-main"
 			>
-				<Title mb="lg">Create App</Title>
+				<Title mb="lg">Buat Aplikasi</Title>
 				<FormCreateKarsaApp maw={400} />
 			</AdminPanel>
 			<Footer />

@@ -73,8 +73,8 @@ export default function FormUpdateUser({
 				setErrorMessage(fetcher.data.error);
 			} else if (fetcher.data.data) {
 				notifications.show({
-					title: 'Success',
-					message: `User ${fetcher.data.data.name} updated successfully`,
+					title: 'Berhasil',
+					message: `Pengguna ${fetcher.data.data.name} berhasil diperbarui.`,
 				});
 			}
 		}
@@ -88,7 +88,7 @@ export default function FormUpdateUser({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -112,7 +112,8 @@ export default function FormUpdateUser({
 						{...form.getInputProps('userId')}
 					/>
 					<TextInput
-						label="Name"
+						label="Nama"
+						placeholder="Contoh: Sari Wulandari"
 						name="name"
 						key={form.key('name')}
 						readOnly={isLoading}
@@ -120,14 +121,16 @@ export default function FormUpdateUser({
 					/>
 					<TextInput
 						type="email"
-						label="Email"
+						label="Alamat email"
+						placeholder="nama@contoh.com"
 						name="email"
 						key={form.key('email')}
 						readOnly={isLoading}
 						{...form.getInputProps('email')}
 					/>
 					<Select
-						label="Role"
+						label="Peran"
+						placeholder="Pilih peran"
 						name="role"
 						key={form.key('role')}
 						readOnly={isLoading}
@@ -135,7 +138,8 @@ export default function FormUpdateUser({
 						{...form.getInputProps('role')}
 					/>
 					<Select
-						label="Timezone"
+						label="Zona waktu"
+						placeholder="Pilih zona waktu"
 						name="timezone"
 						searchable
 						key={form.key('timezone')}
@@ -144,7 +148,7 @@ export default function FormUpdateUser({
 						{...form.getInputProps('timezone')}
 					/>
 					<Checkbox
-						label="Activate User"
+						label="Aktifkan Pengguna"
 						name="isActive"
 						key={form.key('isActive')}
 						readOnly={isLoading}
@@ -162,13 +166,13 @@ export default function FormUpdateUser({
 							to={`/admin/users/${data.id}/change-password`}
 							loading={isLoading}
 						>
-							Change Password
+							Ubah kata sandi
 						</ButtonLink>
 						<Button
 							type="submit"
 							loading={isLoading}
 						>
-							Update User
+							Simpan perubahan
 						</Button>
 					</Group>
 				</Stack>

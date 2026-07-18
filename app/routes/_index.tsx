@@ -1,6 +1,7 @@
 import { Accordion, Badge, Box, Group, SimpleGrid, Stack, Text, Title } from '@mantine/core';
 import { LuArrowUpRight } from 'react-icons/lu';
 import { labelAppCategory } from '~app-modules/enum-options';
+import { getPublicFaqs } from '~app-modules/faqs';
 import { metaPublicRoute } from '~app-modules/meta';
 import type { KarsaAppPlain } from '~app-modules/schema/app';
 import { actionGetKarsaAppsByCategory } from '~app-server/app';
@@ -27,39 +28,16 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 
 export function meta({ loaderData }: Route.MetaArgs) {
 	return metaPublicRoute({
-		title: 'Ekosistem Karsakito',
+		title: 'Ekosistem KarsaKito',
 		description:
-			'Temukan berbagai solusi AI dari KarsaKito yang siap membantu Anda bekerja lebih cepat, lebih cerdas, dan lebih efisien melalui satu platform terpadu.',
+			'KarsaKito membantu Anda membuat, menyempurnakan, menerjemahkan, dan mengolah teks berbasis Bahasa Nusantara melalui alur kerja terstruktur.',
 		noIndex: loaderData.noIndex,
 	});
 }
 
-const faqs = [
-	{
-		title: 'How does the AI generate content?',
-		content:
-			'The AI generates content using a combination of natural language processing and machine learning algorithms.',
-	},
-	{
-		title: 'Can i customize the AI-generated content?',
-		content:
-			'Yes, you can customize the AI-generated content to meet your specific needs untuk Mengakselerasi Pemanfaatan Bahasa dan Warisan Budaya Daerah',
-	},
-	{
-		title: 'What types of content can the AI generate?',
-		content:
-			'The AI can generate a wide range of content types, including text, images, videos, and more.',
-	},
-	{
-		title: 'Is the AI-generated content plagiarism-free?',
-		content:
-			'Yes, the AI-generated content is plagiarism-free and is not copied from other sources.',
-	},
-	{
-		title: 'Does the tool have any limitations?',
-		content: 'The tool has no limitations and can be used for any purpose.',
-	},
-];
+const faqs = getPublicFaqs(['tentang', 'layanan', 'token'], {
+	featuredOnly: true,
+});
 
 export default function AppsRoute({ loaderData }: Route.ComponentProps) {
 	return (
@@ -86,18 +64,20 @@ export default function AppsRoute({ loaderData }: Route.ComponentProps) {
 						<Title
 							fz={{
 								base: 'xl',
-								lg: 28,
+								lg: 32,
 							}}
 						>
-							Ekosistem Karsakito
+							Ekosistem Produktivitas AI untuk Bahasa Nusantara
 						</Title>
 						<Text
 							c="gray.6"
-							size="sm"
+							fz={{
+								base: 'sm',
+								lg: 'md',
+							}}
 						>
-							Temukan berbagai solusi AI dari KarsaKito yang siap membantu Anda
-							bekerja lebih cepat, lebih cerdas, dan lebih efisien melalui satu
-							platform terpadu.
+							Pilih tool dan isi kebutuhan Anda untuk memulai pekerjaan berbasis
+							bahasa dengan lebih terarah.
 						</Text>
 						<Group
 							gap="xs"
@@ -130,7 +110,7 @@ export default function AppsRoute({ loaderData }: Route.ComponentProps) {
 								variant="light"
 								radius="full"
 							>
-								Pelajari Selengkapnya
+								Tentang KarsaKito
 							</ButtonLink>
 						</Group>
 					</Stack>
@@ -263,7 +243,7 @@ export default function AppsRoute({ loaderData }: Route.ComponentProps) {
 							lg: 20,
 						}}
 					>
-						Tutorial & Dokumentasi
+						Panduan Penggunaan
 					</Title>
 					<SimpleGrid
 						cols={{
@@ -312,39 +292,36 @@ export default function AppsRoute({ loaderData }: Route.ComponentProps) {
 							}}
 							mb="sm"
 						>
-							FAQ's
+							Pertanyaan umum
 						</Title>
 						<Text
 							size="sm"
 							mb="md"
 						>
-							Everything you need to know about the product and other
-							information.{' '}
+							Jawaban ringkas seputar KarsaKito, tool, dan Token.
 						</Text>
 						<ButtonLink
 							to="/faq"
-							target="_blank"
 							size="sm"
 							fz="xs"
 							radius="full"
 							rightSection={<LuArrowUpRight size={18} />}
 						>
-							FAQ Lengkap
+							Lihat semua FAQ
 						</ButtonLink>
 						<Text
 							size="sm"
 							mt="lg"
 						>
-							Can't find the answer you're looking for? <br />
-							Say hi at{' '}
+							Butuh bantuan lain? <br />
+							Kirim email ke{' '}
 							<Link
-								to="mailto:info@karsakito.com"
-								target="_blank"
+								to="mailto:info@karsakito.web.id"
 								c="primary"
 								fw={600}
 								td="underline"
 							>
-								info@karsakito.com
+								info@karsakito.web.id
 							</Link>
 						</Text>
 					</Box>

@@ -38,6 +38,13 @@ import type { UserScalarFieldEnum } from '~generated/prisma/internal/prismaNames
 
 import type { Route } from './+types/admin.users._index';
 
+const userSortOptions = [
+	{ value: 'email', label: 'Alamat email' },
+	{ value: 'name', label: 'Nama' },
+	{ value: 'createdAt', label: 'Dibuat pada' },
+	{ value: 'updatedAt', label: 'Diperbarui pada' },
+] satisfies { value: UserScalarFieldEnum; label: string }[];
+
 const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) => {
 	const authSession = await authMiddlewareSession({
 		guard: {
@@ -70,7 +77,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 
 export function meta(_: Route.MetaArgs) {
 	return metaAdminRoute({
-		title: 'Manage Users',
+		title: 'Kelola Pengguna',
 	});
 }
 
@@ -124,7 +131,7 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 				authUser={loaderData.user}
 				className="site-main"
 			>
-				<Title mb="lg">Manage Users</Title>
+				<Title mb="lg">Kelola Pengguna</Title>
 				{navigation.state === 'loading' ? (
 					<Center>
 						<Loader />
@@ -150,12 +157,12 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 								fz="xs"
 								radius="md"
 							>
-								Create New
+								Buat Pengguna
 							</ButtonLink>
 							<TextInput
 								name="search"
 								defaultValue={queryParams?.search}
-								placeholder="Search..."
+								placeholder="Cari Pengguna..."
 								size="xs"
 								rightSection={
 									<ActionIcon
@@ -178,6 +185,7 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 									size="xs"
 									defaultValue={queryParams?.role}
 									data={optionsUserRole}
+									placeholder="Semua peran"
 								/>
 								<Popover
 									width={160}
@@ -206,15 +214,9 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 														? [queryParams.asc]
 														: queryParams?.asc
 												}
-												data={
-													[
-														'email',
-														'name',
-														'createdAt',
-														'updatedAt',
-													] satisfies UserScalarFieldEnum[]
-												}
-												label="Sort ASC"
+												data={userSortOptions}
+												label="Urut naik"
+												placeholder="Pilih kolom"
 												labelProps={{
 													fz: 10,
 												}}
@@ -227,15 +229,9 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 														? [queryParams.desc]
 														: queryParams?.desc
 												}
-												data={
-													[
-														'email',
-														'name',
-														'createdAt',
-														'updatedAt',
-													] satisfies UserScalarFieldEnum[]
-												}
-												label="Sort DESC"
+												data={userSortOptions}
+												label="Urut turun"
+												placeholder="Pilih kolom"
 												labelProps={{
 													fz: 10,
 												}}
@@ -251,7 +247,7 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 										fz="xs"
 										variant="light"
 									>
-										Apply
+										Terapkan
 									</Button>
 									{hasParams ? (
 										<Button
@@ -262,7 +258,7 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 											color="gray.2"
 											onClick={handlerResetParams}
 										>
-											Reset
+											Atur ulang
 										</Button>
 									) : null}
 								</Group>
@@ -281,9 +277,9 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 									<Table.Tr>
 										<Table.Td miw={160}>Nama</Table.Td>
 										<Table.Td miw={160}>Email</Table.Td>
-										<Table.Td miw={88}>Role</Table.Td>
+										<Table.Td miw={88}>Peran</Table.Td>
 										<Table.Td miw={80}>Status</Table.Td>
-										<Table.Td ta="center">Action</Table.Td>
+										<Table.Td ta="center">Tindakan</Table.Td>
 									</Table.Tr>
 								</Table.Thead>
 								{loaderData.users.data.length ? (
@@ -301,7 +297,7 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 															tt="none"
 															fw={500}
 														>
-															Active
+															Aktif
 														</Badge>
 													) : (
 														<Badge
@@ -310,7 +306,7 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 															tt="none"
 															fw={500}
 														>
-															Inactive
+															Tidak aktif
 														</Badge>
 													)}
 												</Table.Td>
@@ -333,19 +329,19 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 																color="blue"
 																to={`/admin/users/${user.id}/balance`}
 															>
-																Balance
+																Saldo Token
 															</Menu.Item>
 															<Menu.Item
 																component={Link}
 																to={`/admin/users/${user.id}`}
 															>
-																Update
+																Ubah
 															</Menu.Item>
 															<Menu.Item
 																component={Link}
 																to={`/admin/users/${user.id}/change-password`}
 															>
-																Change Password
+																Ubah kata sandi
 															</Menu.Item>
 															<Menu.Item
 																component={Link}
@@ -353,7 +349,7 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 																color="red"
 																leftSection={<LuTrash size={14} />}
 															>
-																Delete
+																Hapus
 															</Menu.Item>
 														</Menu.Dropdown>
 													</Menu>
@@ -362,7 +358,7 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 										))}
 									</Table.Tbody>
 								) : (
-									<Table.Caption>Users not found</Table.Caption>
+									<Table.Caption>Pengguna tidak ditemukan.</Table.Caption>
 								)}
 							</Table>
 						</Box>
@@ -386,7 +382,7 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 											})
 										}
 									>
-										Previous
+										Sebelumnya
 									</Button>
 								) : null}
 								{loaderData.users.nextCursor ? (
@@ -403,7 +399,7 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 											})
 										}
 									>
-										Next
+										Berikutnya
 									</Button>
 								) : null}
 							</Group>

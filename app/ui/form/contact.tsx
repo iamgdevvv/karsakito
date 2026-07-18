@@ -57,16 +57,15 @@ export default function FormContact(props: BoxProps) {
 			{fetcher.data?.success ? (
 				<Alert
 					color="green"
-					title="Success"
+					title="Pesan terkirim"
 					mb="md"
 				>
-					Terima kasih telah menghubungi kami. Tim kami telah menerima pesan Anda dan akan
-					segera menindaklanjutinya.
+					Terima kasih. Pesan Anda sudah kami terima dan akan kami tindak lanjuti.
 				</Alert>
 			) : errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Pesan belum terkirim"
 					mb="md"
 				>
 					{errorMessage}
@@ -92,6 +91,7 @@ export default function FormContact(props: BoxProps) {
 					>
 						<TextInput
 							label="Nama Lengkap"
+							placeholder="Contoh: Budi Santoso"
 							name="name"
 							key={form.key('name')}
 							readOnly={isLoading}
@@ -99,7 +99,8 @@ export default function FormContact(props: BoxProps) {
 							{...form.getInputProps('name')}
 						/>
 						<TextInput
-							label="Alamat Email"
+							label="Alamat email"
+							placeholder="nama@contoh.com"
 							type="email"
 							name="email"
 							key={form.key('email')}
@@ -108,7 +109,8 @@ export default function FormContact(props: BoxProps) {
 							{...form.getInputProps('email')}
 						/>
 						<TextInput
-							label="Nomor HP/Whatsapp"
+							label="Nomor HP/WhatsApp"
+							placeholder="Contoh: 0812 3456 7890"
 							type="tel"
 							name="phone"
 							key={form.key('phone')}
@@ -117,7 +119,8 @@ export default function FormContact(props: BoxProps) {
 							{...form.getInputProps('phone')}
 						/>
 						<TextInput
-							label="Nama Instansi/Organisasi"
+							label="Nama instansi atau organisasi"
+							placeholder="Contoh: Kito Kreatif"
 							name="organization"
 							key={form.key('organization')}
 							readOnly={isLoading}
@@ -126,6 +129,7 @@ export default function FormContact(props: BoxProps) {
 					</SimpleGrid>
 					<Textarea
 						label="Pesan Anda"
+						placeholder="Ceritakan kebutuhan atau pertanyaan Anda"
 						name="message"
 						key={form.key('message')}
 						readOnly={isLoading}

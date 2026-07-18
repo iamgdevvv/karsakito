@@ -83,13 +83,13 @@ export default function FormLogin(props: BoxProps) {
 					order={2}
 					fz="xl"
 				>
-					Sign in
+					Masuk
 				</Title>
-				<Text size="sm">Enter your email and password to login to your account</Text>
+				<Text size="sm">Masukkan alamat email dan kata sandi Anda.</Text>
 				{errorMessage ? (
 					<Alert
 						color="red"
-						title="Error"
+						title="Terjadi kendala"
 					>
 						{errorMessage}
 					</Alert>
@@ -108,17 +108,21 @@ export default function FormLogin(props: BoxProps) {
 				<Stack gap="xs">
 					<TextInput
 						type="email"
-						label="Email"
+						label="Alamat email"
+						placeholder="nama@contoh.com"
 						name="email"
 						key={form.key('email')}
 						readOnly={isLoading}
+						required
 						{...form.getInputProps('email')}
 					/>
 					<PasswordInput
-						label="Password"
+						label="Kata sandi"
+						placeholder="Masukkan kata sandi"
 						name="password"
 						key={form.key('password')}
 						readOnly={isLoading}
+						required
 						{...form.getInputProps('password')}
 					/>
 					<Button
@@ -128,7 +132,7 @@ export default function FormLogin(props: BoxProps) {
 						loading={isLoading}
 						mt="md"
 					>
-						Login
+						Masuk
 					</Button>
 				</Stack>
 			</fetcher.Form>
@@ -138,7 +142,7 @@ export default function FormLogin(props: BoxProps) {
 						span
 						fz={10}
 					>
-						OR CONTINUE WITH
+						ATAU LANJUTKAN DENGAN
 					</Text>
 				}
 				my="lg"
@@ -154,7 +158,7 @@ export default function FormLogin(props: BoxProps) {
 					/>
 				}
 			>
-				Continue with Google (Soon)
+				Masuk dengan Google (belum tersedia)
 			</Button>
 			<Text
 				span
@@ -163,13 +167,13 @@ export default function FormLogin(props: BoxProps) {
 				fz="sm"
 				mt="lg"
 			>
-				Don't have an account?{' '}
+				Belum punya akun?{' '}
 				<Link
 					to={`/register${queryParamsToString(searchParams)}`}
 					c="primary"
 					td="underline"
 				>
-					Sign Up
+					Daftar
 				</Link>
 			</Text>
 		</Box>

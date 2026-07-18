@@ -88,7 +88,7 @@ export default function FormKarsaMotto({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -124,8 +124,10 @@ export default function FormKarsaMotto({
 			>
 				<Stack gap="xs">
 					<Select
-						label="Language"
+						label="Pilih Bahasa"
+						required
 						name="language"
+						placeholder="Pilih bahasa"
 						key={form.key('language')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -133,34 +135,42 @@ export default function FormKarsaMotto({
 						{...form.getInputProps('language')}
 					/>
 					<TextInput
-						label="Entity"
+						label="Nama entitas"
 						name="entity"
+						required
 						key={form.key('entity')}
 						readOnly={isLoading}
+						placeholder="Contoh: KarsaKito"
 						{...form.getInputProps('entity')}
 					/>
 					<TextInput
-						label="Core Value"
+						label="Nilai utama"
 						name="core_value"
+						required
 						key={form.key('core_value')}
 						readOnly={isLoading}
+						placeholder="Contoh: kolaborasi dan integritas"
 						{...form.getInputProps('core_value')}
 					/>
 					<Autocomplete
-						label="Tone"
+						label="Gaya"
 						name="tone"
+						required
 						key={form.key('tone')}
 						readOnly={isLoading}
+						placeholder="Pilih atau tulis gaya motto"
 						maxDropdownHeight={160}
 						data={['Klasik', 'Singkat', 'Kiasan']}
 						{...form.getInputProps('tone')}
 					/>
 					<NumberInput
-						label="Jumlah Kata"
+						label="Jumlah kata"
 						name="wordLength"
+						required
 						max={20}
 						key={form.key('wordLength')}
 						readOnly={isLoading}
+						placeholder="Contoh: 4"
 						leftSection={<PiTextColumns size={18} />}
 						{...form.getInputProps('wordLength')}
 					/>
@@ -170,7 +180,7 @@ export default function FormKarsaMotto({
 							loading={isLoading}
 							mt="md"
 						>
-							Submit App
+							Buat motto
 						</Button>
 					</Group>
 				</Stack>

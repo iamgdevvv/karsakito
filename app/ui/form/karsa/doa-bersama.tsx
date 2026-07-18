@@ -87,7 +87,7 @@ export default function FormKarsaDoaBersama({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -123,8 +123,10 @@ export default function FormKarsaDoaBersama({
 			>
 				<Stack gap="xs">
 					<Select
-						label="Language"
+						label="Pilih Bahasa"
+						required
 						name="language"
+						placeholder="Pilih bahasa"
 						key={form.key('language')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -132,27 +134,33 @@ export default function FormKarsaDoaBersama({
 						{...form.getInputProps('language')}
 					/>
 					<Autocomplete
-						label="Religion"
+						label="Kepercayaan"
 						name="religion"
+						required
 						key={form.key('religion')}
 						readOnly={isLoading}
+						placeholder="Pilih atau tulis kepercayaan"
 						maxDropdownHeight={160}
 						data={['Umum', 'Islam', 'Kristen', 'Katolik', 'Budha', 'Hindu', 'Konghucu']}
 						{...form.getInputProps('religion')}
 					/>
 					<Textarea
-						label="Topic"
+						label="Topik"
 						name="topic"
+						required
 						key={form.key('topic')}
 						readOnly={isLoading}
+						placeholder="Contoh: pembukaan kegiatan sekolah"
 						{...form.getInputProps('topic')}
 					/>
 					<NumberInput
-						label="Jumlah Kalimat"
+						label="Jumlah kalimat"
 						name="totalSentence"
+						required
 						max={28}
 						key={form.key('totalSentence')}
 						readOnly={isLoading}
+						placeholder="Contoh: 8"
 						leftSection={<PiTextColumns size={18} />}
 						{...form.getInputProps('totalSentence')}
 					/>
@@ -162,7 +170,7 @@ export default function FormKarsaDoaBersama({
 							loading={isLoading}
 							mt="md"
 						>
-							Submit App
+							Buat doa
 						</Button>
 					</Group>
 				</Stack>

@@ -16,13 +16,13 @@ export async function loader({ request, context, params }: Route.LoaderArgs) {
 	}
 
 	const redirectParams = new URLSearchParams();
-	redirectParams.set('successMessage', `Delete user ${deleteUser.data.name} successfully`);
+	redirectParams.set('successMessage', `Pengguna ${deleteUser.data.name} berhasil dihapus.`);
 
 	return replace(`/admin/users?${redirectParams.toString()}`);
 }
 
 export function meta() {
 	return metaAdminRoute({
-		title: 'Delete User',
+		title: 'Hapus Pengguna',
 	});
 }

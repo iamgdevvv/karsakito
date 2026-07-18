@@ -45,13 +45,13 @@ export const actionSendEmailContact = async ({
 
 		if (error instanceof BrevoTimeoutError) {
 			return {
-				error: 'Email service is timeout, please try again later',
+				error: 'Layanan email belum merespons. Silakan coba lagi beberapa saat lagi.',
 			};
 		}
 
 		if (error instanceof BrevoError) {
 			return {
-				error: 'Email service is down, please try again later',
+				error: 'Layanan email sedang tidak tersedia. Silakan coba lagi beberapa saat lagi.',
 			};
 		}
 

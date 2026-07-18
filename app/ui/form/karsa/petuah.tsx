@@ -84,7 +84,7 @@ export default function FormKarsaPetuah({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -120,8 +120,10 @@ export default function FormKarsaPetuah({
 			>
 				<Stack gap="xs">
 					<Select
-						label="Language"
+						label="Pilih Bahasa"
+						required
 						name="language"
+						placeholder="Pilih bahasa"
 						key={form.key('language')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -129,19 +131,23 @@ export default function FormKarsaPetuah({
 						{...form.getInputProps('language')}
 					/>
 					<Autocomplete
-						label="Style"
+						label="Gaya"
 						name="style"
+						required
 						key={form.key('style')}
 						readOnly={isLoading}
+						placeholder="Pilih atau tulis gaya petuah"
 						maxDropdownHeight={160}
 						data={['Filosofis', 'Puitis', 'Tegas', 'Lembut', 'Singkat']}
 						{...form.getInputProps('style')}
 					/>
 					<Textarea
-						label="Topic"
+						label="Topik"
 						name="topic"
+						required
 						key={form.key('topic')}
 						readOnly={isLoading}
+						placeholder="Contoh: ketekunan dalam belajar"
 						{...form.getInputProps('topic')}
 					/>
 					<Group justify="flex-end">
@@ -150,7 +156,7 @@ export default function FormKarsaPetuah({
 							loading={isLoading}
 							mt="md"
 						>
-							Submit App
+							Buat petuah
 						</Button>
 					</Group>
 				</Stack>

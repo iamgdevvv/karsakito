@@ -10,8 +10,7 @@ export const dashboardSpotlight: SpotlightActionData[] = [
 	{
 		id: '/dashboard',
 		label: 'Dashboard',
-		description:
-			'Manage your account, recent activity, and access important features more quickly through the dashboard',
+		description: 'Kelola akun, pantau aktivitas terbaru, dan buka fitur penting.',
 		leftSection: <MdSpaceDashboard size={24} />,
 	},
 	{
@@ -29,16 +28,14 @@ export const dashboardSpotlight: SpotlightActionData[] = [
 	},
 	{
 		id: '/dashboard/users',
-		label: 'Profile',
-		description:
-			'Manage your profile details, update personal information, and customize your account preferences',
+		label: 'Profil',
+		description: 'Perbarui informasi dan pengaturan akun Anda.',
 		leftSection: <HiUser size={24} />,
 	},
 	{
 		id: '/dashboard/change-password',
-		label: 'Change Password',
-		description:
-			'Update your password to keep your account secure and protect your personal information',
+		label: 'Ubah kata sandi',
+		description: 'Perbarui kata sandi untuk menjaga akses akun Anda.',
 		leftSection: <BiSolidLock size={24} />,
 	},
 ];
@@ -47,13 +44,13 @@ export const staffSpotlight: SpotlightActionData[] = [
 	{
 		id: '/admin',
 		label: 'Admin',
-		description: 'Get full information about current system status',
+		description: 'Lihat informasi dan pengelolaan sistem.',
 		leftSection: <HiMiniHome size={24} />,
 	},
 	{
 		id: '/admin/apps',
-		label: 'Manage Apps',
-		description: 'Manage karsakito apps',
+		label: 'Kelola Aplikasi',
+		description: 'Kelola Aplikasi KarsaKito.',
 		leftSection: <TbApiApp size={24} />,
 	},
 	...dashboardSpotlight,
@@ -62,8 +59,8 @@ export const staffSpotlight: SpotlightActionData[] = [
 export const adminSpotlight: SpotlightActionData[] = [
 	{
 		id: '/admin/users',
-		label: 'Manage Users',
-		description: 'Manage users, roles, and permissions',
+		label: 'Kelola Pengguna',
+		description: 'Kelola Pengguna, peran, dan akses.',
 		leftSection: <FaUsersCog size={24} />,
 	},
 	...staffSpotlight,

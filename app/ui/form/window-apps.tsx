@@ -92,7 +92,7 @@ export function WindowAppKarsaWriter({
 							size="xs"
 							ml={-4}
 						>
-							Options
+							Pengaturan
 						</Text>
 					</Tabs.Tab>
 					<Tabs.Tab
@@ -106,7 +106,7 @@ export function WindowAppKarsaWriter({
 							size="xs"
 							ml={-4}
 						>
-							Result
+							Hasil
 						</Text>
 					</Tabs.Tab>
 				</Tabs.List>
@@ -430,6 +430,12 @@ export function WindowAppKarsaWriter({
 
 				<Tabs.Panel value="result">
 					<Stack gap="xs">
+						<Text
+							size="xs"
+							c="dimmed"
+						>
+							Tinjau hasil sebelum digunakan atau dibagikan.
+						</Text>
 						{resultAI === null ? (
 							<Skeleton
 								w="100%"
@@ -476,7 +482,7 @@ export function WindowAppKarsaWriter({
 									Evaluasi Hasil AI
 								</Text>
 								<Tooltip
-									label="Hasil AI Baik"
+									label="Sesuai kebutuhan"
 									fz="xs"
 								>
 									<ActionIcon
@@ -494,7 +500,7 @@ export function WindowAppKarsaWriter({
 									</ActionIcon>
 								</Tooltip>
 								<Tooltip
-									label="Hasil AI Buruk"
+									label="Perlu diperbaiki"
 									fz="xs"
 								>
 									<ActionIcon

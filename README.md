@@ -1,72 +1,67 @@
-# Welcome to React Router!
+# KarsaKito
 
-A modern, production-ready template for building full-stack React applications using React Router.
+KarsaKito adalah Ekosistem Produktivitas AI Bahasa Nusantara untuk membantu Pengguna membuat, menyempurnakan, menerjemahkan, dan mengolah teks melalui alur kerja terstruktur.
 
-## Features
+KarsaKito bukan chatbot prompt bebas. Pengguna memilih tool, mengisi parameter sesuai kebutuhan, lalu meninjau dan menyempurnakan hasil untuk pekerjaannya.
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+## Fitur saat ini
 
-## Getting Started
+Fitur utama yang tersedia saat ini:
 
-### Installation
+- KarsaWriter untuk menyusun berbagai draf tulisan.
+- KarsaLisa untuk menganalisis penggunaan bahasa.
+- KarsaFrase untuk parafrasa, rangkuman, dan adaptasi dialek.
+- KarsaLator untuk menerjemahkan teks.
 
-Install the dependencies:
+KarsaPedia dan KarsaLingo merupakan arah pengembangan berikutnya dan belum diposisikan sebagai fitur aktif. Mode Kreator di Workspace masih bersifat eksperimental.
+
+## Token
+
+KarsaKito menggunakan Token Aplikasi, bukan token API AI.
+
+- Pengguna memperoleh hingga 100 Token harian yang tersedia kembali setiap pukul 00.00 sesuai timezone akun.
+- Token harian digunakan lebih dahulu saat memakai tool.
+- Estimasi harga Token adalah Rp50 per Token.
+- Pembelian Token masih disiapkan; antarmuka top up saat ini hanya menampilkan estimasi harga.
+
+## Teknologi
+
+Project ini menggunakan React Router, React, Mantine, Cloudflare Workers, Cloudflare D1, dan Prisma.
+
+## Menjalankan Project
+
+Pasang dependensi:
 
 ```bash
 npm install
 ```
 
-### Development
-
-Start the development server with HMR:
+Jalankan server pengembangan:
 
 ```bash
 npm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+Aplikasi tersedia di `http://localhost:5173`.
 
-## Previewing the Production Build
+## Build dan Deploy
 
-Preview the production build locally:
-
-```bash
-npm run preview
-```
-
-## Building for Production
-
-Create a production build:
+Verifikasi build produksi:
 
 ```bash
 npm run build
 ```
 
-## Deployment
+Deploy ke Cloudflare Workers:
 
-Deployment is done using the Wrangler CLI.
-
-To build and deploy directly to production:
-
-```sh
+```bash
 npm run deploy
 ```
 
-To deploy a preview URL:
+Untuk membuat dan mempromosikan versi preview:
 
-```sh
+```bash
 npx wrangler versions upload
-```
-
-You can then promote a version to production after verification or roll it out progressively.
-
-```sh
 npx wrangler versions deploy
 ```
 
@@ -74,7 +69,7 @@ npx wrangler versions deploy
 
 Project ini memakai Prisma sebagai sumber schema dan Cloudflare D1 sebagai database runtime. Tidak ada database SQLite lokal permanen; migrasi dibuat dari riwayat file `prisma/migrations` lalu diterapkan ke D1 remote dengan Wrangler.
 
-Kalau kamu pakai PowerShell di Windows, pakai `cmd /c` jika command `npm` atau `npx` terkena policy eksekusi.
+Kalau memakai PowerShell di Windows, gunakan `cmd /c` jika command `npm` atau `npx` terkena policy eksekusi.
 
 ### Konfigurasi
 
@@ -88,46 +83,38 @@ Kalau kamu pakai PowerShell di Windows, pakai `cmd /c` jika command `npm` atau `
 1. Edit model di `prisma/schema.prisma`.
 2. Buat file migrasi dari diff schema:
 
-```bash
-npm run db:migrate:create -- nama_migrasi
-```
+    ```bash
+    npm run db:migrate:create -- nama_migrasi
+    ```
 
 3. Review file SQL yang dibuat di `prisma/migrations/<nomor>_nama_migrasi/migration.sql`.
 4. Cek migrasi yang pending di Cloudflare D1:
 
-```bash
-npm run db:migrate:list
-```
+    ```bash
+    npm run db:migrate:list
+    ```
 
 5. Terapkan migrasi ke D1 remote:
 
-```bash
-npm run db:migrate:remote
-```
+    ```bash
+    npm run db:migrate:remote
+    ```
 
 6. Verifikasi tabel remote:
 
-```bash
-npm run db:tables
-```
+    ```bash
+    npm run db:tables
+    ```
 
 7. Generate ulang Prisma client kalau schema berubah:
 
-```bash
-npm run db:generate
-```
+    ```bash
+    npm run db:generate
+    ```
 
 ### Catatan aman
 
-- Jangan pakai `wrangler d1 migrations apply --local` untuk project ini.
+- Jangan gunakan `wrangler d1 migrations apply --local` untuk project ini.
 - Jangan buat atau commit `prisma/db.sqlite`.
-- `remote: true` berarti query dari dev server dapat menyentuh resource Cloudflare asli. Hindari operasi tulis/hapus tanpa sadar.
-- Untuk perubahan destruktif, backup/export D1 remote dulu atau pastikan rollback plan jelas sebelum `npm run db:migrate:remote`.
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+- `remote: true` berarti query dari dev server dapat menyentuh resource Cloudflare asli. Hindari operasi tulis atau hapus tanpa sadar.
+- Untuk perubahan destruktif, backup atau export D1 remote terlebih dahulu, atau pastikan rencana rollback sudah jelas sebelum menjalankan `npm run db:migrate:remote`.

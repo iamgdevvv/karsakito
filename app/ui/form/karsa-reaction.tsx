@@ -63,8 +63,8 @@ export default function FormKarsaReaction({
 				}
 
 				notifications.show({
-					title: 'Success',
-					message: 'Terimakasih, Evaluasi karsa berhasil disimpan.',
+					title: 'Berhasil',
+					message: 'Terima kasih. Penilaian Anda telah disimpan.',
 				});
 			}
 		}
@@ -78,7 +78,7 @@ export default function FormKarsaReaction({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -105,7 +105,7 @@ export default function FormKarsaReaction({
 					/>
 					<Group gap={4}>
 						<Tooltip
-							label="Hasil AI Baik"
+							label="Sesuai kebutuhan"
 							fz="xs"
 						>
 							<ActionIcon
@@ -117,7 +117,7 @@ export default function FormKarsaReaction({
 							</ActionIcon>
 						</Tooltip>
 						<Tooltip
-							label="Hasil AI Buruk"
+							label="Perlu diperbaiki"
 							fz="xs"
 						>
 							<ActionIcon
@@ -130,10 +130,12 @@ export default function FormKarsaReaction({
 						</Tooltip>
 					</Group>
 					<Textarea
-						label="Feedback"
+						label="Umpan balik"
+						placeholder="Ceritakan hal yang sudah membantu atau perlu diperbaiki"
 						name="feedback"
 						key={form.key('feedback')}
 						readOnly={isLoading}
+						required
 						{...form.getInputProps('feedback')}
 					/>
 					<Group
@@ -145,7 +147,7 @@ export default function FormKarsaReaction({
 							type="submit"
 							loading={isLoading}
 						>
-							Kirim Evaluasi
+							Kirim Penilaian
 						</Button>
 					</Group>
 				</Stack>

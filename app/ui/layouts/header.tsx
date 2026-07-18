@@ -118,13 +118,13 @@ function MenuActionUser({
 					component={Link}
 					to="/dashboard/profile"
 				>
-					Profile
+					Profil
 				</MenuItem>
 				<MenuItem
 					component={Link}
 					to="/dashboard/change-password"
 				>
-					Change Password
+					Ubah kata sandi
 				</MenuItem>
 				<MenuDivider />
 				<MenuItem
@@ -134,7 +134,7 @@ function MenuActionUser({
 					replace
 					leftSection={<LuLogOut size={14} />}
 				>
-					Logout
+					Keluar
 				</MenuItem>
 			</MenuDropdown>
 		</Menu>
@@ -194,13 +194,13 @@ function MenuActionUserAdmin({
 					component={Link}
 					to="/dashboard/profile"
 				>
-					Profile
+					Profil
 				</MenuItem>
 				<MenuItem
 					component={Link}
 					to="/dashboard/change-password"
 				>
-					Change Password
+					Ubah kata sandi
 				</MenuItem>
 				<MenuDivider />
 				<MenuItem
@@ -210,7 +210,7 @@ function MenuActionUserAdmin({
 					replace
 					leftSection={<LuLogOut size={14} />}
 				>
-					Logout
+					Keluar
 				</MenuItem>
 			</MenuDropdown>
 		</Menu>
@@ -247,7 +247,7 @@ export function Header({
 					{/* Logo */}
 					<Link
 						to="/"
-						aria-label="Karsakito Logo"
+						aria-label="Logo KarsaKito"
 					>
 						<Image
 							src="/logo.svg"
@@ -314,6 +314,18 @@ export function Header({
 								}
 							>
 								Hubungi
+							</NavLink>
+							<NavLink
+								to="/faq"
+								className={({ isActive, isPending, isTransitioning }) =>
+									cn('hover:underline', {
+										'text-primary font-semibold': isActive,
+										'text-primary font-semibold animate-pulse':
+											isPending || isTransitioning,
+									})
+								}
+							>
+								FAQ
 							</NavLink>
 							<Group
 								gap={4}
@@ -468,7 +480,7 @@ export function HeaderApps({
 					{/* Logo */}
 					<Link
 						to="/"
-						aria-label="Karsakito Logo"
+						aria-label="Logo KarsaKito"
 					>
 						<Image
 							src="/logo.svg"
@@ -523,7 +535,7 @@ export function HeaderDashboard({
 					{/* Logo */}
 					<Link
 						to="/"
-						aria-label="Karsakito Logo"
+						aria-label="Logo KarsaKito"
 					>
 						<Image
 							src="/logo.svg"
@@ -558,7 +570,7 @@ export function HeaderDashboard({
 								label: 'mr-auto leading-tight',
 							}}
 						>
-							Search Actions
+							Cari tindakan
 						</Button>
 						<ActionIcon
 							hiddenFrom="lg"
@@ -578,11 +590,11 @@ export function HeaderDashboard({
 					...action,
 					onClick: () => navigate(action.id),
 				}))}
-				nothingFound="Nothing found..."
+				nothingFound="Tidak ada tindakan yang ditemukan."
 				highlightQuery
 				searchProps={{
 					leftSection: <HiOutlineSearch size={20} />,
-					placeholder: 'Search...',
+					placeholder: 'Cari tindakan...',
 				}}
 			/>
 		</Stack>
@@ -630,7 +642,7 @@ export function HeaderAdmin({
 					{/* Logo */}
 					<Link
 						to="/"
-						aria-label="Karsakito Logo"
+						aria-label="Logo KarsaKito"
 					>
 						<Image
 							src="/logo.svg"
@@ -666,7 +678,7 @@ export function HeaderAdmin({
 								label: 'mr-auto leading-tight',
 							}}
 						>
-							Search Actions
+							Cari tindakan
 						</Button>
 						<ActionIcon
 							hiddenFrom="lg"
@@ -686,11 +698,11 @@ export function HeaderAdmin({
 					...action,
 					onClick: () => navigate(action.id),
 				}))}
-				nothingFound="Nothing found..."
+				nothingFound="Tidak ada tindakan yang ditemukan."
 				highlightQuery
 				searchProps={{
 					leftSection: <HiOutlineSearch size={20} />,
-					placeholder: 'Search...',
+					placeholder: 'Cari tindakan...',
 				}}
 			/>
 		</Stack>

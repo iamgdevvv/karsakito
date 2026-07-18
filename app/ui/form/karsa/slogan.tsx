@@ -88,7 +88,7 @@ export default function FormKarsaSlogan({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -124,8 +124,10 @@ export default function FormKarsaSlogan({
 			>
 				<Stack gap="xs">
 					<Select
-						label="Language"
+						label="Pilih Bahasa"
+						required
 						name="language"
+						placeholder="Pilih bahasa"
 						key={form.key('language')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -133,26 +135,32 @@ export default function FormKarsaSlogan({
 						{...form.getInputProps('language')}
 					/>
 					<TextInput
-						label="Campaign"
+						label="Kampanye"
 						name="campaign"
+						required
 						key={form.key('campaign')}
 						readOnly={isLoading}
+						placeholder="Contoh: Gerakan Kurangi Sampah Plastik"
 						{...form.getInputProps('campaign')}
 					/>
 					<Autocomplete
-						label="Audience"
+						label="Audiens"
 						name="audience"
+						required
 						key={form.key('audience')}
 						readOnly={isLoading}
+						placeholder="Pilih atau tulis audiens"
 						maxDropdownHeight={160}
 						data={optionsKarsaWriterAudience}
 						{...form.getInputProps('audience')}
 					/>
 					<Autocomplete
-						label="Tone"
+						label="Gaya"
 						name="tone"
+						required
 						key={form.key('tone')}
 						readOnly={isLoading}
+						placeholder="Pilih atau tulis gaya slogan"
 						maxDropdownHeight={160}
 						data={[
 							'Tegas',
@@ -166,11 +174,13 @@ export default function FormKarsaSlogan({
 						{...form.getInputProps('tone')}
 					/>
 					<NumberInput
-						label="Jumlah Kata"
+						label="Jumlah kata"
 						name="wordLength"
+						required
 						max={20}
 						key={form.key('wordLength')}
 						readOnly={isLoading}
+						placeholder="Contoh: 5"
 						leftSection={<PiTextColumns size={18} />}
 						{...form.getInputProps('wordLength')}
 					/>
@@ -180,7 +190,7 @@ export default function FormKarsaSlogan({
 							loading={isLoading}
 							mt="md"
 						>
-							Submit App
+							Buat slogan
 						</Button>
 					</Group>
 				</Stack>

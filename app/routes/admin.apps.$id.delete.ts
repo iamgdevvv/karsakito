@@ -19,7 +19,7 @@ export async function loader({ request, context, params }: Route.LoaderArgs) {
 	const redirectParams = new URLSearchParams();
 	redirectParams.set(
 		'successMessage',
-		`Delete app ${labelAppName[deleteApp.data.name]} successfully`,
+		`Aplikasi ${labelAppName[deleteApp.data.name]} berhasil dihapus.`,
 	);
 
 	return replace(`/admin/apps?${redirectParams.toString()}`);
@@ -27,6 +27,6 @@ export async function loader({ request, context, params }: Route.LoaderArgs) {
 
 export function meta() {
 	return metaAdminRoute({
-		title: 'Delete App',
+		title: 'Hapus Aplikasi',
 	});
 }

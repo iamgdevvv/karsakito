@@ -28,7 +28,7 @@ export const actionUpdateBalanceUser = async ({
 
 		if ('error' in authSession) {
 			return {
-				error: 'Forbidden',
+				error: 'Anda tidak memiliki akses untuk tindakan ini.',
 			};
 		}
 
@@ -115,7 +115,7 @@ export const actionGetBalanceUser = async ({
 
 		if ('error' in authSession) {
 			return {
-				error: 'Forbidden',
+				error: 'Anda tidak memiliki akses untuk tindakan ini.',
 			};
 		}
 

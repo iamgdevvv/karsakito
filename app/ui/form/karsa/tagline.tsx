@@ -89,7 +89,7 @@ export default function FormKarsaTagline({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -125,8 +125,10 @@ export default function FormKarsaTagline({
 			>
 				<Stack gap="xs">
 					<Select
-						label="Language"
+						label="Pilih Bahasa"
+						required
 						name="language"
+						placeholder="Pilih bahasa"
 						key={form.key('language')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -134,33 +136,41 @@ export default function FormKarsaTagline({
 						{...form.getInputProps('language')}
 					/>
 					<TextInput
-						label="Entity"
+						label="Nama entitas"
 						name="entity"
+						required
 						key={form.key('entity')}
 						readOnly={isLoading}
+						placeholder="Contoh: KarsaKito"
 						{...form.getInputProps('entity')}
 					/>
 					<TextInput
-						label="USP"
+						label="Keunggulan utama"
 						name="usp"
+						required
 						key={form.key('usp')}
 						readOnly={isLoading}
+						placeholder="Contoh: tool AI berbahasa Indonesia yang praktis"
 						{...form.getInputProps('usp')}
 					/>
 					<Autocomplete
-						label="Audience"
+						label="Audiens"
 						name="audience"
+						required
 						key={form.key('audience')}
 						readOnly={isLoading}
+						placeholder="Pilih atau tulis audiens"
 						maxDropdownHeight={160}
 						data={optionsKarsaWriterAudience}
 						{...form.getInputProps('audience')}
 					/>
 					<Autocomplete
-						label="Tone"
+						label="Gaya"
 						name="tone"
+						required
 						key={form.key('tone')}
 						readOnly={isLoading}
+						placeholder="Pilih atau tulis gaya tagline"
 						maxDropdownHeight={160}
 						data={[
 							'Unik',
@@ -174,11 +184,13 @@ export default function FormKarsaTagline({
 						{...form.getInputProps('tone')}
 					/>
 					<NumberInput
-						label="Jumlah Kata"
+						label="Jumlah kata"
 						name="wordLength"
+						required
 						max={20}
 						key={form.key('wordLength')}
 						readOnly={isLoading}
+						placeholder="Contoh: 5"
 						leftSection={<PiTextColumns size={18} />}
 						{...form.getInputProps('wordLength')}
 					/>
@@ -188,7 +200,7 @@ export default function FormKarsaTagline({
 							loading={isLoading}
 							mt="md"
 						>
-							Submit App
+							Buat tagline
 						</Button>
 					</Group>
 				</Stack>

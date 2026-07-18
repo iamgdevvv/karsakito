@@ -59,7 +59,7 @@ export async function action({ request, context }: Route.ActionArgs) {
 
 export function meta({ loaderData }: Route.MetaArgs) {
 	return metaAdminRoute({
-		title: `User ${loaderData.recordUser.name}`,
+		title: `Pengguna ${loaderData.recordUser.name}`,
 	});
 }
 
@@ -71,7 +71,7 @@ export default function DetailUserAdminRoute({ loaderData }: Route.ComponentProp
 				authUser={loaderData.user}
 				className="site-main"
 			>
-				<Title mb="lg">Detail User</Title>
+				<Title mb="lg">Detail Pengguna</Title>
 				<FormUpdateUser
 					data={loaderData.recordUser}
 					maw={400}

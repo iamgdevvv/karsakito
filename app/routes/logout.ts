@@ -6,7 +6,7 @@ import type { Route } from './+types/logout';
 
 export function meta() {
 	return metaPublicRoute({
-		title: 'Sign out',
+		title: 'Keluar',
 		noIndex: true,
 	});
 }

@@ -115,7 +115,7 @@ export default function FormKarsaSyair({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -151,8 +151,10 @@ export default function FormKarsaSyair({
 			>
 				<Stack gap="xs">
 					<Select
-						label="Language"
+						label="Pilih Bahasa"
+						required
 						name="language"
+						placeholder="Pilih bahasa"
 						key={form.key('language')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -160,8 +162,9 @@ export default function FormKarsaSyair({
 						{...form.getInputProps('language')}
 					/>
 					<Select
-						label="Type"
+						label="Jenis"
 						name="type"
+						required
 						key={form.key('type')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -170,37 +173,44 @@ export default function FormKarsaSyair({
 						{...form.getInputProps('type')}
 					/>
 					<Select
-						label="Tone"
+						label="Gaya bahasa"
 						name="tone"
+						required
 						key={form.key('tone')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
 						data={optionsKarsaSyairTone}
-						placeholder="Pilih nada syair"
+						placeholder="Pilih gaya bahasa syair"
 						{...form.getInputProps('tone')}
 					/>
 					<Autocomplete
-						label="Audience"
+						label="Audiens"
 						name="audience"
+						required
 						key={form.key('audience')}
 						readOnly={isLoading}
+						placeholder="Pilih atau tulis audiens"
 						maxDropdownHeight={160}
 						data={optionsKarsaWriterAudience}
 						{...form.getInputProps('audience')}
 					/>
 					<Textarea
-						label="Topic"
+						label="Topik"
 						name="topic"
+						required
 						key={form.key('topic')}
 						readOnly={isLoading}
+						placeholder="Contoh: semangat menjaga persatuan"
 						{...form.getInputProps('topic')}
 					/>
 					<NumberInput
-						label="Number Verses"
+						label="Jumlah bait"
 						name="numberVerses"
+						required
 						max={20}
 						key={form.key('numberVerses')}
 						readOnly={isLoading}
+						placeholder="Contoh: 4"
 						leftSection={<PiTextColumns size={18} />}
 						{...form.getInputProps('numberVerses')}
 					/>
@@ -210,7 +220,7 @@ export default function FormKarsaSyair({
 							loading={isLoading}
 							mt="md"
 						>
-							Submit App
+							Buat syair
 						</Button>
 					</Group>
 				</Stack>

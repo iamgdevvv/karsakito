@@ -205,7 +205,8 @@ function Panel({
 								</ActionIcon>
 								<Select
 									hiddenFrom="md"
-									label="Navigation"
+									label="Navigasi"
+									placeholder="Pilih menu"
 									defaultValue={
 										selectedSidebarPanel ? selectedSidebarPanel.value : pathname
 									}
@@ -279,18 +280,18 @@ export function DashboardPanel({
 				],
 			}}
 			secondaryNavs={{
-				title: 'Account',
+				title: 'Akun',
 				items: [
 					{
-						label: 'Profile',
+						label: 'Profil',
 						value: '/dashboard/profile',
 					},
 					{
-						label: 'Change Password',
+						label: 'Ubah kata sandi',
 						value: '/dashboard/change-password',
 					},
 					{
-						label: 'Logout',
+						label: 'Keluar',
 						value: '/logout',
 					},
 				],
@@ -316,14 +317,14 @@ export function AdminPanel({
 				value: '/admin',
 			},
 			{
-				label: 'Manage Apps',
+				label: 'Kelola Aplikasi',
 				value: '/admin/apps',
 			},
 		];
 
 		if (authUser.role === 'ADMIN') {
 			navs.push({
-				label: 'Manage Users',
+				label: 'Kelola Pengguna',
 				value: '/admin/users',
 			});
 		}
@@ -339,18 +340,18 @@ export function AdminPanel({
 				items: navigationMain,
 			}}
 			secondaryNavs={{
-				title: 'Account',
+				title: 'Akun',
 				items: [
 					{
-						label: 'Profile',
+						label: 'Profil',
 						value: '/dashboard/profile',
 					},
 					{
-						label: 'Change Password',
+						label: 'Ubah kata sandi',
 						value: '/dashboard/change-password',
 					},
 					{
-						label: 'Logout',
+						label: 'Keluar',
 						value: '/logout',
 					},
 				],

@@ -86,7 +86,7 @@ export default function FormKarsaAnalisaDokumen({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -122,8 +122,10 @@ export default function FormKarsaAnalisaDokumen({
 			>
 				<Stack gap="xs">
 					<Select
-						label="Language"
+						label="Pilih Bahasa"
+						required
 						name="language"
+						placeholder="Pilih bahasa"
 						key={form.key('language')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -131,25 +133,31 @@ export default function FormKarsaAnalisaDokumen({
 						{...form.getInputProps('language')}
 					/>
 					<Autocomplete
-						label="Audience"
+						label="Audiens"
 						name="audience"
+						required
 						key={form.key('audience')}
 						readOnly={isLoading}
+						placeholder="Pilih atau tulis audiens"
 						data={optionsKarsaLisaAudience}
 						{...form.getInputProps('audience')}
 					/>
 					<TextInput
-						label="Info"
+						label="Keterangan"
 						name="info"
+						required
 						key={form.key('info')}
 						readOnly={isLoading}
+						placeholder="Contoh: Pengumuman untuk masyarakat umum"
 						{...form.getInputProps('info')}
 					/>
 					<Textarea
-						label="Text"
+						label="Teks terpilih"
 						name="selectionText"
+						required
 						key={form.key('selectionText')}
 						readOnly={true}
+						placeholder="Pilih teks dari dokumen untuk dianalisis."
 						{...form.getInputProps('selectionText')}
 					/>
 					<Group justify="flex-end">
@@ -158,7 +166,7 @@ export default function FormKarsaAnalisaDokumen({
 							loading={isLoading}
 							mt="md"
 						>
-							Submit App
+							Analisis teks
 						</Button>
 					</Group>
 				</Stack>

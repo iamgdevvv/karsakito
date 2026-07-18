@@ -68,8 +68,8 @@ export const optionsAppCategory = Object.entries(labelAppCategory).map(([value, 
 
 export const labelUserRole = {
 	ADMIN: 'Admin',
-	STAFF: 'Staff',
-	CUSTOMER: 'Customer',
+	STAFF: 'Staf',
+	CUSTOMER: 'Pengguna',
 } as const satisfies Record<UserRole, string>;
 
 export const optionsUserRole = Object.entries(labelUserRole).map(([value, label]) => ({
@@ -80,7 +80,7 @@ export const optionsUserRole = Object.entries(labelUserRole).map(([value, label]
 export const labelActivityType = {
 	DAILY_BONUS: 'Bonus Harian',
 	GIVEAWAY: 'Hadiah',
-	KARSA: 'Penggunaan AI',
+	KARSA: 'Penggunaan Tool',
 	PURCHASE: 'Pembelian Token',
 } as const satisfies Record<BalanceActivityType, string>;
 

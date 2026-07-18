@@ -58,7 +58,8 @@ export default function TopupDashboardRoute({ loaderData }: Route.ComponentProps
 					size="sm"
 					mb="lg"
 				>
-					Beli token reguler untuk memakai Karsa AI lebih banyak.
+					Gunakan simulasi ini untuk melihat perkiraan kebutuhan Token. Pembelian Token
+					belum tersedia.
 				</Text>
 				<FormTopup />
 			</DashboardPanel>

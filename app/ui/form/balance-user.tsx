@@ -51,7 +51,7 @@ export default function FormBalanceUser({
 				setErrorMessage(fetcher.data.error);
 			} else if (fetcher.data?.data) {
 				const redirectParams = new URLSearchParams();
-				redirectParams.set('successMessage', 'Balance updated successfully');
+				redirectParams.set('successMessage', 'Saldo Token berhasil diperbarui.');
 
 				navigate(`/admin/users/${userId}/balance?${redirectParams.toString()}`);
 			}
@@ -66,7 +66,7 @@ export default function FormBalanceUser({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -84,29 +84,32 @@ export default function FormBalanceUser({
 			>
 				<Stack gap="xs">
 					<Select
-						label="Type"
+						label="Jenis aktivitas"
+						placeholder="Pilih jenis aktivitas"
 						name="type"
 						key={form.key('type')}
 						readOnly={isLoading}
-						data={
-							[
-								'DAILY_BONUS',
-								'GIVEAWAY',
-								'PURCHASE',
-							] satisfies PayloadUpdateBalance['type'][]
-						}
+						required
+						data={[
+							{ value: 'DAILY_BONUS', label: 'Bonus Harian' },
+							{ value: 'GIVEAWAY', label: 'Hadiah' },
+							{ value: 'PURCHASE', label: 'Pembelian Token' },
+						]}
 						{...form.getInputProps('type')}
 					/>
 					<NumberInput
-						label={form.values.type === 'DAILY_BONUS' ? 'Daily Token' : 'Token'}
+						label={form.values.type === 'DAILY_BONUS' ? 'Token Harian' : 'Token'}
+						placeholder="Contoh: 100"
 						name="token"
 						key={form.key('token')}
 						readOnly={isLoading}
+						required
 						leftSection={<PiCoinsFill size={18} />}
 						{...form.getInputProps('token')}
 					/>
 					<Textarea
-						label="Description"
+						label="Keterangan"
+						placeholder="Contoh: Penyesuaian saldo Token"
 						name="description"
 						key={form.key('description')}
 						readOnly={isLoading}
@@ -118,7 +121,7 @@ export default function FormBalanceUser({
 							loading={isLoading}
 							mt="md"
 						>
-							Update Balance
+							Simpan perubahan Token
 						</Button>
 					</Group>
 				</Stack>

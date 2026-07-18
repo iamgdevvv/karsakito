@@ -77,7 +77,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 		if (successMessage) {
 			notifications.show({
-				title: 'Success',
+				title: 'Berhasil',
 				message: successMessage,
 				position: 'top-center',
 				autoClose: 1000,
@@ -92,7 +92,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 		if (errorMessage) {
 			notifications.show({
-				title: 'Error',
+				title: 'Terjadi kendala',
 				color: 'red',
 				message: errorMessage,
 				position: 'top-center',
@@ -169,14 +169,12 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 								lg: 40,
 							}}
 						>
-							{statusCode === 404
-								? 'Halaman Tidak Ditemukan'
-								: 'Something went wrong'}
+							{statusCode === 404 ? 'Halaman tidak ditemukan' : 'Terjadi kesalahan'}
 						</Title>
 						<Text>
 							{statusCode === 404
-								? 'Ups! Halaman yang Anda tuju tidak tersedia. Periksa kembali alamat URL atau kembali ke halaman sebelumnya untuk melanjutkan penjelajahan.'
-								: 'Terjadi kesalahan saat memproses permintaan Anda. Silakan coba beberapa saat lagi. Jika masalah masih berlanjut, hubungi tim dukungan untuk mendapatkan bantuan.'}
+								? 'Halaman yang Anda tuju tidak tersedia. Periksa kembali alamatnya atau kembali ke halaman sebelumnya.'
+								: 'Permintaan Anda belum dapat diproses. Silakan coba lagi beberapa saat lagi. Jika kendala berlanjut, hubungi Kito.'}
 						</Text>
 						<Group
 							justify="center"
@@ -194,9 +192,9 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 									</ButtonLink>
 									<Button
 										component="a"
-										href="/hubungi-kami"
+										href="/hubungi"
 									>
-										Laporkan Kesalahan
+										Laporkan kendala
 									</Button>
 								</>
 							)}

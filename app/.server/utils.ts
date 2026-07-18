@@ -25,35 +25,35 @@ export const valueNullOrSkip = <T>(value?: T | null | undefined): T | null | typ
 export const messageActionError = (error: unknown) => {
 	if (error instanceof Prisma.PrismaClientKnownRequestError) {
 		if (error.code === 'P2002') {
-			return 'Record already exists'
+			return 'Data dengan informasi yang sama sudah ada.';
 		}
 
 		if (error.code === 'P2025') {
-			return 'Record not found'
+			return 'Data tidak ditemukan.';
 		}
 	}
 
 	if (error instanceof ZodError) {
-		return 'Payload invalid'
+		return 'Data yang dikirim tidak valid.';
 	}
 
 	if (typeof error === 'object' && error && 'cause' in error && typeof error.cause === 'string') {
 		if (error.cause === 'user_not_found') {
-			return 'User not found'
+			return 'Silakan masuk untuk melanjutkan.';
 		}
 
 		if (error.cause === 'user_not_active') {
-			return 'User not active'
+			return 'Akun Anda tidak aktif.';
 		}
 
 		if (error.cause === 'user_not_authorized') {
-			return 'User not authorized'
+			return 'Anda tidak memiliki akses untuk tindakan ini.';
 		}
 
 		if (error.cause === 'user_not_authorized_role') {
-			return 'User not authorized role'
+			return 'Anda tidak memiliki akses untuk tindakan ini.';
 		}
 	}
 
-	return 'Something went wrong'
+	return 'Terjadi kesalahan. Silakan coba lagi.';
 };

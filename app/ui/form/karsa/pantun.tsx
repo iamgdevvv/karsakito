@@ -111,7 +111,7 @@ export default function FormKarsaPantun({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -147,8 +147,10 @@ export default function FormKarsaPantun({
 			>
 				<Stack gap="xs">
 					<Select
-						label="Language"
+						label="Pilih Bahasa"
+						required
 						name="language"
+						placeholder="Pilih bahasa"
 						key={form.key('language')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -156,8 +158,9 @@ export default function FormKarsaPantun({
 						{...form.getInputProps('language')}
 					/>
 					<Select
-						label="Type"
+						label="Jenis"
 						name="type"
+						required
 						key={form.key('type')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -166,27 +169,33 @@ export default function FormKarsaPantun({
 						{...form.getInputProps('type')}
 					/>
 					<Autocomplete
-						label="Audience"
+						label="Audiens"
 						name="audience"
+						required
 						key={form.key('audience')}
 						readOnly={isLoading}
+						placeholder="Pilih atau tulis audiens"
 						maxDropdownHeight={160}
 						data={optionsKarsaWriterAudience}
 						{...form.getInputProps('audience')}
 					/>
 					<Textarea
-						label="Topic"
+						label="Topik"
 						name="topic"
+						required
 						key={form.key('topic')}
 						readOnly={isLoading}
+						placeholder="Contoh: semangat menjaga kebersihan lingkungan"
 						{...form.getInputProps('topic')}
 					/>
 					<NumberInput
-						label="Number Verses"
+						label="Jumlah bait"
 						name="numberVerses"
+						required
 						max={20}
 						key={form.key('numberVerses')}
 						readOnly={isLoading}
+						placeholder="Contoh: 2"
 						leftSection={<PiTextColumns size={18} />}
 						{...form.getInputProps('numberVerses')}
 					/>
@@ -196,7 +205,7 @@ export default function FormKarsaPantun({
 							loading={isLoading}
 							mt="md"
 						>
-							Submit App
+							Buat pantun
 						</Button>
 					</Group>
 				</Stack>

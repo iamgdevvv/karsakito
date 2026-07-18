@@ -119,7 +119,7 @@ export default function FormKarsaHymne({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -155,8 +155,10 @@ export default function FormKarsaHymne({
 			>
 				<Stack gap="xs">
 					<Select
-						label="Language"
+						label="Pilih Bahasa"
+						required
 						name="language"
+						placeholder="Pilih bahasa"
 						key={form.key('language')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -164,8 +166,9 @@ export default function FormKarsaHymne({
 						{...form.getInputProps('language')}
 					/>
 					<Select
-						label="Type"
+						label="Jenis"
 						name="type"
+						required
 						key={form.key('type')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -174,16 +177,18 @@ export default function FormKarsaHymne({
 						{...form.getInputProps('type')}
 					/>
 					<TextInput
-						label="Institution"
+						label="Instansi atau organisasi"
 						name="institution"
+						required
 						key={form.key('institution')}
 						readOnly={isLoading}
 						placeholder="Misal: Sekolah, Universitas, Komunitas"
 						{...form.getInputProps('institution')}
 					/>
 					<Select
-						label="Structure"
+						label="Struktur"
 						name="structure"
+						required
 						key={form.key('structure')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -192,18 +197,22 @@ export default function FormKarsaHymne({
 						{...form.getInputProps('structure')}
 					/>
 					<Textarea
-						label="Topic"
+						label="Topik"
 						name="topic"
+						required
 						key={form.key('topic')}
 						readOnly={isLoading}
+						placeholder="Contoh: semangat belajar dan berkarya"
 						{...form.getInputProps('topic')}
 					/>
 					<NumberInput
-						label="Number Verses"
+						label="Jumlah bait"
 						name="numberVerses"
+						required
 						max={20}
 						key={form.key('numberVerses')}
 						readOnly={isLoading}
+						placeholder="Contoh: 4"
 						leftSection={<PiTextColumns size={18} />}
 						{...form.getInputProps('numberVerses')}
 					/>
@@ -213,7 +222,7 @@ export default function FormKarsaHymne({
 							loading={isLoading}
 							mt="md"
 						>
-							Submit App
+							Buat hymne
 						</Button>
 					</Group>
 				</Stack>

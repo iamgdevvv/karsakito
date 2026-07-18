@@ -62,7 +62,7 @@ export async function action({ request, context, params }: Route.ActionArgs) {
 
 export function meta({ loaderData }: Route.MetaArgs) {
 	return metaAdminRoute({
-		title: `Adjust Balance User ${loaderData.recordUser.name}`,
+		title: `Sesuaikan Saldo Token ${loaderData.recordUser.name}`,
 	});
 }
 
@@ -74,7 +74,7 @@ export default function BalanceUserAdminRoute({ loaderData, params }: Route.Comp
 				authUser={loaderData.user}
 				className="site-main"
 			>
-				<Title mb="lg">Adjust Balance User</Title>
+				<Title mb="lg">Sesuaikan Saldo Token</Title>
 				<FormBalanceUser
 					userId={params.id}
 					maw={400}

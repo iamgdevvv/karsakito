@@ -39,8 +39,8 @@ export default function FormChangePassword(props: BoxProps) {
 				fetcher.reset();
 
 				notifications.show({
-					title: 'Success',
-					message: 'Password updated successfully',
+					title: 'Berhasil',
+					message: 'Kata sandi berhasil diperbarui.',
 				});
 			}
 		}
@@ -54,7 +54,7 @@ export default function FormChangePassword(props: BoxProps) {
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -72,24 +72,30 @@ export default function FormChangePassword(props: BoxProps) {
 			>
 				<Stack gap="xs">
 					<PasswordInput
-						label="Current Password"
+						label="Kata sandi saat ini"
+						placeholder="Masukkan kata sandi saat ini"
 						name="curentPassword"
 						key={form.key('curentPassword')}
 						readOnly={isLoading}
+						required
 						{...form.getInputProps('curentPassword')}
 					/>
 					<PasswordInput
-						label="New Password"
+						label="Kata sandi baru"
+						placeholder="Masukkan kata sandi baru"
 						name="password"
 						key={form.key('password')}
 						readOnly={isLoading}
+						required
 						{...form.getInputProps('password')}
 					/>
 					<PasswordInput
-						label="Confirm New Password"
+						label="Konfirmasi kata sandi baru"
+						placeholder="Masukkan kembali kata sandi baru"
 						name="confirmPassword"
 						key={form.key('confirmPassword')}
 						readOnly={isLoading}
+						required
 						{...form.getInputProps('confirmPassword')}
 					/>
 					<Button
@@ -98,7 +104,7 @@ export default function FormChangePassword(props: BoxProps) {
 						loading={isLoading}
 						mt="md"
 					>
-						Save Password
+						Simpan kata sandi
 					</Button>
 				</Stack>
 			</fetcher.Form>

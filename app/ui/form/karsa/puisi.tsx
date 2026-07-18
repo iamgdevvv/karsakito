@@ -127,7 +127,7 @@ export default function FormKarsaPuisi({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -163,8 +163,10 @@ export default function FormKarsaPuisi({
 			>
 				<Stack gap="xs">
 					<Select
-						label="Language"
+						label="Pilih Bahasa"
+						required
 						name="language"
+						placeholder="Pilih bahasa"
 						key={form.key('language')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -172,8 +174,9 @@ export default function FormKarsaPuisi({
 						{...form.getInputProps('language')}
 					/>
 					<Select
-						label="Type"
+						label="Jenis"
 						name="type"
+						required
 						key={form.key('type')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -182,8 +185,9 @@ export default function FormKarsaPuisi({
 						{...form.getInputProps('type')}
 					/>
 					<Select
-						label="Style"
+						label="Gaya"
 						name="style"
+						required
 						key={form.key('style')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -192,37 +196,44 @@ export default function FormKarsaPuisi({
 						{...form.getInputProps('style')}
 					/>
 					<Select
-						label="Effect"
+						label="Gaya bahasa"
 						name="effect"
+						required
 						key={form.key('effect')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
 						data={optionsKarsaPuisiEffect}
-						placeholder="Pilih efek puisi"
+						placeholder="Pilih gaya bahasa"
 						{...form.getInputProps('effect')}
 					/>
 					<Autocomplete
-						label="Audience"
+						label="Audiens"
 						name="audience"
+						required
 						key={form.key('audience')}
 						readOnly={isLoading}
+						placeholder="Pilih atau tulis audiens"
 						maxDropdownHeight={160}
 						data={optionsKarsaWriterAudience}
 						{...form.getInputProps('audience')}
 					/>
 					<Textarea
-						label="Topic"
+						label="Topik"
 						name="topic"
+						required
 						key={form.key('topic')}
 						readOnly={isLoading}
+						placeholder="Contoh: keindahan pantai saat senja"
 						{...form.getInputProps('topic')}
 					/>
 					<NumberInput
-						label="Number Verses"
+						label="Jumlah bait"
 						name="numberVerses"
+						required
 						max={20}
 						key={form.key('numberVerses')}
 						readOnly={isLoading}
+						placeholder="Contoh: 4"
 						leftSection={<PiTextColumns size={18} />}
 						{...form.getInputProps('numberVerses')}
 					/>
@@ -232,7 +243,7 @@ export default function FormKarsaPuisi({
 							loading={isLoading}
 							mt="md"
 						>
-							Submit App
+							Buat puisi
 						</Button>
 					</Group>
 				</Stack>

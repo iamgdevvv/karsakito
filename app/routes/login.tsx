@@ -32,7 +32,7 @@ export async function action({ request, context }: Route.ActionArgs) {
 
 export function meta(_: Route.MetaArgs) {
 	return metaAppsRoute({
-		title: 'Sign in',
+		title: 'Masuk',
 	});
 }
 

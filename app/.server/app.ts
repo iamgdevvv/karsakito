@@ -24,7 +24,7 @@ export const actionCreateKarsaApp = async ({
 
         if ('error' in authSession) {
             return {
-                error: 'Forbidden'
+				error: 'Anda tidak memiliki akses untuk tindakan ini.'
             }
         }
 
@@ -65,7 +65,7 @@ export const actionUpdateKarsaApp = async ({
 
         if ('error' in authSession) {
             return {
-                error: 'Forbidden'
+				error: 'Anda tidak memiliki akses untuk tindakan ini.'
             }
         }
 
@@ -113,7 +113,7 @@ export const actionDeleteKarsaApp = async ({
 
         if ('error' in authSession) {
             return {
-                error: 'Forbidden'
+				error: 'Anda tidak memiliki akses untuk tindakan ini.'
             }
         }
 
@@ -315,7 +315,7 @@ export const actionGetKarsaApp = async ({
 
         if ('error' in authSession) {
             return {
-                error: 'Forbidden'
+				error: 'Anda tidak memiliki akses untuk tindakan ini.'
             }
         }
 

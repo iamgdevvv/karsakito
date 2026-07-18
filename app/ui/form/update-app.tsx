@@ -76,8 +76,8 @@ export default function FormUpdateApp({
 				setErrorMessage(fetcher.data.error);
 			} else if (fetcher.data.data) {
 				notifications.show({
-					title: 'Success',
-					message: `App ${labelAppName[fetcher.data.data.name]} updated successfully`,
+					title: 'Berhasil',
+					message: `Aplikasi ${labelAppName[fetcher.data.data.name]} berhasil diperbarui.`,
 				});
 			}
 		}
@@ -91,7 +91,7 @@ export default function FormUpdateApp({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -115,7 +115,8 @@ export default function FormUpdateApp({
 						{...form.getInputProps('karsaAppId')}
 					/>
 					<Select
-						label="Name"
+						label="Nama Aplikasi"
+						placeholder="Pilih Aplikasi"
 						name="name"
 						key={form.key('name')}
 						readOnly={isLoading}
@@ -123,7 +124,8 @@ export default function FormUpdateApp({
 						{...form.getInputProps('name')}
 					/>
 					<TextInput
-						label="Label"
+						label="Label Aplikasi"
+						placeholder="Contoh: Pembuat Pidato"
 						name="label"
 						key={form.key('label')}
 						readOnly={isLoading}
@@ -137,6 +139,7 @@ export default function FormUpdateApp({
 					>
 						<NumberInput
 							label="Token"
+							placeholder="Contoh: 10"
 							name="token"
 							key={form.key('token')}
 							readOnly={isLoading}
@@ -147,7 +150,8 @@ export default function FormUpdateApp({
 							{...form.getInputProps('token')}
 						/>
 						<NumberInput
-							label="Token Promo"
+							label="Token promo"
+							placeholder="Contoh: 5"
 							name="tokenPromo"
 							key={form.key('tokenPromo')}
 							readOnly={isLoading}
@@ -159,7 +163,8 @@ export default function FormUpdateApp({
 						/>
 					</SimpleGrid>
 					<Select
-						label="Category"
+						label="Kategori"
+						placeholder="Pilih kategori"
 						name="category"
 						key={form.key('category')}
 						readOnly={isLoading}
@@ -167,7 +172,7 @@ export default function FormUpdateApp({
 						{...form.getInputProps('category')}
 					/>
 					<Checkbox
-						label="Visible"
+						label="Tampilkan Aplikasi"
 						name="visible"
 						key={form.key('visible')}
 						readOnly={isLoading}
@@ -176,7 +181,8 @@ export default function FormUpdateApp({
 						})}
 					/>
 					<Textarea
-						label="Description"
+						label="Deskripsi"
+						placeholder="Jelaskan manfaat dan cara penggunaan singkat"
 						name="description"
 						key={form.key('description')}
 						readOnly={isLoading}
@@ -191,7 +197,7 @@ export default function FormUpdateApp({
 							type="submit"
 							loading={isLoading}
 						>
-							Update App
+							Simpan perubahan
 						</Button>
 					</Group>
 				</Stack>

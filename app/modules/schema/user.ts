@@ -64,7 +64,7 @@ export const PayloadUpdateProfilePasswordSchema = z
 		confirmPassword: z.string().nonempty(),
 	})
 	.refine(({ password, confirmPassword }) => password === confirmPassword, {
-		message: 'Passwords do not match',
+		message: 'Konfirmasi kata sandi belum sesuai.',
 		path: ['confirmPassword'],
 	});
 

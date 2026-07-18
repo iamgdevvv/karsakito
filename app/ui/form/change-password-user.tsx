@@ -48,7 +48,7 @@ export default function FormChangePasswordUser({
 				setErrorMessage(fetcher.data.error);
 			} else {
 				const redirectParams = new URLSearchParams();
-				redirectParams.set('successMessage', 'Change password user successfully');
+				redirectParams.set('successMessage', 'Kata sandi Pengguna berhasil diperbarui.');
 
 				navigate(`/admin/users/${data.id}?${redirectParams.toString()}`);
 			}
@@ -63,7 +63,7 @@ export default function FormChangePasswordUser({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -88,10 +88,12 @@ export default function FormChangePasswordUser({
 					/>
 
 					<PasswordInput
-						label="New Password"
+						label="Kata sandi baru"
+						placeholder="Masukkan kata sandi baru"
 						name="password"
 						key={form.key('password')}
 						readOnly={isLoading}
+						required
 						{...form.getInputProps('password')}
 					/>
 					<Button
@@ -100,7 +102,7 @@ export default function FormChangePasswordUser({
 						loading={isLoading}
 						mt="md"
 					>
-						Save Password
+						Simpan kata sandi
 					</Button>
 				</Stack>
 			</fetcher.Form>

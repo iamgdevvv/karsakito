@@ -36,13 +36,13 @@ export const actionLogin = async ({
 
 		if (!user.isActive) {
 			return {
-				error: 'User not active'
+				error: 'Akun ini tidak aktif.'
 			}
 		}
 
 		if (!auth) {
 			return {
-				error: 'User oauth without password'
+				error: 'Akun ini menggunakan metode masuk lain.'
 			}
 		}
 
@@ -50,7 +50,7 @@ export const actionLogin = async ({
 
 		if (!credValid) {
 			return {
-				error: 'Password incorrect'
+				error: 'Email atau kata sandi tidak sesuai.'
 			}
 		}
 

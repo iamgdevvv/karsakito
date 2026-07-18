@@ -42,7 +42,7 @@ export default function FormWindowWorkspace({
 		}
 
 		if (!form.values.title) {
-			form.setFieldValue('title', 'New Workspace');
+			form.setFieldValue('title', 'Window Baru');
 		}
 	}, []);
 
@@ -56,18 +56,21 @@ export default function FormWindowWorkspace({
 			<Stack gap={6}>
 				{viewMode !== 'simple' ? (
 					<TextInput
-						label="Title"
+						label="Judul Window"
+						placeholder="Contoh: Draf pidato sambutan"
 						size="sm"
 						labelProps={{
 							fz: 'xs',
 						}}
 						key={form.key('title')}
+						required
 						{...form.getInputProps('title')}
 					/>
 				) : null}
 
 				<Select
-					label="Choose App"
+					label="Pilih tool"
+					placeholder="Pilih tool yang akan digunakan"
 					size="sm"
 					labelProps={{
 						fz: 'xs',
@@ -77,6 +80,7 @@ export default function FormWindowWorkspace({
 						items,
 					}))}
 					key={form.key('app')}
+					required
 					{...form.getInputProps('app')}
 					onChange={(value) => {
 						form.getInputProps('app').onChange(value);
@@ -98,7 +102,7 @@ export default function FormWindowWorkspace({
 						mt={6}
 						disabled={!form.isValid() || Object.keys(form.errors).length > 0}
 					>
-						Create Window
+						Buat Window
 					</Button>
 				) : null}
 			</Stack>

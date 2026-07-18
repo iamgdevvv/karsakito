@@ -90,7 +90,7 @@ export default function FormKarsaCeritaPendek({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -126,8 +126,10 @@ export default function FormKarsaCeritaPendek({
 			>
 				<Stack gap="xs">
 					<Select
-						label="Language"
+						label="Pilih Bahasa"
+						required
 						name="language"
+						placeholder="Pilih bahasa"
 						key={form.key('language')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -137,8 +139,10 @@ export default function FormKarsaCeritaPendek({
 					<Autocomplete
 						label="Genre"
 						name="genre"
+						required
 						key={form.key('genre')}
 						readOnly={isLoading}
+						placeholder="Pilih atau tulis genre cerita"
 						maxDropdownHeight={160}
 						data={[
 							'Fabel (Cerita Binatang)',
@@ -153,34 +157,42 @@ export default function FormKarsaCeritaPendek({
 						{...form.getInputProps('genre')}
 					/>
 					<Autocomplete
-						label="Audience"
+						label="Audiens"
 						name="audience"
+						required
 						key={form.key('audience')}
 						readOnly={isLoading}
+						placeholder="Pilih atau tulis audiens"
 						maxDropdownHeight={160}
 						data={optionsKarsaWriterAudience}
 						{...form.getInputProps('audience')}
 					/>
 					<TextInput
-						label="Morale"
+						label="Pesan moral"
 						name="morale"
+						required
 						key={form.key('morale')}
 						readOnly={isLoading}
+						placeholder="Contoh: pentingnya menjaga kejujuran"
 						{...form.getInputProps('morale')}
 					/>
 					<Textarea
-						label="Topic"
+						label="Topik"
 						name="topic"
+						required
 						key={form.key('topic')}
 						readOnly={isLoading}
+						placeholder="Contoh: persahabatan dua sahabat di sekolah"
 						{...form.getInputProps('topic')}
 					/>
 					<NumberInput
-						label="Jumlah Kata"
+						label="Jumlah paragraf"
 						name="totalParagraph"
+						required
 						max={28}
 						key={form.key('totalParagraph')}
 						readOnly={isLoading}
+						placeholder="Contoh: 5"
 						leftSection={<PiTextColumns size={18} />}
 						{...form.getInputProps('totalParagraph')}
 					/>
@@ -190,7 +202,7 @@ export default function FormKarsaCeritaPendek({
 							loading={isLoading}
 							mt="md"
 						>
-							Submit App
+							Buat cerita
 						</Button>
 					</Group>
 				</Stack>

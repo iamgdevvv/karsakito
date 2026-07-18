@@ -13,7 +13,7 @@ dayjs.extend(dayjsTimezone);
 export async function loader({ context, request }: Route.LoaderArgs) {
 	try {
 		if (request.headers.get('Authorization') !== cfContext(context).env.API_AI_KEY) {
-			throw new Error('Unauthorized');
+			throw new Error('Akses tidak diizinkan.');
 		}
 
 		const prisma = prismaClient(context);
@@ -31,7 +31,7 @@ export async function loader({ context, request }: Route.LoaderArgs) {
 				try {
 					return dayjs().tz(tz).hour() === 0;
 				} catch (e) {
-					console.error(`Invalid timezone in DB: ${tz}`, e);
+					console.error(`Zona waktu tidak valid dalam data: ${tz}`, e);
 					return false;
 				}
 			});
@@ -39,10 +39,12 @@ export async function loader({ context, request }: Route.LoaderArgs) {
 		console.log({ targetTimezones });
 
 		if (targetTimezones.length === 0) {
-			console.log('Tidak ada timezone yang sedang tengah malam. Skip refill.');
+			console.log(
+				'Tidak ada zona waktu yang memasuki pukul 00.00. Pengisian ulang dilewati.',
+			);
 
 			return {
-				result: 'Tidak ada timezone yang sedang tengah malam. Skip refill',
+				result: 'Tidak ada zona waktu yang memasuki pukul 00.00. Pengisian ulang dilewati.',
 			};
 		}
 
@@ -109,15 +111,15 @@ export async function loader({ context, request }: Route.LoaderArgs) {
 		}
 
 		console.log(
-			`Berhasil melakukan refill daily token untuk ${transactions.length} users, pada timezones: ${targetTimezones.join(', ')}`,
+			`Berhasil mengisi ulang Token harian untuk ${transactions.length} Pengguna pada zona waktu: ${targetTimezones.join(', ')}`,
 		);
 
 		return {
-			result: `Berhasil melakukan refill daily token untuk ${transactions.length} users.`,
+			result: `Token harian berhasil diisi ulang untuk ${transactions.length} Pengguna.`,
 			timezones: targetTimezones,
 		};
 	} catch (error) {
-		console.error('Error saat menjalankan refillToken:', error);
+		console.error('Gagal menjalankan pengisian ulang Token Harian:', error);
 
 		// oxlint-disable-next-line preserve-caught-error
 		throw new Error(messageActionError(error));

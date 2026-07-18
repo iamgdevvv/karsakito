@@ -28,7 +28,7 @@ export default function Footer(props: BoxProps) {
 							lg: 'sm',
 						}}
 					>
-						© {new Date().getFullYear()} Team Kito. All rights reserved.
+						© {new Date().getFullYear()} Tim Kito. Hak cipta dilindungi.
 					</Text>
 					<Text
 						span
@@ -41,7 +41,7 @@ export default function Footer(props: BoxProps) {
 							lg: 'sm',
 						}}
 					>
-						Hackathon X DIGDAYA 2026 - Bank Indonesia
+						Peserta PIDI - DIGDAYA X Hackathon 2026
 					</Text>
 				</Group>
 			</Container>

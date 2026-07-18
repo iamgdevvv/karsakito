@@ -49,7 +49,7 @@ export async function action({ request, context }: Route.ActionArgs) {
 
 export function meta(_: Route.MetaArgs) {
 	return metaAdminRoute({
-		title: 'Create User',
+		title: 'Buat Pengguna',
 	});
 }
 
@@ -61,7 +61,7 @@ export default function CreateUserAdminRoute({ loaderData }: Route.ComponentProp
 				authUser={loaderData.user}
 				className="site-main"
 			>
-				<Title mb="lg">Create User</Title>
+				<Title mb="lg">Buat Pengguna</Title>
 				<FormCreateUser maw={400} />
 			</AdminPanel>
 			<Footer />

@@ -13,12 +13,14 @@ import {
 	Title,
 } from '@mantine/core';
 import { FiMail, FiMapPin } from 'react-icons/fi';
+import { getPublicFaqs } from '~app-modules/faqs';
 import { metaPublicRoute } from '~app-modules/meta';
 import { cfContext } from '~app-server/context';
 import { actionSendEmailContact } from '~app-server/email';
 import { authGetSession } from '~app-server/session';
 import FormContact from '~app-ui/form/contact';
 import Banner from '~app-ui/layouts/banner';
+import Footer from '~app-ui/layouts/footer';
 import { Header } from '~app-ui/layouts/header';
 
 import type { Route } from './+types/hubungi';
@@ -36,36 +38,15 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 export function meta({ loaderData }: Route.MetaArgs) {
 	return metaPublicRoute({
 		title: 'Hubungi KarsaKito',
+		description:
+			'Hubungi tim Kito untuk pertanyaan, masukan, atau kebutuhan terkait KarsaKito.',
 		noIndex: loaderData.noIndex,
 	});
 }
 
-const faqs = [
-	{
-		title: 'How does the AI generate content?',
-		content:
-			'The AI generates content using a combination of natural language processing and machine learning algorithms.',
-	},
-	{
-		title: 'Can i customize the AI-generated content?',
-		content:
-			'Yes, you can customize the AI-generated content to meet your specific needs untuk Mengakselerasi Pemanfaatan Bahasa dan Warisan Budaya Daerah',
-	},
-	{
-		title: 'What types of content can the AI generate?',
-		content:
-			'The AI can generate a wide range of content types, including text, images, videos, and more.',
-	},
-	{
-		title: 'Is the AI-generated content plagiarism-free?',
-		content:
-			'Yes, the AI-generated content is plagiarism-free and is not copied from other sources.',
-	},
-	{
-		title: 'Does the tool have any limitations?',
-		content: 'The tool has no limitations and can be used for any purpose.',
-	},
-];
+const faqs = getPublicFaqs(['tentang', 'token', 'hasil', 'akun'], {
+	featuredOnly: true,
+});
 
 export async function action({ request, context }: Route.ActionArgs) {
 	return await actionSendEmailContact({
@@ -102,13 +83,12 @@ export default function HubungiRoute({ loaderData }: Route.ComponentProps) {
 							c="primary"
 							tt="uppercase"
 						>
-							Hubungi Kami
+							Hubungi Kito
 						</Text>
-						<Title>Mari Bicara dengan Kami</Title>
+						<Title>Mari bicarakan kebutuhan Anda</Title>
 						<Text>
-							Kami percaya pelestarian budaya dimulai dari kolaborasi yang erat.
-							Beritahu kami kebutuhan Anda, kami senang menjadi bagian dari kesuksesan
-							Anda.
+							Sampaikan pertanyaan, masukan, atau kebutuhan Anda. Kito akan membantu
+							mengarahkan Anda ke langkah berikutnya.
 						</Text>
 					</Banner>
 
@@ -134,14 +114,14 @@ export default function HubungiRoute({ loaderData }: Route.ComponentProps) {
 										order={2}
 										mb="md"
 									>
-										Info Kontak
+										Kontak Kito
 									</Title>
 									<Text
 										c="gray.6"
 										mb="xl"
 									>
-										Jangan ragu untuk menghubungi kami melalui detail di bawah
-										ini atau mengisi formulir kontak.
+										Untuk pertanyaan umum, masukan produk, atau kerja sama,
+										kirim pesan melalui email atau formulir ini.
 									</Text>
 
 									<Stack>
@@ -192,13 +172,13 @@ export default function HubungiRoute({ loaderData }: Route.ComponentProps) {
 													fw={700}
 													size="sm"
 												>
-													Alamat Kantor
+													Wilayah layanan
 												</Text>
 												<Text
 													size="sm"
 													c="gray.6"
 												>
-													KarsaKito, Indonesia
+													Indonesia
 												</Text>
 											</Stack>
 										</Group>
@@ -225,8 +205,8 @@ export default function HubungiRoute({ loaderData }: Route.ComponentProps) {
 										c="gray.6"
 										mb="lg"
 									>
-										Isi formulir berikut dan tim kami akan segera menghubungi
-										Anda kembali dalam waktu 1x24 jam.
+										Isi formulir berikut. Kito akan meninjau pesan Anda dan
+										menghubungi kembali melalui email.
 									</Text>
 
 									<FormContact />
@@ -260,10 +240,8 @@ export default function HubungiRoute({ loaderData }: Route.ComponentProps) {
 							>
 								FAQ
 							</Badge>
-							<Title order={2}>Frequently Asked Questions</Title>
-							<Text>
-								Everything you need to know about the product and other information.
-							</Text>
+							<Title order={2}>Pertanyaan yang sering ditanyakan</Title>
+							<Text>Temukan jawaban singkat sebelum menghubungi Kito.</Text>
 						</Stack>
 
 						<Accordion
@@ -293,6 +271,7 @@ export default function HubungiRoute({ loaderData }: Route.ComponentProps) {
 					</Container>
 				</Box>
 			</main>
+			<Footer />
 		</div>
 	);
 }

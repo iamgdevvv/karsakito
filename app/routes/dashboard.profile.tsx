@@ -51,7 +51,7 @@ export async function action({ request, context }: Route.ActionArgs) {
 
 export function meta(_: Route.MetaArgs) {
 	return metaDashboardRoute({
-		title: 'Profile',
+		title: 'Profil',
 	});
 }
 
@@ -60,7 +60,7 @@ export default function ProfileDashboardRoute({ loaderData }: Route.ComponentPro
 		<div className="site">
 			<HeaderDashboard authUser={loaderData.user} />
 			<DashboardPanel className="site-main">
-				<Title mb="lg">Update Profile</Title>
+				<Title mb="lg">Perbarui profil</Title>
 				<FormProfile
 					data={loaderData.user}
 					maw={400}

@@ -51,7 +51,7 @@ export async function action({ request, context }: Route.ActionArgs) {
 
 export function meta(_: Route.MetaArgs) {
 	return metaDashboardRoute({
-		title: 'Change Password',
+		title: 'Ubah kata sandi',
 	});
 }
 
@@ -60,7 +60,7 @@ export default function ChangePasswordDashboardRoute({ loaderData }: Route.Compo
 		<div className="site">
 			<HeaderDashboard authUser={loaderData.user} />
 			<DashboardPanel className="site-main">
-				<Title mb="lg">Change Password</Title>
+				<Title mb="lg">Ubah kata sandi</Title>
 				<FormChangePassword maw={400} />
 			</DashboardPanel>
 			<Footer />

@@ -124,7 +124,7 @@ export default function UsageDashboardRoute({ loaderData }: Route.ComponentProps
 					size="sm"
 					mb="lg"
 				>
-					Pantau saldo dan riwayat penggunaan token Anda.
+					Pantau Token dan riwayat penggunaannya.
 				</Text>
 
 				<SimpleGrid
@@ -161,7 +161,7 @@ export default function UsageDashboardRoute({ loaderData }: Route.ComponentProps
 						color="orange"
 					/>
 					<StatCard
-						label="Total Karsa"
+						label="Total aktivitas"
 						value={totalTransaksi}
 						sublabel={
 							dayjs(queryParams.activityStartAt).format('DD MMMM YYYY') +
@@ -189,7 +189,7 @@ export default function UsageDashboardRoute({ loaderData }: Route.ComponentProps
 						clearable
 						maxLevel="month"
 						leftSection={<LuWallet size={16} />}
-						placeholder="Filter tanggal"
+						placeholder="Pilih rentang tanggal"
 						valueFormat="DD MMM YYYY"
 						readOnly={navigation.state === 'loading'}
 						defaultValue={[
@@ -219,9 +219,10 @@ export default function UsageDashboardRoute({ loaderData }: Route.ComponentProps
 									handlerSearchParams(payload.data);
 								} else {
 									notifications.show({
-										title: 'Error',
+										title: 'Rentang tanggal tidak valid',
 										color: 'orange',
-										message: 'Rentang tanggal tidak valid',
+										message:
+											'Pilih tanggal mulai dan tanggal akhir yang valid.',
 									});
 								}
 							} else if (!activityStartAt && !activityEndAt) {
@@ -390,7 +391,6 @@ function StatCard({
 			>
 				<Text
 					span
-					pr="xs"
 					fz={10}
 					fw={700}
 					c="dimmed"

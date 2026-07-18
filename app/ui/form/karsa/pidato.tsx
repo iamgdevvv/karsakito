@@ -91,7 +91,7 @@ export default function FormKarsaPidato({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -127,8 +127,10 @@ export default function FormKarsaPidato({
 			>
 				<Stack gap="xs">
 					<Select
-						label="Language"
+						label="Pilih Bahasa"
+						required
 						name="language"
+						placeholder="Pilih bahasa"
 						key={form.key('language')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -136,10 +138,12 @@ export default function FormKarsaPidato({
 						{...form.getInputProps('language')}
 					/>
 					<Autocomplete
-						label="Purpose"
+						label="Tujuan"
 						name="purpose"
+						required
 						key={form.key('purpose')}
 						readOnly={isLoading}
+						placeholder="Pilih atau tulis tujuan pidato"
 						maxDropdownHeight={160}
 						data={[
 							'Sambutan',
@@ -160,41 +164,51 @@ export default function FormKarsaPidato({
 						{...form.getInputProps('purpose')}
 					/>
 					<TextInput
-						label="Agenda"
+						label="Acara"
 						name="agenda"
+						required
 						key={form.key('agenda')}
 						readOnly={isLoading}
+						placeholder="Contoh: pembukaan rapat kerja"
 						{...form.getInputProps('agenda')}
 					/>
 					<TextInput
-						label="Speaker"
+						label="Pembicara"
 						name="speaker"
+						required
 						key={form.key('speaker')}
 						readOnly={isLoading}
+						placeholder="Contoh: Ketua Panitia"
 						{...form.getInputProps('speaker')}
 					/>
 					<Autocomplete
-						label="Audience"
+						label="Audiens"
 						name="audience"
+						required
 						key={form.key('audience')}
 						readOnly={isLoading}
+						placeholder="Pilih atau tulis audiens"
 						maxDropdownHeight={160}
 						data={optionsKarsaWriterAudience}
 						{...form.getInputProps('audience')}
 					/>
 					<Textarea
-						label="Topic"
+						label="Topik"
 						name="topic"
+						required
 						key={form.key('topic')}
 						readOnly={isLoading}
+						placeholder="Contoh: kolaborasi untuk kemajuan daerah"
 						{...form.getInputProps('topic')}
 					/>
 					<NumberInput
-						label="Total Sentence"
+						label="Jumlah kalimat"
 						name="totalSentence"
+						required
 						max={80}
 						key={form.key('totalSentence')}
 						readOnly={isLoading}
+						placeholder="Contoh: 12"
 						leftSection={<PiTextColumns size={18} />}
 						{...form.getInputProps('totalSentence')}
 					/>
@@ -204,7 +218,7 @@ export default function FormKarsaPidato({
 							loading={isLoading}
 							mt="md"
 						>
-							Submit App
+							Buat pidato
 						</Button>
 					</Group>
 				</Stack>

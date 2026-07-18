@@ -115,7 +115,7 @@ export const actionSubmissionKarsaAI = async ({
 
 		if ('error' in authSession) {
 			return {
-				error: 'Forbidden',
+				error: 'Anda tidak memiliki akses untuk tindakan ini.',
 			};
 		}
 
@@ -124,7 +124,7 @@ export const actionSubmissionKarsaAI = async ({
 
 		if (!formBody) {
 			return {
-				error: 'Bad Request',
+				error: 'Permintaan tidak valid.',
 			};
 		}
 
@@ -160,7 +160,9 @@ export const actionSubmissionKarsaAI = async ({
 		const userTotalToken = userBalance.tokenDaily + userBalance.token;
 
 		if (userTotalToken < karsaAppCostToken) {
-			throw new Error('Insufficient tokens to perform this action.');
+			return {
+				error: 'Token Anda tidak mencukupi untuk menggunakan fitur ini.',
+			};
 		}
 
 		let submissionPayload: KarsaPlain['promptJson'] = body.payload;
@@ -208,7 +210,7 @@ export const actionSubmissionKarsaAI = async ({
 
 		if (!result) {
 			return {
-				error: 'Failed to generate karsa',
+				error: 'Hasil belum dapat dibuat. Silakan coba lagi.',
 			};
 		}
 
@@ -273,7 +275,7 @@ export const actionSubmissionKarsaAI = async ({
 			console.log('Concurrency or DB Error while saving:', error);
 
 			return {
-				error: 'Failed to save result due to a balance sync issue. Please try again.',
+				error: 'Hasil belum dapat disimpan karena saldo Token berubah. Silakan coba lagi.',
 			};
 		}
 
@@ -314,7 +316,7 @@ export const actionSubmissionReactionKarsaAI = async ({
 
 		if ('error' in authSession) {
 			return {
-				error: 'Forbidden',
+				error: 'Anda tidak memiliki akses untuk tindakan ini.',
 			};
 		}
 

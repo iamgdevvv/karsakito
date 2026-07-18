@@ -11,7 +11,7 @@ import { Link } from '~app-ui/components/link';
 
 const navigations = [
 	{
-		label: 'Home',
+		label: 'Beranda',
 		value: '/',
 		icon: <TbAppsFilled />,
 		disabled: false,
@@ -23,13 +23,13 @@ const navigations = [
 		disabled: false,
 	},
 	{
-		label: 'Saved',
+		label: 'Tersimpan',
 		value: '/workspace/saved',
 		icon: <MdSave />,
 		disabled: true,
 	},
 	{
-		label: 'Profile',
+		label: 'Profil',
 		value: '/dashboard',
 		icon: <HiUser />,
 		disabled: false,

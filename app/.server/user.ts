@@ -25,7 +25,7 @@ export const actionCreateUser = async ({
 
 		if ('error' in authSession) {
 			return {
-				error: 'Forbidden'
+				error: 'Anda tidak memiliki akses untuk tindakan ini.'
 			}
 		}
 
@@ -94,7 +94,7 @@ export const actionUpdateUser = async ({
 
 		if ('error' in authSession) {
 			return {
-				error: 'Forbidden'
+				error: 'Anda tidak memiliki akses untuk tindakan ini.'
 			}
 		}
 
@@ -140,7 +140,7 @@ export const actionUpdateUserPassword = async ({
 
 		if ('error' in authSession) {
 			return {
-				error: 'Forbidden'
+				error: 'Anda tidak memiliki akses untuk tindakan ini.'
 			}
 		}
 
@@ -194,7 +194,7 @@ export const actionDeleteUser = async ({
 
 		if ('error' in authSession) {
 			return {
-				error: 'Forbidden'
+				error: 'Anda tidak memiliki akses untuk tindakan ini.'
 			}
 		}
 
@@ -235,7 +235,7 @@ export const actionUpdateProfile = async ({
 
 		if ('error' in authSession) {
 			return {
-				error: 'Forbidden'
+				error: 'Anda tidak memiliki akses untuk tindakan ini.'
 			}
 		}
 
@@ -284,7 +284,7 @@ export const actionChangePassword = async ({
 
 		if ('error' in authSession) {
 			return {
-				error: 'Forbidden'
+				error: 'Anda tidak memiliki akses untuk tindakan ini.'
 			}
 		}
 
@@ -297,7 +297,7 @@ export const actionChangePassword = async ({
 
 		if (password !== confirmPassword) {
 			return {
-				error: 'Confirm password incorrect'
+				error: 'Konfirmasi kata sandi tidak sesuai.'
 			}
 		}
 
@@ -314,7 +314,7 @@ export const actionChangePassword = async ({
 
 		if (!credValid) {
 			return {
-				error: 'Current password incorrect'
+				error: 'Kata sandi saat ini tidak sesuai.'
 			}
 		}
 
@@ -530,7 +530,7 @@ export const actionGetUser = async ({
 
 		if ('error' in authSession) {
 			return {
-				error: 'Forbidden'
+				error: 'Anda tidak memiliki akses untuk tindakan ini.'
 			}
 		}
 

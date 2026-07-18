@@ -9,9 +9,11 @@ import {
 	SimpleGrid,
 	Stack,
 	Text,
+	ThemeIcon,
 	Title,
 } from '@mantine/core';
-import { LuArrowRight } from 'react-icons/lu';
+import { LuArrowRight, LuTrophy } from 'react-icons/lu';
+import { getPublicFaqs } from '~app-modules/faqs';
 import { metaPublicRoute } from '~app-modules/meta';
 import { cfContext } from '~app-server/context';
 import { authGetSession } from '~app-server/session';
@@ -37,35 +39,37 @@ export function meta({ loaderData }: Route.MetaArgs) {
 	return metaPublicRoute({
 		title: 'KarsaKito',
 		description:
-			'Platform AI untuk Mengakselerasi Pemanfaatan Bahasa dan Warisan Budaya Daerah',
+			'Ekosistem produktivitas AI untuk membantu pekerjaan berbasis Bahasa Nusantara melalui alur kerja terstruktur.',
 		noIndex: loaderData.noIndex,
 	});
 }
 
 const solutions = [
 	{
-		title: 'KarsaLingo',
-		desc: 'Media belajar modern, interaktif, dan adaptif untuk penguasaan bahasa daerah yang dirancang khusus untuk membantu transisi pemahaman bahasa lintas generasi.',
-	},
-	{
 		title: 'KarsaWriter',
-		desc: 'Asisten produktivitas berbasis kecerdasan buatan untuk menyusun draf konten, naskah kreatif, karya sastra tradisional, serta artikel formal berbahasa lokal secara efisien.',
+		desc: 'Susun draf teks dengan topik, tujuan, audiens, dan gaya yang lebih jelas.',
 	},
 	{
 		title: 'KarsaLator',
-		desc: 'Sistem translasi kontekstual tingkat lanjut yang akurat, menjamin ketepatan makna berdasarkan basis pengetahuan adat yang dapat dipertanggungjawabkan.',
+		desc: 'Terjemahkan teks, lalu tinjau dan sesuaikan hasilnya dengan konteks penggunaan.',
 	},
 	{
 		title: 'KarsaLisa',
-		desc: 'Modul analisis bahasa cerdas untuk mengevaluasi kesopanan berbahasa, ketepatan tata bahasa daerah, serta kecocokan konteks sosial penggunaan kata.',
-	},
-	{
-		title: 'KarsaPedia',
-		desc: 'Ensiklopedia warisan budaya dan adat nusantara berbasis Retrieval-Augmented Generation (RAG) yang menyediakan akses informasi tepercaya secara praktis.',
+		desc: 'Tinjau pilihan bahasa dan konteks penggunaan agar komunikasi Anda lebih sesuai kebutuhan.',
 	},
 	{
 		title: 'KarsaFrase',
-		desc: 'Alat restrukturisasi dan parafrase teks otomatis guna mengolah ragam bentuk kalimat bahasa lokal tanpa merubah esensi makna budaya asli.',
+		desc: 'Susun ulang teks tanpa mengubah inti pesan agar lebih ringkas, jelas, atau sesuai gaya yang Anda pilih.',
+	},
+	{
+		title: 'KarsaPedia',
+		desc: 'Dalam pengembangan sebagai ruang pengetahuan untuk membantu pencarian informasi seputar Bahasa Nusantara.',
+		status: 'Dalam pengembangan',
+	},
+	{
+		title: 'KarsaLingo',
+		desc: 'Dalam pengembangan untuk mendukung proses belajar Bahasa Nusantara melalui pengalaman yang lebih terarah.',
+		status: 'Dalam pengembangan',
 	},
 ];
 
@@ -73,7 +77,7 @@ const teams = [
 	{
 		name: 'Grafis Nuresa',
 		position: 'Project Lead, Business Analyst, dan UI/UX Strategist',
-		desc: 'Memimpin pengembangan produk, menyusun strategi bisnis, merancang pengalaman pengguna, serta memastikan solusi yang dibangun selaras dengan kebutuhan pengguna.',
+		desc: 'Memimpin pengembangan produk, menyusun strategi bisnis, merancang pengalaman Pengguna, serta memastikan solusi yang dibangun selaras dengan kebutuhan Pengguna.',
 		image: '/images/grafis-nuresa.jpg',
 	},
 	{
@@ -85,76 +89,43 @@ const teams = [
 	{
 		name: 'Okyra Asyrafi Guchan',
 		position: 'Full Stack Developer',
-		desc: 'Membangun fitur end-to-end, mengintegrasikan frontend dan backend, serta memastikan implementasi berjalan optimal di seluruh alur aplikasi.',
+		desc: 'Membangun fitur end-to-end, mengintegrasikan frontend dan backend, serta memastikan implementasi berjalan optimal di seluruh alur Aplikasi.',
 		image: '/images/okyra-asyrafi-guchan.jpg',
 	},
 	{
 		name: 'Pandu Pratama Handika',
 		position: 'Frontend Developer',
-		desc: 'Mengimplementasikan antarmuka yang responsif, interaktif, dan mudah digunakan dengan fokus pada performa, aksesibilitas, serta pengalaman pengguna yang konsisten.',
+		desc: 'Mengimplementasikan antarmuka yang responsif, interaktif, dan mudah digunakan dengan fokus pada performa, aksesibilitas, serta pengalaman Pengguna yang konsisten.',
 		image: '/images/pandu-pratama-handika.jpg',
 	},
 ];
 
 const testimonials = [
 	{
-		quote: "The platform significantly streamlined our content creation workflow while preserving the authenticity of local cultural values. It's intuitive, fast, and delivers consistently high-quality results.",
-		name: 'Sarah Wijaya',
-		position: 'Head of Communications, Nusantara Creative Hub',
+		quote: 'Mulai dari topik dan tujuan untuk menyusun draf caption, naskah, atau ide konten yang dapat disesuaikan lagi.',
+		name: 'Kreator konten',
+		position: 'Ilustrasi pengalaman Pengguna',
 	},
 	{
-		quote: 'We reduced the time needed to prepare educational materials from hours to minutes. This has become an essential tool for our teaching activities.',
-		name: 'Ahmad Pratama',
-		position: 'Lecturer, Faculty of Cultural Studies',
+		quote: 'Gunakan hasil sebagai titik awal untuk merangkum, menyusun ulang, atau menyesuaikan teks sebelum dipakai dalam tugas.',
+		name: 'Pelajar dan mahasiswa',
+		position: 'Ilustrasi pengalaman Pengguna',
 	},
 	{
-		quote: 'The AI-generated content feels natural and contextually relevant. It has helped our team produce more engaging campaigns with far less effort.',
-		name: 'Michelle Tan',
-		position: 'Digital Marketing Manager',
+		quote: 'Siapkan draf komunikasi dengan tujuan dan audiens yang jelas, lalu tinjau kembali sebelum dibagikan.',
+		name: 'Humas dan organisasi',
+		position: 'Ilustrasi pengalaman Pengguna',
 	},
 	{
-		quote: 'As a content creator, I appreciate how easy it is to generate ideas and polished drafts without losing my own creative voice.',
-		name: 'Rizky Saputra',
-		position: 'Content Creator',
-	},
-	{
-		quote: 'This solution enables us to promote regional culture more effectively while maintaining accuracy and consistency across our digital channels.',
-		name: 'Dewi Lestari',
-		position: 'Public Relations Officer, Regional Tourism Office',
-	},
-	{
-		quote: 'The user experience is clean and straightforward, making it accessible even for team members with minimal technical experience.',
-		name: 'Kevin Hartono',
-		position: 'Product Manager',
+		quote: 'Terjemahkan atau tinjau pilihan bahasa sebagai bahan kerja, lalu sesuaikan hasilnya dengan konteks dan pengetahuan Anda.',
+		name: 'Pengguna Bahasa Nusantara',
+		position: 'Ilustrasi pengalaman Pengguna',
 	},
 ];
 
-const faqs = [
-	{
-		title: 'How does the AI generate content?',
-		content:
-			'The AI generates content using a combination of natural language processing and machine learning algorithms.',
-	},
-	{
-		title: 'Can i customize the AI-generated content?',
-		content:
-			'Yes, you can customize the AI-generated content to meet your specific needs untuk Mengakselerasi Pemanfaatan Bahasa dan Warisan Budaya Daerah',
-	},
-	{
-		title: 'What types of content can the AI generate?',
-		content:
-			'The AI can generate a wide range of content types, including text, images, videos, and more.',
-	},
-	{
-		title: 'Is the AI-generated content plagiarism-free?',
-		content:
-			'Yes, the AI-generated content is plagiarism-free and is not copied from other sources.',
-	},
-	{
-		title: 'Does the tool have any limitations?',
-		content: 'The tool has no limitations and can be used for any purpose.',
-	},
-];
+const faqs = getPublicFaqs(['tentang', 'layanan', 'kreator', 'hasil'], {
+	featuredOnly: true,
+});
 
 export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 	return (
@@ -165,12 +136,12 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 					background="/images/karsakito-beranda-banner.jpg"
 					ctas={[
 						{
-							label: 'Layanan KarsaKito',
+							label: 'Jelajahi Layanan',
 							to: '/layanan',
 							variant: 'light',
 						},
 						{
-							label: 'Biaya Layanan',
+							label: 'Harga Token',
 							to: '/biaya-layanan',
 							rightSection: <LuArrowRight size={20} />,
 						},
@@ -186,8 +157,7 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 						KarsaKito
 					</Text>
 					<Title>
-						Platform AI untuk Mengakselerasi Pemanfaatan Bahasa dan Warisan Budaya
-						Daerah
+						Platform AI untuk Mengakselerasi Pemanfaatan Bahasa Daerah Indonesia
 					</Title>
 					<Text>
 						KarsaKito menghadirkan ekosistem AI yang mengintegrasikan pembelajaran
@@ -196,7 +166,6 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 					</Text>
 				</Banner>
 
-				{/* 1. SEKSI SOCIAL PROOF (Didukung Oleh - Statis & Proporsional) */}
 				<Box
 					component="section"
 					bg="white"
@@ -210,7 +179,39 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 					<Container>
 						<Stack
 							align="center"
+							gap="sm"
+						>
+							<ThemeIcon
+								size={56}
+								radius="full"
+								variant="light"
+							>
+								<LuTrophy size={26} />
+							</ThemeIcon>
+							<Text
+								span
+								display="inline-block"
+								size="xs"
+								tt="uppercase"
+								ta="center"
+								c="gray.6"
+							>
+								Peserta PIDI - DIGDAYA X Hackathon 2026
+							</Text>
+							<Text
+								maw={620}
+								ta="center"
+								c="gray.6"
+							>
+								KarsaKito mengikuti PIDI - DIGDAYA X Hackathon 2026 sebagai bagian
+								dari perjalanan mengembangkan solusi produktivitas AI untuk Bahasa
+								Nusantara.
+							</Text>
+						</Stack>
+						<Stack
+							align="center"
 							gap="xl"
+							mt="xl"
 						>
 							<Text
 								span
@@ -265,7 +266,6 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 					</Container>
 				</Box>
 
-				{/* 2. PANEL 1: PROBLEM VALIDATION (Responsive Sticky - z-10) */}
 				<Box
 					component="section"
 					bg="gray.0"
@@ -286,32 +286,27 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 								fw={500}
 								mb="sm"
 							>
-								Problem Validation
+								Masalah & Tantangan
 							</Badge>
 							<h2 className="text-2xl leading-tight font-black tracking-tight text-slate-900 sm:text-3xl md:text-5xl">
-								Akar Masalah: Minimnya Dukungan Teknologi Produktivitas Bahasa
-								Daerah.
+								Pekerjaan berbasis bahasa membutuhkan proses yang lebih terarah.
 							</h2>
 						</div>
 						<Stack className="md:col-span-6">
 							<Text fw={300}>
-								Masyarakat menghadapi hambatan nyata ketika ingin mempelajari,
-								menggunakan, atau menghasilkan karya berbasis bahasa daerah karena
-								kesulitan memahami kosakata, keterbatasan media belajar modern,
-								serta sulitnya mengakses informasi adat secara praktis.
+								Menyusun teks, menyesuaikan gaya, menerjemahkan, atau memilih frasa
+								dapat memakan waktu, terutama saat tujuan, audiens, dan konteksnya
+								beragam.
 							</Text>
 							<Text fw={300}>
-								Saat ini teknologi AI global telah membantu penulisan dalam bahasa
-								global, namun dukungan serupa untuk bahasa daerah masih sangat
-								terbatas pada aspek tata bahasa, kesopanan (KarsaLisa), dan
-								pengetahuan adat. Jika dibiarkan, transfer pengetahuan budaya
-								antargenerasi berisiko terputus.
+								KarsaKito membantu Anda memulai pekerjaan melalui tool dengan
+								parameter terstruktur. Hasilnya dapat Anda tinjau dan sesuaikan
+								sebelum digunakan.
 							</Text>
 						</Stack>
 					</Container>
 				</Box>
 
-				{/* 3. PANEL 2: SOLUTION APPROACH - PART 1 (Responsive Sticky - z-20) */}
 				<Box
 					pos="relative"
 					component="section"
@@ -335,13 +330,13 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 								fw={500}
 								mb="sm"
 							>
-								SOLUTION APPROACH
+								Solusi KarsaKito
 							</Badge>
 							<Title
 								order={2}
 								mb="md"
 							>
-								Ekosistem AI Terintegrasi Berbasis RAG
+								Alur kerja terstruktur untuk kebutuhan bahasa
 							</Title>
 							<Text
 								c="gray.6"
@@ -350,10 +345,9 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 									lg: 'md',
 								}}
 							>
-								KarsaKito mengintegrasikan knowledge base budaya terstruktur dengan
-								teknologi Retrieval-Augmented Generation (RAG) untuk menghasilkan
-								respons yang kontekstual dan relevan, diawali melalui implementasi
-								Bahasa Minangkabau.
+								KarsaKito terus disempurnakan bersama Pengguna. Kami memprioritaskan
+								tool yang membantu pekerjaan berbasis bahasa menjadi lebih terarah,
+								mudah digunakan, dan relevan dengan kebutuhan nyata.
 							</Text>
 						</Box>
 
@@ -377,18 +371,28 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 										fw={700}
 										className="group-hover:text-primary text-gray-600 transition-colors md:col-span-1"
 									>
-										{Number(index + 1).toLocaleString('en-US', {
-											minimumIntegerDigits: 2,
-											useGrouping: false,
-										})}
+										{String(index + 1).padStart(2, '0')}
 									</Text>
-									<Title
-										order={3}
-										fz="lg"
+									<Stack
+										gap={2}
 										className="md:col-span-3"
 									>
-										{solution.title}
-									</Title>
+										<Title
+											order={3}
+											fz="lg"
+										>
+											{solution.title}
+										</Title>
+										{solution.status ? (
+											<Text
+												size="xs"
+												fw={600}
+												c="primary"
+											>
+												{solution.status}
+											</Text>
+										) : null}
+									</Stack>
 									<Text
 										c="gray.6"
 										fw={300}
@@ -527,7 +531,7 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 								fz={10}
 								fw={500}
 							>
-								Community Voice
+								Suara Pengguna
 							</Badge>
 							<Title order={2}>Apa Kata Mereka Tentang KarsaKito?</Title>
 						</Stack>
@@ -547,11 +551,11 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 									'border border-primary bg-primary-4! [&[data-active]]:bg-primary!',
 							}}
 						>
-							{testimonials.map((testimonial, index) => (
-								<Carousel.Slide key={`testimonial-${index}`}>
+							{testimonials.map((story, index) => (
+								<Carousel.Slide key={`illustrative-story-${index}`}>
 									<TestimonialCard
 										h="100%"
-										data={testimonial}
+										data={story}
 									/>
 								</Carousel.Slide>
 							))}
@@ -584,9 +588,10 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 							>
 								FAQ
 							</Badge>
-							<Title order={2}>Frequently Asked Questions</Title>
+							<Title order={2}>Pertanyaan yang sering ditanyakan</Title>
 							<Text>
-								Everything you need to know about the product and other information.
+								Kenali cara kerja KarsaKito, penggunaan Token, dan langkah awal
+								untuk memulai.
 							</Text>
 						</Stack>
 

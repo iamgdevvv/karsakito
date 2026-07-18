@@ -85,7 +85,7 @@ export default function FormKarsaParafrase({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -121,8 +121,9 @@ export default function FormKarsaParafrase({
 			>
 				<Stack gap="xs">
 					<Select
-						label="Source Language"
+						label="Bahasa sumber"
 						name="sourceLanguage"
+						placeholder="Pilih bahasa sumber"
 						key={form.key('sourceLanguage')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -130,8 +131,9 @@ export default function FormKarsaParafrase({
 						{...form.getInputProps('sourceLanguage')}
 					/>
 					<Select
-						label="Target Language"
+						label="Bahasa tujuan"
 						name="targetLanguage"
+						placeholder="Pilih bahasa tujuan"
 						key={form.key('targetLanguage')}
 						readOnly={isLoading}
 						maxDropdownHeight={160}
@@ -139,19 +141,23 @@ export default function FormKarsaParafrase({
 						{...form.getInputProps('targetLanguage')}
 					/>
 					<Autocomplete
-						label="Preference"
+						label="Preferensi"
 						name="preference"
+						required
 						key={form.key('preference')}
 						readOnly={isLoading}
+						placeholder="Pilih atau tulis gaya hasil"
 						maxDropdownHeight={160}
 						data={optionsKarsaFrasePreference}
 						{...form.getInputProps('preference')}
 					/>
 					<Textarea
-						label="Text"
+						label="Teks"
 						name="text"
+						required
 						key={form.key('text')}
 						readOnly={isLoading}
+						placeholder="Tempel teks yang ingin diparafrasekan."
 						{...form.getInputProps('text')}
 					/>
 					<Group justify="flex-end">
@@ -160,7 +166,7 @@ export default function FormKarsaParafrase({
 							loading={isLoading}
 							mt="md"
 						>
-							Submit App
+							Parafrase teks
 						</Button>
 					</Group>
 				</Stack>

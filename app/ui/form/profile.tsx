@@ -54,8 +54,8 @@ export default function FormProfile({
 				setErrorMessage(fetcher.data.error);
 			} else {
 				notifications.show({
-					title: 'Success',
-					message: 'Profile updated successfully',
+					title: 'Berhasil',
+					message: 'Profil berhasil diperbarui.',
 				});
 			}
 		}
@@ -69,7 +69,7 @@ export default function FormProfile({
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -88,6 +88,7 @@ export default function FormProfile({
 				<Stack gap="xs">
 					<TextInput
 						label="Nama"
+						placeholder="Contoh: Sari Wulandari"
 						name="name"
 						key={form.key('name')}
 						readOnly={isLoading}
@@ -95,14 +96,16 @@ export default function FormProfile({
 					/>
 					<TextInput
 						type="email"
-						label="Email"
+						label="Alamat email"
+						placeholder="nama@contoh.com"
 						name="email"
 						key={form.key('email')}
 						readOnly={isLoading}
 						{...form.getInputProps('email')}
 					/>
 					<Select
-						label="Timezone"
+						label="Zona waktu"
+						placeholder="Pilih zona waktu"
 						name="timezone"
 						searchable
 						key={form.key('timezone')}
@@ -116,7 +119,7 @@ export default function FormProfile({
 						loading={isLoading}
 						mt="md"
 					>
-						Update Profile
+						Simpan Perubahan
 					</Button>
 				</Stack>
 			</fetcher.Form>

@@ -39,6 +39,16 @@ import type { KarsaAppScalarFieldEnum } from '~generated/prisma/internal/prismaN
 
 import type { Route } from './+types/admin.apps._index';
 
+const appSortOptions = [
+	{ value: 'name', label: 'Nama' },
+	{ value: 'label', label: 'Label' },
+	{ value: 'token', label: 'Token' },
+	{ value: 'tokenPromo', label: 'Token promo' },
+	{ value: 'visible', label: 'Status tayang' },
+	{ value: 'createdAt', label: 'Dibuat pada' },
+	{ value: 'updatedAt', label: 'Diperbarui pada' },
+] satisfies { value: KarsaAppScalarFieldEnum; label: string }[];
+
 const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) => {
 	const authSession = await authMiddlewareSession({
 		guard: {
@@ -71,7 +81,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 
 export function meta(_: Route.MetaArgs) {
 	return metaAdminRoute({
-		title: 'Manage Apps',
+		title: 'Kelola Aplikasi',
 	});
 }
 
@@ -125,7 +135,7 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 				authUser={loaderData.user}
 				className="site-main"
 			>
-				<Title mb="lg">Manage Apps</Title>
+				<Title mb="lg">Kelola Aplikasi</Title>
 				{navigation.state === 'loading' ? (
 					<Center>
 						<Loader />
@@ -151,12 +161,12 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 								fz="xs"
 								radius="md"
 							>
-								Create New
+								Buat Aplikasi
 							</ButtonLink>
 							<TextInput
 								name="search"
 								defaultValue={queryParams?.search}
-								placeholder="Search..."
+								placeholder="Cari Aplikasi..."
 								size="xs"
 								rightSection={
 									<ActionIcon
@@ -179,6 +189,7 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 									size="xs"
 									defaultValue={queryParams?.category}
 									data={optionsAppCategory}
+									placeholder="Semua kategori"
 								/>
 								<Popover
 									width={160}
@@ -207,18 +218,9 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 														? [queryParams.asc]
 														: queryParams?.asc
 												}
-												data={
-													[
-														'name',
-														'label',
-														'token',
-														'tokenPromo',
-														'visible',
-														'createdAt',
-														'updatedAt',
-													] satisfies KarsaAppScalarFieldEnum[]
-												}
-												label="Sort ASC"
+												data={appSortOptions}
+												label="Urut naik"
+												placeholder="Pilih kolom"
 												labelProps={{
 													fz: 10,
 												}}
@@ -231,18 +233,9 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 														? [queryParams.desc]
 														: queryParams?.desc
 												}
-												data={
-													[
-														'name',
-														'label',
-														'token',
-														'tokenPromo',
-														'visible',
-														'createdAt',
-														'updatedAt',
-													] satisfies KarsaAppScalarFieldEnum[]
-												}
-												label="Sort DESC"
+												data={appSortOptions}
+												label="Urut turun"
+												placeholder="Pilih kolom"
 												labelProps={{
 													fz: 10,
 												}}
@@ -258,7 +251,7 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 										fz="xs"
 										variant="light"
 									>
-										Apply
+										Terapkan
 									</Button>
 									{hasParams ? (
 										<Button
@@ -269,7 +262,7 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 											color="gray.2"
 											onClick={handlerResetParams}
 										>
-											Reset
+											Atur ulang
 										</Button>
 									) : null}
 								</Group>
@@ -288,15 +281,15 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 									<Table.Tr>
 										<Table.Td miw={120}>Nama</Table.Td>
 										<Table.Td miw={120}>Label</Table.Td>
-										<Table.Td miw={120}>Category</Table.Td>
+										<Table.Td miw={120}>Kategori</Table.Td>
 										<Table.Td
 											miw={80}
 											ta="center"
 										>
 											Token
 										</Table.Td>
-										<Table.Td miw={80}>Visible</Table.Td>
-										<Table.Td ta="center">Action</Table.Td>
+										<Table.Td miw={80}>Tampil</Table.Td>
+										<Table.Td ta="center">Tindakan</Table.Td>
 									</Table.Tr>
 								</Table.Thead>
 								{loaderData.karsaApps.data.length ? (
@@ -341,7 +334,7 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 															tt="none"
 															fw={500}
 														>
-															Visible
+															Tampil
 														</Badge>
 													) : (
 														<Badge
@@ -350,7 +343,7 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 															tt="none"
 															fw={500}
 														>
-															Invisible
+															Tidak tampil
 														</Badge>
 													)}
 												</Table.Td>
@@ -372,7 +365,7 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 																component={Link}
 																to={`/admin/apps/${app.id}`}
 															>
-																Update
+																Ubah
 															</Menu.Item>
 															<Menu.Item
 																component={Link}
@@ -380,7 +373,7 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 																color="red"
 																leftSection={<LuTrash size={14} />}
 															>
-																Delete
+																Hapus
 															</Menu.Item>
 														</Menu.Dropdown>
 													</Menu>
@@ -389,7 +382,7 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 										))}
 									</Table.Tbody>
 								) : (
-									<Table.Caption>Apps not found</Table.Caption>
+									<Table.Caption>Aplikasi tidak ditemukan.</Table.Caption>
 								)}
 							</Table>
 						</Box>
@@ -414,7 +407,7 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 											})
 										}
 									>
-										Previous
+										Sebelumnya
 									</Button>
 								) : null}
 								{loaderData.karsaApps.nextCursor ? (
@@ -431,7 +424,7 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 											})
 										}
 									>
-										Next
+										Berikutnya
 									</Button>
 								) : null}
 							</Group>

@@ -82,7 +82,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 
 export function meta(_: Route.MetaArgs) {
 	return metaPublicRoute({
-		title: 'Apps KarsaKito',
+		title: 'Workspace KarsaKito',
 		noIndex: true,
 	});
 }
@@ -153,7 +153,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 
 					const param = PayloadWindowWorkspaceSchema.safeParse({
 						id: crypto.randomUUID(),
-						title: 'My Workspace',
+						title: 'Window Baru',
 						app,
 					} satisfies PayloadWindowWorkspace);
 
@@ -241,7 +241,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 										size="sm"
 										fw={500}
 									>
-										{loaderData.userBalance.data?.tokenDaily || 0} Token Daily
+										{loaderData.userBalance.data?.tokenDaily || 0} Token Harian
 									</Text>
 								</Flex>
 							</Stack>
@@ -259,7 +259,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 							setSearchParams({ viewMode: value });
 						}}
 						data={[
-							{ label: 'Simple', value: 'simple' },
+							{ label: 'Sederhana', value: 'simple' },
 							{ label: 'Kreator', value: 'window' },
 						]}
 					/>
@@ -286,14 +286,14 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 											inherit
 											visibleFrom="sm"
 										>
-											Add Window
+											Tambah Window
 										</Text>
 										<Text
 											span
 											inherit
 											hiddenFrom="sm"
 										>
-											Add new
+											Tambah
 										</Text>
 									</Button>
 								</Popover.Target>
@@ -309,7 +309,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 							</Popover>
 							<Tooltip
 								fz="xs"
-								label="Save Workspace"
+								label="Penyimpanan Workspace belum tersedia"
 							>
 								<ActionIcon
 									size="lg"
@@ -321,7 +321,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 							</Tooltip>
 							<Tooltip
 								fz="xs"
-								label="Fit Window"
+								label="Rapikan Window"
 							>
 								<ActionIcon
 									size="lg"
@@ -336,7 +336,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 
 					<Tooltip
 						fz="xs"
-						label="Fullscreen"
+						label="Layar Penuh"
 					>
 						<ActionIcon
 							size="lg"
@@ -350,6 +350,16 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 					</Tooltip>
 				</Group>
 				<Divider my="xs" />
+				{viewMode === 'window' ? (
+					<Text
+						size="xs"
+						c="dimmed"
+						mb="xs"
+					>
+						Kreator masih eksperimental. Mode ini Anda dapat mengatur beberapa Window
+						untuk mencoba alur kerja Anda.
+					</Text>
+				) : null}
 				<Box
 					ref={refCanvas}
 					pos="relative"

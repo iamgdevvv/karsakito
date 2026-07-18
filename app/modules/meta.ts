@@ -1,5 +1,8 @@
 import type { MetaDescriptor } from 'react-router';
 
+const defaultPublicDescription =
+	'KarsaKito membantu Anda membuat, menyempurnakan, menerjemahkan, dan mengolah teks melalui alur kerja AI yang terstruktur.';
+
 export function metaPublicRoute(
 	{
 		title,
@@ -18,10 +21,10 @@ export function metaPublicRoute(
 		},
 	];
 
-	if (description) {
+	if (description || !noIndex) {
 		meta.push({
 			name: 'description',
-			content: description,
+			content: description || defaultPublicDescription,
 		});
 	}
 

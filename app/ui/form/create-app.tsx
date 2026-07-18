@@ -54,7 +54,7 @@ export default function FormCreateKarsaApp(props: BoxProps) {
 				redirectParams.set('desc', 'createdAt');
 				redirectParams.set(
 					'successMessage',
-					`App ${labelAppName[fetcher.data.data.name]} created successfully`,
+					`Aplikasi ${labelAppName[fetcher.data.data.name]} berhasil dibuat.`,
 				);
 
 				navigate(`/admin/apps?${redirectParams.toString()}`);
@@ -70,7 +70,7 @@ export default function FormCreateKarsaApp(props: BoxProps) {
 			{errorMessage ? (
 				<Alert
 					color="red"
-					title="Error"
+					title="Terjadi kendala"
 					mb="md"
 				>
 					{errorMessage}
@@ -88,18 +88,22 @@ export default function FormCreateKarsaApp(props: BoxProps) {
 			>
 				<Stack gap="xs">
 					<Select
-						label="Name"
+						label="Nama Aplikasi"
+						placeholder="Pilih Aplikasi"
 						name="name"
 						key={form.key('name')}
 						readOnly={isLoading}
+						required
 						data={optionsAppName}
 						{...form.getInputProps('name')}
 					/>
 					<TextInput
-						label="Label"
+						label="Label Aplikasi"
+						placeholder="Contoh: Pembuat Pidato"
 						name="label"
 						key={form.key('label')}
 						readOnly={isLoading}
+						required
 						{...form.getInputProps('label')}
 					/>
 					<SimpleGrid
@@ -110,9 +114,11 @@ export default function FormCreateKarsaApp(props: BoxProps) {
 					>
 						<NumberInput
 							label="Token"
+							placeholder="Contoh: 10"
 							name="token"
 							key={form.key('token')}
 							readOnly={isLoading}
+							required
 							leftSection={<PiCoinsFill size={18} />}
 							leftSectionProps={{
 								color: 'yellow',
@@ -120,7 +126,8 @@ export default function FormCreateKarsaApp(props: BoxProps) {
 							{...form.getInputProps('token')}
 						/>
 						<NumberInput
-							label="Token Promo"
+							label="Token promo"
+							placeholder="Contoh: 5"
 							name="tokenPromo"
 							key={form.key('tokenPromo')}
 							readOnly={isLoading}
@@ -132,15 +139,17 @@ export default function FormCreateKarsaApp(props: BoxProps) {
 						/>
 					</SimpleGrid>
 					<Select
-						label="Category"
+						label="Kategori"
+						placeholder="Pilih kategori"
 						name="category"
 						key={form.key('category')}
 						readOnly={isLoading}
+						required
 						data={optionsAppCategory}
 						{...form.getInputProps('category')}
 					/>
 					<Checkbox
-						label="Visible"
+						label="Tampilkan Aplikasi"
 						name="visible"
 						key={form.key('visible')}
 						readOnly={isLoading}
@@ -149,7 +158,8 @@ export default function FormCreateKarsaApp(props: BoxProps) {
 						})}
 					/>
 					<Textarea
-						label="Description"
+						label="Deskripsi"
+						placeholder="Jelaskan manfaat dan cara penggunaan singkat"
 						name="description"
 						key={form.key('description')}
 						readOnly={isLoading}
@@ -161,7 +171,7 @@ export default function FormCreateKarsaApp(props: BoxProps) {
 							loading={isLoading}
 							mt="md"
 						>
-							Create App
+							Buat Aplikasi
 						</Button>
 					</Group>
 				</Stack>
