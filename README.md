@@ -19,7 +19,7 @@ KarsaPedia dan KarsaLingo merupakan arah pengembangan berikutnya dan belum dipos
 
 KarsaKito menggunakan Token Aplikasi, bukan token API AI.
 
-- Pengguna memperoleh hingga 100 Token harian yang tersedia kembali setiap pukul 00.00 sesuai timezone akun.
+- Pengguna memperoleh hingga 100 Token harian yang tersedia kembali setiap pukul 00.00 sesuai zona waktu akun.
 - Token harian digunakan lebih dahulu saat memakai tool.
 - Estimasi harga Token adalah Rp50 per Token.
 - Pembelian Token masih disiapkan; antarmuka top up saat ini hanya menampilkan estimasi harga.

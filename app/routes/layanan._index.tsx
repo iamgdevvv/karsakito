@@ -305,7 +305,10 @@ export default function LayananRoute({ loaderData }: Route.ComponentProps) {
 								<Title order={2}>Apa Kata Mereka Tentang KarsaKito?</Title>
 							</Stack>
 							<Carousel
-								slideSize="50%"
+								slideSize={{
+									base: '100%',
+									sm: '50%',
+								}}
 								slideGap={{
 									base: 'md',
 									lg: 'lg',

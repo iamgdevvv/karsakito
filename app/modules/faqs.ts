@@ -147,7 +147,7 @@ export const publicFaqs: readonly PublicFaq[] = [
 		featured: true,
 		title: 'Bagaimana Token Harian bekerja?',
 		content:
-			'Bonus Harian mengisi saldo Token Harian hingga 100 Token setiap pukul 00.00 sesuai timezone akun Anda. Token Harian digunakan lebih dahulu saat memakai tool.',
+			'Bonus Harian mengisi saldo Token Harian hingga 100 Token setiap pukul 00.00 sesuai zona waktu akun Anda. Token Harian digunakan lebih dahulu saat memakai tool.',
 	},
 	{
 		category: 'token',
@@ -178,7 +178,7 @@ export const publicFaqs: readonly PublicFaq[] = [
 		category: 'token',
 		title: 'Apakah Token memiliki masa berlaku?',
 		content:
-			'Token tidak memiliki masa berlaku. Token Harian mengikuti aturan harian dan diisi kembali hingga 100 Token sesuai timezone akun Anda.',
+			'Token tidak memiliki masa berlaku. Token Harian mengikuti aturan harian dan diisi kembali hingga 100 Token sesuai zona waktu akun Anda.',
 	},
 	{
 		category: 'token',

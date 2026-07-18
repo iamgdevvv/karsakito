@@ -210,7 +210,7 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 						</Stack>
 						<Stack
 							align="center"
-							gap="xl"
+							gap="md"
 							mt="xl"
 						>
 							<Text
@@ -221,7 +221,7 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 								ta="center"
 								c="gray.6"
 							>
-								Didukung &amp; dipercaya oleh
+								Didukung &amp; diselenggarakan oleh
 							</Text>
 							<Flex
 								align="center"
@@ -240,17 +240,45 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 									w="auto"
 									h="auto"
 									maw={200}
-									mah={60}
-									className="opacity-80 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+									mah={48}
+									className="transition-all duration-300 lg:opacity-80 lg:grayscale lg:hover:opacity-100 lg:hover:grayscale-0"
 								/>
 								<Image
 									src="/images/logo/logo-ojk.svg"
-									alt="OJK"
+									alt="Otoritas Jasa Keuangan"
 									w="auto"
 									h="auto"
 									maw={200}
-									mah={60}
-									className="opacity-80 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+									mah={48}
+									className="transition-all duration-300 lg:opacity-80 lg:grayscale lg:hover:opacity-100 lg:hover:grayscale-0"
+								/>
+								<Image
+									src="/images/logo/logo-aspi.svg"
+									alt="Asosiasi Sistem Pembayaran Indonesia"
+									w="auto"
+									h="auto"
+									maw={200}
+									mah={48}
+									className="transition-all duration-300 lg:opacity-80 lg:grayscale lg:hover:opacity-100 lg:hover:grayscale-0"
+								/>
+								<Image
+									src="/images/logo/logo-finctechid.svg"
+									alt="Fintech Indonesia"
+									objectFit="contain"
+									w="auto"
+									h="auto"
+									maw={200}
+									mah={48}
+									className="transition-all duration-300 lg:opacity-80 lg:grayscale lg:hover:opacity-100 lg:hover:grayscale-0"
+								/>
+								<Image
+									src="/images/logo/logo-apuvindo.svg"
+									alt="Asosiasi Pasar Uang dan Pasar Valuta Asing Indonesia"
+									w="auto"
+									h="auto"
+									maw={200}
+									mah={48}
+									className="transition-all duration-300 lg:opacity-80 lg:grayscale lg:hover:opacity-100 lg:hover:grayscale-0"
 								/>
 								<Image
 									src="/images/logo/logo-lppi.svg"
@@ -258,8 +286,8 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 									w="auto"
 									h="auto"
 									maw={200}
-									mah={60}
-									className="opacity-80 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+									mah={48}
+									className="transition-all duration-300 lg:opacity-80 lg:grayscale lg:hover:opacity-100 lg:hover:grayscale-0"
 								/>
 							</Flex>
 						</Stack>
@@ -536,7 +564,10 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 							<Title order={2}>Apa Kata Mereka Tentang KarsaKito?</Title>
 						</Stack>
 						<Carousel
-							slideSize="50%"
+							slideSize={{
+								base: '100%',
+								sm: '50%',
+							}}
 							slideGap={{
 								base: 'md',
 								lg: 'lg',
