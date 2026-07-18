@@ -1,6 +1,5 @@
 import type { AnswerLeaf, FAQPageLeaf, QuestionLeaf } from 'schema-dts';
-
-import { pageSchema, type PageSchemaInput } from './page';
+import { pageSchema, type PageSchemaInput } from '~app-modules/seo/page';
 
 export const faqSchema = (
 	faqs: readonly {

@@ -28,7 +28,7 @@ import { Header } from '~app-ui/layouts/header';
 
 import type { Route } from './+types/biaya-layanan';
 
-const pageTitle = 'Estimasi Biaya Layanan | KarsaKito';
+const pageTitle = 'Biaya Layanan | KarsaKito';
 const pageDescription =
 	'Lihat estimasi harga Token KarsaKito dan tarif penggunaan Token untuk tool yang tersedia.';
 

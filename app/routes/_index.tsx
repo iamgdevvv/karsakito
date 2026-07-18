@@ -73,17 +73,6 @@ export default function AppsRoute({ loaderData }: Route.ComponentProps) {
 					>
 						<Image
 							src="/network.svg"
-							className="motion-reduce:hidden"
-							w={{
-								base: 72,
-								sm: 86,
-								lg: 100,
-							}}
-							h="auto"
-						/>
-						<Image
-							src="/favicon.svg"
-							className="hidden motion-reduce:block"
 							w={{
 								base: 72,
 								sm: 86,

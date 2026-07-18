@@ -5,6 +5,7 @@ import {
 	Badge,
 	Box,
 	Container,
+	Flex,
 	SimpleGrid,
 	Stack,
 	Text,
@@ -176,11 +177,13 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 					>
 						KarsaKito
 					</Text>
-					<Title>Produktivitas AI untuk Pekerjaan Berbasis Bahasa Nusantara</Title>
+					<Title>
+						Platform AI untuk Mengakselerasi Pemanfaatan Bahasa Daerah Indonesia
+					</Title>
 					<Text>
-						KarsaKito membantu Anda menyusun, menyempurnakan, menerjemahkan, dan
-						menganalisis teks melalui tool yang terarah. KarsaPedia dan KarsaLingo
-						sedang dikembangkan untuk melengkapi ekosistem.
+						KarsaKito menghadirkan ekosistem AI yang mengintegrasikan pembelajaran
+						bahasa daerah, pembuatan karya, penerjemahan, parafrase, analisis penggunaan
+						bahasa, serta ensiklopedia budaya dalam satu platform.
 					</Text>
 				</Banner>
 
@@ -225,6 +228,89 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 								dari perjalanan mengembangkan solusi produktivitas AI untuk Bahasa
 								Nusantara.
 							</Text>
+						</Stack>
+						<Stack
+							align="center"
+							gap="md"
+							mt="xl"
+						>
+							<Text
+								span
+								display="inline-block"
+								size="xs"
+								tt="uppercase"
+								ta="center"
+								c="gray.6"
+							>
+								Didukung &amp; diselenggarakan oleh
+							</Text>
+							<Flex
+								align="center"
+								wrap="wrap"
+								justify="center"
+								gap={{
+									base: 'lg',
+									md: 'xl',
+									lg: 48,
+								}}
+							>
+								<Image
+									src="/images/logo/logo-bankindonesia.svg"
+									alt="Bank Indonesia"
+									objectFit="contain"
+									w="auto"
+									h="auto"
+									maw={200}
+									mah={48}
+									className="transition-all duration-300 lg:opacity-80 lg:grayscale lg:hover:opacity-100 lg:hover:grayscale-0"
+								/>
+								<Image
+									src="/images/logo/logo-ojk.svg"
+									alt="Otoritas Jasa Keuangan"
+									w="auto"
+									h="auto"
+									maw={200}
+									mah={48}
+									className="transition-all duration-300 lg:opacity-80 lg:grayscale lg:hover:opacity-100 lg:hover:grayscale-0"
+								/>
+								<Image
+									src="/images/logo/logo-aspi.svg"
+									alt="Asosiasi Sistem Pembayaran Indonesia"
+									w="auto"
+									h="auto"
+									maw={200}
+									mah={48}
+									className="transition-all duration-300 lg:opacity-80 lg:grayscale lg:hover:opacity-100 lg:hover:grayscale-0"
+								/>
+								<Image
+									src="/images/logo/logo-finctechid.svg"
+									alt="Fintech Indonesia"
+									objectFit="contain"
+									w="auto"
+									h="auto"
+									maw={200}
+									mah={48}
+									className="transition-all duration-300 lg:opacity-80 lg:grayscale lg:hover:opacity-100 lg:hover:grayscale-0"
+								/>
+								<Image
+									src="/images/logo/logo-apuvindo.svg"
+									alt="Asosiasi Pasar Uang dan Pasar Valuta Asing Indonesia"
+									w="auto"
+									h="auto"
+									maw={200}
+									mah={48}
+									className="transition-all duration-300 lg:opacity-80 lg:grayscale lg:hover:opacity-100 lg:hover:grayscale-0"
+								/>
+								<Image
+									src="/images/logo/logo-lppi.svg"
+									alt="LPPI"
+									w="auto"
+									h="auto"
+									maw={200}
+									mah={48}
+									className="transition-all duration-300 lg:opacity-80 lg:grayscale lg:hover:opacity-100 lg:hover:grayscale-0"
+								/>
+							</Flex>
 						</Stack>
 					</Container>
 				</Box>
@@ -443,7 +529,12 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 										c="white"
 										className="z-3"
 									>
-										<Text mb="lg">{team.desc}</Text>
+										<Text
+											mb="lg"
+											className="transition lg:opacity-0 lg:group-hover:opacity-100"
+										>
+											{team.desc}
+										</Text>
 										<Text
 											span
 											size="sm"
@@ -490,9 +581,9 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 								fz={10}
 								fw={500}
 							>
-								Ilustrasi Penggunaan
+								Suara Pengguna
 							</Badge>
-							<Title order={2}>Gambaran manfaat untuk berbagai kebutuhan</Title>
+							<Title order={2}>Apa Kata Mereka Tentang KarsaKito?</Title>
 						</Stack>
 						<Carousel
 							slideSize={{

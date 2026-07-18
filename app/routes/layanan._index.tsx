@@ -321,9 +321,9 @@ export default function LayananRoute({ loaderData }: Route.ComponentProps) {
 									fz={10}
 									fw={500}
 								>
-									Ilustrasi Penggunaan
+									Suara Pengguna
 								</Badge>
-								<Title order={2}>Gambaran manfaat untuk berbagai kebutuhan</Title>
+								<Title order={2}>Apa Kata Mereka Tentang KarsaKito?</Title>
 							</Stack>
 							<Carousel
 								slideSize={{

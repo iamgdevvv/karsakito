@@ -13,7 +13,6 @@ import {
 	Stack,
 	Text,
 	ThemeIcon,
-	Title,
 	Tooltip,
 } from '@mantine/core';
 import { useFullscreenDocument, useMap, useMediaQuery } from '@mantine/hooks';
@@ -176,12 +175,6 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 	return (
 		<div className="site">
 			<AppPanel className="site-main">
-				<Title
-					order={1}
-					className="visually-hidden"
-				>
-					Workspace KarsaKito
-				</Title>
 				<Group gap={6}>
 					<Popover
 						opened={openBalanceUser}
@@ -203,7 +196,8 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 								variant="light"
 								color="yellow"
 								tt="capitalize"
-								onClick={() => setOpenBalanceUser((opened) => !opened)}
+								onMouseEnter={() => setOpenBalanceUser(true)}
+								onMouseLeave={() => setOpenBalanceUser(false)}
 								aria-expanded={openBalanceUser}
 								aria-controls="balance-details"
 								aria-label={`Lihat rincian saldo: ${totalTokenBalance} Token`}
