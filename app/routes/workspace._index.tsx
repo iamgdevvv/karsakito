@@ -202,7 +202,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 								aria-controls="balance-details"
 								aria-label={`Lihat rincian saldo: ${totalTokenBalance} Token`}
 							>
-								Token{' '}
+								🪙{' '}
 								<Text
 									span
 									inherit
