@@ -140,21 +140,12 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-	// let message = 'Oops!';
-	// let details = 'An unexpected error occurred.';
-	// let stack: string | undefined;
 	let statusCode: number = 404;
 
 	if (isRouteErrorResponse(error)) {
 		statusCode = error.status;
-		// message = error.status === 404 ? '404' : 'Error';
-		// details =
-		// 	error.status === 404
-		// 		? 'The requested page could not be found.'
-		// 		: error.statusText || details;
 	} else if (import.meta.env.DEV && error && error instanceof Error) {
-		// details = error.message;
-		// stack = error.stack;
+		console.log('ErrorBoundary', error);
 	}
 
 	return (

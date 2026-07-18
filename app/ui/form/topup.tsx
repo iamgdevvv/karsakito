@@ -3,24 +3,22 @@ import {
 	Badge,
 	Box,
 	Button,
-	Center,
 	Group,
 	Modal,
+	NumberInput,
 	Stack,
 	Text,
-	TextInput,
 	ThemeIcon,
 	type BoxProps,
 } from '@mantine/core';
-import { useState } from 'react';
-import { LuGift, LuSparkles, LuCrown, LuGem, LuPencil } from 'react-icons/lu';
-import { PiHandCoinsFill, PiCoinsFill } from 'react-icons/pi';
-import { cn } from '~app-modules/utils';
+import { useMemo, useState } from 'react';
+import { LuCrown, LuGem, LuGift, LuPencil, LuSparkles } from 'react-icons/lu';
+import { PiCoinsFill, PiHandCoinsFill } from 'react-icons/pi';
+import { cn, displayPrice } from '~app-modules/utils';
 
 type TokenPackage = {
 	id: string;
 	token: number;
-	price: number;
 	label: string;
 	description: string;
 	icon: React.ReactNode;
@@ -28,13 +26,10 @@ type TokenPackage = {
 	popular?: boolean;
 };
 
-// NOTE: Hanya mockup UI — fitur topup belum siap (button "Coming Soon").
-// Harga & paket di bawah adalah placeholder, silakan disesuaikan kemudian.
 const tokenPackages: TokenPackage[] = [
 	{
 		id: 'pkg-50',
-		token: 50,
-		price: 10000,
+		token: 200,
 		label: 'Starter',
 		description: 'Cocok untuk coba-coba',
 		icon: <LuSparkles size={22} />,
@@ -42,8 +37,7 @@ const tokenPackages: TokenPackage[] = [
 	},
 	{
 		id: 'pkg-100',
-		token: 100,
-		price: 18000,
+		token: 500,
 		label: 'Basic',
 		description: 'Paling laris untuk harian',
 		icon: <LuGift size={22} />,
@@ -52,8 +46,7 @@ const tokenPackages: TokenPackage[] = [
 	},
 	{
 		id: 'pkg-200',
-		token: 200,
-		price: 35000,
+		token: 800,
 		label: 'Plus',
 		description: 'Lebih hemat untuk produktif',
 		icon: <LuGem size={22} />,
@@ -61,8 +54,7 @@ const tokenPackages: TokenPackage[] = [
 	},
 	{
 		id: 'pkg-500',
-		token: 500,
-		price: 80000,
+		token: 1000,
 		label: 'Pro',
 		description: 'Untuk pengguna aktif',
 		icon: <LuCrown size={22} />,
@@ -73,54 +65,56 @@ const tokenPackages: TokenPackage[] = [
 const CUSTOM_PACKAGE_ID = 'pkg-custom';
 const MIN_CUSTOM_PRICE = 10000;
 const CUSTOM_PRICE_STEP = 1000;
-
-// NOTE: Mock rate token per rupiah (estimasi). Sesuaikan kemudian saat payment siap.
-// Paket Basic: 100 token / Rp18.000 ≈ 1 token per Rp180 → dibulatkan jadi Rp200/token (mock).
-const TOKEN_PER_RUPIAH = 1 / 200;
-
-const formatPrice = (price: number) => {
-	return new Intl.NumberFormat('id-ID', {
-		style: 'currency',
-		currency: 'IDR',
-		minimumFractionDigits: 0,
-	}).format(price);
-};
+const TOKEN_PER_RUPIAH = 50;
 
 export default function FormTopup({ ...props }: BoxProps) {
 	const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
-	const [customPrice, setCustomPrice] = useState<string>('');
+	const [customPrice, setCustomPrice] = useState<number | undefined>(undefined);
 	const [customModalOpened, setCustomModalOpened] = useState(false);
 	const selected = tokenPackages.find((p) => p.id === selectedPackage);
 	const isCustom = selectedPackage === CUSTOM_PACKAGE_ID;
 
-	// Validasi nominal custom: minimal Rp10.000 & kelipatan Rp1.000 (tanpa ratusan/puluhan).
-	// Dihitung saat modal dibuka / user input — TIDAK bergantung isCustom (selectedPackage).
-	const customPriceNumber = customPrice ? Number(customPrice) : 0;
-	const hasInput = customPrice.trim() !== '';
-	const customError = !hasInput
-		? null
-		: Number.isNaN(customPriceNumber) || customPriceNumber < MIN_CUSTOM_PRICE
-			? `Minimal ${formatPrice(MIN_CUSTOM_PRICE)}`
-			: customPriceNumber % CUSTOM_PRICE_STEP !== 0
-				? `Harus kelipatan ${formatPrice(CUSTOM_PRICE_STEP)} (contoh: 10.000, 11.000)`
-				: null;
+	const customToken = useMemo(() => {
+		if (customPrice) {
+			return Math.round(customPrice / TOKEN_PER_RUPIAH);
+		}
 
-	// Estimasi token dari nominal custom (mock rate).
-	const estimatedToken =
-		isCustom && !customError ? Math.floor(customPriceNumber * TOKEN_PER_RUPIAH) : 0;
+		return 0;
+	}, [customPrice]);
 
-	// Ringkasan dipakai bersama: paket tetap atau custom.
-	const summary = isCustom
-		? customError
-			? null
-			: {
-					label: 'Custom',
-					token: estimatedToken,
-					price: customPriceNumber,
-				}
-		: selected
-			? { label: selected.label, token: selected.token, price: selected.price }
-			: null;
+	const summaryBiling = useMemo(() => {
+		if (isCustom && customPrice) {
+			return {
+				label: 'Custom',
+				token: customToken,
+				price: customPrice,
+			};
+		}
+
+		if (selected) {
+			return {
+				label: selected.label,
+				token: selected.token,
+				price: selected.token * TOKEN_PER_RUPIAH,
+			};
+		}
+
+		return null;
+	}, [isCustom, selected, customToken, customPrice]);
+
+	const customPriceError = useMemo(() => {
+		if (isCustom && customPrice !== undefined) {
+			if (customPrice < MIN_CUSTOM_PRICE) {
+				return `Minimal ${displayPrice(MIN_CUSTOM_PRICE)}`;
+			}
+
+			if (customPrice % CUSTOM_PRICE_STEP !== 0) {
+				return `Harus kelipatan ${displayPrice(CUSTOM_PRICE_STEP)} (contoh: 10.000, 11.000)`;
+			}
+		}
+
+		return null;
+	}, []);
 
 	return (
 		<Box
@@ -209,11 +203,11 @@ export default function FormTopup({ ...props }: BoxProps) {
 											{pkg.popular ? (
 												<Badge
 													size="xs"
-													variant="filled"
+													variant="light"
 													color="primary"
 													tt="none"
 												>
-													Popular
+													Pilihan Terbaik
 												</Badge>
 											) : null}
 										</Group>
@@ -245,7 +239,7 @@ export default function FormTopup({ ...props }: BoxProps) {
 										size="xs"
 										fw={600}
 									>
-										{formatPrice(pkg.price)}
+										{displayPrice(pkg.token * TOKEN_PER_RUPIAH)}
 									</Text>
 								</Stack>
 							</Group>
@@ -293,9 +287,9 @@ export default function FormTopup({ ...props }: BoxProps) {
 									size="xs"
 									c="dimmed"
 								>
-									{isCustom && !customError
-										? `${formatPrice(customPriceNumber)} • ${estimatedToken} token`
-										: `Masukkan nominal sendiri (min. ${formatPrice(MIN_CUSTOM_PRICE)})`}
+									{customPrice && !customPriceError
+										? `${displayPrice(customPrice)} • ${customToken} token`
+										: `Masukkan nominal sendiri (min. ${displayPrice(MIN_CUSTOM_PRICE)})`}
 								</Text>
 							</Stack>
 						</Group>
@@ -312,7 +306,7 @@ export default function FormTopup({ ...props }: BoxProps) {
 				</Box>
 			</Stack>
 
-			{summary ? (
+			{summaryBiling ? (
 				<Stack
 					gap="xs"
 					p="md"
@@ -333,8 +327,8 @@ export default function FormTopup({ ...props }: BoxProps) {
 							fw={600}
 						>
 							{isCustom
-								? `${summary.token} token`
-								: `${summary.label} (${summary.token} token)`}
+								? `${summaryBiling.token} token`
+								: `${summaryBiling.label} (${summaryBiling.token} token)`}
 						</Text>
 					</Group>
 					<Group justify="space-between">
@@ -349,13 +343,16 @@ export default function FormTopup({ ...props }: BoxProps) {
 							fw={800}
 							c="primary"
 						>
-							{formatPrice(summary.price)}
+							{displayPrice(summaryBiling.price)}
 						</Text>
 					</Group>
 				</Stack>
 			) : null}
 
-			<Center>
+			<Group
+				justify="flex-end"
+				mt="lg"
+			>
 				<Button
 					type="button"
 					size="lg"
@@ -364,32 +361,47 @@ export default function FormTopup({ ...props }: BoxProps) {
 				>
 					Coming Soon
 				</Button>
-			</Center>
+			</Group>
 
 			<Modal
 				opened={customModalOpened}
 				onClose={() => setCustomModalOpened(false)}
-				title="Topup Custom"
+				title={
+					<Text
+						span
+						size="md"
+						fw={700}
+					>
+						Topup Custom
+					</Text>
+				}
 				size="sm"
 				centered
 			>
 				<Stack gap="md">
-					<TextInput
+					<NumberInput
 						label="Nominal Topup"
-						description={`Min. ${formatPrice(MIN_CUSTOM_PRICE)}, kelipatan ${formatPrice(CUSTOM_PRICE_STEP)} (tanpa titik/koma)`}
+						description={
+							<Text
+								span
+								size="xs"
+							>
+								Min. {displayPrice(MIN_CUSTOM_PRICE)}, kelipatan{' '}
+								{displayPrice(CUSTOM_PRICE_STEP)} (tanpa titik/koma)
+							</Text>
+						}
 						placeholder="Contoh: 15000"
-						inputMode="numeric"
 						leftSection="Rp"
 						value={customPrice}
-						error={customError}
-						onChange={(event) => {
-							// Hanya terima digit angka, buang karakter lain (titik, koma, huruf).
-							const digits = event.currentTarget.value.replace(/[^\d]/g, '');
-							setCustomPrice(digits);
+						onChange={(value) => {
+							setCustomPrice(Number(value));
 						}}
+						min={MIN_CUSTOM_PRICE}
+						step={CUSTOM_PRICE_STEP}
+						error={customPriceError}
 					/>
 
-					{!customError && customPriceNumber >= MIN_CUSTOM_PRICE ? (
+					{customPrice && customPrice >= MIN_CUSTOM_PRICE ? (
 						<Group
 							justify="space-between"
 							p="sm"
@@ -408,7 +420,7 @@ export default function FormTopup({ ...props }: BoxProps) {
 									size="sm"
 									fw={700}
 								>
-									{estimatedToken} token
+									{customToken} token
 								</Text>
 							</Stack>
 							<Stack
@@ -426,26 +438,27 @@ export default function FormTopup({ ...props }: BoxProps) {
 									fw={800}
 									c="primary"
 								>
-									{formatPrice(customPriceNumber)}
+									{displayPrice(customPrice)}
 								</Text>
 							</Stack>
 						</Group>
 					) : null}
 
-					<Button
-						type="button"
-						disabled={
-							!hasInput ||
-							Boolean(customError) ||
-							customPriceNumber < MIN_CUSTOM_PRICE
-						}
-						onClick={() => {
-							setSelectedPackage(CUSTOM_PACKAGE_ID);
-							setCustomModalOpened(false);
-						}}
-					>
-						Pilih Nominal
-					</Button>
+					<Group justify="flex-end">
+						<Button
+							type="button"
+							disabled={
+								Boolean(customPriceError) ||
+								Boolean(customPrice && customPrice < MIN_CUSTOM_PRICE)
+							}
+							onClick={() => {
+								setSelectedPackage(CUSTOM_PACKAGE_ID);
+								setCustomModalOpened(false);
+							}}
+						>
+							Pilih Nominal
+						</Button>
+					</Group>
 				</Stack>
 			</Modal>
 		</Box>

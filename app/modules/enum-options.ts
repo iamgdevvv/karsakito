@@ -1,6 +1,11 @@
 import type { LanguageApp } from '~app-modules/schema/app';
 import { TimezoneSchema } from '~app-modules/schema/enum';
-import { type KarsaAppsCategory, type KarsaAppsName, type UserRole } from '~generated/prisma/enums';
+import {
+	BalanceActivityType,
+	type KarsaAppsCategory,
+	type KarsaAppsName,
+	type UserRole,
+} from '~generated/prisma/enums';
 
 export const amountTokenDaily = 100;
 
@@ -71,6 +76,13 @@ export const optionsUserRole = Object.entries(labelUserRole).map(([value, label]
 	label,
 	value,
 }));
+
+export const labelActivityType = {
+	DAILY_BONUS: 'Bonus Harian',
+	GIVEAWAY: 'Hadiah',
+	KARSA: 'Penggunaan AI',
+	PURCHASE: 'Pembelian Token',
+} as const satisfies Record<BalanceActivityType, string>;
 
 export const optionsTimezone = Object.values(TimezoneSchema.enum);
 

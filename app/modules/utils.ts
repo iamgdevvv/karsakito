@@ -153,3 +153,11 @@ export function getYoutubeId(url: string) {
 		return undefined;
 	}
 }
+
+export function displayPrice(price: number) {
+	return new Intl.NumberFormat('id-ID', {
+		style: 'currency',
+		currency: 'IDR',
+		minimumFractionDigits: 0,
+	}).format(price);
+}

@@ -1,26 +1,28 @@
 import {
 	Badge,
-	Box,
 	Center,
 	DataList,
+	Flex,
 	Group,
 	Loader,
+	ScrollArea,
 	SimpleGrid,
 	Stack,
 	Text,
 	ThemeIcon,
 	Timeline,
 	Title,
+	type StackProps,
 } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import { notifications } from '@mantine/notifications';
 import { useCallback, useMemo } from 'react';
 import { LiaMoneyBillWaveSolid } from 'react-icons/lia';
-import { LuGift, LuHandHeart, LuWallet } from 'react-icons/lu';
-import { PiCoinsFill, PiListChecksFill, PiLightningFill } from 'react-icons/pi';
+import { LuCoins, LuGift, LuHandHeart, LuWallet } from 'react-icons/lu';
+import { PiCoinsFill, PiLightningFill } from 'react-icons/pi';
 import { TbApiApp } from 'react-icons/tb';
 import { replace, useNavigation, useSearchParams } from 'react-router';
-import { labelAppName } from '~app-modules/enum-options';
+import { labelActivityType, labelAppName } from '~app-modules/enum-options';
 import { metaDashboardRoute } from '~app-modules/meta';
 import {
 	PayloadQueryBalanceUserSchema,
@@ -33,30 +35,8 @@ import { authGetSession } from '~app-server/session';
 import Footer from '~app-ui/layouts/footer';
 import { HeaderDashboard } from '~app-ui/layouts/header';
 import { DashboardPanel } from '~app-ui/layouts/panel';
-import type { KarsaAppsName } from '~generated/prisma/enums';
 
 import type { Route } from './+types/dashboard.usage';
-
-type BalanceActivityWithRelations = {
-	id: string;
-	type: string;
-	token: number;
-	tokenBefore: number;
-	tokenAfter: number;
-	tokenDailyBefore: number;
-	tokenDailyAfter: number;
-	description: string | null;
-	createdAt: Date;
-	sender: { id: string; name: string } | null;
-	karsa: { app: string } | null;
-};
-
-const labelActivityType: Record<string, string> = {
-	DAILY_BONUS: 'Bonus Harian',
-	GIVEAWAY: 'Hadiah',
-	KARSA: 'Penggunaan AI',
-	PURCHASE: 'Pembelian Token',
-};
 
 const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) => {
 	const authSession = await authGetSession(request);
@@ -84,33 +64,15 @@ export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 export async function loader({ request, context }: Route.LoaderArgs) {
 	const user = context.get(authUserCtx)!;
 
-	const url = new URL(request.url);
-	const parsedParams = PayloadQueryBalanceUserSchema.safeParse(
-		Object.fromEntries(url.searchParams),
-	).data;
-
-	// Default: filter ke hari ini (sesuai timezone user) kalau tidak ada filter di URL.
-	const hasFilterInUrl = Boolean(parsedParams?.activityStartAt && parsedParams?.activityEndAt);
-	const today = dayjs(undefined, user.timezone);
-	const queryParams: PayloadQueryBalanceUser = hasFilterInUrl
-		? (parsedParams as PayloadQueryBalanceUser)
-		: {
-				activityStartAt: today.startOf('day').toDate(),
-				activityEndAt: today.endOf('day').toDate(),
-			};
-
 	const userBalance = await actionGetBalanceUser({
-		userId: user.id,
+		request,
 		context,
 		withActivities: true,
-		activityStartAt: queryParams.activityStartAt,
-		activityEndAt: queryParams.activityEndAt,
 	});
 
 	return {
 		user,
-		userBalance,
-		params: queryParams,
+		result: userBalance,
 	};
 }
 
@@ -125,22 +87,11 @@ export default function UsageDashboardRoute({ loaderData }: Route.ComponentProps
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	const queryParams = useMemo(() => {
-		const parsed = PayloadQueryBalanceUserSchema.safeParse(
-			Object.fromEntries(searchParams),
-		).data;
-		const hasFilter = Boolean(parsed?.activityStartAt && parsed?.activityEndAt);
-
-		if (hasFilter) {
-			return parsed as PayloadQueryBalanceUser;
-		}
-
-		// Default: filter ke hari ini (sesuai timezone user) kalau tidak ada filter di URL.
-		const today = dayjs(undefined, loaderData.user.timezone);
 		return {
-			activityStartAt: today.startOf('day').toDate(),
-			activityEndAt: today.endOf('day').toDate(),
+			...PayloadQueryBalanceUserSchema.safeParse(Object.fromEntries(searchParams)).data,
+			...loaderData.result.params,
 		};
-	}, [searchParams, loaderData.user.timezone]);
+	}, [loaderData.result.params, searchParams]);
 
 	const handlerSearchParams = useCallback(
 		(payload: PayloadQueryBalanceUser) => {
@@ -154,11 +105,8 @@ export default function UsageDashboardRoute({ loaderData }: Route.ComponentProps
 		[queryParams],
 	);
 
-	const balance = 'data' in loaderData.userBalance ? loaderData.userBalance.data : null;
-	const activities: BalanceActivityWithRelations[] =
-		balance && 'activities' in balance && balance.activities
-			? (balance.activities as unknown as BalanceActivityWithRelations[])
-			: [];
+	const balance = useMemo(() => loaderData.result.data, [loaderData.result]);
+	const activities = useMemo(() => balance?.activities || [], [balance]);
 	const hasActivityFilter = Boolean(queryParams.activityStartAt && queryParams.activityEndAt);
 
 	const totalDipakai = useMemo(() => {
@@ -180,36 +128,48 @@ export default function UsageDashboardRoute({ loaderData }: Route.ComponentProps
 				</Text>
 
 				<SimpleGrid
-					cols={{ base: 2, md: 4 }}
+					spacing={{
+						base: 'xs',
+						sm: 'md',
+					}}
+					cols={{ base: 1, sm: 2, md: 4 }}
 					mb="lg"
 				>
 					<StatCard
-						label="Saldo Token"
+						label="Token Utama"
 						value={balance?.token ?? 0}
-						sublabel="Token reguler"
-						icon={<PiCoinsFill size={20} />}
-						color="teal"
+						sublabel="Sisa Token Utama"
+						icon={<PiCoinsFill size={16} />}
+						color="yellow"
 					/>
 					<StatCard
 						label="Token Harian"
 						value={balance?.tokenDaily ?? 0}
-						sublabel="Direset tiap hari"
-						icon={<LuGift size={20} />}
-						color="grape"
+						sublabel="Sisa Token Bonus Harian"
+						icon={<LuCoins size={16} />}
+						color="blue"
 					/>
 					<StatCard
-						label="Total Dipakai"
+						label="Penggunaan Token"
 						value={totalDipakai}
-						sublabel={hasActivityFilter ? 'Dalam rentang' : 'Sepanjang waktu'}
-						icon={<PiLightningFill size={20} />}
+						sublabel={
+							dayjs(queryParams.activityStartAt).format('DD MMMM YYYY') +
+							' - ' +
+							dayjs(queryParams.activityEndAt).format('DD MMMM YYYY')
+						}
+						icon={<PiLightningFill size={16} />}
 						color="orange"
 					/>
 					<StatCard
-						label="Total Transaksi"
+						label="Total Karsa"
 						value={totalTransaksi}
-						sublabel={hasActivityFilter ? 'Dalam rentang' : 'Sepanjang waktu'}
-						icon={<PiListChecksFill size={20} />}
-						color="blue"
+						sublabel={
+							dayjs(queryParams.activityStartAt).format('DD MMMM YYYY') +
+							' - ' +
+							dayjs(queryParams.activityEndAt).format('DD MMMM YYYY')
+						}
+						icon={<TbApiApp size={16} />}
+						color="primary"
 					/>
 				</SimpleGrid>
 
@@ -221,7 +181,7 @@ export default function UsageDashboardRoute({ loaderData }: Route.ComponentProps
 						order={3}
 						size="h4"
 					>
-						Riwayat Transaksi
+						Riwayat Token
 					</Title>
 					<DatePickerInput
 						type="range"
@@ -233,15 +193,15 @@ export default function UsageDashboardRoute({ loaderData }: Route.ComponentProps
 						valueFormat="DD MMM YYYY"
 						readOnly={navigation.state === 'loading'}
 						defaultValue={[
-							loaderData.params.activityStartAt
+							queryParams.activityStartAt
 								? dayjs(
-										loaderData.params.activityStartAt,
+										queryParams.activityStartAt,
 										loaderData.user.timezone,
 									).toDate()
 								: null,
-							loaderData.params.activityEndAt
+							queryParams.activityEndAt
 								? dayjs(
-										loaderData.params.activityEndAt,
+										queryParams.activityEndAt,
 										loaderData.user.timezone,
 									).toDate()
 								: null,
@@ -276,105 +236,114 @@ export default function UsageDashboardRoute({ loaderData }: Route.ComponentProps
 						<Loader />
 					</Center>
 				) : activities.length ? (
-					<Timeline
-						active={activities.length}
-						lineWidth={2}
-						bulletSize={24}
-					>
-						{activities.map((activity, index) => (
-							<Timeline.Item
-								key={`${activity.id}-${index}`}
-								bullet={
-									activity.type === 'DAILY_BONUS' ? (
-										<LuGift />
-									) : activity.type === 'GIVEAWAY' ? (
-										<LuHandHeart />
-									) : activity.type === 'KARSA' ? (
-										<TbApiApp />
-									) : activity.type === 'PURCHASE' ? (
-										<LiaMoneyBillWaveSolid />
-									) : undefined
-								}
-								title={
-									<Group
-										gap="xs"
-										wrap="wrap"
-									>
-										<Text
-											span
-											size="sm"
-											fw={700}
+					<ScrollArea.Autosize mah={600}>
+						<Timeline
+							active={activities.length}
+							lineWidth={2}
+							bulletSize={24}
+						>
+							{activities.map((activity, index) => (
+								<Timeline.Item
+									key={`${activity.id}-${index}`}
+									bullet={
+										activity.type === 'DAILY_BONUS' ? (
+											<LuGift />
+										) : activity.type === 'GIVEAWAY' ? (
+											<LuHandHeart />
+										) : activity.type === 'KARSA' ? (
+											<TbApiApp />
+										) : activity.type === 'PURCHASE' ? (
+											<LiaMoneyBillWaveSolid />
+										) : undefined
+									}
+									title={
+										<Group
+											gap="xs"
+											wrap="wrap"
 										>
-											{activity.type === 'KARSA' && activity.karsa?.app
-												? labelAppName[activity.karsa.app as KarsaAppsName]
-												: labelActivityType[activity.type]}
-										</Text>
-										<Badge
-											size="xs"
-											variant="light"
-											color={activity.type === 'KARSA' ? 'orange' : 'green'}
-											tt="none"
-										>
-											{activity.type === 'KARSA' ? '-' : '+'}
-											{activity.token}
-										</Badge>
-										{activity.sender ? (
+											<Text
+												span
+												size="sm"
+												fw={700}
+											>
+												{activity.type === 'KARSA' &&
+												'karsa' in activity &&
+												activity.karsa?.app
+													? labelAppName[activity.karsa.app]
+													: labelActivityType[activity.type]}
+											</Text>
 											<Badge
 												size="xs"
 												variant="light"
-												color="gray"
+												color={
+													activity.type === 'KARSA' ? 'orange' : 'green'
+												}
 												tt="none"
 											>
-												dari {activity.sender.name}
+												{activity.type === 'KARSA' ? '-' : '+'}
+												{activity.token}
 											</Badge>
-										) : null}
-									</Group>
-								}
-							>
-								<Stack
-									gap={2}
-									title={dayjs(
-										activity.createdAt,
-										loaderData.user.timezone,
-									).toString()}
+											{'sender' in activity && activity.sender ? (
+												<Badge
+													size="xs"
+													variant="light"
+													color="gray"
+													tt="none"
+												>
+													dari {activity.sender.name}
+												</Badge>
+											) : null}
+										</Group>
+									}
 								>
-									<DataList
-										size="xs"
+									<Stack
 										gap={2}
-									>
-										<DataList.Item>
-											<DataList.ItemLabel>Saldo Harian</DataList.ItemLabel>
-											<DataList.ItemValue fw={600}>
-												{activity.tokenDailyBefore} →{' '}
-												{activity.tokenDailyAfter}
-											</DataList.ItemValue>
-										</DataList.Item>
-									</DataList>
-
-									{activity.description ? (
-										<Text
-											c="dimmed"
-											fw={400}
-											size="xs"
-										>
-											{activity.description}
-										</Text>
-									) : null}
-
-									<Text
-										span
-										size="xs"
-										c="dimmed"
-									>
-										{dayjs(
+										title={dayjs(
 											activity.createdAt,
 											loaderData.user.timezone,
-										).fromNow()}
-									</Text>
-								</Stack>
-							</Timeline.Item>
-						))}
-					</Timeline>
+										).toString()}
+									>
+										<DataList
+											size="xs"
+											gap={2}
+											orientation="vertical"
+										>
+											<DataList.Item>
+												<DataList.ItemLabel>
+													Perubahan Token
+												</DataList.ItemLabel>
+												<DataList.ItemValue fw={600}>
+													{activity.tokenDailyBefore} →{' '}
+													{activity.tokenDailyAfter}
+												</DataList.ItemValue>
+											</DataList.Item>
+										</DataList>
+
+										{activity.description ? (
+											<Text
+												c="dimmed"
+												fw={400}
+												size="xs"
+											>
+												{activity.description}
+											</Text>
+										) : null}
+
+										<Text
+											span
+											size="xs"
+											c="dimmed"
+										>
+											{dayjs(
+												activity.createdAt,
+												loaderData.user.timezone,
+											).fromNow()}
+										</Text>
+									</Stack>
+								</Timeline.Item>
+							))}
+						</Timeline>
+					</ScrollArea.Autosize>
 				) : (
 					<Text
 						c="dimmed"
@@ -397,27 +366,33 @@ function StatCard({
 	sublabel,
 	icon,
 	color,
+	...props
 }: {
 	label: string;
 	value: number;
 	sublabel: string;
 	icon: React.ReactNode;
 	color: string;
-}) {
+} & StackProps) {
 	return (
-		<Box
+		<Stack
+			gap={0}
 			p="md"
 			bd="1px solid gray.2"
 			bdrs="lg"
 			bg="white"
+			{...props}
 		>
-			<Group
+			<Flex
+				align="center"
 				justify="space-between"
 				mb="xs"
 			>
 				<Text
-					size="xs"
-					fw={600}
+					span
+					pr="xs"
+					fz={10}
+					fw={700}
 					c="dimmed"
 					tt="uppercase"
 				>
@@ -426,13 +401,16 @@ function StatCard({
 				<ThemeIcon
 					variant="light"
 					color={color}
+					w={28}
+					miw={28}
 					size="md"
 					radius="md"
 				>
 					{icon}
 				</ThemeIcon>
-			</Group>
+			</Flex>
 			<Text
+				span
 				size="xl"
 				fw={800}
 			>
@@ -444,6 +422,6 @@ function StatCard({
 			>
 				{sublabel}
 			</Text>
-		</Box>
+		</Stack>
 	);
 }

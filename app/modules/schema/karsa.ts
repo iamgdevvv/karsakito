@@ -20,30 +20,7 @@ export const PayloadKarsaPidatoSchema = z.object({
 
 export const PayloadKarsaPantunSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	type: z
-		.enum([
-			'Nasihat',
-			'Jenaka',
-			'Cinta',
-			'Persahabatan',
-			'Petuah',
-			'Pendidikan',
-			'Agama',
-			'Budaya',
-			'Adat',
-			'Penyambutan',
-			'Perpisahan',
-			'Ucapan Selamat',
-			'Terima Kasih',
-			'Permintaan Maaf',
-			'Sindiran',
-			'Kritik',
-			'Teka-Teki',
-			'Anak-anak',
-			'Lingkungan',
-			'Kebangsaan',
-		])
-		.default('Nasihat'),
+	type: z.string().nonempty(),
 	audience: z.string().nonempty(),
 	topic: z.string().nonempty(),
 	numberVerses: z.number().gt(0).nonnegative(),
@@ -51,117 +28,28 @@ export const PayloadKarsaPantunSchema = z.object({
 
 export const PayloadKarsaSyairSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	type: z
-		.enum([
-			'Nasihat',
-			'Jenaka',
-			'Cinta',
-			'Persahabatan',
-			'Petuah',
-			'Pendidikan',
-			'Agama',
-			'Budaya',
-			'Adat',
-			'Penyambutan',
-			'Perpisahan',
-			'Ucapan Selamat',
-			'Terima Kasih',
-			'Permintaan Maaf',
-			'Sindiran',
-			'Kritik',
-			'Teka-Teki',
-			'Anak-anak',
-			'Lingkungan',
-			'Kepemimpinan',
-			'Kebangsaan',
-		])
-		.default('Nasihat'),
+	type: z.string().nonempty(),
 	audience: z.string().nonempty(),
-	tone: z
-		.enum(['Klasik/Sastra Tinggi', 'Baku/Standar', 'Populer/Santai'])
-		.default('Baku/Standar'),
+	tone: z.string().nonempty(),
 	topic: z.string().nonempty(),
 	numberVerses: z.number().gt(0).nonnegative(),
 });
 
 export const PayloadKarsaPuisiSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	type: z
-		.enum([
-			'Nasihat',
-			'Jenaka',
-			'Cinta',
-			'Persahabatan',
-			'Petuah',
-			'Pendidikan',
-			'Agama',
-			'Budaya',
-			'Adat',
-			'Penyambutan',
-			'Perpisahan',
-			'Ucapan Selamat',
-			'Terima Kasih',
-			'Permintaan Maaf',
-			'Sindiran',
-			'Kritik',
-			'Teka-Teki',
-			'Anak-anak',
-			'Lingkungan',
-			'Kepemimpinan',
-			'Kebangsaan',
-		])
-		.default('Nasihat'),
+	type: z.string().nonempty(),
 	audience: z.string().nonempty(),
-	style: z
-		.enum(['Bebas (Kontemporer)', 'Berima Rapat (A-A-A-A)', 'Berima Silang (A-B-A-B)'])
-		.default('Bebas (Kontemporer)'),
-	effect: z
-		.enum([
-			'Dominan Metafora (Kiasan)',
-			'Dominan Personifikasi',
-			'Lugas (Tanpa Kiasan Rumit)',
-			'Campuran (Dinamis)',
-		])
-		.default('Campuran (Dinamis)'),
+	style: z.string().nonempty(),
+	effect: z.string().nonempty(),
 	topic: z.string().nonempty(),
 	numberVerses: z.number().gt(0).nonnegative(),
 });
 
 export const PayloadKarsaHymneSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	type: z
-		.enum([
-			'Nasihat',
-			'Jenaka',
-			'Cinta',
-			'Persahabatan',
-			'Petuah',
-			'Pendidikan',
-			'Agama',
-			'Budaya',
-			'Adat',
-			'Penyambutan',
-			'Perpisahan',
-			'Ucapan Selamat',
-			'Terima Kasih',
-			'Permintaan Maaf',
-			'Sindiran',
-			'Kritik',
-			'Teka-Teki',
-			'Anak-anak',
-			'Lingkungan',
-			'Kepemimpinan',
-			'Kebangsaan',
-		])
-		.default('Nasihat'),
+	type: z.string().nonempty(),
 	institution: z.string().nonempty(),
-	structure: z
-		.enum([
-			'Dengan Reff (Chorus Berulang)',
-			'Tanpa Reff (Strofik / Mengalir)',
-			'Bentuk Mars (Cepat & Tegas)',
-		])
-		.default('Dengan Reff (Chorus Berulang)'),
+	structure: z.string().nonempty(),
 	topic: z.string().nonempty(),
 	numberVerses: z.number().gt(0).nonnegative(),
 });
