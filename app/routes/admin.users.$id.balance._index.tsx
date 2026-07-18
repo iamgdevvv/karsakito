@@ -5,6 +5,7 @@ import {
 	DataList,
 	Group,
 	Loader,
+	ScrollArea,
 	Stack,
 	Text,
 	Timeline,
@@ -242,114 +243,127 @@ export default function BalanceUserAdminRoute({ loaderData }: Route.ComponentPro
 				) : loaderData.result.data.balances &&
 				  'activities' in loaderData.result.data.balances ? (
 					loaderData.result.data.balances.activities.length ? (
-						<Timeline
-							active={loaderData.result.data.balances.activities.length}
-							lineWidth={2}
-							bulletSize={24}
-						>
-							{loaderData.result.data.balances.activities.map((activity, index) => (
-								<Timeline.Item
-									key={`${activity.type}-${index}`}
-									bullet={
-										activity.type === 'DAILY_BONUS' ? (
-											<LuGift />
-										) : activity.type === 'GIVEAWAY' ? (
-											<LuHandHeart />
-										) : activity.type === 'KARSA' ? (
-											<TbApiApp />
-										) : activity.type === 'PURCHASE' ? (
-											<LiaMoneyBillWaveSolid />
-										) : undefined
-									}
-									title={
-										<Text
-											span
-											size="sm"
-											fw={700}
-										>
-											{activity.type}
-											{activity.type === 'KARSA' && activity.karsa?.app
-												? ` (${labelAppName[activity.karsa.app]})`
-												: ''}
-										</Text>
-									}
-								>
-									<Stack
-										gap={4}
-										title={dayjs(
-											activity.createdAt,
-											loaderData.user.timezone,
-										).toString()}
-									>
-										<DataList
-											size="xs"
-											gap={2}
-										>
-											<DataList.Item>
-												<DataList.ItemLabel>Token</DataList.ItemLabel>
-												<DataList.ItemValue
+						<ScrollArea.Autosize mah={600}>
+							<Timeline
+								active={loaderData.result.data.balances.activities.length}
+								lineWidth={2}
+								bulletSize={24}
+							>
+								{loaderData.result.data.balances.activities.map(
+									(activity, index) => (
+										<Timeline.Item
+											key={`${activity.type}-${index}`}
+											bullet={
+												activity.type === 'DAILY_BONUS' ? (
+													<LuGift />
+												) : activity.type === 'GIVEAWAY' ? (
+													<LuHandHeart />
+												) : activity.type === 'KARSA' ? (
+													<TbApiApp />
+												) : activity.type === 'PURCHASE' ? (
+													<LiaMoneyBillWaveSolid />
+												) : undefined
+											}
+											title={
+												<Text
+													span
+													size="sm"
 													fw={700}
-													c={activity.type === 'KARSA' ? 'red' : 'green'}
 												>
-													{activity.type === 'KARSA' ? '-' : '+'}
-													{activity.token}
-												</DataList.ItemValue>
-											</DataList.Item>
-											<DataList.Item>
-												<DataList.ItemLabel>
-													Token Before
-												</DataList.ItemLabel>
-												<DataList.ItemValue>
-													{activity.tokenBefore}
-												</DataList.ItemValue>
-											</DataList.Item>
-											<DataList.Item>
-												<DataList.ItemLabel>Token After</DataList.ItemLabel>
-												<DataList.ItemValue>
-													{activity.tokenAfter}
-												</DataList.ItemValue>
-											</DataList.Item>
-											<DataList.Item>
-												<DataList.ItemLabel>
-													Token Daily Before
-												</DataList.ItemLabel>
-												<DataList.ItemValue>
-													{activity.tokenDailyBefore}
-												</DataList.ItemValue>
-											</DataList.Item>
-											<DataList.Item>
-												<DataList.ItemLabel>
-													Token Daily After
-												</DataList.ItemLabel>
-												<DataList.ItemValue>
-													{activity.tokenDailyAfter}
-												</DataList.ItemValue>
-											</DataList.Item>
-										</DataList>
-
-										{activity.description ? (
-											<Text
-												c="dimmed"
-												fw={400}
-												size="xs"
-											>
-												{activity.description}
-											</Text>
-										) : null}
-
-										<Text
-											span
-											size="xs"
+													{activity.type}
+													{activity.type === 'KARSA' &&
+													activity.karsa?.app
+														? ` (${labelAppName[activity.karsa.app]})`
+														: ''}
+												</Text>
+											}
 										>
-											{dayjs(
-												activity.createdAt,
-												loaderData.user.timezone,
-											).fromNow()}
-										</Text>
-									</Stack>
-								</Timeline.Item>
-							))}
-						</Timeline>
+											<Stack
+												gap={4}
+												title={dayjs(
+													activity.createdAt,
+													loaderData.user.timezone,
+												).toString()}
+											>
+												<DataList
+													size="xs"
+													gap={2}
+												>
+													<DataList.Item>
+														<DataList.ItemLabel>
+															Token
+														</DataList.ItemLabel>
+														<DataList.ItemValue
+															fw={700}
+															c={
+																activity.type === 'KARSA'
+																	? 'red'
+																	: 'green'
+															}
+														>
+															{activity.type === 'KARSA' ? '-' : '+'}
+															{activity.token}
+														</DataList.ItemValue>
+													</DataList.Item>
+													<DataList.Item>
+														<DataList.ItemLabel>
+															Token Before
+														</DataList.ItemLabel>
+														<DataList.ItemValue>
+															{activity.tokenBefore}
+														</DataList.ItemValue>
+													</DataList.Item>
+													<DataList.Item>
+														<DataList.ItemLabel>
+															Token After
+														</DataList.ItemLabel>
+														<DataList.ItemValue>
+															{activity.tokenAfter}
+														</DataList.ItemValue>
+													</DataList.Item>
+													<DataList.Item>
+														<DataList.ItemLabel>
+															Token Daily Before
+														</DataList.ItemLabel>
+														<DataList.ItemValue>
+															{activity.tokenDailyBefore}
+														</DataList.ItemValue>
+													</DataList.Item>
+													<DataList.Item>
+														<DataList.ItemLabel>
+															Token Daily After
+														</DataList.ItemLabel>
+														<DataList.ItemValue>
+															{activity.tokenDailyAfter}
+														</DataList.ItemValue>
+													</DataList.Item>
+												</DataList>
+
+												{activity.description ? (
+													<Text
+														c="dimmed"
+														fw={400}
+														size="xs"
+													>
+														{activity.description}
+													</Text>
+												) : null}
+
+												<Text
+													span
+													size="xs"
+												>
+													{dayjs(
+														activity.createdAt,
+														loaderData.user.timezone,
+													).fromNow()}
+												</Text>
+											</Stack>
+										</Timeline.Item>
+									),
+								)}
+							</Timeline>
+						</ScrollArea.Autosize>
 					) : (
 						<Text
 							c="dimmed"

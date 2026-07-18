@@ -27,12 +27,16 @@ import FormKarsaAnalisaKalimat from '~app-ui/form/karsa/analisa-kalimat';
 import FormKarsaCeritaPanjang from '~app-ui/form/karsa/cerita-panjang';
 import FormKarsaCeritaPendek from '~app-ui/form/karsa/cerita-pendek';
 import FormKarsaDoaBersama from '~app-ui/form/karsa/doa-bersama';
+import FormKarsaHymne from '~app-ui/form/karsa/hymne';
 import FormKarsaMotto from '~app-ui/form/karsa/motto';
+import FormKarsaPantun from '~app-ui/form/karsa/pantun';
 import FormKarsaParafrase from '~app-ui/form/karsa/parafrase';
 import FormKarsaPetuah from '~app-ui/form/karsa/petuah';
 import FormKarsaPidato from '~app-ui/form/karsa/pidato';
+import FormKarsaPuisi from '~app-ui/form/karsa/puisi';
 import FormKarsaRangkuman from '~app-ui/form/karsa/rangkuman';
 import FormKarsaSlogan from '~app-ui/form/karsa/slogan';
+import FormKarsaSyair from '~app-ui/form/karsa/syair';
 import FormKarsaTagline from '~app-ui/form/karsa/tagline';
 import FormKarsaTekaTeki from '~app-ui/form/karsa/teka-teki';
 import FormKarsaTerjemahanDokumen from '~app-ui/form/karsa/terjemahan-dokumen';
@@ -120,8 +124,38 @@ export function WindowAppKarsaWriter({
 							backgroundSize: '16px 16px',
 						}}
 					>
-						{data.app === 'pidato' ? (
+						{data.app === 'pantun' ? (
+							<FormKarsaPantun
+								data={data}
+								onError={() => {
+									setActiveTab('options');
+								}}
+								onSubmitProgress={() => {
+									setResultAI(null);
+									setActiveTab('result');
+								}}
+								onSubmit={(values) => {
+									onSubmit(values);
+									setResultAI(values.result);
+								}}
+							/>
+						) : data.app === 'pidato' ? (
 							<FormKarsaPidato
+								data={data}
+								onError={() => {
+									setActiveTab('options');
+								}}
+								onSubmitProgress={() => {
+									setResultAI(null);
+									setActiveTab('result');
+								}}
+								onSubmit={(values) => {
+									onSubmit(values);
+									setResultAI(values.result);
+								}}
+							/>
+						) : data.app === 'puisi' ? (
+							<FormKarsaPuisi
 								data={data}
 								onError={() => {
 									setActiveTab('options');
@@ -137,6 +171,21 @@ export function WindowAppKarsaWriter({
 							/>
 						) : data.app === 'petuah' ? (
 							<FormKarsaPetuah
+								data={data}
+								onError={() => {
+									setActiveTab('options');
+								}}
+								onSubmitProgress={() => {
+									setResultAI(null);
+									setActiveTab('result');
+								}}
+								onSubmit={(values) => {
+									onSubmit(values);
+									setResultAI(values.result);
+								}}
+							/>
+						) : data.app === 'syair' ? (
+							<FormKarsaSyair
 								data={data}
 								onError={() => {
 									setActiveTab('options');
@@ -227,6 +276,21 @@ export function WindowAppKarsaWriter({
 							/>
 						) : data.app === 'doabersama' ? (
 							<FormKarsaDoaBersama
+								data={data}
+								onError={() => {
+									setActiveTab('options');
+								}}
+								onSubmitProgress={() => {
+									setResultAI(null);
+									setActiveTab('result');
+								}}
+								onSubmit={(values) => {
+									onSubmit(values);
+									setResultAI(values.result);
+								}}
+							/>
+						) : data.app === 'hymne' ? (
+							<FormKarsaHymne
 								data={data}
 								onError={() => {
 									setActiveTab('options');

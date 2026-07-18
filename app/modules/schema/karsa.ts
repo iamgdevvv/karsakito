@@ -26,6 +26,34 @@ export const PayloadKarsaPantunSchema = z.object({
 	numberVerses: z.number().gt(0).nonnegative(),
 });
 
+export const PayloadKarsaSyairSchema = z.object({
+	language: LanguageAppSchema.default('indonesia'),
+	type: z.string().nonempty(),
+	audience: z.string().nonempty(),
+	tone: z.string().nonempty(),
+	topic: z.string().nonempty(),
+	numberVerses: z.number().gt(0).nonnegative(),
+});
+
+export const PayloadKarsaPuisiSchema = z.object({
+	language: LanguageAppSchema.default('indonesia'),
+	type: z.string().nonempty(),
+	audience: z.string().nonempty(),
+	style: z.string().nonempty(),
+	effect: z.string().nonempty(),
+	topic: z.string().nonempty(),
+	numberVerses: z.number().gt(0).nonnegative(),
+});
+
+export const PayloadKarsaHymneSchema = z.object({
+	language: LanguageAppSchema.default('indonesia'),
+	type: z.string().nonempty(),
+	institution: z.string().nonempty(),
+	structure: z.string().nonempty(),
+	topic: z.string().nonempty(),
+	numberVerses: z.number().gt(0).nonnegative(),
+});
+
 export const PayloadKarsaPetuahSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
 	style: z.string().nonempty(),
@@ -178,6 +206,18 @@ export const PayloadSubmissionKarsaSchema = z
 				payload: PayloadKarsaPantunSchema,
 			}),
 			z.object({
+				app: z.literal(KarsaSchemaPlain.shape.app.enum.syair),
+				payload: PayloadKarsaSyairSchema,
+			}),
+			z.object({
+				app: z.literal(KarsaSchemaPlain.shape.app.enum.puisi),
+				payload: PayloadKarsaPuisiSchema,
+			}),
+			z.object({
+				app: z.literal(KarsaSchemaPlain.shape.app.enum.hymne),
+				payload: PayloadKarsaHymneSchema,
+			}),
+			z.object({
 				app: z.literal(KarsaSchemaPlain.shape.app.enum.petuah),
 				payload: PayloadKarsaPetuahSchema,
 			}),
@@ -249,6 +289,9 @@ export const PayloadSubmissionReactionKarsaSchema = z.object({
 export type KarsaPlain = z.infer<typeof KarsaSchemaPlain>;
 export type PayloadKarsaPidato = z.infer<typeof PayloadKarsaPidatoSchema>;
 export type PayloadKarsaPantun = z.infer<typeof PayloadKarsaPantunSchema>;
+export type PayloadKarsaSyair = z.infer<typeof PayloadKarsaSyairSchema>;
+export type PayloadKarsaPuisi = z.infer<typeof PayloadKarsaPuisiSchema>;
+export type PayloadKarsaHymne = z.infer<typeof PayloadKarsaHymneSchema>;
 export type PayloadKarsaPetuah = z.infer<typeof PayloadKarsaPetuahSchema>;
 export type PayloadKarsaTagline = z.infer<typeof PayloadKarsaTaglineSchema>;
 export type PayloadKarsaSlogan = z.infer<typeof PayloadKarsaSloganSchema>;

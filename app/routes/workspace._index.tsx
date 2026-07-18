@@ -63,12 +63,12 @@ const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) =>
 
 export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
-export async function loader({ context }: Route.LoaderArgs) {
+export async function loader({ request, context }: Route.LoaderArgs) {
 	const user = context.get(authUserCtx)!;
 	const [optionApps, userBalance] = await Promise.all([
 		actionGetKarsaAppsByCategory({ context }),
 		actionGetBalanceUser({
-			userId: user.id,
+			request,
 			context,
 		}),
 	]);

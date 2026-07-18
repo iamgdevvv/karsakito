@@ -517,7 +517,6 @@ export const actionGetUser = async ({
 }: {
 	userId: User['id']
 	withBalance?: boolean
-	withBalanceActivities?: boolean
 	request: Request
 	context: Readonly<RouterContextProvider>
 }) => {
@@ -540,11 +539,11 @@ export const actionGetUser = async ({
 		const queryParams = PayloadQueryBalanceUserSchema.parse(searchPayload);
 
 		if (!queryParams.activityStartAt) {
-			queryParams.activityStartAt = dayjs().startOf('month').toDate();
+			queryParams.activityStartAt = dayjs().startOf('week').toDate();
 		}
 
 		if (!queryParams.activityEndAt) {
-			queryParams.activityEndAt = dayjs().endOf('month').toDate();
+			queryParams.activityEndAt = dayjs().endOf('week').toDate();
 		}
 
 		return {
@@ -593,7 +592,10 @@ export const actionGetUser = async ({
 					} : Prisma.skip
 				}
 			}),
-			params: queryParams
+			params: {
+				...queryParams,
+				withBalance
+			}
 		}
 	} catch (error) {
 		console.log('actionGetUser', error)
