@@ -35,7 +35,6 @@ export default function Banner({ background, ctas, children, ...props }: Props) 
 			direction="column"
 			justify="center"
 			component="section"
-			role="banner"
 			data-slot="Banner"
 			className="bg-cover bg-fixed bg-center bg-no-repeat"
 			style={{

@@ -15,7 +15,7 @@ import {
 import { FiMail, FiMapPin } from 'react-icons/fi';
 import { getPublicFaqs } from '~app-modules/faqs';
 import { metaPublicRoute } from '~app-modules/meta';
-import { cfContext } from '~app-server/context';
+import { breadcrumbSchema, isCanonicalSiteRequest, pageSchema, seoSchema } from '~app-modules/seo';
 import { actionSendEmailContact } from '~app-server/email';
 import { authGetSession } from '~app-server/session';
 import FormContact from '~app-ui/form/contact';
@@ -25,22 +25,39 @@ import { Header } from '~app-ui/layouts/header';
 
 import type { Route } from './+types/hubungi';
 
-export async function loader({ request, context }: Route.LoaderArgs) {
+const pageTitle = 'Hubungi Kito | KarsaKito';
+const pageDescription =
+	'Hubungi tim Kito untuk menyampaikan pertanyaan, masukan, atau kebutuhan terkait KarsaKito.';
+
+export async function loader({ request }: Route.LoaderArgs) {
 	const authSession = await authGetSession(request);
 	const user = authSession.get('user');
 
 	return {
 		user,
-		noIndex: cfContext(context).env.NODE_ENV !== 'production',
+		noIndex: !isCanonicalSiteRequest(request),
 	};
 }
 
 export function meta({ loaderData }: Route.MetaArgs) {
 	return metaPublicRoute({
-		title: 'Hubungi KarsaKito',
-		description:
-			'Hubungi tim Kito untuk pertanyaan, masukan, atau kebutuhan terkait KarsaKito.',
+		title: pageTitle,
+		description: pageDescription,
 		noIndex: loaderData.noIndex,
+		canonicalPath: '/hubungi',
+		structuredData: seoSchema(
+			pageSchema({
+				name: pageTitle,
+				description: pageDescription,
+				path: '/hubungi',
+				type: 'ContactPage',
+				hasBreadcrumb: true,
+			}),
+			breadcrumbSchema('/hubungi', [
+				{ name: 'KarsaKito', path: '/' },
+				{ name: 'Hubungi Kito', path: '/hubungi' },
+			]),
+		),
 	});
 }
 
@@ -59,7 +76,11 @@ export default function HubungiRoute({ loaderData }: Route.ComponentProps) {
 	return (
 		<div className="site">
 			<Header authUser={loaderData.user} />
-			<main className="site-main">
+			<main
+				id="main-content"
+				tabIndex={-1}
+				className="site-main"
+			>
 				<Box
 					bg="gray.0"
 					component="section"
@@ -146,7 +167,6 @@ export default function HubungiRoute({ loaderData }: Route.ComponentProps) {
 												</Text>
 												<Anchor
 													href="mailto:info@karsakito.web.id"
-													target="_blank"
 													size="sm"
 													underline="hover"
 												>
@@ -219,6 +239,8 @@ export default function HubungiRoute({ loaderData }: Route.ComponentProps) {
 				<Box
 					pos="relative"
 					component="section"
+					id="faq"
+					aria-labelledby="faq-title-hubungi"
 					py={{
 						base: 48,
 						sm: 60,
@@ -240,7 +262,12 @@ export default function HubungiRoute({ loaderData }: Route.ComponentProps) {
 							>
 								FAQ
 							</Badge>
-							<Title order={2}>Pertanyaan yang sering ditanyakan</Title>
+							<Title
+								id="faq-title-hubungi"
+								order={2}
+							>
+								Pertanyaan yang sering ditanyakan
+							</Title>
 							<Text>Temukan jawaban singkat sebelum menghubungi Kito.</Text>
 						</Stack>
 

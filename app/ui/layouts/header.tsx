@@ -21,7 +21,7 @@ import { useHotkeys } from '@mantine/hooks';
 import { Spotlight, spotlight } from '@mantine/spotlight';
 import { useMemo } from 'react';
 import { HiOutlineSearch } from 'react-icons/hi';
-import { LuArrowUpRight, LuLogOut } from 'react-icons/lu';
+import { LuArrowUpRight, LuLogOut, LuMenu } from 'react-icons/lu';
 import { useNavigate, useNavigation } from 'react-router';
 import { adminSpotlight, dashboardSpotlight, staffSpotlight } from '~app-modules/spotlight';
 import { cn } from '~app-modules/utils';
@@ -247,10 +247,14 @@ export function Header({
 					{/* Logo */}
 					<Link
 						to="/"
-						aria-label="Logo KarsaKito"
+						aria-label="Beranda KarsaKito"
 					>
 						<Image
 							src="/logo.svg"
+							loading="eager"
+							fetchPriority="high"
+							width={144}
+							height={57}
 							w={{
 								base: 56,
 								lg: 64,
@@ -264,6 +268,8 @@ export function Header({
 					{/* Navigation */}
 					<Group gap="xl">
 						<Group
+							component="nav"
+							aria-label="Navigasi utama"
 							gap="lg"
 							visibleFrom="lg"
 						>
@@ -347,6 +353,61 @@ export function Header({
 									(Soon)
 								</Text>
 							</Group>
+						</Group>
+						<Group
+							component="nav"
+							aria-label="Navigasi utama seluler"
+							hiddenFrom="lg"
+						>
+							<Menu
+								position="bottom-end"
+								width={220}
+							>
+								<MenuTarget>
+									<ActionIcon
+										variant="light"
+										radius="full"
+										aria-label="Buka navigasi utama"
+									>
+										<LuMenu
+											size={18}
+											aria-hidden="true"
+										/>
+									</ActionIcon>
+								</MenuTarget>
+								<MenuDropdown>
+									<MenuItem
+										component={Link}
+										to="/tentang"
+									>
+										Tentang
+									</MenuItem>
+									<MenuItem
+										component={Link}
+										to="/layanan"
+									>
+										Layanan
+									</MenuItem>
+									<MenuItem
+										component={Link}
+										to="/biaya-layanan"
+									>
+										Biaya Layanan
+									</MenuItem>
+									<MenuItem
+										component={Link}
+										to="/hubungi"
+									>
+										Hubungi
+									</MenuItem>
+									<MenuItem
+										component={Link}
+										to="/faq"
+									>
+										FAQ
+									</MenuItem>
+								</MenuDropdown>
+							</Menu>
 						</Group>
 						<Group gap="xs">
 							{authUser ? (
@@ -480,10 +541,13 @@ export function HeaderApps({
 					{/* Logo */}
 					<Link
 						to="/"
-						aria-label="Logo KarsaKito"
+						aria-label="Beranda KarsaKito"
 					>
 						<Image
 							src="/logo.svg"
+							loading="eager"
+							width={144}
+							height={57}
 							w={{
 								base: 56,
 								lg: 64,
@@ -535,10 +599,13 @@ export function HeaderDashboard({
 					{/* Logo */}
 					<Link
 						to="/"
-						aria-label="Logo KarsaKito"
+						aria-label="Beranda KarsaKito"
 					>
 						<Image
 							src="/logo.svg"
+							loading="eager"
+							width={144}
+							height={57}
 							w={{
 								base: 56,
 								lg: 64,
@@ -575,6 +642,7 @@ export function HeaderDashboard({
 						<ActionIcon
 							hiddenFrom="lg"
 							onClick={spotlight.open}
+							aria-label="Buka pencarian tindakan"
 							variant="outline"
 							color="dark"
 							radius="full"
@@ -642,10 +710,13 @@ export function HeaderAdmin({
 					{/* Logo */}
 					<Link
 						to="/"
-						aria-label="Logo KarsaKito"
+						aria-label="Beranda KarsaKito"
 					>
 						<Image
 							src="/logo.svg"
+							loading="eager"
+							width={144}
+							height={57}
 							w={{
 								base: 56,
 								lg: 64,
@@ -683,6 +754,7 @@ export function HeaderAdmin({
 						<ActionIcon
 							hiddenFrom="lg"
 							onClick={spotlight.open}
+							aria-label="Buka pencarian tindakan"
 							variant="outline"
 							color="dark"
 							radius="full"

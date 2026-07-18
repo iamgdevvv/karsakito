@@ -161,11 +161,13 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 							</ButtonLink>
 							<TextInput
 								name="search"
+								aria-label="Cari pengguna"
 								defaultValue={queryParams?.search}
 								placeholder="Cari Pengguna..."
 								size="xs"
 								rightSection={
 									<ActionIcon
+										aria-label="Cari pengguna"
 										type="submit"
 										size="sm"
 										variant="subtle"
@@ -182,6 +184,7 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 							>
 								<Select
 									name="role"
+									aria-label="Filter peran pengguna"
 									size="xs"
 									defaultValue={queryParams?.role}
 									data={optionsUserRole}
@@ -198,6 +201,7 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 											disabled={!hasParamOrderBy}
 										>
 											<ActionIcon
+												aria-label="Atur urutan pengguna"
 												variant="outline"
 												radius="md"
 											>
@@ -317,6 +321,7 @@ export default function UsersAdminRoute({ loaderData }: Route.ComponentProps) {
 													>
 														<Menu.Target>
 															<ActionIcon
+																aria-label="Buka tindakan pengguna"
 																variant="outline"
 																radius="full"
 															>

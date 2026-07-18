@@ -115,6 +115,7 @@ export default function FormUpdateUser({
 						label="Nama"
 						placeholder="Contoh: Sari Wulandari"
 						name="name"
+						autoComplete="name"
 						key={form.key('name')}
 						readOnly={isLoading}
 						{...form.getInputProps('name')}
@@ -124,6 +125,8 @@ export default function FormUpdateUser({
 						label="Alamat email"
 						placeholder="nama@contoh.com"
 						name="email"
+						autoComplete="email"
+						spellCheck={false}
 						key={form.key('email')}
 						readOnly={isLoading}
 						{...form.getInputProps('email')}

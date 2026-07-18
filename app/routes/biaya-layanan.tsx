@@ -19,14 +19,18 @@ import { TbApiApp } from 'react-icons/tb';
 import { labelAppCategory } from '~app-modules/enum-options';
 import { getPublicFaqs } from '~app-modules/faqs';
 import { metaPublicRoute } from '~app-modules/meta';
+import { breadcrumbSchema, isCanonicalSiteRequest, pageSchema, seoSchema } from '~app-modules/seo';
 import { actionGetKarsaApps } from '~app-server/app';
-import { cfContext } from '~app-server/context';
 import { authGetSession } from '~app-server/session';
 import Banner from '~app-ui/layouts/banner';
 import Footer from '~app-ui/layouts/footer';
 import { Header } from '~app-ui/layouts/header';
 
 import type { Route } from './+types/biaya-layanan';
+
+const pageTitle = 'Estimasi Biaya Layanan | KarsaKito';
+const pageDescription =
+	'Lihat estimasi harga Token KarsaKito dan tarif penggunaan Token untuk tool yang tersedia.';
 
 export async function loader({ request, context }: Route.LoaderArgs) {
 	const authSession = await authGetSession(request);
@@ -43,16 +47,28 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 	return {
 		user,
 		karsaApps,
-		noIndex: cfContext(context).env.NODE_ENV !== 'production',
+		noIndex: !isCanonicalSiteRequest(request),
 	};
 }
 
 export function meta({ loaderData }: Route.MetaArgs) {
 	return metaPublicRoute({
-		title: 'Biaya Layanan KarsaKito',
-		description:
-			'Lihat estimasi harga Token KarsaKito dan tarif penggunaan Token untuk tool yang tersedia.',
+		title: pageTitle,
+		description: pageDescription,
 		noIndex: loaderData.noIndex,
+		canonicalPath: '/biaya-layanan',
+		structuredData: seoSchema(
+			pageSchema({
+				name: pageTitle,
+				description: pageDescription,
+				path: '/biaya-layanan',
+				hasBreadcrumb: true,
+			}),
+			breadcrumbSchema('/biaya-layanan', [
+				{ name: 'KarsaKito', path: '/' },
+				{ name: 'Biaya Layanan', path: '/biaya-layanan' },
+			]),
+		),
 	});
 }
 
@@ -105,7 +121,11 @@ export default function BiayaLayananRoute({ loaderData }: Route.ComponentProps) 
 	return (
 		<div className="site">
 			<Header authUser={loaderData.user} />
-			<main className="site-main">
+			<main
+				id="main-content"
+				tabIndex={-1}
+				className="site-main"
+			>
 				<Box
 					bg="gray.0"
 					component="section"
@@ -263,7 +283,7 @@ export default function BiayaLayananRoute({ loaderData }: Route.ComponentProps) 
 							mt="xl"
 						>
 							Nominal lain dapat diperkirakan mulai Rp10.000 dalam kelipatan Rp1.000.
-							Estimasi hargga Rp50 per Token serta saat ini pembelian Token belum
+							Estimasi harga Rp50 per Token serta saat ini pembelian Token belum
 							tersedia.
 						</Text>
 					</Container>
@@ -400,6 +420,8 @@ export default function BiayaLayananRoute({ loaderData }: Route.ComponentProps) 
 
 				<Box
 					component="section"
+					id="faq"
+					aria-labelledby="faq-title-biaya"
 					bg="gray.0"
 					py={{
 						base: 48,
@@ -421,7 +443,12 @@ export default function BiayaLayananRoute({ loaderData }: Route.ComponentProps) 
 							>
 								FAQ
 							</Badge>
-							<Title order={2}>Pertanyaan yang sering ditanyakan</Title>
+							<Title
+								id="faq-title-biaya"
+								order={2}
+							>
+								Pertanyaan yang sering ditanyakan
+							</Title>
 							<Text>Pahami cara kerja Token dan penggunaan tool KarsaKito.</Text>
 						</Stack>
 

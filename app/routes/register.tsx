@@ -39,6 +39,9 @@ export function meta(_: Route.MetaArgs) {
 export default function LoginRoute(_: Route.ComponentProps) {
 	return (
 		<Center
+			component="main"
+			id="main-content"
+			tabIndex={-1}
 			mih="100vh"
 			bg="primary.1"
 		>

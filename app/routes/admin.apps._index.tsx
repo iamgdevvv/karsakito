@@ -165,11 +165,13 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 							</ButtonLink>
 							<TextInput
 								name="search"
+								aria-label="Cari aplikasi"
 								defaultValue={queryParams?.search}
 								placeholder="Cari Aplikasi..."
 								size="xs"
 								rightSection={
 									<ActionIcon
+										aria-label="Cari aplikasi"
 										type="submit"
 										size="sm"
 										variant="subtle"
@@ -186,6 +188,7 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 							>
 								<Select
 									name="category"
+									aria-label="Filter kategori aplikasi"
 									size="xs"
 									defaultValue={queryParams?.category}
 									data={optionsAppCategory}
@@ -202,6 +205,7 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 											disabled={!hasParamOrderBy}
 										>
 											<ActionIcon
+												aria-label="Atur urutan aplikasi"
 												variant="outline"
 												radius="md"
 											>
@@ -354,6 +358,7 @@ export default function KarsaAppsAdminRoute({ loaderData }: Route.ComponentProps
 													>
 														<Menu.Target>
 															<ActionIcon
+																aria-label="Buka tindakan aplikasi"
 																variant="outline"
 																radius="full"
 															>

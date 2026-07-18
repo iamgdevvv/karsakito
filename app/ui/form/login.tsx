@@ -63,9 +63,15 @@ export default function FormLogin(props: BoxProps) {
 			data-slot="FormLogin"
 		>
 			<Center>
-				<Link to="/">
+				<Link
+					to="/"
+					aria-label="Beranda KarsaKito"
+				>
 					<Image
 						src="/logo.svg"
+						loading="eager"
+						width={144}
+						height={57}
 						w={{
 							base: 56,
 							lg: 64,
@@ -80,7 +86,7 @@ export default function FormLogin(props: BoxProps) {
 				mb="md"
 			>
 				<Title
-					order={2}
+					order={1}
 					fz="xl"
 				>
 					Masuk
@@ -111,6 +117,8 @@ export default function FormLogin(props: BoxProps) {
 						label="Alamat email"
 						placeholder="nama@contoh.com"
 						name="email"
+						autoComplete="email"
+						spellCheck={false}
 						key={form.key('email')}
 						readOnly={isLoading}
 						required
@@ -120,6 +128,7 @@ export default function FormLogin(props: BoxProps) {
 						label="Kata sandi"
 						placeholder="Masukkan kata sandi"
 						name="password"
+						autoComplete="current-password"
 						key={form.key('password')}
 						readOnly={isLoading}
 						required

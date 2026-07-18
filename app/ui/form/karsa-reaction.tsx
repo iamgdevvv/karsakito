@@ -103,12 +103,18 @@ export default function FormKarsaReaction({
 						key={form.key('karsaId')}
 						{...form.getInputProps('karsaId')}
 					/>
-					<Group gap={4}>
+					<Group
+						role="group"
+						aria-label="Penilaian hasil"
+						gap={4}
+					>
 						<Tooltip
 							label="Sesuai kebutuhan"
 							fz="xs"
 						>
 							<ActionIcon
+								aria-label="Tandai hasil sesuai kebutuhan"
+								aria-pressed={form.values.reaction === true}
 								variant={form.values.reaction ? 'filled' : 'light'}
 								color="green"
 								onClick={() => form.setFieldValue('reaction', true)}
@@ -121,6 +127,8 @@ export default function FormKarsaReaction({
 							fz="xs"
 						>
 							<ActionIcon
+								aria-label="Tandai hasil perlu diperbaiki"
+								aria-pressed={form.values.reaction === false}
 								variant={form.values.reaction === false ? 'filled' : 'light'}
 								color="orange"
 								onClick={() => form.setFieldValue('reaction', false)}
@@ -133,6 +141,7 @@ export default function FormKarsaReaction({
 						label="Umpan balik"
 						placeholder="Ceritakan hal yang sudah membantu atau perlu diperbaiki"
 						name="feedback"
+						autoComplete="off"
 						key={form.key('feedback')}
 						readOnly={isLoading}
 						required

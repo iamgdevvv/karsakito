@@ -49,6 +49,9 @@ export default function AppPanel({
 
 	return (
 		<Flex
+			component="main"
+			id="main-content"
+			tabIndex={-1}
 			p={{
 				sm: 'xl',
 			}}
@@ -111,6 +114,8 @@ export default function AppPanel({
 					className="pointer-events-none z-2"
 				>
 					<Group
+						component="nav"
+						aria-label="Navigasi aplikasi"
 						gap={0}
 						w="100%"
 						maw={{
@@ -173,6 +178,9 @@ export default function AppPanel({
 								<Link
 									key={`${nav.value}-${index}`}
 									to={nav.value}
+									aria-current={
+										selectedPanel?.value === nav.value ? 'page' : undefined
+									}
 									display="flex"
 									className={cn(
 										'flex-col items-center gap-0.5',

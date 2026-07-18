@@ -7,6 +7,7 @@ export default function VideoIframe({
 	src,
 	preview,
 	previewProps,
+	title = 'Video panduan KarsaKito',
 	className,
 	...props
 }: {
@@ -43,6 +44,7 @@ export default function VideoIframe({
 				youtubeId ? (
 					<Box
 						component="iframe"
+						title={title}
 						loading="lazy"
 						src={`https://www.youtube-nocookie.com/embed/${youtubeId}?si=2YNxticfuTKKZshl`}
 						frameBorder="0"
@@ -53,20 +55,30 @@ export default function VideoIframe({
 				) : (
 					<Box
 						component="iframe"
+						title={title}
 						loading="lazy"
 						src={src}
 					/>
 				)
 			) : (
-				<Image
-					{...previewProps}
-					src={videoPlaceholder}
-					onMouseOver={() => {
-						if (!showIframe) {
-							setShowIframe(true);
-						}
-					}}
-				/>
+				<Box
+					component="button"
+					type="button"
+					aria-label={`Putar ${title.toLocaleLowerCase('id-ID')}`}
+					w="100%"
+					h="100%"
+					p={0}
+					bd={0}
+					bg="transparent"
+					onClick={() => setShowIframe(true)}
+				>
+					<Image
+						{...previewProps}
+						src={videoPlaceholder}
+						w="100%"
+						h="100%"
+					/>
+				</Box>
 			)}
 		</AspectRatio>
 	);

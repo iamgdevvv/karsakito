@@ -67,6 +67,9 @@ function Panel({
 
 	return (
 		<Flex
+			component="main"
+			id="main-content"
+			tabIndex={-1}
 			bg="primary.1"
 			py="xl"
 			{...props}
@@ -91,6 +94,8 @@ function Panel({
 						>
 							{(styleTransition) => (
 								<Box
+									component="nav"
+									aria-label="Navigasi panel"
 									visibleFrom="md"
 									w={280}
 									miw={280}
@@ -195,6 +200,11 @@ function Panel({
 									visibleFrom="md"
 									variant="subtle"
 									size="lg"
+									aria-label={
+										expandedPanel
+											? 'Ciutkan navigasi samping'
+											: 'Buka navigasi samping'
+									}
 									onClick={() => setExpandedPanel(!expandedPanel)}
 								>
 									{expandedPanel ? (
@@ -203,46 +213,53 @@ function Panel({
 										<TbLayoutSidebarLeftCollapseFilled />
 									)}
 								</ActionIcon>
-								<Select
+								<Box
+									component="nav"
+									aria-label="Navigasi panel seluler"
 									hiddenFrom="md"
-									label="Navigasi"
-									placeholder="Pilih menu"
-									defaultValue={
-										selectedSidebarPanel ? selectedSidebarPanel.value : pathname
-									}
-									loading={navigation.state === 'loading'}
-									radius="xl"
-									labelProps={{
-										fz: 10,
-										fw: 500,
-										tt: 'uppercase',
-										c: 'primary',
-									}}
-									classNames={{
-										input: 'bg-primary-50',
-									}}
-									onChange={(href) => {
-										if (href) navigate(href);
-									}}
-									data={[
-										...(mainNavs?.items.length
-											? [
-													{
-														group: mainNavs.title,
-														items: mainNavs.items,
-													},
-												]
-											: []),
-										...(secondaryNavs?.items.length
-											? [
-													{
-														group: secondaryNavs.title,
-														items: secondaryNavs.items,
-													},
-												]
-											: []),
-									]}
-								/>
+								>
+									<Select
+										label="Navigasi"
+										placeholder="Pilih menu"
+										defaultValue={
+											selectedSidebarPanel
+												? selectedSidebarPanel.value
+												: pathname
+										}
+										loading={navigation.state === 'loading'}
+										radius="xl"
+										labelProps={{
+											fz: 10,
+											fw: 500,
+											tt: 'uppercase',
+											c: 'primary',
+										}}
+										classNames={{
+											input: 'bg-primary-50',
+										}}
+										onChange={(href) => {
+											if (href) navigate(href);
+										}}
+										data={[
+											...(mainNavs?.items.length
+												? [
+														{
+															group: mainNavs.title,
+															items: mainNavs.items,
+														},
+													]
+												: []),
+											...(secondaryNavs?.items.length
+												? [
+														{
+															group: secondaryNavs.title,
+															items: secondaryNavs.items,
+														},
+													]
+												: []),
+										]}
+									/>
+								</Box>
 							</Box>
 						) : null}
 						{children}

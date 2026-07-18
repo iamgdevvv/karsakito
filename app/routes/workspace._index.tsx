@@ -13,6 +13,7 @@ import {
 	Stack,
 	Text,
 	ThemeIcon,
+	Title,
 	Tooltip,
 } from '@mantine/core';
 import { useFullscreenDocument, useMap, useMediaQuery } from '@mantine/hooks';
@@ -100,6 +101,9 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 	const isMobile = useMediaQuery('(max-width: 1199px)', true, {
 		getInitialValueInEffect: true,
 	});
+	const totalTokenBalance =
+		Number(loaderData.userBalance.data?.token || 0) +
+		Number(loaderData.userBalance.data?.tokenDaily || 0);
 
 	const viewMode = useMemo(() => {
 		const paramViewMode = searchParams.get('viewMode');
@@ -172,9 +176,16 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 	return (
 		<div className="site">
 			<AppPanel className="site-main">
+				<Title
+					order={1}
+					className="visually-hidden"
+				>
+					Workspace KarsaKito
+				</Title>
 				<Group gap={6}>
 					<Popover
 						opened={openBalanceUser}
+						onChange={setOpenBalanceUser}
 						width={200}
 						radius="lg"
 						position="bottom-start"
@@ -182,6 +193,8 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 					>
 						<Popover.Target>
 							<Badge
+								component="button"
+								type="button"
 								size="xl"
 								mih={36}
 								px="sm"
@@ -190,21 +203,22 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 								variant="light"
 								color="yellow"
 								tt="capitalize"
-								onMouseEnter={() => setOpenBalanceUser(true)}
-								onMouseLeave={() => setOpenBalanceUser(false)}
+								onClick={() => setOpenBalanceUser((opened) => !opened)}
+								aria-expanded={openBalanceUser}
+								aria-controls="balance-details"
+								aria-label={`Lihat rincian saldo: ${totalTokenBalance} Token`}
 							>
-								🪙{' '}
+								Token{' '}
 								<Text
 									span
 									inherit
 									fw={700}
 								>
-									{Number(loaderData.userBalance.data?.token || 0) +
-										Number(loaderData.userBalance.data?.tokenDaily || 0)}
+									{totalTokenBalance}
 								</Text>
 							</Badge>
 						</Popover.Target>
-						<Popover.Dropdown>
+						<Popover.Dropdown id="balance-details">
 							<Stack gap="xs">
 								<Flex align="center">
 									<ThemeIcon
@@ -249,6 +263,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 					</Popover>
 
 					<SegmentedControl
+						aria-label="Mode Workspace"
 						mr="auto"
 						withItemsBorders={false}
 						classNames={{
@@ -312,6 +327,8 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 								label="Penyimpanan Workspace belum tersedia"
 							>
 								<ActionIcon
+									aria-label="Simpan Workspace"
+									aria-describedby="workspace-save-status"
 									size="lg"
 									variant="light"
 									disabled
@@ -324,6 +341,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 								label="Rapikan Window"
 							>
 								<ActionIcon
+									aria-label="Rapikan Window"
 									size="lg"
 									variant="light"
 									onClick={handleFitWindow}
@@ -339,25 +357,25 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 						label="Layar Penuh"
 					>
 						<ActionIcon
+							aria-label={fullscreen ? 'Keluar dari layar penuh' : 'Buka layar penuh'}
 							size="lg"
 							variant={fullscreen ? 'filled' : 'light'}
+							onClick={toggleFullscreen}
 						>
-							<BsArrowsFullscreen
-								size={14}
-								onClick={toggleFullscreen}
-							/>
+							<BsArrowsFullscreen size={14} />
 						</ActionIcon>
 					</Tooltip>
 				</Group>
 				<Divider my="xs" />
 				{viewMode === 'window' ? (
 					<Text
+						id="workspace-save-status"
 						size="xs"
 						c="dimmed"
 						mb="xs"
 					>
-						Kreator masih eksperimental. Mode ini Anda dapat mengatur beberapa Window
-						untuk mencoba alur kerja Anda.
+						Kreator masih eksperimental. Dalam mode ini, Anda dapat mengatur beberapa
+						Window untuk mencoba alur kerja. Penyimpanan Workspace belum tersedia.
 					</Text>
 				) : null}
 				<Box

@@ -1,35 +1,52 @@
 import { Accordion, Anchor, Badge, Box, Container, Stack, Text, Title } from '@mantine/core';
 import { faqCategories, getPublicFaqs } from '~app-modules/faqs';
 import { metaPublicRoute } from '~app-modules/meta';
-import { cfContext } from '~app-server/context';
+import { breadcrumbSchema, faqSchema, isCanonicalSiteRequest, seoSchema } from '~app-modules/seo';
 import { authGetSession } from '~app-server/session';
 import Footer from '~app-ui/layouts/footer';
 import { Header } from '~app-ui/layouts/header';
 
 import type { Route } from './+types/faq';
 
+const pageTitle = 'FAQ KarsaKito';
+const pageDescription =
+	'Temukan jawaban tentang KarsaKito, layanan, Kreator, Token, dan penggunaan hasil tool.';
+const allFaqs = getPublicFaqs();
+
 const faqGroups = faqCategories
 	.map((category) => ({
 		...category,
-		faqs: getPublicFaqs([category.id]),
+		faqs: allFaqs.filter((faq) => faq.category === category.id),
 	}))
 	.filter((category) => category.faqs.length > 0);
 
-export async function loader({ request, context }: Route.LoaderArgs) {
+export async function loader({ request }: Route.LoaderArgs) {
 	const authSession = await authGetSession(request);
 
 	return {
 		user: authSession.get('user'),
-		noIndex: cfContext(context).env.NODE_ENV !== 'production',
+		noIndex: !isCanonicalSiteRequest(request),
 	};
 }
 
 export function meta({ loaderData }: Route.MetaArgs) {
 	return metaPublicRoute({
-		title: 'FAQ KarsaKito',
-		description:
-			'Temukan jawaban tentang KarsaKito, layanan, Kreator, Token, dan penggunaan hasil tool.',
+		title: pageTitle,
+		description: pageDescription,
 		noIndex: loaderData.noIndex,
+		canonicalPath: '/faq',
+		structuredData: seoSchema(
+			faqSchema(allFaqs, {
+				name: pageTitle,
+				description: pageDescription,
+				path: '/faq',
+				hasBreadcrumb: true,
+			}),
+			breadcrumbSchema('/faq', [
+				{ name: 'KarsaKito', path: '/' },
+				{ name: 'FAQ', path: '/faq' },
+			]),
+		),
 	});
 }
 
@@ -37,9 +54,15 @@ export default function FaqRoute({ loaderData }: Route.ComponentProps) {
 	return (
 		<div className="site">
 			<Header authUser={loaderData.user} />
-			<main className="site-main">
+			<main
+				id="main-content"
+				tabIndex={-1}
+				className="site-main"
+			>
 				<Box
 					component="section"
+					id="faq"
+					aria-labelledby="faq-page-title"
 					py={{
 						base: 48,
 						sm: 60,
@@ -60,7 +83,12 @@ export default function FaqRoute({ loaderData }: Route.ComponentProps) {
 							>
 								FAQ
 							</Badge>
-							<Title order={1}>Pertanyaan yang sering ditanyakan</Title>
+							<Title
+								id="faq-page-title"
+								order={1}
+							>
+								Pertanyaan yang sering ditanyakan
+							</Title>
 							<Text c="gray.6">
 								Temukan informasi tentang KarsaKito, Layanan, Kreator, Token, dan
 								cara menggunakan hasil tool.

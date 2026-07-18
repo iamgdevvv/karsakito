@@ -3,7 +3,7 @@ import { Accordion, Badge, Box, Container, Grid, Group, Stack, Text, Title } fro
 import { LuArrowUpRight } from 'react-icons/lu';
 import { getPublicFaqs } from '~app-modules/faqs';
 import { metaPublicRoute } from '~app-modules/meta';
-import { cfContext } from '~app-server/context';
+import { breadcrumbSchema, isCanonicalSiteRequest, pageSchema, seoSchema } from '~app-modules/seo';
 import { authGetSession } from '~app-server/session';
 import { Image } from '~app-ui/components/image';
 import { ButtonLink } from '~app-ui/components/link';
@@ -14,6 +14,10 @@ import { Header } from '~app-ui/layouts/header';
 import type { KarsaAppsCategory } from '~generated/prisma/enums';
 
 import type { Route } from './+types/layanan._index';
+
+const pageTitle = 'Layanan AI Bahasa Nusantara | KarsaKito';
+const pageDescription =
+	'Pilih tool KarsaKito untuk membantu menyusun, menyempurnakan, menerjemahkan, dan mengolah teks berbasis Bahasa Nusantara.';
 
 const services = [
 	{
@@ -78,22 +82,35 @@ const services = [
 	visible: boolean;
 }[];
 
-export async function loader({ request, context }: Route.LoaderArgs) {
+export async function loader({ request }: Route.LoaderArgs) {
 	const authSession = await authGetSession(request);
 	const user = authSession.get('user');
 
 	return {
 		user,
-		noIndex: cfContext(context).env.NODE_ENV !== 'production',
+		noIndex: !isCanonicalSiteRequest(request),
 	};
 }
 
 export function meta({ loaderData }: Route.MetaArgs) {
 	return metaPublicRoute({
-		title: 'Layanan KarsaKito',
-		description:
-			'Pilih tool KarsaKito untuk membantu menyusun, menyempurnakan, menerjemahkan, dan mengolah teks berbasis Bahasa Nusantara.',
+		title: pageTitle,
+		description: pageDescription,
 		noIndex: loaderData.noIndex,
+		canonicalPath: '/layanan',
+		structuredData: seoSchema(
+			pageSchema({
+				name: pageTitle,
+				description: pageDescription,
+				path: '/layanan',
+				type: 'CollectionPage',
+				hasBreadcrumb: true,
+			}),
+			breadcrumbSchema('/layanan', [
+				{ name: 'KarsaKito', path: '/' },
+				{ name: 'Layanan', path: '/layanan' },
+			]),
+		),
 	});
 }
 
@@ -128,7 +145,11 @@ export default function LayananRoute({ loaderData }: Route.ComponentProps) {
 	return (
 		<div className="site">
 			<Header authUser={loaderData.user} />
-			<main className="site-main">
+			<main
+				id="main-content"
+				tabIndex={-1}
+				className="site-main"
+			>
 				<Box
 					style={{
 						minHeight: '100vh',
@@ -203,7 +224,7 @@ export default function LayananRoute({ loaderData }: Route.ComponentProps) {
 														w="auto"
 														h={80}
 														objectFit="contain"
-														className="animate-pulse"
+														className="animate-pulse motion-reduce:animate-none"
 														style={{
 															zIndex: 1,
 															filter: 'drop-shadow(0 15px 25px rgba(0,0,0,0.08))',
@@ -251,7 +272,7 @@ export default function LayananRoute({ loaderData }: Route.ComponentProps) {
 														gap="xs"
 													>
 														<ButtonLink
-															to="/"
+															to="/workspace"
 															rightSection={
 																<LuArrowUpRight size={18} />
 															}
@@ -300,9 +321,9 @@ export default function LayananRoute({ loaderData }: Route.ComponentProps) {
 									fz={10}
 									fw={500}
 								>
-									Suara Pengguna
+									Ilustrasi Penggunaan
 								</Badge>
-								<Title order={2}>Apa Kata Mereka Tentang KarsaKito?</Title>
+								<Title order={2}>Gambaran manfaat untuk berbagai kebutuhan</Title>
 							</Stack>
 							<Carousel
 								slideSize={{
@@ -338,6 +359,8 @@ export default function LayananRoute({ loaderData }: Route.ComponentProps) {
 					<Box
 						pos="relative"
 						component="section"
+						id="faq"
+						aria-labelledby="faq-title-layanan"
 						bg="gray.0"
 						py={{
 							base: 48,
@@ -360,7 +383,12 @@ export default function LayananRoute({ loaderData }: Route.ComponentProps) {
 								>
 									FAQ
 								</Badge>
-								<Title order={2}>Pertanyaan yang sering ditanyakan</Title>
+								<Title
+									id="faq-title-layanan"
+									order={2}
+								>
+									Pertanyaan yang sering ditanyakan
+								</Title>
 								<Text>
 									Kenali cara kerja KarsaKito, penggunaan Token, dan langkah awal
 									untuk memulai.

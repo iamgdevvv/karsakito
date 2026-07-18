@@ -59,6 +59,8 @@ export default function FormContact(props: BoxProps) {
 					color="green"
 					title="Pesan terkirim"
 					mb="md"
+					role="status"
+					aria-live="polite"
 				>
 					Terima kasih. Pesan Anda sudah kami terima dan akan kami tindak lanjuti.
 				</Alert>
@@ -67,6 +69,7 @@ export default function FormContact(props: BoxProps) {
 					color="red"
 					title="Pesan belum terkirim"
 					mb="md"
+					role="alert"
 				>
 					{errorMessage}
 				</Alert>
@@ -93,6 +96,7 @@ export default function FormContact(props: BoxProps) {
 							label="Nama Lengkap"
 							placeholder="Contoh: Budi Santoso"
 							name="name"
+							autoComplete="name"
 							key={form.key('name')}
 							readOnly={isLoading}
 							required
@@ -103,6 +107,8 @@ export default function FormContact(props: BoxProps) {
 							placeholder="nama@contoh.com"
 							type="email"
 							name="email"
+							autoComplete="email"
+							spellCheck={false}
 							key={form.key('email')}
 							readOnly={isLoading}
 							required
@@ -113,6 +119,8 @@ export default function FormContact(props: BoxProps) {
 							placeholder="Contoh: 0812 3456 7890"
 							type="tel"
 							name="phone"
+							autoComplete="tel"
+							inputMode="tel"
 							key={form.key('phone')}
 							readOnly={isLoading}
 							required
@@ -122,6 +130,7 @@ export default function FormContact(props: BoxProps) {
 							label="Nama instansi atau organisasi"
 							placeholder="Contoh: Kito Kreatif"
 							name="organization"
+							autoComplete="organization"
 							key={form.key('organization')}
 							readOnly={isLoading}
 							{...form.getInputProps('organization')}
@@ -131,6 +140,7 @@ export default function FormContact(props: BoxProps) {
 						label="Pesan Anda"
 						placeholder="Ceritakan kebutuhan atau pertanyaan Anda"
 						name="message"
+						autoComplete="off"
 						key={form.key('message')}
 						readOnly={isLoading}
 						required

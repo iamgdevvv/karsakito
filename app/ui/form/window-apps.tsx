@@ -460,6 +460,8 @@ export function WindowAppKarsaWriter({
 						)}
 						{data.karsa ? (
 							<Group
+								role="group"
+								aria-label="Penilaian hasil"
 								pos="sticky"
 								bottom={{
 									base: mode === 'simple' ? 90 : 4,
@@ -486,6 +488,8 @@ export function WindowAppKarsaWriter({
 									fz="xs"
 								>
 									<ActionIcon
+										aria-label="Tandai hasil sesuai kebutuhan"
+										aria-pressed={data.karsa?.reaction === true}
 										variant={data.karsa?.reaction ? 'filled' : 'light'}
 										color="green"
 										onClick={() =>
@@ -504,6 +508,8 @@ export function WindowAppKarsaWriter({
 									fz="xs"
 								>
 									<ActionIcon
+										aria-label="Tandai hasil perlu diperbaiki"
+										aria-pressed={data.karsa?.reaction === false}
 										variant={
 											data.karsa?.reaction === false ? 'filled' : 'light'
 										}
@@ -529,7 +535,7 @@ export function WindowAppKarsaWriter({
 				opened={!!openSubmissionReaction}
 				keepMounted
 				withinPortal={false}
-				withCloseButton={false}
+				title="Beri penilaian hasil"
 				onClose={() => setOpenSubmissionReaction(null)}
 			>
 				{data.karsa && openSubmissionReaction ? (

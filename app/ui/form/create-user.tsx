@@ -88,6 +88,7 @@ export default function FormCreateUser(props: BoxProps) {
 						label="Nama"
 						placeholder="Contoh: Sari Wulandari"
 						name="name"
+						autoComplete="name"
 						key={form.key('name')}
 						readOnly={isLoading}
 						required
@@ -98,6 +99,8 @@ export default function FormCreateUser(props: BoxProps) {
 						label="Alamat email"
 						placeholder="nama@contoh.com"
 						name="email"
+						autoComplete="email"
+						spellCheck={false}
 						key={form.key('email')}
 						readOnly={isLoading}
 						required
@@ -137,6 +140,7 @@ export default function FormCreateUser(props: BoxProps) {
 						label="Kata sandi"
 						placeholder="Masukkan kata sandi"
 						name="password"
+						autoComplete="new-password"
 						key={form.key('password')}
 						readOnly={isLoading}
 						required

@@ -75,6 +75,7 @@ export default function FormChangePassword(props: BoxProps) {
 						label="Kata sandi saat ini"
 						placeholder="Masukkan kata sandi saat ini"
 						name="curentPassword"
+						autoComplete="current-password"
 						key={form.key('curentPassword')}
 						readOnly={isLoading}
 						required
@@ -84,6 +85,7 @@ export default function FormChangePassword(props: BoxProps) {
 						label="Kata sandi baru"
 						placeholder="Masukkan kata sandi baru"
 						name="password"
+						autoComplete="new-password"
 						key={form.key('password')}
 						readOnly={isLoading}
 						required
@@ -93,6 +95,7 @@ export default function FormChangePassword(props: BoxProps) {
 						label="Konfirmasi kata sandi baru"
 						placeholder="Masukkan kembali kata sandi baru"
 						name="confirmPassword"
+						autoComplete="new-password"
 						key={form.key('confirmPassword')}
 						readOnly={isLoading}
 						required

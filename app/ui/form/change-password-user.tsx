@@ -91,6 +91,7 @@ export default function FormChangePasswordUser({
 						label="Kata sandi baru"
 						placeholder="Masukkan kata sandi baru"
 						name="password"
+						autoComplete="new-password"
 						key={form.key('password')}
 						readOnly={isLoading}
 						required

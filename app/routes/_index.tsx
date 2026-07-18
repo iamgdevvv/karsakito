@@ -4,8 +4,14 @@ import { labelAppCategory } from '~app-modules/enum-options';
 import { getPublicFaqs } from '~app-modules/faqs';
 import { metaPublicRoute } from '~app-modules/meta';
 import type { KarsaAppPlain } from '~app-modules/schema/app';
+import {
+	isCanonicalSiteRequest,
+	organizationSchema,
+	pageSchema,
+	seoSchema,
+	websiteSchema,
+} from '~app-modules/seo';
 import { actionGetKarsaAppsByCategory } from '~app-server/app';
-import { cfContext } from '~app-server/context';
 import { authGetSession } from '~app-server/session';
 import { Image } from '~app-ui/components/image';
 import { ButtonLink, Link } from '~app-ui/components/link';
@@ -13,6 +19,10 @@ import VideoIframe from '~app-ui/components/video';
 import AppPanel from '~app-ui/layouts/apps-panel';
 
 import type { Route } from './+types/_index';
+
+const pageTitle = 'KarsaKito | Produktivitas AI Bahasa Nusantara';
+const pageDescription =
+	'KarsaKito membantu Anda membuat, menyempurnakan, menerjemahkan, dan mengolah teks berbasis Bahasa Nusantara melalui alur kerja terstruktur.';
 
 export async function loader({ request, context }: Route.LoaderArgs) {
 	const authSession = await authGetSession(request);
@@ -22,16 +32,25 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 	return {
 		optionApps,
 		user,
-		noIndex: cfContext(context).env.NODE_ENV !== 'production',
+		noIndex: !isCanonicalSiteRequest(request),
 	};
 }
 
 export function meta({ loaderData }: Route.MetaArgs) {
 	return metaPublicRoute({
-		title: 'Ekosistem KarsaKito',
-		description:
-			'KarsaKito membantu Anda membuat, menyempurnakan, menerjemahkan, dan mengolah teks berbasis Bahasa Nusantara melalui alur kerja terstruktur.',
+		title: pageTitle,
+		description: pageDescription,
 		noIndex: loaderData.noIndex,
+		canonicalPath: '/',
+		structuredData: seoSchema(
+			organizationSchema(),
+			websiteSchema(),
+			pageSchema({
+				name: pageTitle,
+				description: pageDescription,
+				path: '/',
+			}),
+		),
 	});
 }
 
@@ -54,6 +73,17 @@ export default function AppsRoute({ loaderData }: Route.ComponentProps) {
 					>
 						<Image
 							src="/network.svg"
+							className="motion-reduce:hidden"
+							w={{
+								base: 72,
+								sm: 86,
+								lg: 100,
+							}}
+							h="auto"
+						/>
+						<Image
+							src="/favicon.svg"
+							className="hidden motion-reduce:block"
 							w={{
 								base: 72,
 								sm: 86,
@@ -259,6 +289,8 @@ export default function AppsRoute({ loaderData }: Route.ComponentProps) {
 				</Stack>
 				<Group
 					id="faq"
+					component="section"
+					aria-labelledby="faq-title-home"
 					gap={0}
 					align="flex-start"
 					mt={{
@@ -285,6 +317,7 @@ export default function AppsRoute({ loaderData }: Route.ComponentProps) {
 						}}
 					>
 						<Title
+							id="faq-title-home"
 							order={2}
 							fz={{
 								base: 'lg',

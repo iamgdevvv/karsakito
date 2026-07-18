@@ -5,7 +5,6 @@ import {
 	Badge,
 	Box,
 	Container,
-	Flex,
 	SimpleGrid,
 	Stack,
 	Text,
@@ -15,7 +14,7 @@ import {
 import { LuArrowRight, LuTrophy } from 'react-icons/lu';
 import { getPublicFaqs } from '~app-modules/faqs';
 import { metaPublicRoute } from '~app-modules/meta';
-import { cfContext } from '~app-server/context';
+import { breadcrumbSchema, isCanonicalSiteRequest, pageSchema, seoSchema } from '~app-modules/seo';
 import { authGetSession } from '~app-server/session';
 import { Image } from '~app-ui/components/image';
 import { TestimonialCard } from '~app-ui/components/testimonial';
@@ -25,22 +24,39 @@ import { Header } from '~app-ui/layouts/header';
 
 import type { Route } from './+types/tentang';
 
-export async function loader({ request, context }: Route.LoaderArgs) {
+const pageTitle = 'Tentang KarsaKito';
+const pageDescription =
+	'Kenali KarsaKito, ekosistem produktivitas AI untuk membantu pekerjaan berbasis Bahasa Nusantara melalui alur kerja terstruktur.';
+
+export async function loader({ request }: Route.LoaderArgs) {
 	const authSession = await authGetSession(request);
 	const user = authSession.get('user');
 
 	return {
 		user,
-		noIndex: cfContext(context).env.NODE_ENV !== 'production',
+		noIndex: !isCanonicalSiteRequest(request),
 	};
 }
 
 export function meta({ loaderData }: Route.MetaArgs) {
 	return metaPublicRoute({
-		title: 'KarsaKito',
-		description:
-			'Ekosistem produktivitas AI untuk membantu pekerjaan berbasis Bahasa Nusantara melalui alur kerja terstruktur.',
+		title: pageTitle,
+		description: pageDescription,
 		noIndex: loaderData.noIndex,
+		canonicalPath: '/tentang',
+		structuredData: seoSchema(
+			pageSchema({
+				name: pageTitle,
+				description: pageDescription,
+				path: '/tentang',
+				type: 'AboutPage',
+				hasBreadcrumb: true,
+			}),
+			breadcrumbSchema('/tentang', [
+				{ name: 'KarsaKito', path: '/' },
+				{ name: 'Tentang KarsaKito', path: '/tentang' },
+			]),
+		),
 	});
 }
 
@@ -131,7 +147,11 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 	return (
 		<div className="site">
 			<Header authUser={loaderData.user} />
-			<main className="site-main">
+			<main
+				id="main-content"
+				tabIndex={-1}
+				className="site-main"
+			>
 				<Banner
 					background="/images/karsakito-beranda-banner.jpg"
 					ctas={[
@@ -156,13 +176,11 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 					>
 						KarsaKito
 					</Text>
-					<Title>
-						Platform AI untuk Mengakselerasi Pemanfaatan Bahasa Daerah Indonesia
-					</Title>
+					<Title>Produktivitas AI untuk Pekerjaan Berbasis Bahasa Nusantara</Title>
 					<Text>
-						KarsaKito menghadirkan ekosistem AI yang mengintegrasikan pembelajaran
-						bahasa daerah, pembuatan karya, penerjemahan, parafrase, analisis penggunaan
-						bahasa, serta ensiklopedia budaya dalam satu platform.
+						KarsaKito membantu Anda menyusun, menyempurnakan, menerjemahkan, dan
+						menganalisis teks melalui tool yang terarah. KarsaPedia dan KarsaLingo
+						sedang dikembangkan untuk melengkapi ekosistem.
 					</Text>
 				</Banner>
 
@@ -207,89 +225,6 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 								dari perjalanan mengembangkan solusi produktivitas AI untuk Bahasa
 								Nusantara.
 							</Text>
-						</Stack>
-						<Stack
-							align="center"
-							gap="md"
-							mt="xl"
-						>
-							<Text
-								span
-								display="inline-block"
-								size="xs"
-								tt="uppercase"
-								ta="center"
-								c="gray.6"
-							>
-								Didukung &amp; diselenggarakan oleh
-							</Text>
-							<Flex
-								align="center"
-								wrap="wrap"
-								justify="center"
-								gap={{
-									base: 'lg',
-									md: 'xl',
-									lg: 48,
-								}}
-							>
-								<Image
-									src="/images/logo/logo-bankindonesia.svg"
-									alt="Bank Indonesia"
-									objectFit="contain"
-									w="auto"
-									h="auto"
-									maw={200}
-									mah={48}
-									className="transition-all duration-300 lg:opacity-80 lg:grayscale lg:hover:opacity-100 lg:hover:grayscale-0"
-								/>
-								<Image
-									src="/images/logo/logo-ojk.svg"
-									alt="Otoritas Jasa Keuangan"
-									w="auto"
-									h="auto"
-									maw={200}
-									mah={48}
-									className="transition-all duration-300 lg:opacity-80 lg:grayscale lg:hover:opacity-100 lg:hover:grayscale-0"
-								/>
-								<Image
-									src="/images/logo/logo-aspi.svg"
-									alt="Asosiasi Sistem Pembayaran Indonesia"
-									w="auto"
-									h="auto"
-									maw={200}
-									mah={48}
-									className="transition-all duration-300 lg:opacity-80 lg:grayscale lg:hover:opacity-100 lg:hover:grayscale-0"
-								/>
-								<Image
-									src="/images/logo/logo-finctechid.svg"
-									alt="Fintech Indonesia"
-									objectFit="contain"
-									w="auto"
-									h="auto"
-									maw={200}
-									mah={48}
-									className="transition-all duration-300 lg:opacity-80 lg:grayscale lg:hover:opacity-100 lg:hover:grayscale-0"
-								/>
-								<Image
-									src="/images/logo/logo-apuvindo.svg"
-									alt="Asosiasi Pasar Uang dan Pasar Valuta Asing Indonesia"
-									w="auto"
-									h="auto"
-									maw={200}
-									mah={48}
-									className="transition-all duration-300 lg:opacity-80 lg:grayscale lg:hover:opacity-100 lg:hover:grayscale-0"
-								/>
-								<Image
-									src="/images/logo/logo-lppi.svg"
-									alt="LPPI"
-									w="auto"
-									h="auto"
-									maw={200}
-									mah={48}
-									className="transition-all duration-300 lg:opacity-80 lg:grayscale lg:hover:opacity-100 lg:hover:grayscale-0"
-								/>
-							</Flex>
 						</Stack>
 					</Container>
 				</Box>
@@ -484,6 +419,7 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 								>
 									<Image
 										src={team.image}
+										alt={`Foto ${team.name}`}
 										pos="absolute"
 										top={0}
 										left={0}
@@ -507,12 +443,7 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 										c="white"
 										className="z-3"
 									>
-										<Text
-											mb="lg"
-											className="transition group-hover:opacity-100 lg:opacity-0"
-										>
-											{team.desc}
-										</Text>
+										<Text mb="lg">{team.desc}</Text>
 										<Text
 											span
 											size="sm"
@@ -559,9 +490,9 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 								fz={10}
 								fw={500}
 							>
-								Suara Pengguna
+								Ilustrasi Penggunaan
 							</Badge>
-							<Title order={2}>Apa Kata Mereka Tentang KarsaKito?</Title>
+							<Title order={2}>Gambaran manfaat untuk berbagai kebutuhan</Title>
 						</Stack>
 						<Carousel
 							slideSize={{
@@ -597,6 +528,8 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 				<Box
 					pos="relative"
 					component="section"
+					id="faq"
+					aria-labelledby="faq-title-tentang"
 					bg="gray.0"
 					py={{
 						base: 48,
@@ -619,7 +552,12 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 							>
 								FAQ
 							</Badge>
-							<Title order={2}>Pertanyaan yang sering ditanyakan</Title>
+							<Title
+								id="faq-title-tentang"
+								order={2}
+							>
+								Pertanyaan yang sering ditanyakan
+							</Title>
 							<Text>
 								Kenali cara kerja KarsaKito, penggunaan Token, dan langkah awal
 								untuk memulai.

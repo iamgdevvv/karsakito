@@ -24,6 +24,8 @@ import {
 	useSearchParams,
 } from 'react-router';
 import theme from '~app-modules/theme';
+import { ButtonLink } from '~app-ui/components/link';
+import Footer from '~app-ui/layouts/footer';
 
 import '@gfazioli/mantine-scene/styles.css';
 import '@gfazioli/mantine-window/styles.css';
@@ -32,9 +34,6 @@ import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/nprogress/styles.css';
 import '@mantine/spotlight/styles.css';
-
-import { ButtonLink } from '~app-ui/components/link';
-import Footer from '~app-ui/layouts/footer';
 
 import type { Route } from './+types/root';
 
@@ -124,6 +123,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 			</head>
 			<body>
 				<MantineProvider theme={theme}>
+					<a
+						href="#main-content"
+						className="skip-link"
+					>
+						Langsung ke konten utama
+					</a>
 					<NavigationProgress />
 					<Notifications position="top-center" />
 					{children}
@@ -152,6 +157,8 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 		<div className="site">
 			<Box
 				component="main"
+				id="main-content"
+				tabIndex={-1}
 				bg="primary.1"
 				py="xl"
 				className="site-main"

@@ -76,9 +76,15 @@ export default function FormRegister(props: BoxProps) {
 			data-slot="FormRegister"
 		>
 			<Center>
-				<Link to="/">
+				<Link
+					to="/"
+					aria-label="Beranda KarsaKito"
+				>
 					<Image
 						src="/logo.svg"
+						loading="eager"
+						width={144}
+						height={57}
 						w={{
 							base: 56,
 							lg: 64,
@@ -93,7 +99,7 @@ export default function FormRegister(props: BoxProps) {
 				mb="md"
 			>
 				<Title
-					order={2}
+					order={1}
 					fz="xl"
 				>
 					Daftar
@@ -123,6 +129,7 @@ export default function FormRegister(props: BoxProps) {
 						label="Nama"
 						placeholder="Contoh: Sari Wulandari"
 						name="name"
+						autoComplete="name"
 						key={form.key('name')}
 						readOnly={isLoading}
 						required
@@ -133,6 +140,8 @@ export default function FormRegister(props: BoxProps) {
 						label="Alamat email"
 						placeholder="nama@contoh.com"
 						name="email"
+						autoComplete="email"
+						spellCheck={false}
 						key={form.key('email')}
 						readOnly={isLoading}
 						required
@@ -142,6 +151,7 @@ export default function FormRegister(props: BoxProps) {
 						label="Kata sandi"
 						placeholder="Buat kata sandi untuk akun Anda"
 						name="password"
+						autoComplete="new-password"
 						key={form.key('password')}
 						readOnly={isLoading}
 						required

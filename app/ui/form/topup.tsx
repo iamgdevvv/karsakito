@@ -161,6 +161,7 @@ export default function FormTopup({ ...props }: BoxProps) {
 							key={pkg.id}
 							component="button"
 							type="button"
+							aria-pressed={isSelected}
 							onClick={() => setSelectedPackage(pkg.id)}
 							className={cn(
 								'text-left w-full cursor-pointer transition-colors',
@@ -238,6 +239,9 @@ export default function FormTopup({ ...props }: BoxProps) {
 				<Box
 					component="button"
 					type="button"
+					aria-pressed={isCustom}
+					aria-haspopup="dialog"
+					aria-expanded={customModalOpened}
 					onClick={() => setCustomModalOpened(true)}
 					className={cn(
 						'text-left w-full cursor-pointer transition-colors',

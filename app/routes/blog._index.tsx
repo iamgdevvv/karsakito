@@ -26,7 +26,11 @@ export default function BlogRoute({ loaderData }: Route.ComponentProps) {
 	return (
 		<div className="site">
 			<Header authUser={loaderData.user} />
-			<main className="site-main">
+			<main
+				id="main-content"
+				tabIndex={-1}
+				className="site-main"
+			>
 				<Box
 					component="section"
 					bg="gray.0"
