@@ -54,7 +54,7 @@ export default function FormKarsaCeritaPendek({
 			audience: payload?.audience || '',
 			morale: payload?.morale || '',
 			topic: payload?.topic || '',
-			totalParagraph: payload?.totalParagraph ?? 16,
+			totalParagraphs: payload?.totalParagraphs ?? 16,
 		} satisfies PayloadKarsaCeritaPendek;
 	}, [data]);
 
@@ -187,14 +187,14 @@ export default function FormKarsaCeritaPendek({
 					/>
 					<NumberInput
 						label="Jumlah paragraf"
-						name="totalParagraph"
+						name="totalParagraphs"
 						required
 						max={28}
-						key={form.key('totalParagraph')}
+						key={form.key('totalParagraphs')}
 						readOnly={isLoading}
 						placeholder="Contoh: 5"
 						leftSection={<PiTextColumns size={18} />}
-						{...form.getInputProps('totalParagraph')}
+						{...form.getInputProps('totalParagraphs')}
 					/>
 					<Group justify="flex-end">
 						<Button

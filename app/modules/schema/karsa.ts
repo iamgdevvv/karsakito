@@ -91,7 +91,7 @@ export const PayloadKarsaCeritaPendekSchema = z.object({
 	audience: z.string().nonempty(),
 	morale: z.string().nonempty(),
 	topic: z.string().nonempty(),
-	totalParagraph: z.number().gt(0).nonnegative(),
+	totalParagraphs: z.number().gt(0).nonnegative(),
 });
 
 export const PayloadKarsaCeritaPanjangSchema = z.object({
@@ -100,7 +100,7 @@ export const PayloadKarsaCeritaPanjangSchema = z.object({
 	audience: z.string().nonempty(),
 	morale: z.string().nonempty(),
 	topic: z.string().nonempty(),
-	totalParagraph: z.number().gt(0).nonnegative(),
+	totalParagraphs: z.number().gt(0).nonnegative(),
 });
 
 export const PayloadKarsaDoaBersamaSchema = z.object({

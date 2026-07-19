@@ -2,8 +2,8 @@ import {
 	ActionIcon,
 	Box,
 	Group,
+	Loader,
 	Modal,
-	Skeleton,
 	Stack,
 	Tabs,
 	Text,
@@ -11,7 +11,7 @@ import {
 	Typography,
 	type TabsProps,
 } from '@mantine/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { HiOutlineCommandLine } from 'react-icons/hi2';
 import { IoMdOptions } from 'react-icons/io';
 import { LuThumbsDown, LuThumbsUp } from 'react-icons/lu';
@@ -42,6 +42,14 @@ import FormKarsaTekaTeki from '~app-ui/form/karsa/teka-teki';
 import FormKarsaTerjemahanDokumen from '~app-ui/form/karsa/terjemahan-dokumen';
 import FormKarsaTerjemahanKalimat from '~app-ui/form/karsa/terjemahan-kalimat';
 
+const loadingMessages = [
+	'✨ Memahami kebutuhan Anda',
+	'🧠 Menganalisis konteks',
+	'📝 Menyusun jawaban terbaik',
+	'🔍 Meninjau kualitas hasil',
+	'🚀 Menyiapkan hasil akhir',
+] as const;
+
 export function WindowAppKarsaWriter({
 	data,
 	mode,
@@ -56,6 +64,21 @@ export function WindowAppKarsaWriter({
 		useState<PayloadSubmissionReactionKarsa | null>(null);
 	const [resultAI, setResultAI] = useState<string | null>(null);
 	const [activeTab, setActiveTab] = useState<'options' | 'result' | null>('options');
+	const [loadingMessageIndex, setLoadingMessageIndex] = useState(0);
+	const isLoadingResult = activeTab === 'result' && resultAI === null;
+
+	useEffect(() => {
+		if (!isLoadingResult) {
+			return;
+		}
+
+		setLoadingMessageIndex(0);
+		const intervalId = setInterval(() => {
+			setLoadingMessageIndex((currentIndex) => (currentIndex + 1) % loadingMessages.length);
+		}, 4000);
+
+		return () => clearInterval(intervalId);
+	}, [isLoadingResult]);
 
 	return (
 		<>
@@ -436,12 +459,31 @@ export function WindowAppKarsaWriter({
 						>
 							Tinjau hasil sebelum digunakan atau dibagikan.
 						</Text>
-						{resultAI === null ? (
-							<Skeleton
+						{isLoadingResult ? (
+							<Stack
 								w="100%"
-								h="100%"
-								mih={200}
-							/>
+								mih={400}
+								pt={60}
+								align="center"
+								gap="xs"
+								bg="gray.0"
+								bdrs="md"
+								role="status"
+								aria-live="polite"
+								aria-busy="true"
+							>
+								<Loader
+									type="dots"
+									size="sm"
+								/>
+								<Text
+									size="sm"
+									fw={500}
+									ta="center"
+								>
+									{loadingMessages[loadingMessageIndex]}
+								</Text>
+							</Stack>
 						) : (
 							<Box
 								w="100%"
