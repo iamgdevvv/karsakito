@@ -14,8 +14,9 @@ import { schemaResolver, useForm } from '@mantine/form';
 import { useEffect, useMemo, useState } from 'react';
 import { PiTextColumns } from 'react-icons/pi';
 import { useFetcher } from 'react-router';
-import { optionsLanguageApp } from '~app-modules/enum-options';
+import { labelAppName, optionsLanguageApp } from '~app-modules/enum-options';
 import {
+	karasInputMaxLength,
 	PayloadKarsaHymneSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -179,6 +180,7 @@ export default function FormKarsaHymne({
 					<TextInput
 						label="Instansi atau organisasi"
 						name="institution"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('institution')}
 						readOnly={isLoading}
@@ -199,6 +201,7 @@ export default function FormKarsaHymne({
 					<Textarea
 						label="Topik"
 						name="topic"
+						maxLength={karasInputMaxLength.prompt}
 						required
 						key={form.key('topic')}
 						readOnly={isLoading}
@@ -222,7 +225,7 @@ export default function FormKarsaHymne({
 							loading={isLoading}
 							mt="md"
 						>
-							Buat hymne
+							Buat {labelAppName.hymne}
 						</Button>
 					</Group>
 				</Stack>

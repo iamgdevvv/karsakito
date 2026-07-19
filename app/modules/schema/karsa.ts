@@ -2,6 +2,18 @@ import * as z from 'zod';
 import { LanguageAppSchema } from '~app-modules/schema/app';
 import { KarsaSchema, WorkspaceWindowSchema } from '~generated/prisma-zod/schemas/models';
 
+export const karasInputMaxLength = {
+	short: 200,
+	prompt: 500,
+	text: 1_000,
+} as const;
+
+const zKarsaString = (maxLength: number) =>
+	z
+		.string()
+		.nonempty()
+		.max(maxLength, `Maksimal ${maxLength.toLocaleString('id-ID')} karakter`);
+
 export const KarsaSchemaPlain = KarsaSchema.omit({
 	promptJson: true,
 }).extend({
@@ -10,174 +22,174 @@ export const KarsaSchemaPlain = KarsaSchema.omit({
 
 export const PayloadKarsaPidatoSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	purpose: z.string().nonempty(),
-	agenda: z.string().nonempty(),
-	speaker: z.string().nonempty(),
-	audience: z.string().nonempty(),
-	topic: z.string().nonempty(),
+	purpose: zKarsaString(karasInputMaxLength.short),
+	agenda: zKarsaString(karasInputMaxLength.short),
+	speaker: zKarsaString(karasInputMaxLength.short),
+	audience: zKarsaString(karasInputMaxLength.short),
+	topic: zKarsaString(karasInputMaxLength.prompt),
 	totalSentence: z.number().gt(0).nonnegative(),
 });
 
 export const PayloadKarsaPantunSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	type: z.string().nonempty(),
-	audience: z.string().nonempty(),
-	topic: z.string().nonempty(),
+	type: zKarsaString(karasInputMaxLength.short),
+	audience: zKarsaString(karasInputMaxLength.short),
+	topic: zKarsaString(karasInputMaxLength.prompt),
 	numberVerses: z.number().gt(0).nonnegative(),
 });
 
 export const PayloadKarsaSyairSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	type: z.string().nonempty(),
-	audience: z.string().nonempty(),
-	tone: z.string().nonempty(),
-	topic: z.string().nonempty(),
+	type: zKarsaString(karasInputMaxLength.short),
+	audience: zKarsaString(karasInputMaxLength.short),
+	tone: zKarsaString(karasInputMaxLength.short),
+	topic: zKarsaString(karasInputMaxLength.prompt),
 	numberVerses: z.number().gt(0).nonnegative(),
 });
 
 export const PayloadKarsaPuisiSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	type: z.string().nonempty(),
-	audience: z.string().nonempty(),
-	style: z.string().nonempty(),
-	effect: z.string().nonempty(),
-	topic: z.string().nonempty(),
+	type: zKarsaString(karasInputMaxLength.short),
+	audience: zKarsaString(karasInputMaxLength.short),
+	style: zKarsaString(karasInputMaxLength.short),
+	effect: zKarsaString(karasInputMaxLength.short),
+	topic: zKarsaString(karasInputMaxLength.prompt),
 	numberVerses: z.number().gt(0).nonnegative(),
 });
 
 export const PayloadKarsaHymneSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	type: z.string().nonempty(),
-	institution: z.string().nonempty(),
-	structure: z.string().nonempty(),
-	topic: z.string().nonempty(),
+	type: zKarsaString(karasInputMaxLength.short),
+	institution: zKarsaString(karasInputMaxLength.short),
+	structure: zKarsaString(karasInputMaxLength.short),
+	topic: zKarsaString(karasInputMaxLength.prompt),
 	numberVerses: z.number().gt(0).nonnegative(),
 });
 
 export const PayloadKarsaPetuahSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	style: z.string().nonempty(),
-	topic: z.string().nonempty(),
+	style: zKarsaString(karasInputMaxLength.short),
+	topic: zKarsaString(karasInputMaxLength.prompt),
 });
 
 export const PayloadKarsaTaglineSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	entity: z.string().nonempty(),
-	usp: z.string().nonempty(),
-	audience: z.string().nonempty(),
-	tone: z.string().nonempty(),
+	entity: zKarsaString(karasInputMaxLength.short),
+	usp: zKarsaString(karasInputMaxLength.short),
+	audience: zKarsaString(karasInputMaxLength.short),
+	tone: zKarsaString(karasInputMaxLength.short),
 	wordLength: z.number().gt(0).nonnegative(),
 });
 
 export const PayloadKarsaSloganSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	campaign: z.string().nonempty(),
-	audience: z.string().nonempty(),
-	tone: z.string().nonempty(),
+	campaign: zKarsaString(karasInputMaxLength.short),
+	audience: zKarsaString(karasInputMaxLength.short),
+	tone: zKarsaString(karasInputMaxLength.short),
 	wordLength: z.number().gt(0).nonnegative(),
 });
 
 export const PayloadKarsaMottoSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	entity: z.string().nonempty(),
-	core_value: z.string().nonempty(),
-	tone: z.string().nonempty(),
+	entity: zKarsaString(karasInputMaxLength.short),
+	core_value: zKarsaString(karasInputMaxLength.short),
+	tone: zKarsaString(karasInputMaxLength.short),
 	wordLength: z.number().gt(0).nonnegative(),
 });
 
 export const PayloadKarsaCeritaPendekSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	genre: z.string().nonempty(),
-	audience: z.string().nonempty(),
-	morale: z.string().nonempty(),
-	topic: z.string().nonempty(),
+	genre: zKarsaString(karasInputMaxLength.short),
+	audience: zKarsaString(karasInputMaxLength.short),
+	morale: zKarsaString(karasInputMaxLength.short),
+	topic: zKarsaString(karasInputMaxLength.prompt),
 	totalParagraphs: z.number().gt(0).nonnegative(),
 });
 
 export const PayloadKarsaCeritaPanjangSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	genre: z.string().nonempty(),
-	audience: z.string().nonempty(),
-	morale: z.string().nonempty(),
-	topic: z.string().nonempty(),
+	genre: zKarsaString(karasInputMaxLength.short),
+	audience: zKarsaString(karasInputMaxLength.short),
+	morale: zKarsaString(karasInputMaxLength.short),
+	topic: zKarsaString(karasInputMaxLength.prompt),
 	totalParagraphs: z.number().gt(0).nonnegative(),
 });
 
 export const PayloadKarsaDoaBersamaSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	religion: z.string().nonempty(),
-	topic: z.string().nonempty(),
+	religion: zKarsaString(karasInputMaxLength.short),
+	topic: zKarsaString(karasInputMaxLength.prompt),
 	totalSentence: z.number().gt(0).nonnegative(),
 });
 
 export const PayloadKarsaTekaTekiSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	type: z.string().nonempty(),
-	level: z.string().nonempty(),
-	topic: z.string().nonempty(),
+	type: zKarsaString(karasInputMaxLength.short),
+	level: zKarsaString(karasInputMaxLength.short),
+	topic: zKarsaString(karasInputMaxLength.prompt),
 });
 
 export const PayloadKarsaParafraseSchema = z.object({
 	sourceLanguage: LanguageAppSchema.default('indonesia'),
 	targetLanguage: LanguageAppSchema.default('indonesia'),
-	preference: z.string().nonempty(),
-	text: z.string().nonempty(),
+	preference: zKarsaString(karasInputMaxLength.short),
+	text: zKarsaString(karasInputMaxLength.text),
 });
 
 export const PayloadKarsaRangkumanSchema = z.object({
 	sourceLanguage: LanguageAppSchema.default('indonesia'),
 	targetLanguage: LanguageAppSchema.default('indonesia'),
-	style: z.string().nonempty(),
-	preference: z.string().nonempty(),
-	text: z.string().nonempty(),
+	style: zKarsaString(karasInputMaxLength.short),
+	preference: zKarsaString(karasInputMaxLength.short),
+	text: zKarsaString(karasInputMaxLength.text),
 });
 
 export const PayloadKarsaAdaptasiDialekSchema = z.object({
 	sourceLanguage: LanguageAppSchema.default('indonesia'),
 	targetLanguage: LanguageAppSchema.default('indonesia'),
-	dialect: z.string().nonempty(),
-	text: z.string().nonempty(),
+	dialect: zKarsaString(karasInputMaxLength.short),
+	text: zKarsaString(karasInputMaxLength.text),
 });
 
 export const PayloadKarsaTranslateSchema = z.object({
 	source_language: LanguageAppSchema.default('indonesia'),
 	target_language: LanguageAppSchema.default('minang'),
-	info: z.string().nonempty(),
-	text: z.string().nonempty(),
+	info: zKarsaString(karasInputMaxLength.short),
+	text: zKarsaString(karasInputMaxLength.text),
 });
 
 export const PayloadKarsaTerjemahanKalimatSchema = z.object({
 	sourceLanguage: LanguageAppSchema.default('indonesia'),
 	targetLanguage: LanguageAppSchema.default('minang'),
-	usage: z.string().nonempty(),
-	text: z.string().nonempty(),
+	usage: zKarsaString(karasInputMaxLength.short),
+	text: zKarsaString(karasInputMaxLength.text),
 });
 
 export const PayloadKarsaTerjemahanDokumenSchema = z.object({
 	sourceLanguage: LanguageAppSchema.default('indonesia'),
 	targetLanguage: LanguageAppSchema.default('minang'),
-	info: z.string().nonempty(),
-	selectionText: z.string().nonempty(),
+	info: zKarsaString(karasInputMaxLength.short),
+	selectionText: zKarsaString(karasInputMaxLength.text),
 });
 
 export const PayloadKarsaAnalisaSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	info: z.string().nonempty(),
-	audience: z.string().nonempty(),
-	text: z.string().nonempty(),
+	info: zKarsaString(karasInputMaxLength.short),
+	audience: zKarsaString(karasInputMaxLength.short),
+	text: zKarsaString(karasInputMaxLength.text),
 });
 
 export const PayloadKarsaAnalisaKalimatSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	audience: z.string().nonempty(),
-	text: z.string().nonempty(),
+	audience: zKarsaString(karasInputMaxLength.short),
+	text: zKarsaString(karasInputMaxLength.text),
 });
 
 export const PayloadKarsaAnalisaDokumenSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
-	info: z.string().nonempty(),
-	audience: z.string().nonempty(),
-	selectionText: z.string().nonempty(),
+	info: zKarsaString(karasInputMaxLength.short),
+	audience: zKarsaString(karasInputMaxLength.short),
+	selectionText: zKarsaString(karasInputMaxLength.text),
 });
 
 export const PayloadKarsaSchemaPlain = KarsaSchemaPlain.omit({

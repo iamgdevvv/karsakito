@@ -14,8 +14,9 @@ import { schemaResolver, useForm } from '@mantine/form';
 import { useEffect, useMemo, useState } from 'react';
 import { PiTextColumns } from 'react-icons/pi';
 import { useFetcher } from 'react-router';
-import { optionsLanguageApp } from '~app-modules/enum-options';
+import { labelAppName, optionsLanguageApp } from '~app-modules/enum-options';
 import {
+	karasInputMaxLength,
 	PayloadKarsaMottoSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -137,6 +138,7 @@ export default function FormKarsaMotto({
 					<TextInput
 						label="Nama entitas"
 						name="entity"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('entity')}
 						readOnly={isLoading}
@@ -146,6 +148,7 @@ export default function FormKarsaMotto({
 					<TextInput
 						label="Nilai utama"
 						name="core_value"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('core_value')}
 						readOnly={isLoading}
@@ -155,6 +158,7 @@ export default function FormKarsaMotto({
 					<Autocomplete
 						label="Gaya"
 						name="tone"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('tone')}
 						readOnly={isLoading}
@@ -180,7 +184,7 @@ export default function FormKarsaMotto({
 							loading={isLoading}
 							mt="md"
 						>
-							Buat motto
+							Buat {labelAppName.motto}
 						</Button>
 					</Group>
 				</Stack>

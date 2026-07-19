@@ -14,8 +14,9 @@ import { schemaResolver, useForm } from '@mantine/form';
 import { useEffect, useMemo, useState } from 'react';
 import { PiTextColumns } from 'react-icons/pi';
 import { useFetcher } from 'react-router';
-import { optionsLanguageApp } from '~app-modules/enum-options';
+import { labelAppName, optionsLanguageApp } from '~app-modules/enum-options';
 import {
+	karasInputMaxLength,
 	PayloadKarsaDoaBersamaSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -136,6 +137,7 @@ export default function FormKarsaDoaBersama({
 					<Autocomplete
 						label="Kepercayaan"
 						name="religion"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('religion')}
 						readOnly={isLoading}
@@ -147,6 +149,7 @@ export default function FormKarsaDoaBersama({
 					<Textarea
 						label="Topik"
 						name="topic"
+						maxLength={karasInputMaxLength.prompt}
 						required
 						key={form.key('topic')}
 						readOnly={isLoading}
@@ -170,7 +173,7 @@ export default function FormKarsaDoaBersama({
 							loading={isLoading}
 							mt="md"
 						>
-							Buat doa
+							Buat {labelAppName.doabersama}
 						</Button>
 					</Group>
 				</Stack>

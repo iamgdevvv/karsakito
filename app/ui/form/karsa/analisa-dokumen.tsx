@@ -13,8 +13,13 @@ import {
 import { schemaResolver, useForm } from '@mantine/form';
 import { useEffect, useMemo, useState } from 'react';
 import { useFetcher } from 'react-router';
-import { optionsKarsaLisaAudience, optionsLanguageApp } from '~app-modules/enum-options';
 import {
+	labelAppName,
+	optionsKarsaLisaAudience,
+	optionsLanguageApp,
+} from '~app-modules/enum-options';
+import {
+	karasInputMaxLength,
 	PayloadKarsaAnalisaDokumenSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -135,6 +140,7 @@ export default function FormKarsaAnalisaDokumen({
 					<Autocomplete
 						label="Audiens"
 						name="audience"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('audience')}
 						readOnly={isLoading}
@@ -145,6 +151,7 @@ export default function FormKarsaAnalisaDokumen({
 					<TextInput
 						label="Keterangan"
 						name="info"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('info')}
 						readOnly={isLoading}
@@ -154,6 +161,7 @@ export default function FormKarsaAnalisaDokumen({
 					<Textarea
 						label="Teks terpilih"
 						name="selectionText"
+						maxLength={karasInputMaxLength.text}
 						required
 						key={form.key('selectionText')}
 						readOnly={true}
@@ -166,7 +174,7 @@ export default function FormKarsaAnalisaDokumen({
 							loading={isLoading}
 							mt="md"
 						>
-							Analisis teks
+							Buat {labelAppName.analisadokumen}
 						</Button>
 					</Group>
 				</Stack>

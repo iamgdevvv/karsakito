@@ -12,8 +12,13 @@ import {
 import { schemaResolver, useForm } from '@mantine/form';
 import { useEffect, useMemo, useState } from 'react';
 import { useFetcher } from 'react-router';
-import { optionsKarsaFrasePreference, optionsLanguageApp } from '~app-modules/enum-options';
 import {
+	labelAppName,
+	optionsKarsaFrasePreference,
+	optionsLanguageApp,
+} from '~app-modules/enum-options';
+import {
+	karasInputMaxLength,
 	PayloadKarsaRangkumanSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -144,6 +149,7 @@ export default function FormKarsaRangkuman({
 					<Autocomplete
 						label="Format rangkuman"
 						name="style"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('style')}
 						readOnly={isLoading}
@@ -155,6 +161,7 @@ export default function FormKarsaRangkuman({
 					<Autocomplete
 						label="Preferensi"
 						name="preference"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('preference')}
 						readOnly={isLoading}
@@ -166,6 +173,7 @@ export default function FormKarsaRangkuman({
 					<Textarea
 						label="Teks"
 						name="text"
+						maxLength={karasInputMaxLength.text}
 						required
 						key={form.key('text')}
 						readOnly={isLoading}
@@ -178,7 +186,7 @@ export default function FormKarsaRangkuman({
 							loading={isLoading}
 							mt="md"
 						>
-							Buat rangkuman
+							Buat {labelAppName.rangkuman}
 						</Button>
 					</Group>
 				</Stack>

@@ -14,8 +14,13 @@ import { schemaResolver, useForm } from '@mantine/form';
 import { useEffect, useMemo, useState } from 'react';
 import { PiTextColumns } from 'react-icons/pi';
 import { useFetcher } from 'react-router';
-import { optionsKarsaWriterAudience, optionsLanguageApp } from '~app-modules/enum-options';
 import {
+	labelAppName,
+	optionsKarsaWriterAudience,
+	optionsLanguageApp,
+} from '~app-modules/enum-options';
+import {
+	karasInputMaxLength,
 	PayloadKarsaTaglineSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -138,6 +143,7 @@ export default function FormKarsaTagline({
 					<TextInput
 						label="Nama entitas"
 						name="entity"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('entity')}
 						readOnly={isLoading}
@@ -147,6 +153,7 @@ export default function FormKarsaTagline({
 					<TextInput
 						label="Keunggulan utama"
 						name="usp"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('usp')}
 						readOnly={isLoading}
@@ -156,6 +163,7 @@ export default function FormKarsaTagline({
 					<Autocomplete
 						label="Audiens"
 						name="audience"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('audience')}
 						readOnly={isLoading}
@@ -167,6 +175,7 @@ export default function FormKarsaTagline({
 					<Autocomplete
 						label="Gaya"
 						name="tone"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('tone')}
 						readOnly={isLoading}
@@ -200,7 +209,7 @@ export default function FormKarsaTagline({
 							loading={isLoading}
 							mt="md"
 						>
-							Buat tagline
+							Buat {labelAppName.tagline}
 						</Button>
 					</Group>
 				</Stack>

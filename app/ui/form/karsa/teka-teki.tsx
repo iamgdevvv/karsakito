@@ -12,8 +12,9 @@ import {
 import { schemaResolver, useForm } from '@mantine/form';
 import { useEffect, useMemo, useState } from 'react';
 import { useFetcher } from 'react-router';
-import { optionsLanguageApp } from '~app-modules/enum-options';
+import { labelAppName, optionsLanguageApp } from '~app-modules/enum-options';
 import {
+	karasInputMaxLength,
 	PayloadKarsaTekaTekiSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -134,6 +135,7 @@ export default function FormKarsaTekaTeki({
 					<Autocomplete
 						label="Jenis"
 						name="type"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('type')}
 						readOnly={isLoading}
@@ -154,6 +156,7 @@ export default function FormKarsaTekaTeki({
 					<Autocomplete
 						label="Tingkat kesulitan"
 						name="level"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('level')}
 						readOnly={isLoading}
@@ -165,6 +168,7 @@ export default function FormKarsaTekaTeki({
 					<Textarea
 						label="Topik"
 						name="topic"
+						maxLength={karasInputMaxLength.prompt}
 						required
 						key={form.key('topic')}
 						readOnly={isLoading}
@@ -177,7 +181,7 @@ export default function FormKarsaTekaTeki({
 							loading={isLoading}
 							mt="md"
 						>
-							Buat teka-teki
+							Buat {labelAppName.tekateki}
 						</Button>
 					</Group>
 				</Stack>

@@ -14,8 +14,13 @@ import { schemaResolver, useForm } from '@mantine/form';
 import { useEffect, useMemo, useState } from 'react';
 import { PiTextColumns } from 'react-icons/pi';
 import { useFetcher } from 'react-router';
-import { optionsKarsaWriterAudience, optionsLanguageApp } from '~app-modules/enum-options';
 import {
+	labelAppName,
+	optionsKarsaWriterAudience,
+	optionsLanguageApp,
+} from '~app-modules/enum-options';
+import {
+	karasInputMaxLength,
 	PayloadKarsaSloganSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -137,6 +142,7 @@ export default function FormKarsaSlogan({
 					<TextInput
 						label="Kampanye"
 						name="campaign"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('campaign')}
 						readOnly={isLoading}
@@ -146,6 +152,7 @@ export default function FormKarsaSlogan({
 					<Autocomplete
 						label="Audiens"
 						name="audience"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('audience')}
 						readOnly={isLoading}
@@ -157,6 +164,7 @@ export default function FormKarsaSlogan({
 					<Autocomplete
 						label="Gaya"
 						name="tone"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('tone')}
 						readOnly={isLoading}
@@ -190,7 +198,7 @@ export default function FormKarsaSlogan({
 							loading={isLoading}
 							mt="md"
 						>
-							Buat slogan
+							Buat {labelAppName.slogan}
 						</Button>
 					</Group>
 				</Stack>

@@ -12,8 +12,9 @@ import {
 import { schemaResolver, useForm } from '@mantine/form';
 import { useEffect, useMemo, useState } from 'react';
 import { useFetcher } from 'react-router';
-import { optionsLanguageApp } from '~app-modules/enum-options';
+import { labelAppName, optionsLanguageApp } from '~app-modules/enum-options';
 import {
+	karasInputMaxLength,
 	PayloadKarsaTerjemahanDokumenSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -143,6 +144,7 @@ export default function FormKarsaTerjemahanDokumen({
 					<TextInput
 						label="Keterangan"
 						name="info"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('info')}
 						readOnly={isLoading}
@@ -152,6 +154,7 @@ export default function FormKarsaTerjemahanDokumen({
 					<Textarea
 						label="Teks terpilih"
 						name="selectionText"
+						maxLength={karasInputMaxLength.text}
 						required
 						key={form.key('selectionText')}
 						readOnly={true}
@@ -164,7 +167,7 @@ export default function FormKarsaTerjemahanDokumen({
 							loading={isLoading}
 							mt="md"
 						>
-							Terjemahkan teks
+							Buat {labelAppName.terjemahandokumen}
 						</Button>
 					</Group>
 				</Stack>

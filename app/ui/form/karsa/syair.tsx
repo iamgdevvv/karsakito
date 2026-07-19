@@ -14,8 +14,13 @@ import { schemaResolver, useForm } from '@mantine/form';
 import { useEffect, useMemo, useState } from 'react';
 import { PiTextColumns } from 'react-icons/pi';
 import { useFetcher } from 'react-router';
-import { optionsKarsaWriterAudience, optionsLanguageApp } from '~app-modules/enum-options';
 import {
+	labelAppName,
+	optionsKarsaWriterAudience,
+	optionsLanguageApp,
+} from '~app-modules/enum-options';
+import {
+	karasInputMaxLength,
 	PayloadKarsaSyairSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -186,6 +191,7 @@ export default function FormKarsaSyair({
 					<Autocomplete
 						label="Audiens"
 						name="audience"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('audience')}
 						readOnly={isLoading}
@@ -197,6 +203,7 @@ export default function FormKarsaSyair({
 					<Textarea
 						label="Topik"
 						name="topic"
+						maxLength={karasInputMaxLength.prompt}
 						required
 						key={form.key('topic')}
 						readOnly={isLoading}
@@ -220,7 +227,7 @@ export default function FormKarsaSyair({
 							loading={isLoading}
 							mt="md"
 						>
-							Buat syair
+							Buat {labelAppName.syair}
 						</Button>
 					</Group>
 				</Stack>

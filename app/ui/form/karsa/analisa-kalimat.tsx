@@ -12,8 +12,13 @@ import {
 import { schemaResolver, useForm } from '@mantine/form';
 import { useEffect, useMemo, useState } from 'react';
 import { useFetcher } from 'react-router';
-import { optionsKarsaLisaAudience, optionsLanguageApp } from '~app-modules/enum-options';
 import {
+	labelAppName,
+	optionsKarsaLisaAudience,
+	optionsLanguageApp,
+} from '~app-modules/enum-options';
+import {
+	karasInputMaxLength,
 	PayloadKarsaAnalisaKalimatSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -133,6 +138,7 @@ export default function FormKarsaAnalisaKalimat({
 					<Autocomplete
 						label="Audiens"
 						name="audience"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('audience')}
 						readOnly={isLoading}
@@ -143,6 +149,7 @@ export default function FormKarsaAnalisaKalimat({
 					<Textarea
 						label="Teks"
 						name="text"
+						maxLength={karasInputMaxLength.text}
 						required
 						key={form.key('text')}
 						readOnly={isLoading}
@@ -155,7 +162,7 @@ export default function FormKarsaAnalisaKalimat({
 							loading={isLoading}
 							mt="md"
 						>
-							Analisis teks
+							Buat {labelAppName.analisakalimat}
 						</Button>
 					</Group>
 				</Stack>

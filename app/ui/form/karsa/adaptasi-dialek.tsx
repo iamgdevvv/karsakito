@@ -12,8 +12,9 @@ import {
 import { schemaResolver, useForm } from '@mantine/form';
 import { useEffect, useMemo, useState } from 'react';
 import { useFetcher } from 'react-router';
-import { optionsLanguageApp } from '~app-modules/enum-options';
+import { labelAppName, optionsLanguageApp } from '~app-modules/enum-options';
 import {
+	karasInputMaxLength,
 	PayloadKarsaAdaptasiDialekSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -143,6 +144,7 @@ export default function FormKarsaAdaptasiDialek({
 					<TextInput
 						label="Dialek"
 						name="dialect"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('dialect')}
 						readOnly={isLoading}
@@ -152,6 +154,7 @@ export default function FormKarsaAdaptasiDialek({
 					<Textarea
 						label="Teks"
 						name="text"
+						maxLength={karasInputMaxLength.text}
 						required
 						key={form.key('text')}
 						readOnly={isLoading}
@@ -164,7 +167,7 @@ export default function FormKarsaAdaptasiDialek({
 							loading={isLoading}
 							mt="md"
 						>
-							Adaptasikan teks
+							Buat {labelAppName.adaptasidialek}
 						</Button>
 					</Group>
 				</Stack>

@@ -12,8 +12,9 @@ import {
 import { schemaResolver, useForm } from '@mantine/form';
 import { useEffect, useMemo, useState } from 'react';
 import { useFetcher } from 'react-router';
-import { optionsLanguageApp } from '~app-modules/enum-options';
+import { labelAppName, optionsLanguageApp } from '~app-modules/enum-options';
 import {
+	karasInputMaxLength,
 	PayloadKarsaPetuahSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -133,6 +134,7 @@ export default function FormKarsaPetuah({
 					<Autocomplete
 						label="Gaya"
 						name="style"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('style')}
 						readOnly={isLoading}
@@ -144,6 +146,7 @@ export default function FormKarsaPetuah({
 					<Textarea
 						label="Topik"
 						name="topic"
+						maxLength={karasInputMaxLength.prompt}
 						required
 						key={form.key('topic')}
 						readOnly={isLoading}
@@ -156,7 +159,7 @@ export default function FormKarsaPetuah({
 							loading={isLoading}
 							mt="md"
 						>
-							Buat petuah
+							Buat {labelAppName.petuah}
 						</Button>
 					</Group>
 				</Stack>

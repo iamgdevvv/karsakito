@@ -12,8 +12,13 @@ import {
 import { schemaResolver, useForm } from '@mantine/form';
 import { useEffect, useMemo, useState } from 'react';
 import { useFetcher } from 'react-router';
-import { optionsKarsaFrasePreference, optionsLanguageApp } from '~app-modules/enum-options';
 import {
+	labelAppName,
+	optionsKarsaFrasePreference,
+	optionsLanguageApp,
+} from '~app-modules/enum-options';
+import {
+	karasInputMaxLength,
 	PayloadKarsaParafraseSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -143,6 +148,7 @@ export default function FormKarsaParafrase({
 					<Autocomplete
 						label="Preferensi"
 						name="preference"
+						maxLength={karasInputMaxLength.short}
 						required
 						key={form.key('preference')}
 						readOnly={isLoading}
@@ -154,6 +160,7 @@ export default function FormKarsaParafrase({
 					<Textarea
 						label="Teks"
 						name="text"
+						maxLength={karasInputMaxLength.text}
 						required
 						key={form.key('text')}
 						readOnly={isLoading}
@@ -166,7 +173,7 @@ export default function FormKarsaParafrase({
 							loading={isLoading}
 							mt="md"
 						>
-							Parafrase teks
+							Buat {labelAppName.parafrase}
 						</Button>
 					</Group>
 				</Stack>
