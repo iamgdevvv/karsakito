@@ -8,6 +8,7 @@ import {
 	Flex,
 	Group,
 	LoadingOverlay,
+	Modal,
 	Popover,
 	SegmentedControl,
 	Stack,
@@ -39,6 +40,8 @@ import FormWindowWorkspace from '~app-ui/form/window-workspace';
 import AppPanel from '~app-ui/layouts/apps-panel';
 
 import type { Route } from './+types/workspace._index';
+
+type WorkspaceViewMode = 'simple' | 'window';
 
 const authMiddleware: Route.MiddlewareFunction = async ({ request, context }) => {
 	const authSession = await authGetSession(request);
@@ -113,6 +116,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 
 		return 'simple';
 	}, [searchParams]);
+	const [pendingViewMode, setPendingViewMode] = useState<WorkspaceViewMode | null>(null);
 
 	const simpleKarsaSelected = useMemo(() => {
 		const [first] = windowLists.keys();
@@ -145,6 +149,17 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 		},
 		[windowLists.size],
 	);
+
+	const handleConfirmViewModeChange = useCallback(() => {
+		if (!pendingViewMode) {
+			return;
+		}
+
+		windowLists.clear();
+		setOpenFormNewWindow(false);
+		setSearchParams({ viewMode: pendingViewMode });
+		setPendingViewMode(null);
+	}, [pendingViewMode]);
 
 	useEffect(() => {
 		if (refCanvas.current && !isFirstRender) {
@@ -264,9 +279,7 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 							label: 'text-xs min-h-7 flex items-center justify-center',
 						}}
 						value={viewMode}
-						onChange={(value) => {
-							setSearchParams({ viewMode: value });
-						}}
+						onChange={setPendingViewMode}
 						data={[
 							{ label: 'Sederhana', value: 'simple' },
 							{ label: 'Kreator', value: 'window' },
@@ -501,6 +514,62 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 					) : null}
 				</Box>
 			</AppPanel>
+			<Modal
+				opened={pendingViewMode !== null}
+				onClose={() => setPendingViewMode(null)}
+				title={
+					<Text
+						span
+						fw={700}
+					>
+						Beralih ke Mode {pendingViewMode === 'window' ? 'Kreator' : 'Sederhana'}?
+					</Text>
+				}
+				size="sm"
+				radius="lg"
+				centered={!isMobile}
+			>
+				<Stack gap="xs">
+					<Text size="sm">
+						{pendingViewMode === 'window'
+							? 'Mode Kreator memungkinkan Anda membuka dan mengatur beberapa Window dalam satu workspace.'
+							: 'Mode Sederhana memusatkan workspace pada satu aplikasi dalam tampilan formulir yang ringkas.'}
+					</Text>
+					<Text
+						size="xs"
+						c="dimmed"
+						fw={500}
+					>
+						Seluruh field dan hasil AI dari mode sebelumnya akan dihapus. Tindakan ini
+						tidak dapat dibatalkan.
+					</Text>
+					<Group
+						mt="md"
+						gap="xs"
+						justify="flex-end"
+					>
+						<Button
+							size="sm"
+							fz="sm"
+							radius="md"
+							variant="outline"
+							color="orange"
+							onClick={() => setPendingViewMode(null)}
+						>
+							Batal
+						</Button>
+						<Button
+							size="sm"
+							fz="sm"
+							radius="md"
+							variant="light"
+							onClick={handleConfirmViewModeChange}
+						>
+							Lanjut Beralih
+						</Button>
+					</Group>
+				</Stack>
+			</Modal>
 		</div>
 	);
 }

@@ -577,6 +577,7 @@ export function WindowAppKarsaWriter({
 				opened={!!openSubmissionReaction}
 				keepMounted
 				withinPortal={false}
+				radius="lg"
 				title="Beri penilaian hasil"
 				onClose={() => setOpenSubmissionReaction(null)}
 			>

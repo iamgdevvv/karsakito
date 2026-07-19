@@ -374,6 +374,7 @@ export default function FormTopup({ ...props }: BoxProps) {
 					</Text>
 				}
 				size="sm"
+				radius="lg"
 				centered
 			>
 				<Stack gap="md">

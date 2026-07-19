@@ -61,7 +61,7 @@ const services = [
 		description:
 			'Dalam pengembangan sebagai ruang pengetahuan untuk membantu pencarian informasi seputar Bahasa Nusantara.',
 		image: '/images/logo/logo-karsapedia.svg',
-		badge: 'Roadmap',
+		badge: 'Segera',
 		visible: false,
 	},
 	{
@@ -70,7 +70,7 @@ const services = [
 		description:
 			'Dalam pengembangan untuk mendukung proses belajar Bahasa Nusantara melalui pengalaman yang lebih terarah.',
 		image: '/images/logo/logo-karsalingo.svg',
-		badge: 'Roadmap',
+		badge: 'Segera',
 		visible: false,
 	},
 ] as const satisfies {

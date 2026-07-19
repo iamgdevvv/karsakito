@@ -371,7 +371,7 @@ export const actionGetKarsaAppsByCategory = async ({
         karsaApps.forEach((app) => {
             karsaAppWithCategories[app.category].push({
                 value: app.name,
-                label: `${app.label} — ${app.visible ? `🪙${app.tokenPromo || app.token}` : 'Soon'}`,
+                label: `${app.label} — ${app.visible ? `🪙${app.tokenPromo || app.token}` : 'Segera'}`,
                 description: app.description,
                 disabled: !app.visible,
             })

@@ -81,12 +81,12 @@ const solutions = [
 	{
 		title: 'KarsaPedia',
 		desc: 'Dalam pengembangan sebagai ruang pengetahuan untuk membantu pencarian informasi seputar Bahasa Nusantara.',
-		status: 'Dalam pengembangan',
+		status: 'Segera',
 	},
 	{
 		title: 'KarsaLingo',
 		desc: 'Dalam pengembangan untuk mendukung proses belajar Bahasa Nusantara melalui pengalaman yang lebih terarah.',
-		status: 'Dalam pengembangan',
+		status: 'Segera',
 	},
 ];
 
@@ -177,13 +177,12 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 					>
 						KarsaKito
 					</Text>
-					<Title>
-						Platform AI untuk Mengakselerasi Pemanfaatan Bahasa Daerah Indonesia
-					</Title>
+					<Title>Platform AI untuk Mengakselerasi Pemanfaatan Bahasa Nusantara</Title>
 					<Text>
 						KarsaKito menghadirkan ekosistem AI yang mengintegrasikan pembelajaran
-						bahasa daerah, pembuatan karya, penerjemahan, parafrase, analisis penggunaan
-						bahasa, serta ensiklopedia budaya dalam satu platform.
+						bahasa nusantara (daerah dan indonesia), pembuatan karya, penerjemahan,
+						parafrase, analisis penggunaan bahasa, serta ensiklopedia budaya dalam satu
+						platform.
 					</Text>
 				</Banner>
 

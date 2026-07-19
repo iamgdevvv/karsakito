@@ -350,7 +350,7 @@ export function Header({
 									fw={700}
 									c="primary"
 								>
-									(Soon)
+									(Segera)
 								</Text>
 							</Group>
 						</Group>
