@@ -104,7 +104,7 @@ export default function FormKarsaCeritaPanjang({
 					setErrorMessage(null);
 					onSubmitProgress();
 					const payload = PayloadSubmissionKarsaSchema.safeParse({
-						app: 'ceritapendek',
+						app: 'ceritapanjang',
 						payload: values,
 					} satisfies PayloadSubmissionKarsa);
 
