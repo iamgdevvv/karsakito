@@ -94,7 +94,7 @@ const theme = createTheme({
 		}),
 		InputWrapper: Input.Wrapper.extend({
 			defaultProps: {
-				inputWrapperOrder: ['label', 'input', 'description'],
+				inputWrapperOrder: ['label', 'input', 'description', 'error'],
 			},
 		}),
 		Input: Input.extend({

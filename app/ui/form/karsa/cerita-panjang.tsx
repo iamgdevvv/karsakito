@@ -4,9 +4,11 @@ import {
 	Box,
 	Button,
 	Group,
+	HoverCard,
 	NumberInput,
 	Select,
 	Stack,
+	Text,
 	Textarea,
 	TextInput,
 	type BoxProps,
@@ -132,6 +134,42 @@ export default function FormKarsaCeritaPanjang({
 				<Stack gap="xs">
 					<Select
 						label="Pilih Bahasa"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan bahasa narasi, dialog, dan keseluruhan cerita
+										yang dihasilkan AI.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						required
 						name="language"
 						placeholder="Pilih bahasa"
@@ -143,6 +181,43 @@ export default function FormKarsaCeritaPanjang({
 					/>
 					<Autocomplete
 						label="Genre"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Mengarahkan pola konflik, suasana, karakter, dan konvensi
+										cerita panjang. Jika opsi yang tersedia belum sesuai, Anda
+										dapat memasukkan pilihan lain sesuai kebutuhan.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="genre"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -164,6 +239,44 @@ export default function FormKarsaCeritaPanjang({
 					/>
 					<Autocomplete
 						label="Audiens"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menyesuaikan kosakata, kompleksitas alur, tema, dan
+										kelayakan isi bagi pembaca sasaran. Jika opsi yang tersedia
+										belum sesuai, Anda dapat memasukkan pilihan lain sesuai
+										kebutuhan.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="audience"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -176,6 +289,42 @@ export default function FormKarsaCeritaPanjang({
 					/>
 					<TextInput
 						label="Pesan moral"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menjadi nilai utama yang dibangun melalui konflik, tindakan
+										tokoh, dan penyelesaian cerita.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="morale"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -186,6 +335,42 @@ export default function FormKarsaCeritaPanjang({
 					/>
 					<Textarea
 						label="Topik"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menjadi dasar premis, rangkaian peristiwa, tokoh, dan detail
+										utama cerita.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="topic"
 						maxLength={karasInputMaxLength.prompt}
 						required
@@ -196,6 +381,42 @@ export default function FormKarsaCeritaPanjang({
 					/>
 					<NumberInput
 						label="Jumlah paragraf"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan target panjang dan ruang pengembangan alur;
+										jumlah lebih besar menghasilkan cerita lebih terperinci.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="totalParagraphs"
 						required
 						max={60}

@@ -4,9 +4,11 @@ import {
 	Box,
 	Button,
 	Group,
+	HoverCard,
 	NumberInput,
 	Select,
 	Stack,
+	Text,
 	TextInput,
 	type BoxProps,
 } from '@mantine/core';
@@ -126,6 +128,41 @@ export default function FormKarsaMotto({
 				<Stack gap="xs">
 					<Select
 						label="Pilih Bahasa"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan bahasa yang digunakan pada motto hasil generasi.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						required
 						name="language"
 						placeholder="Pilih bahasa"
@@ -137,6 +174,42 @@ export default function FormKarsaMotto({
 					/>
 					<TextInput
 						label="Nama entitas"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menetapkan merek, organisasi, atau pribadi yang identitasnya
+										harus diwakili oleh motto.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="entity"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -147,6 +220,42 @@ export default function FormKarsaMotto({
 					/>
 					<TextInput
 						label="Nilai utama"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menjadi gagasan inti yang ditekankan agar motto mencerminkan
+										prinsip entitas.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="core_value"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -157,6 +266,43 @@ export default function FormKarsaMotto({
 					/>
 					<Autocomplete
 						label="Gaya"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Mengatur nada dan kesan motto, misalnya tegas, inspiratif,
+										modern, atau bersahaja. Jika opsi yang tersedia belum
+										sesuai, Anda dapat memasukkan pilihan lain sesuai kebutuhan.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="tone"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -169,6 +315,42 @@ export default function FormKarsaMotto({
 					/>
 					<NumberInput
 						label="Jumlah kata"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan target kepanjangan motto; hasil tetap dapat
+										sedikit menyesuaikan demi kealamian bahasa.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="wordLength"
 						required
 						max={20}

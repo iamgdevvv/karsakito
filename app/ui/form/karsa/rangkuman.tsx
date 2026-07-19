@@ -4,8 +4,10 @@ import {
 	Box,
 	Button,
 	Group,
+	HoverCard,
 	Select,
 	Stack,
+	Text,
 	Textarea,
 	type BoxProps,
 } from '@mantine/core';
@@ -128,6 +130,42 @@ export default function FormKarsaRangkuman({
 				<Stack gap="xs">
 					<Select
 						label="Bahasa sumber"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan bahasa teks asli agar AI memahami isi dan istilah
+										sebelum meringkasnya.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="sourceLanguage"
 						placeholder="Pilih bahasa sumber"
 						key={form.key('sourceLanguage')}
@@ -138,6 +176,41 @@ export default function FormKarsaRangkuman({
 					/>
 					<Select
 						label="Bahasa tujuan"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan bahasa yang digunakan pada hasil rangkuman.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="targetLanguage"
 						placeholder="Pilih bahasa tujuan"
 						key={form.key('targetLanguage')}
@@ -148,6 +221,44 @@ export default function FormKarsaRangkuman({
 					/>
 					<Autocomplete
 						label="Format rangkuman"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan struktur penyajian hasil, misalnya paragraf,
+										poin-poin, atau format lain yang dipilih. Jika opsi yang
+										tersedia belum sesuai, Anda dapat memasukkan pilihan lain
+										sesuai kebutuhan.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="style"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -160,6 +271,44 @@ export default function FormKarsaRangkuman({
 					/>
 					<Autocomplete
 						label="Preferensi"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Mengatur tingkat kepadatan dan fokus rangkuman, seperti
+										singkat, terperinci, atau menonjolkan gagasan utama. Jika
+										opsi yang tersedia belum sesuai, Anda dapat memasukkan
+										pilihan lain sesuai kebutuhan.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="preference"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -172,6 +321,42 @@ export default function FormKarsaRangkuman({
 					/>
 					<Textarea
 						label="Teks"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Sumber informasi yang dipadatkan; fakta dan gagasan di
+										dalamnya menjadi batas isi rangkuman.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="text"
 						maxLength={karasInputMaxLength.text}
 						required

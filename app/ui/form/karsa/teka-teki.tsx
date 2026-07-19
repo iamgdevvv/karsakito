@@ -4,8 +4,10 @@ import {
 	Box,
 	Button,
 	Group,
+	HoverCard,
 	Select,
 	Stack,
+	Text,
 	Textarea,
 	type BoxProps,
 } from '@mantine/core';
@@ -123,6 +125,42 @@ export default function FormKarsaTekaTeki({
 				<Stack gap="xs">
 					<Select
 						label="Pilih Bahasa"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan bahasa yang digunakan pada pertanyaan dan jawaban
+										teka-teki.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						required
 						name="language"
 						placeholder="Pilih bahasa"
@@ -134,6 +172,43 @@ export default function FormKarsaTekaTeki({
 					/>
 					<Autocomplete
 						label="Jenis"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan pola permainan, bentuk petunjuk, dan cara jawaban
+										disembunyikan. Jika opsi yang tersedia belum sesuai, Anda
+										dapat memasukkan pilihan lain sesuai kebutuhan.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="type"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -155,6 +230,44 @@ export default function FormKarsaTekaTeki({
 					/>
 					<Autocomplete
 						label="Tingkat kesulitan"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Mengatur seberapa langsung petunjuk, kompleks hubungan
+										logis, dan usaha yang diperlukan untuk menemukan jawaban.
+										Jika opsi yang tersedia belum sesuai, Anda dapat memasukkan
+										pilihan lain sesuai kebutuhan.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="level"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -167,6 +280,42 @@ export default function FormKarsaTekaTeki({
 					/>
 					<Textarea
 						label="Topik"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan ranah pengetahuan, objek jawaban, dan petunjuk
+										yang digunakan dalam teka-teki.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="topic"
 						maxLength={karasInputMaxLength.prompt}
 						required

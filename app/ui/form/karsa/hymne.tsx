@@ -3,9 +3,11 @@ import {
 	Box,
 	Button,
 	Group,
+	HoverCard,
 	NumberInput,
 	Select,
 	Stack,
+	Text,
 	Textarea,
 	TextInput,
 	type BoxProps,
@@ -157,6 +159,41 @@ export default function FormKarsaHymne({
 				<Stack gap="xs">
 					<Select
 						label="Pilih Bahasa"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan bahasa yang digunakan pada seluruh lirik hymne.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						required
 						name="language"
 						placeholder="Pilih bahasa"
@@ -168,6 +205,42 @@ export default function FormKarsaHymne({
 					/>
 					<Select
 						label="Jenis"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Mengarahkan karakter hymne, suasana, dan tujuan emosional
+										lirik.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="type"
 						required
 						key={form.key('type')}
@@ -179,6 +252,42 @@ export default function FormKarsaHymne({
 					/>
 					<TextInput
 						label="Instansi atau organisasi"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menjadi identitas utama yang dimuliakan dan dirujuk secara
+										konsisten dalam hymne.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="institution"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -189,6 +298,42 @@ export default function FormKarsaHymne({
 					/>
 					<Select
 						label="Struktur"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan susunan bagian lirik, seperti bait dan refrein,
+										agar hasil mengikuti bentuk yang diinginkan.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="structure"
 						required
 						key={form.key('structure')}
@@ -200,6 +345,42 @@ export default function FormKarsaHymne({
 					/>
 					<Textarea
 						label="Topik"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menetapkan nilai, sejarah, cita-cita, atau semangat utama
+										yang diangkat dalam lirik.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="topic"
 						maxLength={karasInputMaxLength.prompt}
 						required
@@ -210,6 +391,42 @@ export default function FormKarsaHymne({
 					/>
 					<NumberInput
 						label="Jumlah bait"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan target panjang lirik dan ruang pengembangan pesan
+										hymne.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="numberVerses"
 						required
 						max={20}

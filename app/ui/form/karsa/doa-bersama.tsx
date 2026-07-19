@@ -4,9 +4,11 @@ import {
 	Box,
 	Button,
 	Group,
+	HoverCard,
 	NumberInput,
 	Select,
 	Stack,
+	Text,
 	Textarea,
 	type BoxProps,
 } from '@mantine/core';
@@ -125,6 +127,41 @@ export default function FormKarsaDoaBersama({
 				<Stack gap="xs">
 					<Select
 						label="Pilih Bahasa"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan bahasa yang digunakan pada seluruh susunan doa.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						required
 						name="language"
 						placeholder="Pilih bahasa"
@@ -136,6 +173,43 @@ export default function FormKarsaDoaBersama({
 					/>
 					<Autocomplete
 						label="Kepercayaan"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menyesuaikan istilah, sapaan, nilai, dan tata ungkap doa
+										dengan keyakinan yang dipilih. Jika opsi yang tersedia belum
+										sesuai, Anda dapat memasukkan pilihan lain sesuai kebutuhan.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="religion"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -148,6 +222,42 @@ export default function FormKarsaDoaBersama({
 					/>
 					<Textarea
 						label="Topik"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan maksud, pokok permohonan, rasa syukur, atau
+										harapan yang disampaikan.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="topic"
 						maxLength={karasInputMaxLength.prompt}
 						required
@@ -158,6 +268,42 @@ export default function FormKarsaDoaBersama({
 					/>
 					<NumberInput
 						label="Jumlah kalimat"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan target panjang doa dan tingkat perincian pokok
+										yang disampaikan.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="totalSentence"
 						required
 						max={28}

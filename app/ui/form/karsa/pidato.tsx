@@ -4,9 +4,11 @@ import {
 	Box,
 	Button,
 	Group,
+	HoverCard,
 	NumberInput,
 	Select,
 	Stack,
+	Text,
 	Textarea,
 	TextInput,
 	type BoxProps,
@@ -133,6 +135,41 @@ export default function FormKarsaPidato({
 				<Stack gap="xs">
 					<Select
 						label="Pilih Bahasa"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan bahasa yang digunakan pada seluruh naskah pidato.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						required
 						name="language"
 						placeholder="Pilih bahasa"
@@ -144,6 +181,44 @@ export default function FormKarsaPidato({
 					/>
 					<Autocomplete
 						label="Tujuan"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Mengarahkan strategi penyampaian pidato, misalnya untuk
+										menginformasikan, mengajak, atau menginspirasi. Jika opsi
+										yang tersedia belum sesuai, Anda dapat memasukkan pilihan
+										lain sesuai kebutuhan.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="purpose"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -171,6 +246,42 @@ export default function FormKarsaPidato({
 					/>
 					<TextInput
 						label="Acara"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Memberi konteks situasi agar pembukaan, sapaan, isi, dan
+										penutup pidato sesuai dengan acaranya.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="agenda"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -181,6 +292,42 @@ export default function FormKarsaPidato({
 					/>
 					<TextInput
 						label="Pembicara"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan identitas atau peran suara yang berbicara
+										sehingga sudut pandang dan kewenangannya terasa tepat.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="speaker"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -191,6 +338,44 @@ export default function FormKarsaPidato({
 					/>
 					<Autocomplete
 						label="Audiens"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menyesuaikan sapaan, istilah, argumen, dan tingkat
+										formalitas kepada pendengar sasaran. Jika opsi yang tersedia
+										belum sesuai, Anda dapat memasukkan pilihan lain sesuai
+										kebutuhan.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="audience"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -203,6 +388,42 @@ export default function FormKarsaPidato({
 					/>
 					<Textarea
 						label="Topik"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan pokok bahasan, gagasan pendukung, dan pesan utama
+										naskah pidato.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="topic"
 						maxLength={karasInputMaxLength.prompt}
 						required
@@ -213,6 +434,42 @@ export default function FormKarsaPidato({
 					/>
 					<NumberInput
 						label="Jumlah kalimat"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan target panjang dan tingkat perincian naskah
+										pidato yang dihasilkan.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="totalSentence"
 						required
 						max={80}

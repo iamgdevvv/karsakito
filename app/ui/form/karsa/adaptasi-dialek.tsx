@@ -3,8 +3,10 @@ import {
 	Box,
 	Button,
 	Group,
+	HoverCard,
 	Select,
 	Stack,
+	Text,
 	Textarea,
 	TextInput,
 	type BoxProps,
@@ -123,6 +125,42 @@ export default function FormKarsaAdaptasiDialek({
 				<Stack gap="xs">
 					<Select
 						label="Bahasa sumber"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan bahasa asli teks agar AI memahami kosakata dan
+										makna awal sebelum mengadaptasinya.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="sourceLanguage"
 						placeholder="Pilih bahasa sumber"
 						key={form.key('sourceLanguage')}
@@ -133,6 +171,42 @@ export default function FormKarsaAdaptasiDialek({
 					/>
 					<Select
 						label="Bahasa tujuan"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan bahasa keluaran yang digunakan AI saat menulis
+										hasil adaptasi dialek.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="targetLanguage"
 						placeholder="Pilih bahasa tujuan"
 						key={form.key('targetLanguage')}
@@ -143,6 +217,42 @@ export default function FormKarsaAdaptasiDialek({
 					/>
 					<TextInput
 						label="Dialek"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Mengarahkan pilihan kosakata, ungkapan, dan nuansa lokal
+										yang diterapkan pada hasil.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="dialect"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -153,6 +263,42 @@ export default function FormKarsaAdaptasiDialek({
 					/>
 					<Textarea
 						label="Teks"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Isi utama yang akan dipertahankan maknanya lalu ditulis
+										ulang sesuai bahasa dan dialek pilihan.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="text"
 						maxLength={karasInputMaxLength.text}
 						required

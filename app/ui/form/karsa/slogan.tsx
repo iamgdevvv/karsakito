@@ -4,9 +4,11 @@ import {
 	Box,
 	Button,
 	Group,
+	HoverCard,
 	NumberInput,
 	Select,
 	Stack,
+	Text,
 	TextInput,
 	type BoxProps,
 } from '@mantine/core';
@@ -130,6 +132,41 @@ export default function FormKarsaSlogan({
 				<Stack gap="xs">
 					<Select
 						label="Pilih Bahasa"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan bahasa yang digunakan pada slogan hasil generasi.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						required
 						name="language"
 						placeholder="Pilih bahasa"
@@ -141,6 +178,42 @@ export default function FormKarsaSlogan({
 					/>
 					<TextInput
 						label="Kampanye"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan isu, produk, atau gerakan yang harus dipromosikan
+										dan menjadi fokus slogan.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="campaign"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -151,6 +224,43 @@ export default function FormKarsaSlogan({
 					/>
 					<Autocomplete
 						label="Audiens"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menyesuaikan kosakata, daya tarik, dan ajakan slogan kepada
+										kelompok sasaran. Jika opsi yang tersedia belum sesuai, Anda
+										dapat memasukkan pilihan lain sesuai kebutuhan.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="audience"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -163,6 +273,43 @@ export default function FormKarsaSlogan({
 					/>
 					<Autocomplete
 						label="Gaya"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Mengatur nada dan kesan slogan, seperti persuasif, tegas,
+										jenaka, atau inspiratif. Jika opsi yang tersedia belum
+										sesuai, Anda dapat memasukkan pilihan lain sesuai kebutuhan.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="tone"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -183,6 +330,42 @@ export default function FormKarsaSlogan({
 					/>
 					<NumberInput
 						label="Jumlah kata"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan target kepanjangan slogan; hasil tetap dapat
+										sedikit menyesuaikan agar pesannya alami dan kuat.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="wordLength"
 						required
 						max={20}

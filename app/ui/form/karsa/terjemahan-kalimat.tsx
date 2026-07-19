@@ -4,8 +4,10 @@ import {
 	Box,
 	Button,
 	Group,
+	HoverCard,
 	Select,
 	Stack,
+	Text,
 	Textarea,
 	type BoxProps,
 } from '@mantine/core';
@@ -123,6 +125,42 @@ export default function FormKarsaTerjemahanKalimat({
 				<Stack gap="xs">
 					<Select
 						label="Bahasa sumber"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan bahasa asli agar AI memahami makna kalimat
+										sebelum menerjemahkannya.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="sourceLanguage"
 						placeholder="Pilih bahasa sumber"
 						key={form.key('sourceLanguage')}
@@ -135,6 +173,41 @@ export default function FormKarsaTerjemahanKalimat({
 					/>
 					<Select
 						label="Bahasa tujuan"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan bahasa yang digunakan pada hasil terjemahan.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="targetLanguage"
 						placeholder="Pilih bahasa tujuan"
 						key={form.key('targetLanguage')}
@@ -147,6 +220,44 @@ export default function FormKarsaTerjemahanKalimat({
 					/>
 					<Autocomplete
 						label="Konteks penggunaan"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Membantu AI memilih arti, istilah, dan tingkat formalitas
+										yang sesuai dengan situasi pemakaian. Jika opsi yang
+										tersedia belum sesuai, Anda dapat memasukkan pilihan lain
+										sesuai kebutuhan.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="usage"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -163,6 +274,42 @@ export default function FormKarsaTerjemahanKalimat({
 					/>
 					<Textarea
 						label="Teks"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Kalimat sumber yang diterjemahkan dengan tetap
+										mempertahankan maksud dan konteksnya.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="text"
 						maxLength={karasInputMaxLength.text}
 						required

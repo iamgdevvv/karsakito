@@ -1,3 +1,4 @@
+import '~app-modules/zod-locale';
 import {
 	Box,
 	Button,

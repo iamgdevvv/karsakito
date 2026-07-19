@@ -4,8 +4,10 @@ import {
 	Box,
 	Button,
 	Group,
+	HoverCard,
 	Select,
 	Stack,
+	Text,
 	Textarea,
 	type BoxProps,
 } from '@mantine/core';
@@ -127,6 +129,42 @@ export default function FormKarsaParafrase({
 				<Stack gap="xs">
 					<Select
 						label="Bahasa sumber"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan bahasa asli agar AI memahami makna dan struktur
+										teks sebelum memparafrasekannya.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="sourceLanguage"
 						placeholder="Pilih bahasa sumber"
 						key={form.key('sourceLanguage')}
@@ -137,6 +175,42 @@ export default function FormKarsaParafrase({
 					/>
 					<Select
 						label="Bahasa tujuan"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Menentukan bahasa hasil; dapat sama dengan bahasa sumber
+										atau sekaligus mengalihbahasakan parafrasa.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="targetLanguage"
 						placeholder="Pilih bahasa tujuan"
 						key={form.key('targetLanguage')}
@@ -147,6 +221,44 @@ export default function FormKarsaParafrase({
 					/>
 					<Autocomplete
 						label="Preferensi"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Mengatur cara teks ditulis ulang, seperti tingkat
+										formalitas, kesederhanaan, atau kedekatan dengan teks asli.
+										Jika opsi yang tersedia belum sesuai, Anda dapat memasukkan
+										pilihan lain sesuai kebutuhan.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="preference"
 						maxLength={karasInputMaxLength.short}
 						required
@@ -159,6 +271,42 @@ export default function FormKarsaParafrase({
 					/>
 					<Textarea
 						label="Teks"
+						description={
+							<HoverCard
+								width={240}
+								position="bottom-start"
+								offset={4}
+								shadow="md"
+							>
+								<HoverCard.Target>
+									<Text
+										span
+										fz="xs"
+									>
+										Butuh penjelasan? Lihat informasi field{' '}
+										<Text
+											span
+											inherit
+											fw={600}
+											td="underline"
+										>
+											disini
+										</Text>
+										.
+									</Text>
+								</HoverCard.Target>
+								<HoverCard.Dropdown>
+									<Text
+										span
+										c="black"
+										fz="xs"
+									>
+										Isi yang akan ditulis ulang dengan susunan berbeda sambil
+										mempertahankan makna utamanya.
+									</Text>
+								</HoverCard.Dropdown>
+							</HoverCard>
+						}
 						name="text"
 						maxLength={karasInputMaxLength.text}
 						required
