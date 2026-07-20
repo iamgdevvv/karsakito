@@ -5,7 +5,6 @@ import {
 	Badge,
 	Box,
 	Container,
-	Flex,
 	SimpleGrid,
 	Stack,
 	Text,
@@ -228,7 +227,7 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 								Nusantara.
 							</Text>
 						</Stack>
-						<Stack
+						{/* <Stack
 							align="center"
 							gap="md"
 							mt="xl"
@@ -310,7 +309,7 @@ export default function TentangRoute({ loaderData }: Route.ComponentProps) {
 									className="transition-all duration-300 lg:opacity-80 lg:grayscale lg:hover:opacity-100 lg:hover:grayscale-0"
 								/>
 							</Flex>
-						</Stack>
+						</Stack> */}
 					</Container>
 				</Box>
 
