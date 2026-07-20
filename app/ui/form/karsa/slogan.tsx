@@ -23,6 +23,7 @@ import {
 } from '~app-modules/enum-options';
 import {
 	karasInputMaxLength,
+	karsaNumericInputMax,
 	PayloadKarsaSloganSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -368,7 +369,7 @@ export default function FormKarsaSlogan({
 						}
 						name="wordLength"
 						required
-						max={20}
+						max={karsaNumericInputMax.slogan.wordLength}
 						key={form.key('wordLength')}
 						readOnly={isLoading}
 						placeholder="Contoh: 5"

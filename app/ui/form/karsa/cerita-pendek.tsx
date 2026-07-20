@@ -24,6 +24,7 @@ import {
 } from '~app-modules/enum-options';
 import {
 	karasInputMaxLength,
+	karsaNumericInputMax,
 	PayloadKarsaCeritaPendekSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -419,7 +420,7 @@ export default function FormKarsaCeritaPendek({
 						}
 						name="totalParagraphs"
 						required
-						max={28}
+						max={karsaNumericInputMax.ceritaPendek.totalParagraphs}
 						key={form.key('totalParagraphs')}
 						readOnly={isLoading}
 						placeholder="Contoh: 5"

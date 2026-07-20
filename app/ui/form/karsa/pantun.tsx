@@ -23,6 +23,7 @@ import {
 } from '~app-modules/enum-options';
 import {
 	karasInputMaxLength,
+	karsaNumericInputMax,
 	PayloadKarsaPantunSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -382,7 +383,7 @@ export default function FormKarsaPantun({
 						}
 						name="numberVerses"
 						required
-						max={20}
+						max={karsaNumericInputMax.pantun.numberVerses}
 						key={form.key('numberVerses')}
 						readOnly={isLoading}
 						placeholder="Contoh: 2"

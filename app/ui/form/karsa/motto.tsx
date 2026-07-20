@@ -19,6 +19,7 @@ import { useFetcher } from 'react-router';
 import { labelAppName, optionsLanguageApp } from '~app-modules/enum-options';
 import {
 	karasInputMaxLength,
+	karsaNumericInputMax,
 	PayloadKarsaMottoSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -353,7 +354,7 @@ export default function FormKarsaMotto({
 						}
 						name="wordLength"
 						required
-						max={20}
+						max={karsaNumericInputMax.motto.wordLength}
 						key={form.key('wordLength')}
 						readOnly={isLoading}
 						placeholder="Contoh: 4"

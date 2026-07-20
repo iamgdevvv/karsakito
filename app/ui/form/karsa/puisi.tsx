@@ -23,6 +23,7 @@ import {
 } from '~app-modules/enum-options';
 import {
 	karasInputMaxLength,
+	karsaNumericInputMax,
 	PayloadKarsaPuisiSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -491,7 +492,7 @@ export default function FormKarsaPuisi({
 						}
 						name="numberVerses"
 						required
-						max={20}
+						max={karsaNumericInputMax.puisi.numberVerses}
 						key={form.key('numberVerses')}
 						readOnly={isLoading}
 						placeholder="Contoh: 4"

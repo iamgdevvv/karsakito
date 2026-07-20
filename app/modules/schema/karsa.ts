@@ -8,11 +8,32 @@ export const karasInputMaxLength = {
 	text: 1_000,
 } as const;
 
+export const karsaNumericInputMax = {
+	pidato: { totalSentence: 80 },
+	pantun: { numberVerses: 20 },
+	syair: { numberVerses: 20 },
+	puisi: { numberVerses: 20 },
+	hymne: { numberVerses: 20 },
+	tagline: { wordLength: 20 },
+	slogan: { wordLength: 20 },
+	motto: { wordLength: 20 },
+	ceritaPendek: { totalParagraphs: 28 },
+	ceritaPanjang: { totalParagraphs: 60 },
+	doaBersama: { totalSentence: 28 },
+} as const;
+
 const zKarsaString = (maxLength: number) =>
 	z
 		.string()
 		.nonempty()
 		.max(maxLength, `Maksimal ${maxLength.toLocaleString('id-ID')} karakter`);
+
+const zKarsaNumericInput = (max: number, unit: string) =>
+	z
+		.number()
+		.gt(0)
+		.nonnegative()
+		.max(max, `Maksimal ${max.toLocaleString('id-ID')} ${unit}`);
 
 export const KarsaSchemaPlain = KarsaSchema.omit({
 	promptJson: true,
@@ -27,7 +48,7 @@ export const PayloadKarsaPidatoSchema = z.object({
 	speaker: zKarsaString(karasInputMaxLength.short),
 	audience: zKarsaString(karasInputMaxLength.short),
 	topic: zKarsaString(karasInputMaxLength.prompt),
-	totalSentence: z.number().gt(0).nonnegative(),
+	totalSentence: zKarsaNumericInput(karsaNumericInputMax.pidato.totalSentence, 'kalimat'),
 });
 
 export const PayloadKarsaPantunSchema = z.object({
@@ -35,7 +56,7 @@ export const PayloadKarsaPantunSchema = z.object({
 	type: zKarsaString(karasInputMaxLength.short),
 	audience: zKarsaString(karasInputMaxLength.short),
 	topic: zKarsaString(karasInputMaxLength.prompt),
-	numberVerses: z.number().gt(0).nonnegative(),
+	numberVerses: zKarsaNumericInput(karsaNumericInputMax.pantun.numberVerses, 'bait'),
 });
 
 export const PayloadKarsaSyairSchema = z.object({
@@ -44,7 +65,7 @@ export const PayloadKarsaSyairSchema = z.object({
 	audience: zKarsaString(karasInputMaxLength.short),
 	tone: zKarsaString(karasInputMaxLength.short),
 	topic: zKarsaString(karasInputMaxLength.prompt),
-	numberVerses: z.number().gt(0).nonnegative(),
+	numberVerses: zKarsaNumericInput(karsaNumericInputMax.syair.numberVerses, 'bait'),
 });
 
 export const PayloadKarsaPuisiSchema = z.object({
@@ -54,7 +75,7 @@ export const PayloadKarsaPuisiSchema = z.object({
 	style: zKarsaString(karasInputMaxLength.short),
 	effect: zKarsaString(karasInputMaxLength.short),
 	topic: zKarsaString(karasInputMaxLength.prompt),
-	numberVerses: z.number().gt(0).nonnegative(),
+	numberVerses: zKarsaNumericInput(karsaNumericInputMax.puisi.numberVerses, 'bait'),
 });
 
 export const PayloadKarsaHymneSchema = z.object({
@@ -63,7 +84,7 @@ export const PayloadKarsaHymneSchema = z.object({
 	institution: zKarsaString(karasInputMaxLength.short),
 	structure: zKarsaString(karasInputMaxLength.short),
 	topic: zKarsaString(karasInputMaxLength.prompt),
-	numberVerses: z.number().gt(0).nonnegative(),
+	numberVerses: zKarsaNumericInput(karsaNumericInputMax.hymne.numberVerses, 'bait'),
 });
 
 export const PayloadKarsaPetuahSchema = z.object({
@@ -78,7 +99,7 @@ export const PayloadKarsaTaglineSchema = z.object({
 	usp: zKarsaString(karasInputMaxLength.short),
 	audience: zKarsaString(karasInputMaxLength.short),
 	tone: zKarsaString(karasInputMaxLength.short),
-	wordLength: z.number().gt(0).nonnegative(),
+	wordLength: zKarsaNumericInput(karsaNumericInputMax.tagline.wordLength, 'kata'),
 });
 
 export const PayloadKarsaSloganSchema = z.object({
@@ -86,7 +107,7 @@ export const PayloadKarsaSloganSchema = z.object({
 	campaign: zKarsaString(karasInputMaxLength.short),
 	audience: zKarsaString(karasInputMaxLength.short),
 	tone: zKarsaString(karasInputMaxLength.short),
-	wordLength: z.number().gt(0).nonnegative(),
+	wordLength: zKarsaNumericInput(karsaNumericInputMax.slogan.wordLength, 'kata'),
 });
 
 export const PayloadKarsaMottoSchema = z.object({
@@ -94,7 +115,7 @@ export const PayloadKarsaMottoSchema = z.object({
 	entity: zKarsaString(karasInputMaxLength.short),
 	core_value: zKarsaString(karasInputMaxLength.short),
 	tone: zKarsaString(karasInputMaxLength.short),
-	wordLength: z.number().gt(0).nonnegative(),
+	wordLength: zKarsaNumericInput(karsaNumericInputMax.motto.wordLength, 'kata'),
 });
 
 export const PayloadKarsaCeritaPendekSchema = z.object({
@@ -103,7 +124,10 @@ export const PayloadKarsaCeritaPendekSchema = z.object({
 	audience: zKarsaString(karasInputMaxLength.short),
 	morale: zKarsaString(karasInputMaxLength.short),
 	topic: zKarsaString(karasInputMaxLength.prompt),
-	totalParagraphs: z.number().gt(0).nonnegative(),
+	totalParagraphs: zKarsaNumericInput(
+		karsaNumericInputMax.ceritaPendek.totalParagraphs,
+		'paragraf',
+	),
 });
 
 export const PayloadKarsaCeritaPanjangSchema = z.object({
@@ -112,14 +136,17 @@ export const PayloadKarsaCeritaPanjangSchema = z.object({
 	audience: zKarsaString(karasInputMaxLength.short),
 	morale: zKarsaString(karasInputMaxLength.short),
 	topic: zKarsaString(karasInputMaxLength.prompt),
-	totalParagraphs: z.number().gt(0).nonnegative(),
+	totalParagraphs: zKarsaNumericInput(
+		karsaNumericInputMax.ceritaPanjang.totalParagraphs,
+		'paragraf',
+	),
 });
 
 export const PayloadKarsaDoaBersamaSchema = z.object({
 	language: LanguageAppSchema.default('indonesia'),
 	religion: zKarsaString(karasInputMaxLength.short),
 	topic: zKarsaString(karasInputMaxLength.prompt),
-	totalSentence: z.number().gt(0).nonnegative(),
+	totalSentence: zKarsaNumericInput(karsaNumericInputMax.doaBersama.totalSentence, 'kalimat'),
 });
 
 export const PayloadKarsaTekaTekiSchema = z.object({

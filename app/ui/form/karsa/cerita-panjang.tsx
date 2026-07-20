@@ -24,6 +24,7 @@ import {
 } from '~app-modules/enum-options';
 import {
 	karasInputMaxLength,
+	karsaNumericInputMax,
 	PayloadKarsaCeritaPanjangSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -419,7 +420,7 @@ export default function FormKarsaCeritaPanjang({
 						}
 						name="totalParagraphs"
 						required
-						max={60}
+						max={karsaNumericInputMax.ceritaPanjang.totalParagraphs}
 						key={form.key('totalParagraphs')}
 						readOnly={isLoading}
 						placeholder="Contoh: 12"

@@ -24,6 +24,7 @@ import {
 } from '~app-modules/enum-options';
 import {
 	karasInputMaxLength,
+	karsaNumericInputMax,
 	PayloadKarsaPidatoSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -472,7 +473,7 @@ export default function FormKarsaPidato({
 						}
 						name="totalSentence"
 						required
-						max={80}
+						max={karsaNumericInputMax.pidato.totalSentence}
 						key={form.key('totalSentence')}
 						readOnly={isLoading}
 						placeholder="Contoh: 12"

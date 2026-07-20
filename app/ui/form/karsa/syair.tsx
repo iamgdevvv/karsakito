@@ -23,6 +23,7 @@ import {
 } from '~app-modules/enum-options';
 import {
 	karasInputMaxLength,
+	karsaNumericInputMax,
 	PayloadKarsaSyairSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -432,7 +433,7 @@ export default function FormKarsaSyair({
 						}
 						name="numberVerses"
 						required
-						max={20}
+						max={karsaNumericInputMax.syair.numberVerses}
 						key={form.key('numberVerses')}
 						readOnly={isLoading}
 						placeholder="Contoh: 4"

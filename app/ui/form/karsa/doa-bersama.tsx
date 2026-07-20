@@ -19,6 +19,7 @@ import { useFetcher } from 'react-router';
 import { labelAppName, optionsLanguageApp } from '~app-modules/enum-options';
 import {
 	karasInputMaxLength,
+	karsaNumericInputMax,
 	PayloadKarsaDoaBersamaSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -306,7 +307,7 @@ export default function FormKarsaDoaBersama({
 						}
 						name="totalSentence"
 						required
-						max={28}
+						max={karsaNumericInputMax.doaBersama.totalSentence}
 						key={form.key('totalSentence')}
 						readOnly={isLoading}
 						placeholder="Contoh: 8"

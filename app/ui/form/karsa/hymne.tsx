@@ -19,6 +19,7 @@ import { useFetcher } from 'react-router';
 import { labelAppName, optionsLanguageApp } from '~app-modules/enum-options';
 import {
 	karasInputMaxLength,
+	karsaNumericInputMax,
 	PayloadKarsaHymneSchema,
 	PayloadSubmissionKarsaSchema,
 	type KarsaPlain,
@@ -429,7 +430,7 @@ export default function FormKarsaHymne({
 						}
 						name="numberVerses"
 						required
-						max={20}
+						max={karsaNumericInputMax.hymne.numberVerses}
 						key={form.key('numberVerses')}
 						readOnly={isLoading}
 						placeholder="Contoh: 4"
