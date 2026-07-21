@@ -2,7 +2,7 @@ import { Alert, Box, Button, PasswordInput, Stack, type BoxProps } from '@mantin
 import { schemaResolver, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { useEffect, useMemo, useState } from 'react';
-import { useFetcher } from 'react-router';
+import { useFetcher, useNavigate } from 'react-router';
 import {
 	PayloadUpdateProfilePasswordSchema,
 	type PayloadUpdateProfilePassword,
@@ -10,6 +10,7 @@ import {
 import type { ActionChangePassword } from '~app-server/user';
 
 export default function FormChangePassword(props: BoxProps) {
+	const navigate = useNavigate();
 	const fetcher = useFetcher<ActionChangePassword>();
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -36,12 +37,10 @@ export default function FormChangePassword(props: BoxProps) {
 			if (fetcher.data.error) {
 				setErrorMessage(fetcher.data.error);
 			} else if (fetcher.data.data) {
-				fetcher.reset();
+				const redirectParams = new URLSearchParams();
+				redirectParams.set('successMessage', 'Kata sandi berhasil diperbarui.');
 
-				notifications.show({
-					title: 'Berhasil',
-					message: 'Kata sandi berhasil diperbarui.',
-				});
+				navigate(`/dashboard/profile/?${redirectParams.toString()}`);
 			}
 		}
 	}, [fetcher.data, isLoading]);

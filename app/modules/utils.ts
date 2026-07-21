@@ -104,9 +104,7 @@ export function parseFormData(formData: FormData) {
 		} else if (value === '-Infinity') {
 			parseData[key] = undefined;
 		} else if (value === '') {
-			parseData[key] = undefined;
-		} else if (Number(value)) {
-			parseData[key] = Number(value);
+			parseData[key] = null;
 		}
 	});
 
