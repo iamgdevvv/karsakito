@@ -284,7 +284,7 @@ export default function AppsRoute({ loaderData }: Route.ComponentProps) {
 							lg: 20,
 						}}
 					>
-						Panduan Penggunaan
+						Panduan & Demo Penggunaan
 					</Title>
 					<SimpleGrid
 						cols={{
@@ -293,9 +293,8 @@ export default function AppsRoute({ loaderData }: Route.ComponentProps) {
 							md: 3,
 						}}
 					>
-						<VideoIframe src="https://www.youtube.com/watch?v=OIi9Gi6cNaA" />
-						<VideoIframe src="https://www.youtube.com/watch?v=IRdBLrzlpag" />
-						<VideoIframe src="https://www.youtube.com/watch?v=Exdoe-pa1kg" />
+						<VideoIframe src="https://www.youtube.com/watch?v=J1DBfsJFaE8" />
+						<VideoIframe src="https://www.youtube.com/watch?v=5py1dTzxWeM" />
 					</SimpleGrid>
 				</Stack>
 				<Group
