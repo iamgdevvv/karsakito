@@ -339,14 +339,15 @@ export const actionGetKarsaAppsByCategory = async ({
     context
 }: {
     context: Readonly<RouterContextProvider>
-}): Promise<Record<KarsaApp['category'], (ComboboxItem & { description: KarsaApp['description'] })[]>> => {
-    const karsaAppWithCategories: Record<KarsaApp['category'], (ComboboxItem & { description: KarsaApp['description'] })[]> = {
+}) => {
+    const karsaAppWithCategories: Record<KarsaApp['category'], (ComboboxItem & Pick<KarsaApp, 'description' | 'token' | 'tokenPromo'>)[]> = {
         karsawriter: [],
         karsalator: [],
         karsalisa: [],
         karsafrase: [],
         karsapedia: []
     }
+
     try {
         const karsaApps = await prismaClient(context).karsaApp.findMany({
             orderBy: [
@@ -371,8 +372,10 @@ export const actionGetKarsaAppsByCategory = async ({
         karsaApps.forEach((app) => {
             karsaAppWithCategories[app.category].push({
                 value: app.name,
-                label: `${app.label} — ${app.visible ? `🪙${app.tokenPromo || app.token}` : 'Segera'}`,
+                label: app.label,
                 description: app.description,
+                token: app.token,
+                tokenPromo: app.tokenPromo,
                 disabled: !app.visible,
             })
         })

@@ -75,7 +75,7 @@ export function WindowAppKarsaWriter({
 		setLoadingMessageIndex(0);
 		const intervalId = setInterval(() => {
 			setLoadingMessageIndex((currentIndex) => (currentIndex + 1) % loadingMessages.length);
-		}, 4000);
+		}, 2000);
 
 		return () => clearInterval(intervalId);
 	}, [isLoadingResult]);

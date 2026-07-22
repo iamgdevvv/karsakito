@@ -27,7 +27,7 @@ export default function FormWindowWorkspace({
 	defaultValues?: PayloadWindowWorkspace;
 	optionApps: Record<
 		KarsaApp['category'],
-		(ComboboxItem & { description: KarsaApp['description'] })[]
+		(ComboboxItem & Pick<KarsaApp, 'description' | 'token' | 'tokenPromo'>)[]
 	>;
 	onSubmit: (values: PayloadWindowWorkspace) => void;
 }) {
@@ -77,7 +77,10 @@ export default function FormWindowWorkspace({
 					}}
 					data={Object.entries(optionApps).map(([group, items]) => ({
 						group: labelAppCategory[group as KarsaApp['category']],
-						items,
+						items: items.map((item) => ({
+							...item,
+							label: `${item.label}${!item.disabled ? ` 🪙${item.tokenPromo || item.token}` : ''}`,
+						})),
 					}))}
 					key={form.key('app')}
 					required

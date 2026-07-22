@@ -1,5 +1,6 @@
 import { Accordion, Badge, Box, Group, SimpleGrid, Stack, Text, Title } from '@mantine/core';
 import { LuArrowUpRight } from 'react-icons/lu';
+import { PiCoinsFill } from 'react-icons/pi';
 import { labelAppCategory } from '~app-modules/enum-options';
 import { getPublicFaqs } from '~app-modules/faqs';
 import { metaPublicRoute } from '~app-modules/meta';
@@ -174,7 +175,7 @@ export default function AppsRoute({ loaderData }: Route.ComponentProps) {
 											order={2}
 											fz="md"
 										>
-											{app.label}
+											{app.label} (Segera)
 										</Title>
 										<Text
 											fz="sm"
@@ -219,6 +220,27 @@ export default function AppsRoute({ loaderData }: Route.ComponentProps) {
 											fz="md"
 										>
 											{app.label}
+											<Badge
+												pos="relative"
+												top={2}
+												size="sm"
+												px={6}
+												fz="xs"
+												fw={500}
+												variant="light"
+												color="yellow"
+												tt="capitalize"
+												ml={6}
+												leftSection={<PiCoinsFill size={12} />}
+											>
+												<Text
+													span
+													inherit
+													fw={700}
+												>
+													{app.tokenPromo || app.token}
+												</Text>
+											</Badge>
 										</Title>
 										<Text
 											fz="sm"

@@ -215,9 +215,9 @@ export default function WorkspaceAppsRoute({ loaderData }: Route.ComponentProps)
 								onMouseLeave={() => setOpenBalanceUser(false)}
 								aria-expanded={openBalanceUser}
 								aria-controls="balance-details"
+								leftSection={<PiCoinsFill size={14} />}
 								aria-label={`Lihat rincian saldo: ${totalTokenBalance} Token`}
 							>
-								🪙{' '}
 								<Text
 									span
 									inherit
