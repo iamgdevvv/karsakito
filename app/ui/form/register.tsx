@@ -53,7 +53,7 @@ export default function FormRegister(props: BoxProps) {
 
 				setErrorMessage(fetcher.data.error);
 			} else if (fetcher.data?.data) {
-				const redirectParams = new URLSearchParams();
+				const redirectParams = new URLSearchParams(searchParams);
 				redirectParams.set('successMessage', 'Pendaftaran berhasil. Silakan masuk.');
 
 				navigate(`/login?${redirectParams.toString()}`, {

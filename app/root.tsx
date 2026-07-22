@@ -1,4 +1,3 @@
-import '~app-modules/zod-locale';
 import {
 	Box,
 	Button,
@@ -25,6 +24,7 @@ import {
 	useSearchParams,
 } from 'react-router';
 import theme from '~app-modules/theme';
+import '~app-modules/zod-locale';
 import { ButtonLink } from '~app-ui/components/link';
 import Footer from '~app-ui/layouts/footer';
 
@@ -80,7 +80,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				title: 'Berhasil',
 				message: successMessage,
 				position: 'top-center',
-				autoClose: 1000,
+				autoClose: 2000,
 				onClose: () => {
 					searchParams.delete('successMessage');
 					setSearchParams(searchParams, {
@@ -96,7 +96,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				color: 'red',
 				message: errorMessage,
 				position: 'top-center',
-				autoClose: 1000,
+				autoClose: 2000,
 				onClose: () => {
 					searchParams.delete('errorMessage');
 					setSearchParams(searchParams, {
